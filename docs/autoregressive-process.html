@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Autoregressive Process | Economic Time Series Modeling and Forecasting</title>
+  <meta name="description" content="Chapter 6 Autoregressive Process | Economic Time Series Modeling and Forecasting" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Autoregressive Process | Economic Time Series Modeling and Forecasting" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Autoregressive Process | Economic Time Series Modeling and Forecasting" />
+  
+  
+  
+
+<meta name="author" content="David Ubilava" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dynamic-time-series-models.html"/>
+<link rel="next" href="nonlinear-time-series-models.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Economic Time Series Modeling and Forecasting</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i>Features of Time Series Data</a></li>
+<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a></li>
+<li class="chapter" data-level="3" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html"><i class="fa fa-check"></i><b>3</b> Trends and Seasonality</a><ul>
+<li class="chapter" data-level="3.1" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#spurious-relationship"><i class="fa fa-check"></i><b>3.1</b> Spurious Relationship</a></li>
+<li class="chapter" data-level="3.2" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#serial-correlation"><i class="fa fa-check"></i><b>3.2</b> Serial Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="forecasting-methodology.html"><a href="forecasting-methodology.html"><i class="fa fa-check"></i>Forecasting Methodology</a></li>
+<li class="chapter" data-level="4" data-path="forecast-evaluation-and-comparison.html"><a href="forecast-evaluation-and-comparison.html"><i class="fa fa-check"></i><b>4</b> Forecast Evaluation and Comparison</a></li>
+<li class="chapter" data-level="5" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>5</b> Forecast Combination</a></li>
+<li class="chapter" data-level="" data-path="dynamic-time-series-models.html"><a href="dynamic-time-series-models.html"><i class="fa fa-check"></i>Dynamic Time Series Models</a></li>
+<li class="chapter" data-level="6" data-path="autoregressive-process.html"><a href="autoregressive-process.html"><i class="fa fa-check"></i><b>6</b> Autoregressive Process</a></li>
+<li class="chapter" data-level="" data-path="nonlinear-time-series-models.html"><a href="nonlinear-time-series-models.html"><i class="fa fa-check"></i>Nonlinear Time Series Models</a></li>
+<li class="chapter" data-level="7" data-path="regimedependent-autoregressive-process.html"><a href="regimedependent-autoregressive-process.html"><i class="fa fa-check"></i><b>7</b> Regime–Dependent Autoregressive Process</a></li>
+<li class="chapter" data-level="8" data-path="vector-autoregressive-process.html"><a href="vector-autoregressive-process.html"><i class="fa fa-check"></i><b>8</b> Vector Autoregressive Process</a></li>
+<li class="chapter" data-level="" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html"><i class="fa fa-check"></i>Appendix: Introduction to R</a><ul>
+<li class="chapter" data-level="8.1" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html#data-management"><i class="fa fa-check"></i><b>8.1</b> Data Management</a></li>
+<li class="chapter" data-level="8.2" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html#data-visualisation"><i class="fa fa-check"></i><b>8.2</b> Data Visualisation</a></li>
+<li class="chapter" data-level="8.3" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html#regression-analysis"><i class="fa fa-check"></i><b>8.3</b> Regression Analysis</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Economic Time Series Modeling and Forecasting</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="autoregressive-process" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Autoregressive Process</h1>
+<p>Economic time series are often characterized by stochastic cycles. A cycle is a pattern of periodic fluctuations, not contained within a calendar year. A stochastic cycle is one generated by random variables. In general terms, the process is given by:
+<span class="math display">\[Y_t = f(Y_{t-1},Y_{t-2},\ldots;\mathbf{\theta})+\varepsilon_t.\;~~t=1,\ldots,T\]</span></p>
+<p>An autoregressive process (or, simply, an autoregression) is a regression in which the dependent variable and the regressors belong to the same stochastic process.</p>
+<p>An autoregressive model of order <span class="math inline">\(p\)</span>, referred as <span class="math inline">\(AR(p)\)</span>, has the following functional form:
+<span class="math display">\[y_t = \alpha + \beta_1 y_{t-1}+\beta_2 y_{t-2}+ \cdots + \beta_p y_{t-p}+\varepsilon_t\]</span></p>
+<!-- The sum of the autoregressive parameters, $\beta_1,\ldots,\beta_p$, depicts the persistence of the series. The larger is the persistence (i.e., closer it is to one), the longer it takes for the effect of a shock to dissolve. -->
+<!-- The autocorrelation, $\rho$, and partial autocorrelation, $\pi$, functions of the covariance-stationary $AR(p)$ process have the following distinctive features: -->
+<!-- - $\rho_1 = \pi_1$, and $\pi_p = \beta_p$. -->
+<!-- - The autocorrelation function decreases toward zero, but in different fashion depending on the values of $\beta_1,\ldots,\beta_p$. Nonetheless, the decay is faster when the persistence measure is smaller. -->
+<!-- - The partial autocorrelation function is characterized by the first $p$ spikes $\pi_1 \neq 0,\ldots,\pi_p \neq 0$, and the remaining $\pi_k = 0$, $\forall k > p$. -->
+<!-- ## AR(1) Modelling -->
+<!-- Consider the first-order autoregression: $$y_t = \alpha + \beta_1 y_{t-1} + \varepsilon_t,$$ where $\alpha$ is a constant term; $\beta_1$ is the *persistence* parameter; and $\varepsilon_t$ is a white noise process. -->
+<!-- A necessary and sufficient condition for an $AR(1)$ process to be covariance stationary is that $|\beta_1| < 1$. -->
+<!-- Substitute recursively lagged dependent variables: -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- y_t &= \alpha + \beta_1 y_{t-1} + \varepsilon_t \notag \\ -->
+<!-- y_t &= \alpha + \beta_1 (\alpha + \beta_1 y_{t-2} + \varepsilon_{t-1}) + \varepsilon_t \notag \\ -->
+<!-- &= \alpha(1+\beta_1) + \beta_1^2 (\alpha + \beta_1 y_{t-3} + \varepsilon_{t-2}) + \beta_1\varepsilon_{t-1} + \varepsilon_t \notag \\ -->
+<!-- &\vdots  \notag \\ -->
+<!-- &= \alpha\sum_{i=0}^{k-1}\beta_1^i + \beta_1^k y_{t-k} + \sum_{i=0}^{k-1}\beta_1^i\varepsilon_{t-i} -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- The end-result is a general linear process with geometrically declining coefficients. The $|\beta_1| < 1$ is required for convergence. -->
+<!-- Assuming $|\beta_1| < 1$ and $k \to \infty$: $$y_t = \frac{\alpha}{1-\beta_1} + \sum_{i=0}^{\infty}\beta_1^i\varepsilon_{t-i}$$ -->
+<!-- *Unconditional mean*: $$\mu = E\left(y_t\right) = E\left(\frac{\alpha}{1-\beta_1} + \sum_{i=0}^{\infty}\beta_1^i\varepsilon_{t-i}\right) = \frac{\alpha}{1-\beta_1}$$ -->
+<!-- *Unconditional variance*: $$\gamma_0 = Var\left(y_t\right) = Var\left(\frac{\alpha}{1-\beta_1} + \sum_{i=0}^{\infty}\beta_1^i\varepsilon_{t-i}\right) = \frac{\sigma_{\varepsilon}^2}{1-\beta_1^2}$$ -->
+<!-- *Autocovariance*: $$\gamma_k = Cov(y_t,y_{t-k}) = E[(y_t - \mu)(y_{t-k} - \mu)] = E(y_t y_{t-k}) - \mu^2$$ -->
+<!-- Multiply both sides of $AR(1)$ with $y_{t-k}$ and take the expectation: $$E(y_t y_{t-k}) = \alpha \mu + \beta_1 E(y_{t-1}y_{t-k})$$ -->
+<!-- Some rearrangement and algebraic manipulation will yield: $$\gamma_k = \beta_1\gamma_{k-1}$$ -->
+<!-- *Autocorrelation* (recall, $\rho_k = \gamma_k/\gamma_0$): $$\rho_{k} = \beta_1\rho_{k-1}$$ -->
+<!-- It then follows that: -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- \rho_1 &= \beta_1\rho_0 = \beta_1 \notag \\ -->
+<!-- \rho_2 &= \beta_1\rho_1 = \beta_1^2 \notag \\ -->
+<!-- &\vdots \notag \\ -->
+<!-- \rho_k &= \beta_1\rho_{k-1} = \beta_1^k -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- If $|\beta_1| < 1$, the autocorrelation of AR(1) is a geometric decay. -->
+<!-- The smaller is $|\beta_1|$ the more rapid is the decay. -->
+<!-- By imposing certain restrictions, the AR(1) will reduce to other already known models: -->
+<!-- - If $\beta_1 = 0$, $y_t$ is equivalent to a white noise. -->
+<!-- - If $\beta_1 = 1$ and $\alpha = 0$, $y_t$ is a random walk. -->
+<!-- - If $\beta_1 = 1$ and $\alpha \neq 0$, $y_t$ is a random walk with drift. -->
+<!-- In general, the smaller persistence parameter results in a quicker adjustment to the *unconditional mean* of the process, and vice versa. -->
+<!-- The autocorrelation and partial autocorrelation functions of the AR(1) process have three distinctive features: -->
+<!-- - $\rho_1 = \pi_1 = \beta_1$. That is, the persistence parameter is also the autocorrelation and the partial autocorrelation coefficient. -->
+<!-- - The autocorrelation function decreases exponentially toward zero, and the decay is faster when the persistence parameter is smaller. -->
+<!-- - The partial autocorrelation function is characterized by only one spike $\pi_1 \neq 0$, and the remaining $\pi_k = 0$, $\forall k > 1$. -->
+<!-- ## AR(1) Forecasting -->
+<!-- The optimal one-step-ahead forecast: $$y_{t+1|t} = E(y_{t+1}|\Omega_t) = E(\alpha + \beta_1 y_{t} + \varepsilon_{t+1}) = \alpha + \beta_1 y_{t}$$ -->
+<!-- The one-step-ahead forecast error: $$e_{t+1|t} = y_{t+1} - y_{t+1|t} = \alpha + \beta_1 y_t + \varepsilon_{t+1} - (\alpha + \beta_1 y_t) = \varepsilon_{t+1}$$ -->
+<!-- The one-step-ahead forecast variance: $$\sigma_{t+1|t}^2 = Var(y_{t+1}|\Omega_t) = E(e_{t+1|t}^2) = E(\varepsilon_{t+1}^2) = \sigma_{\varepsilon}^2$$ -->
+<!-- The one-step-ahead (95%) interval forecast: $$y_{t+1|t} \pm z_{.025}\sigma_{t+1|t} = y_{t+1|t} \pm 1.96\sigma_{\varepsilon}$$ -->
+<!-- The optimal two-step-ahead forecast: $$y_{t+2|t} = E(y_{t+2}|\Omega_t) = E(\alpha + \beta_1 y_{t+1} + \varepsilon_{t+2}) = \alpha(1+\beta_1) + \beta_1^2 y_t$$ -->
+<!-- The two-step-ahead forecast error:  -->
+<!-- $$\begin{aligned} -->
+<!-- e_{t+2|t} &= y_{t+2} - y_{t+2|t} \\  -->
+<!-- &= \alpha(1+\beta_1) + \beta_1^2 y_t + \beta_1\varepsilon_{t+1} + \varepsilon_{t+2} - [\alpha(1+\beta_1) + \beta_1^2 y_t] \\ -->
+<!-- &= \beta_1\varepsilon_{t+1} + \varepsilon_{t+2} -->
+<!-- \end{aligned}$$ -->
+<!-- The two-step-ahead forecast variance:  -->
+<!-- $$\begin{aligned} -->
+<!-- \sigma_{t+2|t}^2 &= Var(y_{t+2}|\Omega_t) \\ -->
+<!-- &= E(e_{t+2|t}^2) = E(\beta_1\varepsilon_{t+1} + \varepsilon_{t+2})^2 = \sigma_{\varepsilon}^2(1+\beta_1^2) -->
+<!-- \end{aligned}$$ -->
+<!-- The two-step-ahead (95%) interval forecast: $$y_{t+2|t} \pm z_{.025}\sigma_{t+2|t} = y_{t+2|t} \pm 1.96\sigma_{\varepsilon}\sqrt{1+\beta_1^2}$$ -->
+<!-- The optimal h-step-ahead forecast: $$y_{t+h|t} = E(y_{t+h}|\Omega_t) = E(\alpha + \beta_1 y_{t+h-1} + \varepsilon_{t+1}) = \alpha\textstyle\sum_{j=0}^{h-1}\beta_1^j + \beta_1^h y_t$$ -->
+<!-- The h-step-ahead forecast error: $$e_{t+h|t} = y_{t+h} - y_{t+h|t} = \textstyle\sum_{j=0}^{h-1}\beta_1^j\varepsilon_{t+h-j}$$ -->
+<!-- The h-step-ahead forecast variance: $$\sigma_{t+h|t}^2 = Var(y_{t+h}|\Omega_t) = E(e_{t+h|t}^2) = \sigma_{\varepsilon}^2\textstyle\sum_{j=0}^{h-1}\beta_1^{2j}$$ -->
+<!-- The h-step-ahead (95%) interval forecast: $$y_{t+h|t} \pm z_{.025}\sigma_{t+h|t} = y_{t+1|t} \pm 1.96\sigma_{\varepsilon}\sqrt{\textstyle\sum_{j=0}^{h-1}\beta_1^{2j}}$$ -->
+<!-- In a covariance-stationary process, i.e. when $|\beta_1| < 1$, as $h \to \infty$: -->
+<!-- The optimal point forecast: $$y_{t+h|t} = \frac{\alpha}{1-\beta_1}$$ -->
+<!-- The forecast variance: $$\sigma_{t+h|t}^2 = \frac{\sigma_{\varepsilon}^2}{1-\beta_1^2}$$ -->
+<!-- The (95%) interval forecast: $$y_{t+h|t} \pm z_{.025}\sigma_{t+h|t} = \frac{\alpha}{1-\beta_1} \pm 1.96\frac{\sigma_{\varepsilon}}{\sqrt{1-\beta_1^2}}$$ -->
+<!-- ## AR(2) Forecasting -->
+<!-- Consider the second-order autoregression: $$y_t = \alpha + \beta_1 y_{t-1} + \beta_2 y_{t-2} + \varepsilon_t$$ -->
+<!-- where $\alpha$ is a constant term; $\beta_1+\beta_2$ is the persistence measure; and $\varepsilon_t$ is a white noise process. -->
+<!-- In what follows, the necessary (1 and 2) and sufficient (3 and 4) conditions for an $AR(2)$ process to be covariance stationary are: -->
+<!-- - $|\beta_2| < 1$ -->
+<!-- - $|\beta_1| < 2$ -->
+<!-- - $\beta_1 + \beta_2 < 1$ -->
+<!-- - $\beta_2 - \beta_1 < 1$ -->
+<!-- The autocorrelation functions of the AR(2) process have the following distinctive features: -->
+<!-- - $\rho_1 = \pi_1$ (which is true for any $AR(p)$ process), and $\pi_2 = \beta_2$. -->
+<!-- - The autocorrelation function decreases toward zero. The path, however, varies depending on the values of $\beta_1$ and $\beta_2$. Nonetheless, the decay is faster when the persistence measure is smaller. -->
+<!-- - The partial autocorrelation function is characterized by only two spikes $\pi_1 \neq 0$ and $\pi_2 \neq 0$, and the remaining $\pi_k = 0$, $\forall k > 2$. -->
+<!-- The optimal one-step-ahead forecast:  -->
+<!-- $$\begin{aligned} -->
+<!-- y_{t+1|t} &= E(y_{t+1}|\Omega_t) \\ -->
+<!-- &= E(\alpha + \beta_1 y_{t} + \beta_2 y_{t-1} + \varepsilon_{t+1}) = \alpha + \beta_1 y_{t} + \beta_2 y_{t-1} -->
+<!-- \end{aligned}$$ -->
+<!-- The one-step-ahead forecast error:  -->
+<!-- $$\begin{aligned} -->
+<!-- e_{t+1|t} &= y_{t+1} - y_{t+1|t} \\ -->
+<!-- &= \alpha + \beta_1 y_t + \beta_2 y_{t-1} + \varepsilon_{t+1} - (\alpha + \beta_1 y_t + \beta_2 y_{t-1}) = \varepsilon_{t+1} -->
+<!-- \end{aligned}$$ -->
+<!-- The one-step-ahead forecast variance: $$\sigma_{t+1|t}^2 = Var(y_{t+1}|\Omega_t) = E(e_{t+1|t}^2) = E(\varepsilon_{t+1}^2) = \sigma_{\varepsilon}^2$$ -->
+<!-- The one-step-ahead (95%) interval forecast: $$y_{t+1|t} \pm z_{.025}\sigma_{t+1|t} = y_{t+1|t} \pm 1.96\sigma_{\varepsilon}$$ -->
+<!-- The optimal two-step-ahead forecast:  -->
+<!-- $$\begin{aligned} -->
+<!-- y_{t+2|t} = E(y_{t+2}|\Omega_t) &= E(\alpha + \beta_1 y_{t+1} + \beta_2 y_{t} + \varepsilon_{t+1}) \\ -->
+<!-- &= \alpha(1+\beta_1) + (\beta_1^2+\beta_2) y_{t} + \beta_1\beta_2 y_{t-1} -->
+<!-- \end{aligned}$$ -->
+<!-- The two-step-ahead forecast error:  -->
+<!-- $$\begin{aligned} -->
+<!-- e_{t+2|t} = y_{t+2} - y_{t+2|t} =& \alpha + \beta_1 y_{t+1} + \beta_2 y_{t} + \varepsilon_{t+2} \\ -->
+<!-- &- (\alpha + \beta_1 y_{t+1|t} + \beta_2 y_{t}) = \beta_1\varepsilon_{t+1} + \varepsilon_{t+2} -->
+<!-- \end{aligned}$$ -->
+<!-- The two-step-ahead forecast variance:  -->
+<!-- $$\sigma_{t+2|t}^2 = Var(y_{t+2}|\Omega_t) = E(e_{t+2|t}^2) = E(\beta_1\varepsilon_{t+1} + \varepsilon_{t+2})^2 = \sigma_{\varepsilon}^2(1+\beta_1^2)$$ -->
+<!-- The two-step-ahead (95%) interval forecast: $$y_{t+2|t} \pm z_{.025}\sigma_{t+2|t} = y_{t+2|t} \pm 1.96\sigma_{\varepsilon}\sqrt{1+\beta_1^2}$$ -->
+<!-- The optimal h-step-ahead forecast (iterated method):  -->
+<!-- $$\begin{aligned} -->
+<!-- y_{t+1|t} &= \alpha + \beta_1 y_t + \beta_2 y_{t-1} \\ -->
+<!-- y_{t+2|t} &= \alpha + \beta_1 y_{t+1|t} + \beta_2 y_{t} \\ -->
+<!-- y_{t+3|t} &= \alpha + \beta_1 y_{t+2|t} + \beta_2 y_{t+1|t} \\ -->
+<!-- &\vdots \\ -->
+<!-- y_{t+h|t} &= \alpha + \beta_1 y_{t+h-1|t} + \beta_2 y_{t+h-2|t} -->
+<!-- \end{aligned}$$ -->
+<!-- The h-step-ahead forecast error: $$e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}+\beta_1 e_{t+h-1|t}+\beta_2 e_{t+h-2|t}$$ -->
+<!-- The h-step-ahead forecast variance:  -->
+<!-- $$\begin{aligned} -->
+<!-- \sigma_{t+h|t}^2 &= Var(y_{t+h}|\Omega_t) = E(e_{t+h|t}^2) \\ -->
+<!-- &= \sigma_{\varepsilon}^2+\beta_1^2 Var(e_{t+h-1|t})+\beta_2^2 Var(e_{t+h-2|t}) \\ -->
+<!-- &+2\beta_1\beta_2Cov(e_{t+h-1|t},e_{t+h-2|t}) -->
+<!-- \end{aligned}$$ -->
+<!-- Note that, in general, formulas for $\sigma_{t+1|t}^2,\sigma_{t+2|t}^2,\ldots,\sigma_{t+h|t}^2$ are the same for any $AR(p)$, $p \geq h-1$. -->
+<!-- The h-step-ahead (95%) interval forecast: $$y_{t+h|t} \pm z_{.025}\sigma_{t+h|t} = y_{t+1|t} \pm 1.96\sigma_{t+h|t}$$ -->
+<!-- ## AR(p) Forecasting -->
+<!-- The optimal h-step-ahead forecast: $$y_{t+h|t} = E(y_{t+h}|\Omega_t) = \alpha + \beta_1 y_{t+h-1|t} + \beta_2 y_{t+h-2|t} + \cdots + \beta_p y_{t+h-p|t}$$ -->
+<!-- The h-step-ahead forecast error: $$e_{t+h|t} = \varepsilon_{t+h} + \beta_1 e_{t+h-1|t} + \beta_2 e_{t+h-2|t} + \cdots + \beta_p e_{t+h-p|t}$$ -->
+<!-- The h-step-ahead forecast variance:  -->
+<!-- $$\begin{aligned} -->
+<!-- \sigma_{t+h|t}^2 & = Var(y_{t+h}|\Omega_t) = E(e_{t+2|t}^2) \\ -->
+<!-- &= \sigma_{\varepsilon}^2 + \sum_{i=1}^{p}\beta_i^2 Var(e_{t+h-i|t}) + 2\sum_{i \neq j}\beta_i\beta_j Cov(e_{t+h-i|t},e_{t+h-j|t}) -->
+<!-- \end{aligned}$$ -->
+<!-- The h-step-ahead (95%) interval forecast: $$y_{t+h|t} \pm z_{.025}\sigma_{t+h|t} = y_{t+h|t} \pm 1.96\sigma_{t+h|t}$$ -->
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dynamic-time-series-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="nonlinear-time-series-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["forecasting.pdf"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

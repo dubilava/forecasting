@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Appendix: Introduction to R | Economic Time Series Modeling and Forecasting</title>
+  <meta name="description" content="Appendix: Introduction to R | Economic Time Series Modeling and Forecasting" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Appendix: Introduction to R | Economic Time Series Modeling and Forecasting" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Appendix: Introduction to R | Economic Time Series Modeling and Forecasting" />
+  
+  
+  
+
+<meta name="author" content="David Ubilava" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="forecast-combination.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Economic Time Series Modeling and Forecasting</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i>Preliminaries</a></li>
+<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a></li>
+<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a></li>
+<li class="chapter" data-level="" data-path="deterministic-time-series-models.html"><a href="deterministic-time-series-models.html"><i class="fa fa-check"></i>Deterministic Time Series Models</a></li>
+<li class="chapter" data-level="3" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html"><i class="fa fa-check"></i><b>3</b> Trends and Seasonality</a><ul>
+<li class="chapter" data-level="3.1" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#spurious-relationship"><i class="fa fa-check"></i><b>3.1</b> Spurious Relationship</a></li>
+<li class="chapter" data-level="3.2" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#trends"><i class="fa fa-check"></i><b>3.2</b> Trends</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#modeling"><i class="fa fa-check"></i><b>3.2.1</b> Modeling</a></li>
+<li class="chapter" data-level="3.2.2" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#forecasting"><i class="fa fa-check"></i><b>3.2.2</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#seasonality"><i class="fa fa-check"></i><b>3.3</b> Seasonality</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#modeling-1"><i class="fa fa-check"></i><b>3.3.1</b> Modeling</a></li>
+<li class="chapter" data-level="3.3.2" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>3.3.2</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="trends-and-seasonality.html"><a href="trends-and-seasonality.html#exercise"><i class="fa fa-check"></i><b>3.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="dynamic-time-series-models.html"><a href="dynamic-time-series-models.html"><i class="fa fa-check"></i>Dynamic Time Series Models</a></li>
+<li class="chapter" data-level="4" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>4</b> Linear Autoregression</a><ul>
+<li class="chapter" data-level="4.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>4.1</b> Modeling</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar1"><i class="fa fa-check"></i><b>4.1.1</b> AR(1)</a></li>
+<li class="chapter" data-level="4.1.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar2"><i class="fa fa-check"></i><b>4.1.2</b> AR(2)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>4.2</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>5</b> Vector Autoregression</a></li>
+<li class="chapter" data-level="6" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>6</b> Threshold Autoregression</a></li>
+<li class="chapter" data-level="" data-path="forecast-assessment.html"><a href="forecast-assessment.html"><i class="fa fa-check"></i>Forecast Assessment</a></li>
+<li class="chapter" data-level="7" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>7</b> Forecast Evaluation</a></li>
+<li class="chapter" data-level="8" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>8</b> Forecast Combination</a></li>
+<li class="chapter" data-level="" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html"><i class="fa fa-check"></i>Appendix: Introduction to R</a><ul>
+<li class="chapter" data-level="8.1" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html#data-management"><i class="fa fa-check"></i><b>8.1</b> Data Management</a></li>
+<li class="chapter" data-level="8.2" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html#data-visualisation"><i class="fa fa-check"></i><b>8.2</b> Data Visualisation</a></li>
+<li class="chapter" data-level="8.3" data-path="appendix-introduction-to-r.html"><a href="appendix-introduction-to-r.html#regression-analysis"><i class="fa fa-check"></i><b>8.3</b> Regression Analysis</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Economic Time Series Modeling and Forecasting</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix-introduction-to-r" class="section level1 unnumbered">
+<h1>Appendix: Introduction to R</h1>
+<p>R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial–and–error. To the extent that new features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.</p>
+<p>We will work in RStudio—the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will ‘find’ and connect with the former on its own). R is available from <a href="https://cran.r-project.org/">CRAN</a>, and RStudio is available from <a href="https://www.rstudio.com/">RStudio</a>.</p>
+<div id="data-management" class="section level2">
+<h2><span class="header-section-number">8.1</span> Data Management</h2>
+<p>There are a number of ways in which we can work with data in R. Let’s begin with matrices.</p>
+<p>Consider a string of observations:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="appendix-introduction-to-r.html#cb3-1"></a>a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
+<span id="cb3-2"><a href="appendix-introduction-to-r.html#cb3-2"></a>a</span></code></pre></div>
+<pre><code>## [1] 1 0 4 3 2 6</code></pre>
+<p>A <em>string</em>, unlike a <em>vector</em>, has no dimensions. But we can transform it to a <span class="math inline">\(n \times 1\)</span> vector using the as.matrix() function:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="appendix-introduction-to-r.html#cb5-1"></a>b &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(a)</span>
+<span id="cb5-2"><a href="appendix-introduction-to-r.html#cb5-2"></a>b</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    1
+## [2,]    0
+## [3,]    4
+## [4,]    3
+## [5,]    2
+## [6,]    6</code></pre>
+<p>The result is a <span class="math inline">\(6 \times 1\)</span> vector, or a column matrix. To obtain a <span class="math inline">\(1 \times 6\)</span> vector, or a row matrix, we <em>transpose</em> the foregoing vector using the t() function:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="appendix-introduction-to-r.html#cb7-1"></a>bt &lt;-<span class="st"> </span><span class="kw">t</span>(b)</span>
+<span id="cb7-2"><a href="appendix-introduction-to-r.html#cb7-2"></a>bt</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    0    4    3    2    6</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="appendix-introduction-to-r.html#cb9-1"></a><span class="kw">dim</span>(bt)</span></code></pre></div>
+<pre><code>## [1] 1 6</code></pre>
+<p>We can create any <span class="math inline">\(n \times k\)</span> matrix, using the matrix() function. For example, consider a <span class="math inline">\(3 \times 2\)</span> matrix:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="appendix-introduction-to-r.html#cb11-1"></a>B &lt;-<span class="st"> </span><span class="kw">matrix</span>(a,<span class="dt">nrow=</span><span class="dv">3</span>,<span class="dt">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb11-2"><a href="appendix-introduction-to-r.html#cb11-2"></a>B</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    3
+## [2,]    0    2
+## [3,]    4    6</code></pre>
+<p>We can add column names and row names to this matrix:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="appendix-introduction-to-r.html#cb13-1"></a><span class="kw">colnames</span>(B) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;c1&quot;</span>,<span class="st">&quot;c2&quot;</span>)</span>
+<span id="cb13-2"><a href="appendix-introduction-to-r.html#cb13-2"></a><span class="kw">rownames</span>(B) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;r1&quot;</span>,<span class="st">&quot;r2&quot;</span>,<span class="st">&quot;r3&quot;</span>)</span>
+<span id="cb13-3"><a href="appendix-introduction-to-r.html#cb13-3"></a>B</span></code></pre></div>
+<pre><code>##    c1 c2
+## r1  1  3
+## r2  0  2
+## r3  4  6</code></pre>
+<p>If, at this point, we would like to only work with, say, the first column of the matrix, we can call it using its column number, (1), or the column name, (“c1”), as follows:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="appendix-introduction-to-r.html#cb15-1"></a>B[,<span class="st">&quot;c1&quot;</span>]</span></code></pre></div>
+<pre><code>## r1 r2 r3 
+##  1  0  4</code></pre>
+<p>Similarly, if we want to refer to a matrix element, say <span class="math inline">\(b_{3,2}\)</span>, we can do this as follows:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="appendix-introduction-to-r.html#cb17-1"></a>B[<span class="dv">3</span>,<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<p>Matrix multiplication is done using %*% command, granted that the two matrices are compatible. For example, we obtain a product of matrix <span class="math inline">\(B\)</span> and a new <span class="math inline">\(2 \times 1\)</span> vector, <span class="math inline">\(d\)</span>, as follows:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="appendix-introduction-to-r.html#cb19-1"></a>d &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">c</span>(<span class="dv">5</span>,<span class="op">-</span><span class="dv">2</span>))</span>
+<span id="cb19-2"><a href="appendix-introduction-to-r.html#cb19-2"></a>Bd &lt;-<span class="st"> </span>B<span class="op">%*%</span>d</span>
+<span id="cb19-3"><a href="appendix-introduction-to-r.html#cb19-3"></a>Bd</span></code></pre></div>
+<pre><code>##    [,1]
+## r1   -1
+## r2   -4
+## r3    8</code></pre>
+<p>We can add columns (and rows) to the existing matrix using a cbind() function:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="appendix-introduction-to-r.html#cb21-1"></a>c3 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb21-2"><a href="appendix-introduction-to-r.html#cb21-2"></a>D &lt;-<span class="st"> </span><span class="kw">cbind</span>(B,c3)</span>
+<span id="cb21-3"><a href="appendix-introduction-to-r.html#cb21-3"></a>D</span></code></pre></div>
+<pre><code>##    c1 c2 c3
+## r1  1  3  0
+## r2  0  2  1
+## r3  4  6  0</code></pre>
+<p>We can invert a(n invertible) matrix using the solve() function:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="appendix-introduction-to-r.html#cb23-1"></a>Di &lt;-<span class="st"> </span><span class="kw">solve</span>(D)</span>
+<span id="cb23-2"><a href="appendix-introduction-to-r.html#cb23-2"></a>Di</span></code></pre></div>
+<pre><code>##            r1 r2         r3
+## c1 -1.0000000  0  0.5000000
+## c2  0.6666667  0 -0.1666667
+## c3 -1.3333333  1  0.3333333</code></pre>
+</div>
+<div id="data-visualisation" class="section level2">
+<h2><span class="header-section-number">8.2</span> Data Visualisation</h2>
+<p>One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the <strong>ggplot2</strong> package. Notably, this package requires that the data are maintained in the data.frame or the data.table format (for the latter, you need to load the <strong>data.table</strong> package). Let’s create a data.table object and observe its few lines:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="appendix-introduction-to-r.html#cb25-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb25-2"><a href="appendix-introduction-to-r.html#cb25-2"></a>x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">120</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span>
+<span id="cb25-3"><a href="appendix-introduction-to-r.html#cb25-3"></a>y &lt;-<span class="st"> </span><span class="fl">0.2+0.7</span><span class="op">*</span>x<span class="op">+</span><span class="kw">rnorm</span>(<span class="dv">120</span>)</span>
+<span id="cb25-4"><a href="appendix-introduction-to-r.html#cb25-4"></a></span>
+<span id="cb25-5"><a href="appendix-introduction-to-r.html#cb25-5"></a><span class="kw">library</span>(data.table)</span>
+<span id="cb25-6"><a href="appendix-introduction-to-r.html#cb25-6"></a></span>
+<span id="cb25-7"><a href="appendix-introduction-to-r.html#cb25-7"></a>dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">y=</span>y,<span class="dt">x=</span>x)</span>
+<span id="cb25-8"><a href="appendix-introduction-to-r.html#cb25-8"></a>dt</span></code></pre></div>
+<pre><code>##               y          x
+##   1:  2.9733299 0.53101733
+##   2:  0.6817335 0.74424780
+##   3:  1.6917341 1.14570673
+##   4:  1.4994931 1.81641558
+##   5: -0.2609185 0.40336386
+##  ---                      
+## 116:  0.1835826 0.02615515
+## 117:  1.9894321 1.43113213
+## 118:  2.4197029 0.20636847
+## 119:  1.8521905 0.89256870
+## 120:  2.3040499 1.28020209</code></pre>
+<p>Now, let’s load <strong>ggplot2</strong> and generate a simple scatter plot:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="appendix-introduction-to-r.html#cb27-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb27-2"><a href="appendix-introduction-to-r.html#cb27-2"></a></span>
+<span id="cb27-3"><a href="appendix-introduction-to-r.html#cb27-3"></a><span class="kw">ggplot</span>(dt,<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y))<span class="op">+</span></span>
+<span id="cb27-4"><a href="appendix-introduction-to-r.html#cb27-4"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>We can augment this plot in a number of different ways. Here we change the point color to red, add the fitted regression line to the plot, add labels to the figure, and apply a ‘classic’ background theme:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="appendix-introduction-to-r.html#cb28-1"></a><span class="kw">ggplot</span>(dt,<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y))<span class="op">+</span></span>
+<span id="cb28-2"><a href="appendix-introduction-to-r.html#cb28-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span></span>
+<span id="cb28-3"><a href="appendix-introduction-to-r.html#cb28-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>,<span class="dt">formula=</span>y<span class="op">~</span>x,<span class="dt">se=</span>F,<span class="dt">color=</span><span class="st">&quot;gray&quot;</span>)<span class="op">+</span></span>
+<span id="cb28-4"><a href="appendix-introduction-to-r.html#cb28-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;A scatterplot with fitted regression line&quot;</span>, </span>
+<span id="cb28-5"><a href="appendix-introduction-to-r.html#cb28-5"></a>       <span class="dt">x=</span><span class="st">&quot;Treatment Variable&quot;</span>, </span>
+<span id="cb28-6"><a href="appendix-introduction-to-r.html#cb28-6"></a>       <span class="dt">y=</span><span class="st">&quot;Outcome Variable&quot;</span>, </span>
+<span id="cb28-7"><a href="appendix-introduction-to-r.html#cb28-7"></a>       <span class="dt">caption=</span><span class="st">&quot;Caption: in case if needed.&quot;</span>)<span class="op">+</span></span>
+<span id="cb28-8"><a href="appendix-introduction-to-r.html#cb28-8"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>As another example, let’s generate a histogram (of the dependent variable):</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="appendix-introduction-to-r.html#cb29-1"></a><span class="kw">ggplot</span>(dt,<span class="kw">aes</span>(<span class="dt">x=</span>y))<span class="op">+</span></span>
+<span id="cb29-2"><a href="appendix-introduction-to-r.html#cb29-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color=</span><span class="st">&quot;white&quot;</span>,<span class="dt">fill=</span><span class="st">&quot;red&quot;</span>,<span class="dt">binwidth=</span>.<span class="dv">5</span>)<span class="op">+</span></span>
+<span id="cb29-3"><a href="appendix-introduction-to-r.html#cb29-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;A basic histogram&quot;</span>)<span class="op">+</span></span>
+<span id="cb29-4"><a href="appendix-introduction-to-r.html#cb29-4"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>We typically apply a line plot to illustrate a time series (that are ordered by date). In what follows, we add a date column to our data frame and then plot the dependent variable in the chronological order:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="appendix-introduction-to-r.html#cb30-1"></a>dt<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from=</span><span class="kw">as.Date</span>(<span class="st">&quot;2000-01-01&quot;</span>),<span class="dt">by=</span><span class="st">&quot;month&quot;</span>,<span class="dt">along.with=</span>y)</span>
+<span id="cb30-2"><a href="appendix-introduction-to-r.html#cb30-2"></a></span>
+<span id="cb30-3"><a href="appendix-introduction-to-r.html#cb30-3"></a><span class="kw">ggplot</span>(dt,<span class="kw">aes</span>(<span class="dt">x=</span>date,<span class="dt">y=</span>y))<span class="op">+</span></span>
+<span id="cb30-4"><a href="appendix-introduction-to-r.html#cb30-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span></span>
+<span id="cb30-5"><a href="appendix-introduction-to-r.html#cb30-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;A basic time series plot&quot;</span>,  </span>
+<span id="cb30-6"><a href="appendix-introduction-to-r.html#cb30-6"></a>       <span class="dt">x=</span><span class="st">&quot;Year&quot;</span>, </span>
+<span id="cb30-7"><a href="appendix-introduction-to-r.html#cb30-7"></a>       <span class="dt">y=</span><span class="st">&quot;Outcome Variable&quot;</span>)<span class="op">+</span></span>
+<span id="cb30-8"><a href="appendix-introduction-to-r.html#cb30-8"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+<div id="regression-analysis" class="section level2">
+<h2><span class="header-section-number">8.3</span> Regression Analysis</h2>
+<p>To illustrate the OLS regression in R, we apply the previously generated <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> as independent and dependent variables. To begin, we obtain the least squares estimator “by hand” as follows:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="appendix-introduction-to-r.html#cb31-1"></a>X &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span>,x)</span>
+<span id="cb31-2"><a href="appendix-introduction-to-r.html#cb31-2"></a>b &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X)<span class="op">%*%</span>X)<span class="op">%*%</span><span class="kw">t</span>(X)<span class="op">%*%</span>y</span>
+<span id="cb31-3"><a href="appendix-introduction-to-r.html#cb31-3"></a>b</span></code></pre></div>
+<pre><code>##        [,1]
+##   0.3577680
+## x 0.5781188</code></pre>
+<p>This can be easily done using the lm() function:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="appendix-introduction-to-r.html#cb33-1"></a>ols &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>x)</span>
+<span id="cb33-2"><a href="appendix-introduction-to-r.html#cb33-2"></a>ols</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      0.3578       0.5781</code></pre>
+<p>We can apply the summary() function to see the complete set of regression results:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="appendix-introduction-to-r.html#cb35-1"></a><span class="kw">summary</span>(ols)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.9662 -0.5983 -0.1127  0.5639  2.3882 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   0.3578     0.1904   1.879 0.062717 .  
+## x             0.5781     0.1641   3.522 0.000609 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9716 on 118 degrees of freedom
+## Multiple R-squared:  0.09514,    Adjusted R-squared:  0.08748 
+## F-statistic: 12.41 on 1 and 118 DF,  p-value: 0.0006091</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="forecast-combination.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["forecasting.pdf"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
