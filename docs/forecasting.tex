@@ -4,8 +4,8 @@
 %
 \documentclass[
   oneside]{book}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
@@ -81,7 +81,8 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
 \makeatletter
@@ -90,7 +91,7 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -107,10 +108,13 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 
 \title{Economic Time Series Modeling and Forecasting}
 \author{David Ubilava}
-\date{July 2021}
+\date{August 2021}
 
 \begin{document}
 \maketitle
@@ -195,7 +199,7 @@ Another relevant measure for time series dependence is partial autocorrelation, 
 \hypertarget{transformations}{%
 \section{Transformations}\label{transformations}}
 
-It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations usually are done to work with the suitable variable for the desired econometric analysis. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms the time series ``flatten'' and the fluctuations become proportionate. The difference operator is denoted by \(\Delta\), so that \(\Delta y_t = y_t-y_{t-1}\). The following three graphs illustrate (i) a time series with an apparent exponential growth, (ii) the natural logarithm of this time series, and (iii) their differences (i.e., the log-differences of the original series).
+It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations usually are done to work with the suitable variable for the desired econometric analysis. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms the time series ``flatten'\,' and the fluctuations become proportionate. The difference operator is denoted by \(\Delta\), so that \(\Delta y_t = y_t-y_{t-1}\). The following three graphs illustrate (i) a time series with an apparent exponential growth, (ii) the natural logarithm of this time series, and (iii) their differences (i.e., the log-differences of the original series).
 
 \begin{figure}
 \centering
@@ -258,14 +262,14 @@ Exponential trends are suitable when a time series is characterized by a stable 
 
 We will cover the shifting/switching trend models in another chapter.
 
-\hypertarget{forecasting}{%
-\section{Forecasting}\label{forecasting}}
-
 Trends are (relatively) easy to model and forecast. Caution is needed, however, with (higher order) polynomial trends, as they may fit well in-sample, but cause major problems out-of-sample.
 
 Consider a linear trend model with an additive error term: \[y_t = \alpha + \beta t + \varepsilon_t\] We estimate the model parameters, \(\mathbf{\theta}=\{\alpha,\beta\}\), by fitting the trend model to a time series using the least-squares regression: \[\hat{\theta} = \operatorname*{argmin}_{\mathbf{\theta}} \sum_{t=1}^{T}\big(y_t - \alpha - \beta t\big)^2.\] Fitted values are then given by: \[\hat{y}_t = \hat{\alpha} + \hat{\beta} t\]
 
-Any future realization of a random variable is assumed to follow a linear trend model: \[y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h}.\]
+\hypertarget{forecasting}{%
+\section{Forecasting}\label{forecasting}}
+
+If a linear trend model is fitted to the data, then any future realization of the stochastic process is assumed to follow the linear trend model: \[y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h}.\]
 
 An optimal forecast of \(y_{t+h}\), therefore, is given by: \[y_{t+h|t} = E(y_{t+h}|\Omega_t) = E[\alpha + \beta (t+h) + \varepsilon_{t+h}] = \alpha + \beta (t+h).\]
 
@@ -595,16 +599,17 @@ The h-step-ahead (95\%) interval forecast: \[y_{t+h|t} \pm z_{.025}\sigma_{t+h|t
 \hypertarget{forecast-combination}{%
 \chapter{Forecast Combination}\label{forecast-combination}}
 
-\hypertarget{appendix-introduction-to-r}{%
-\chapter*{Appendix: Introduction to R}\label{appendix-introduction-to-r}}
-\addcontentsline{toc}{chapter}{Appendix: Introduction to R}
+\hypertarget{introduction-to-r}{%
+\chapter*{Introduction to R}\label{introduction-to-r}}
+\addcontentsline{toc}{chapter}{Introduction to R}
 
 R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial--and--error. To the extent that new features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.
 
 We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will `find' and connect with the former on its own). R is available from \href{https://cran.r-project.org/}{CRAN}, and RStudio is available from \href{https://www.rstudio.com/}{RStudio}.
 
 \hypertarget{data-management}{%
-\section{Data Management}\label{data-management}}
+\section*{Data Management}\label{data-management}}
+\addcontentsline{toc}{section}{Data Management}
 
 There are a number of ways in which we can work with data in R. Let's begin with matrices.
 
@@ -612,7 +617,7 @@ Consider a string of observations:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{)}
+\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{)}
 \NormalTok{a}
 \end{Highlighting}
 \end{Shaded}
@@ -625,7 +630,7 @@ A \emph{string}, unlike a \emph{vector}, has no dimensions. But we can transform
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{b <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(a)}
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(a)}
 \NormalTok{b}
 \end{Highlighting}
 \end{Shaded}
@@ -644,7 +649,7 @@ The result is a \(6 \times 1\) vector, or a column matrix. To obtain a \(1 \time
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bt <-}\StringTok{ }\KeywordTok{t}\NormalTok{(b)}
+\NormalTok{bt }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(b)}
 \NormalTok{bt}
 \end{Highlighting}
 \end{Shaded}
@@ -656,7 +661,7 @@ The result is a \(6 \times 1\) vector, or a column matrix. To obtain a \(1 \time
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{dim}\NormalTok{(bt)}
+\FunctionTok{dim}\NormalTok{(bt)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -668,7 +673,7 @@ We can create any \(n \times k\) matrix, using the matrix() function. For exampl
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{B <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(a,}\DataTypeTok{nrow=}\DecValTok{3}\NormalTok{,}\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\NormalTok{B }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(a,}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
 \NormalTok{B}
 \end{Highlighting}
 \end{Shaded}
@@ -684,8 +689,8 @@ We can add column names and row names to this matrix:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{colnames}\NormalTok{(B) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"c1"}\NormalTok{,}\StringTok{"c2"}\NormalTok{)}
-\KeywordTok{rownames}\NormalTok{(B) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"r1"}\NormalTok{,}\StringTok{"r2"}\NormalTok{,}\StringTok{"r3"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(B) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"c1"}\NormalTok{,}\StringTok{"c2"}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(B) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"r1"}\NormalTok{,}\StringTok{"r2"}\NormalTok{,}\StringTok{"r3"}\NormalTok{)}
 \NormalTok{B}
 \end{Highlighting}
 \end{Shaded}
@@ -726,8 +731,8 @@ Matrix multiplication is done using \%*\% command, granted that the two matrices
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{d <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\OperatorTok{-}\DecValTok{2}\NormalTok{))}
-\NormalTok{Bd <-}\StringTok{ }\NormalTok{B}\OperatorTok{%*%}\NormalTok{d}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{))}
+\NormalTok{Bd }\OtherTok{\textless{}{-}}\NormalTok{ B}\SpecialCharTok{\%*\%}\NormalTok{d}
 \NormalTok{Bd}
 \end{Highlighting}
 \end{Shaded}
@@ -743,8 +748,8 @@ We can add columns (and rows) to the existing matrix using a cbind() function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{c3 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
-\NormalTok{D <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(B,c3)}
+\NormalTok{c3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{D }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(B,c3)}
 \NormalTok{D}
 \end{Highlighting}
 \end{Shaded}
@@ -760,7 +765,7 @@ We can invert a(n invertible) matrix using the solve() function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Di <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(D)}
+\NormalTok{Di }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(D)}
 \NormalTok{Di}
 \end{Highlighting}
 \end{Shaded}
@@ -773,19 +778,20 @@ We can invert a(n invertible) matrix using the solve() function:
 \end{verbatim}
 
 \hypertarget{data-visualisation}{%
-\section{Data Visualisation}\label{data-visualisation}}
+\section*{Data Visualisation}\label{data-visualisation}}
+\addcontentsline{toc}{section}{Data Visualisation}
 
 One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the \textbf{ggplot2} package. Notably, this package requires that the data are maintained in the data.frame or the data.table format (for the latter, you need to load the \textbf{data.table} package). Let's create a data.table object and observe its few lines:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{x <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{120}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{)}
-\NormalTok{y <-}\StringTok{ }\FloatTok{0.2+0.7}\OperatorTok{*}\NormalTok{x}\OperatorTok{+}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{120}\NormalTok{)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{120}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FloatTok{0.2+0.7}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{+}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{120}\NormalTok{)}
 
-\KeywordTok{library}\NormalTok{(data.table)}
+\FunctionTok{library}\NormalTok{(data.table)}
 
-\NormalTok{dt <-}\StringTok{ }\KeywordTok{data.table}\NormalTok{(}\DataTypeTok{y=}\NormalTok{y,}\DataTypeTok{x=}\NormalTok{x)}
+\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(}\AttributeTok{y=}\NormalTok{y,}\AttributeTok{x=}\NormalTok{x)}
 \NormalTok{dt}
 \end{Highlighting}
 \end{Shaded}
@@ -809,10 +815,10 @@ Now, let's load \textbf{ggplot2} and generate a simple scatter plot:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
 
-\KeywordTok{ggplot}\NormalTok{(dt,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}\DataTypeTok{y=}\NormalTok{y))}\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{x,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -822,14 +828,14 @@ We can augment this plot in a number of different ways. Here we change the point
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(dt,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}\DataTypeTok{y=}\NormalTok{y))}\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{color=}\StringTok{"red"}\NormalTok{)}\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\StringTok{"lm"}\NormalTok{,}\DataTypeTok{formula=}\NormalTok{y}\OperatorTok{~}\NormalTok{x,}\DataTypeTok{se=}\NormalTok{F,}\DataTypeTok{color=}\StringTok{"gray"}\NormalTok{)}\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"A scatterplot with fitted regression line"}\NormalTok{, }
-       \DataTypeTok{x=}\StringTok{"Treatment Variable"}\NormalTok{, }
-       \DataTypeTok{y=}\StringTok{"Outcome Variable"}\NormalTok{, }
-       \DataTypeTok{caption=}\StringTok{"Caption: in case if needed."}\NormalTok{)}\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme_classic}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{x,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color=}\StringTok{"goldenrod"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{,}\AttributeTok{formula=}\NormalTok{y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x,}\AttributeTok{se=}\NormalTok{F,}\AttributeTok{color=}\StringTok{"darkgray"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"A scatterplot with fitted regression line"}\NormalTok{, }
+       \AttributeTok{x=}\StringTok{"Treatment Variable"}\NormalTok{, }
+       \AttributeTok{y=}\StringTok{"Outcome Variable"}\NormalTok{, }
+       \AttributeTok{caption=}\StringTok{"Caption: in case if needed."}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -839,10 +845,10 @@ As another example, let's generate a histogram (of the dependent variable):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(dt,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{y))}\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{color=}\StringTok{"white"}\NormalTok{,}\DataTypeTok{fill=}\StringTok{"red"}\NormalTok{,}\DataTypeTok{binwidth=}\NormalTok{.}\DecValTok{5}\NormalTok{)}\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"A basic histogram"}\NormalTok{)}\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme_classic}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{color=}\StringTok{"white"}\NormalTok{,}\AttributeTok{fill=}\StringTok{"goldenrod"}\NormalTok{,}\AttributeTok{binwidth=}\NormalTok{.}\DecValTok{5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"A basic histogram"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -852,28 +858,29 @@ We typically apply a line plot to illustrate a time series (that are ordered by 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dt}\OperatorTok{$}\NormalTok{date <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from=}\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2000-01-01"}\NormalTok{),}\DataTypeTok{by=}\StringTok{"month"}\NormalTok{,}\DataTypeTok{along.with=}\NormalTok{y)}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2000{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
 
-\KeywordTok{ggplot}\NormalTok{(dt,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{date,}\DataTypeTok{y=}\NormalTok{y))}\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{color=}\StringTok{"red"}\NormalTok{)}\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"A basic time series plot"}\NormalTok{,  }
-       \DataTypeTok{x=}\StringTok{"Year"}\NormalTok{, }
-       \DataTypeTok{y=}\StringTok{"Outcome Variable"}\NormalTok{)}\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme_classic}\NormalTok{()}
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{color=}\StringTok{"goldenrod"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"A basic time series plot"}\NormalTok{,  }
+       \AttributeTok{x=}\StringTok{"Year"}\NormalTok{, }
+       \AttributeTok{y=}\StringTok{"Outcome Variable"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{forecasting_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 \hypertarget{regression-analysis}{%
-\section{Regression Analysis}\label{regression-analysis}}
+\section*{Regression Analysis}\label{regression-analysis}}
+\addcontentsline{toc}{section}{Regression Analysis}
 
 To illustrate the OLS regression in R, we apply the previously generated \(x\) and \(y\) as independent and dependent variables. To begin, we obtain the least squares estimator ``by hand'' as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{X <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,x)}
-\NormalTok{b <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(X)}\OperatorTok{%*%}\NormalTok{X)}\OperatorTok{%*%}\KeywordTok{t}\NormalTok{(X)}\OperatorTok{%*%}\NormalTok{y}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,x)}
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{X)}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{y}
 \NormalTok{b}
 \end{Highlighting}
 \end{Shaded}
@@ -888,7 +895,7 @@ This can be easily done using the lm() function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ols <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{~}\NormalTok{x)}
+\NormalTok{ols }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x)}
 \NormalTok{ols}
 \end{Highlighting}
 \end{Shaded}
@@ -907,7 +914,7 @@ We can apply the summary() function to see the complete set of regression result
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(ols)}
+\FunctionTok{summary}\NormalTok{(ols)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -931,5 +938,148 @@ We can apply the summary() function to see the complete set of regression result
 ## Multiple R-squared:  0.09514,    Adjusted R-squared:  0.08748 
 ## F-statistic: 12.41 on 1 and 118 DF,  p-value: 0.0006091
 \end{verbatim}
+
+\hypertarget{practice-material}{%
+\chapter*{Practice Material}\label{practice-material}}
+\addcontentsline{toc}{chapter}{Practice Material}
+
+\hypertarget{tutorial-1}{%
+\section*{Tutorial 1}\label{tutorial-1}}
+\addcontentsline{toc}{section}{Tutorial 1}
+
+Generate a sequence of 200 iid random variables with mean zero and variance 4, call it e.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{200}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Notice that prior to sampling we set seed to some value (to one in this instance). We do so to ensure that we can exactly replicate the sample in the future.
+
+Generate a sequence of 200 binary variables, call it x.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}\DecValTok{200}\NormalTok{,}\AttributeTok{replace=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+Construct a dependent variable, y, using the following formula: \(y=2+0.5x+e\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{2}\FloatTok{+0.5}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{+}\NormalTok{e}
+\end{Highlighting}
+\end{Shaded}
+
+Regress y on x, using the \texttt{lm()} function, to obtain estimates of the intercept and slope parameters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ols }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x)}
+\NormalTok{ols}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      2.1244       0.3854
+\end{verbatim}
+
+Generate some ``future'' realizations (100 observations) of y.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}\DecValTok{100}\NormalTok{,}\AttributeTok{replace=}\NormalTok{T)}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{2}\FloatTok{+0.5}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{+}\NormalTok{e}
+\end{Highlighting}
+\end{Shaded}
+
+Note that these represent actual realizations of the variable; these not forecasts.
+
+Suppose we think that in the considered forecast period, x only takes on 1 (below we will refer to this as the Model 1). Based on this, and using parameter estimates from above, let's generate forecasts for this period.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_f1 }\OtherTok{\textless{}{-}}\NormalTok{ ols}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{ols}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+At this point, we have actual realisations of y and its forecasts. Thus, we can obtain forecast errors, mean absolute forecast errors, and root mean square forecast errors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e\_f1 }\OtherTok{\textless{}{-}}\NormalTok{ y}\SpecialCharTok{{-}}\NormalTok{y\_f1}
+
+\NormalTok{mafe1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(}\FunctionTok{abs}\NormalTok{(e\_f1))}
+\NormalTok{rmsfe1 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(e\_f1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+
+\NormalTok{mafe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.43523
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rmsfe1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.739508
+\end{verbatim}
+
+Suppose, instead, we think that in the considered forecast period x only takes on 0 (below we will refer to this as the Model 2). Based on this, and using parameter estimates from above, let's generate forecasts for this period.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_f0 }\OtherTok{\textless{}{-}}\NormalTok{ ols}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{ols}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Using these forecasts, obtain forecast errors, mean absolute forecast errors, and root mean square forecast errors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e\_f0 }\OtherTok{\textless{}{-}}\NormalTok{ y}\SpecialCharTok{{-}}\NormalTok{y\_f0}
+
+\NormalTok{mafe0 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(}\FunctionTok{abs}\NormalTok{(e\_f0))}
+\NormalTok{rmsfe0 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(e\_f0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+
+\NormalTok{mafe0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.455768
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rmsfe0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.736182
+\end{verbatim}
+
+By comparing the two sets of forecasts, we can observe a somewhat rare and yet not an unlikely scenario: MAFE points to the Model 1 as more accurate of the two models, while RMSFE suggests the Model 2 as the more accurate one. More often than not, however, these two accuracy measures tend to agree.
 
 \end{document}
