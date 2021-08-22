@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Tutorial 1 | Economic Time Series Modeling and Forecasting</title>
-  <meta name="description" content="Tutorial 1 | Economic Time Series Modeling and Forecasting" />
+  <title>Chapter 3 Basics of Forecasting | Economic Time Series Modeling and Forecasting</title>
+  <meta name="description" content="Chapter 3 Basics of Forecasting | Economic Time Series Modeling and Forecasting" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Tutorial 1 | Economic Time Series Modeling and Forecasting" />
+  <meta property="og:title" content="Chapter 3 Basics of Forecasting | Economic Time Series Modeling and Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Tutorial 1 | Economic Time Series Modeling and Forecasting" />
+  <meta name="twitter:title" content="Chapter 3 Basics of Forecasting | Economic Time Series Modeling and Forecasting" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction-to-r.html"/>
-<link rel="next" href="tutorial-2.html"/>
+<link rel="prev" href="stochastic-process-and-time-series.html"/>
+<link rel="next" href="deterministic-time-series-models.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -197,71 +197,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tutorial-1" class="section level1 unnumbered">
-<h1>Tutorial 1</h1>
-<p>In this tutorial, we will introduce several simple R functions, and will perform a basic forecasting exercise.</p>
-<p>Let’s generate a sequence of 200 iid random variables with mean zero and variance 4, call it e.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tutorial-1.html#cb35-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb35-2"><a href="tutorial-1.html#cb35-2"></a>e &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">200</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span></code></pre></div>
-<p>Notice that prior to sampling we set seed to some value (to one in this instance). We do so to ensure that we can exactly replicate the sample in the future.</p>
-<p>Nett, generate a sequence of 200 binary variables, call it x.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="tutorial-1.html#cb36-1"></a><span class="kw">set.seed</span>(<span class="dv">2</span>)</span>
-<span id="cb36-2"><a href="tutorial-1.html#cb36-2"></a>x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">200</span>,<span class="dt">replace=</span>T)</span></code></pre></div>
-<p>Construct a dependent variable, y, using the following formula: <span class="math inline">\(y=2+0.5x+e\)</span>.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="tutorial-1.html#cb37-1"></a>y &lt;-<span class="st"> </span><span class="dv">2</span><span class="fl">+0.5</span><span class="op">*</span>x<span class="op">+</span>e</span></code></pre></div>
-<p>Regress y on x, using the <code>lm()</code> function, to obtain estimates of the intercept and slope parameters.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="tutorial-1.html#cb38-1"></a>ols &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>x)</span>
-<span id="cb38-2"><a href="tutorial-1.html#cb38-2"></a>ols</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = y ~ x)
-## 
-## Coefficients:
-## (Intercept)            x  
-##      2.1244       0.3854</code></pre>
-<p>Generate some “future” realizations (100 observations) of y.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="tutorial-1.html#cb40-1"></a><span class="kw">set.seed</span>(<span class="dv">3</span>)</span>
-<span id="cb40-2"><a href="tutorial-1.html#cb40-2"></a>e &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span>
-<span id="cb40-3"><a href="tutorial-1.html#cb40-3"></a></span>
-<span id="cb40-4"><a href="tutorial-1.html#cb40-4"></a><span class="kw">set.seed</span>(<span class="dv">4</span>)</span>
-<span id="cb40-5"><a href="tutorial-1.html#cb40-5"></a>x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">100</span>,<span class="dt">replace=</span>T)</span>
-<span id="cb40-6"><a href="tutorial-1.html#cb40-6"></a></span>
-<span id="cb40-7"><a href="tutorial-1.html#cb40-7"></a>y &lt;-<span class="st"> </span><span class="dv">2</span><span class="fl">+0.5</span><span class="op">*</span>x<span class="op">+</span>e</span></code></pre></div>
-<p>Note that these represent actual realizations of the variable; these not forecasts.</p>
-<p>Suppose we think that in the considered forecast period, x only takes on 1 (below we will refer to this as the Model 1). Based on this, and using parameter estimates from above, let’s generate forecasts for this period.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="tutorial-1.html#cb41-1"></a>y_f1 &lt;-<span class="st"> </span>ols<span class="op">$</span>coefficients[<span class="dv">1</span>]<span class="op">+</span>ols<span class="op">$</span>coefficients[<span class="dv">2</span>]<span class="op">*</span><span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">100</span>)</span></code></pre></div>
-<p>At this point, we have actual realisations of y and its forecasts. Thus, we can obtain forecast errors, mean absolute forecast errors, and root mean square forecast errors.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="tutorial-1.html#cb42-1"></a>e_f1 &lt;-<span class="st"> </span>y<span class="op">-</span>y_f1</span>
-<span id="cb42-2"><a href="tutorial-1.html#cb42-2"></a></span>
-<span id="cb42-3"><a href="tutorial-1.html#cb42-3"></a>mafe1 &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">abs</span>(e_f1))</span>
-<span id="cb42-4"><a href="tutorial-1.html#cb42-4"></a>rmsfe1 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(e_f1<span class="op">^</span><span class="dv">2</span>))</span>
-<span id="cb42-5"><a href="tutorial-1.html#cb42-5"></a></span>
-<span id="cb42-6"><a href="tutorial-1.html#cb42-6"></a>mafe1</span></code></pre></div>
-<pre><code>## [1] 1.43523</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tutorial-1.html#cb44-1"></a>rmsfe1</span></code></pre></div>
-<pre><code>## [1] 1.739508</code></pre>
-<p>Suppose, instead, we think that in the considered forecast period x only takes on 0 (below we will refer to this as the Model 2). Based on this, and using parameter estimates from above, let’s generate forecasts for this period.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tutorial-1.html#cb46-1"></a>y_f0 &lt;-<span class="st"> </span>ols<span class="op">$</span>coefficients[<span class="dv">1</span>]<span class="op">+</span>ols<span class="op">$</span>coefficients[<span class="dv">2</span>]<span class="op">*</span><span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">100</span>)</span></code></pre></div>
-<p>Using these forecasts, obtain forecast errors, mean absolute forecast errors, and root mean square forecast errors.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tutorial-1.html#cb47-1"></a>e_f0 &lt;-<span class="st"> </span>y<span class="op">-</span>y_f0</span>
-<span id="cb47-2"><a href="tutorial-1.html#cb47-2"></a></span>
-<span id="cb47-3"><a href="tutorial-1.html#cb47-3"></a>mafe0 &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">abs</span>(e_f0))</span>
-<span id="cb47-4"><a href="tutorial-1.html#cb47-4"></a>rmsfe0 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(e_f0<span class="op">^</span><span class="dv">2</span>))</span>
-<span id="cb47-5"><a href="tutorial-1.html#cb47-5"></a></span>
-<span id="cb47-6"><a href="tutorial-1.html#cb47-6"></a>mafe0</span></code></pre></div>
-<pre><code>## [1] 1.455768</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="tutorial-1.html#cb49-1"></a>rmsfe0</span></code></pre></div>
-<pre><code>## [1] 1.736182</code></pre>
-<p>By comparing the two sets of forecasts, we can observe a somewhat rare and yet not an unlikely scenario: MAFE points to the Model 1 as more accurate of the two models, while RMSFE suggests the Model 2 as the more accurate one. More often than not, however, these two accuracy measures tend to agree.</p>
+<div id="basics-of-forecasting" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Basics of Forecasting</h1>
+<div id="optimal-forecast" class="section level2">
+<h2><span class="header-section-number">3.1</span> Optimal Forecast</h2>
+<p>A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast (usually a mean of the distribution, but can be a median or, indeed, any quantile).</p>
+<p>A point forecast made in period <span class="math inline">\(t\)</span> for horizon <span class="math inline">\(h\)</span> can be denoted as <span class="math inline">\(y_{t+h|t}\)</span>; this is our ‘best guess’, that is made in period <span class="math inline">\(t\)</span>, about the actual realization of the random variable in period <span class="math inline">\(t+h\)</span>, denoted by <span class="math inline">\(y_{t+h}\)</span>. The difference between the two is the forecast error. That is, <span class="math display">\[e_{t+h|t} = y_{t+h} - y_{t+h|t}\]</span></p>
+<p>The more accurate is the forecast the smaller is the forecast error.</p>
+<p>Three types of uncertainty contribute to the forecast error:
+<span class="math display">\[\begin{aligned}
+        e_{t+h|t} &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(forecast uncertainty)}  \\
+        &amp; + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
+        &amp; + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
+        \end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\Omega_t\)</span> denotes the information set available at the time when the forecast is made; <span class="math inline">\(g(\cdot)\)</span> is a functional form of a model used to fit the data; <span class="math inline">\(\theta\)</span> is a set of parameters of the model, and <span class="math inline">\(\hat{\theta}\)</span> are their estimates</p>
+<p>Because uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the ‘cost’ associated with the forecast errors. This is achieved by minimizing the expected loss function.</p>
+<p>A loss function, <span class="math inline">\(L(e_{t+h|t})\)</span>, can take many different forms, but is should satisfy the following properties:
+<span class="math display">\[\begin{aligned}
+        &amp; L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
+        &amp; L(e_{t+h|t}) \geq 0,\;~~\forall\;e_{t+h|t} \neq 0 \\
+        &amp; L(e_{t+h|t}^{(i)}) &gt; L(e_{t+h|t}^{(j)}),\;~~\forall\;|e_{t+h|t}^{(i)}| &gt; |e_{t+h|t}^{(j)}|
+        \end{aligned}\]</span></p>
+<p>Two commonly used symmetric loss functions are <em>absolute</em> and <em>quadratic</em> loss functions:
+<span class="math display">\[\begin{aligned}
+        &amp; L{(e_{t+h|t})} = |e_{t+h|t}|\;~~\text{(absolute loss function)} \\
+        &amp; L{(e_{t+h|t})} = (e_{t+h|t})^2\;~~\text{(quadratic loss function)}
+        \end{aligned}\]</span></p>
+<p>The quadratic loss function is popular, partly because we typically select models based on ‘in-sample’ quadratic loss (i.e. by minimizing the sum of squared residuals).</p>
+<p>Optimal forecast is the forecast that minimizes the expected loss:
+<span class="math display">\[\min_{y_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{y_{t+h|t}} E\left[L\left(y_{t+h}-y_{t+h|t}\right)\right]\]</span>
+where the expected loss is given by:
+<span class="math display">\[E\left[L\left(y_{t+h}-y_{t+h|t}\right)\right]=\int L\left(y_{t+h}-y_{t+h|t}\right) f(y_{t+h}|\Omega_t)dy\]</span></p>
+<p>We can assume that the conditional density is a normal density with mean <span class="math inline">\(\mu_{t+h} \equiv E(y_{t+h})\)</span>, and variance <span class="math inline">\(\sigma_{t+h}^2 \equiv Var(y_{t+h})\)</span>.</p>
+<p>Under the assumption of the quadratic loss function:
+<span class="math display">\[\begin{aligned}
+        E\left[L(e_{t+h|t})\right] &amp; = E(e_{t+h|t}^2) = E(y_{t+h} - \hat{y}_{t+h|t})^2 \\
+        &amp; = E(y_{t+h}^2)-2E(y_{t+h})\hat{y}_{t+h|t} + \hat{y}_{t+h|t}^2
+        \end{aligned}\]</span></p>
+<p>By solving the optimization problem it follows that: <span class="math display">\[\hat{y}_{t+h|t} = E(y_{t+h}) \equiv \mu_{t+h}\]</span></p>
+<p>Thus, the optimal point forecast under the quadratic loss is the <em>mean</em> (for reference, the optimal point forecast under absolute loss is the <em>median</em>).</p>
+</div>
+<div id="measuring-forecast-accuracy" class="section level2">
+<h2><span class="header-section-number">3.2</span> Measuring Forecast Accuracy</h2>
+<p>Forecast accuracy should only be determined by considering how well a model performs on data not used in estimation. But to assess forecast accuracy we need access to the data, typically from future time periods, that was not used in estimation. This leads to the so-called ‘pseudo forecasting’ routine. This routine involves splitting the available data into two segments referred to as ‘in-sample’ and ‘out-of-sample’. The in-sample segment of a series is also known as the ‘estimation set’ or the ‘training set’. The out-of-sample segment of a series is also known as the ‘hold-out set’ or the ‘test set’.</p>
+<p>Thus, we make the so-called ‘genuine’ forecasts using only the information from the estimation set, and assess the accuracy of these forecasts in an out-of-sample setting.</p>
+<p>Because forecasting is often performed in a time series context, the estimation set typically predates the hold-out set. In non-dynamic settings such chronological ordering may not be necessary, however.</p>
+<p>There are different forecasting schemes for updating the information set in the pseudo-forecasting routine. These are: <em>recursive</em>, <em>rolling</em>, and <em>fixed</em>.</p>
+<ul>
+<li>The recursive forecasting environment uses a sequence of expanding windows to update model estimates and the information set.</li>
+<li>The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.</li>
+<li>The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.</li>
+</ul>
+</div>
+<div id="evaluating-time-series-forecasts" class="section level2">
+<h2><span class="header-section-number">3.3</span> Evaluating Time Series Forecasts</h2>
+<p>To evaluate forecasts of a time series, <span class="math inline">\(\{y_t\}\)</span>, with a total of <span class="math inline">\(T\)</span> observations, we divide the sample into two parts, the in-sample set with a total of <span class="math inline">\(R\)</span> observations, such that <span class="math inline">\(R &lt; T\)</span> (typically, <span class="math inline">\(R \approx 0.75T\)</span>), and the out-of-sample set.</p>
+<p>For example, if we are interested in one-step-ahead forecast assessment, this way we will produce a sequence of forecasts: <span class="math inline">\(\{y_{R+1|R},y_{R+2|{R+1}},\ldots,y_{T|{T-1}}\}\)</span> for <span class="math inline">\(\{Y_{R+1},Y_{R+2},\ldots,Y_{T}\}\)</span>.</p>
+<p>Forecast errors, <span class="math inline">\(e_{R+j} = y_{R+j} - y_{R+j|{R+j-1}}\)</span>, then can be computed for <span class="math inline">\(j = 1,\ldots,T-R\)</span>.</p>
+<p>The most commonly applied accuracy measures are the mean absolute forecast error (MAFE) and the root mean squared forecast error (RMSFE):
+<span class="math display">\[\begin{aligned}
+\text{MAFE}  = &amp; \frac{1}{P}\sum_{i=1}^{P}|e_i|\\
+\text{RMSFE} = &amp; \sqrt{\frac{1}{P}\sum_{i=1}^{P}e_i^2}
+\end{aligned}\]</span>
+where <span class="math inline">\(P\)</span> is the total number of out-of-sample forecasts. The lower is the accuracy measure (of choice), the better a given model performs in generating accurate forecasts. As noted earlier, ‘better’ does not mean ‘without errors’.</p>
+<p>Forecast errors of a ‘good’ forecasting method will have the following properties:</p>
+<ul>
+<li>zero mean; otherwise, the forecasts are biased.</li>
+<li>no correlation with the forecasts; otherwise, there is information left that should be used in computing forecasts.</li>
+<li>no serial correlation among one-step-ahead forecast errors. Note that <span class="math inline">\(k\)</span>-step-ahead forecasts, for <span class="math inline">\(k&gt;1\)</span>, can be, and usually are, serially correlated.</li>
+</ul>
+<p>Any forecasting method that does not satisfy these properties has a potential to be improved.</p>
+<div id="unbiasedness" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Unbiasedness</h3>
+<p>Testing <span class="math inline">\(E(e_{t+h|t})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+h|t} = \alpha+\upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h,\]</span>
+where <span class="math inline">\(R\)</span> is the estimation window size, <span class="math inline">\(T\)</span> is the sample size, and <span class="math inline">\(h\)</span> is the forecast horizon length. The null of zero-mean forecast error is equivalent of testing <span class="math inline">\(H_0: \alpha = 0\)</span> in the OLS setting. For <span class="math inline">\(h\)</span>-step-ahead forecast errors, when <span class="math inline">\(h&gt;1\)</span>, autocorrelation consistent standard errors should be used.</p>
+</div>
+<div id="efficiency" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Efficiency</h3>
+<p>Testing <span class="math inline">\(Cov(e_{t+h|t},y_{t+h|t})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+h|t} = \alpha + \beta y_{t+h|t} + \upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h.\]</span> The null of forecast error independence of the information set is equivalent of testing <span class="math inline">\(H_0: \beta = 0\)</span> in the OLS setting. For <span class="math inline">\(h\)</span>-step-ahead forecast errors, when <span class="math inline">\(h&gt;1\)</span>, autocorrelation consistent standard errors should be used.</p>
+</div>
+<div id="no-autocorrelation" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> No Autocorrelation</h3>
+<p>Testing <span class="math inline">\(Cov(e_{t+1|t},e_{t|t-1})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+1|t} = \alpha + \gamma e_{t|t-1} + \upsilon_{t+1} \hspace{.5in} t = R+1,\ldots,T-1.\]</span> The null of no forecast error autocorrelation is equivalent of testing <span class="math inline">\(H_0: \gamma = 0\)</span> in the OLS setting.</p>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="introduction-to-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tutorial-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="stochastic-process-and-time-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="deterministic-time-series-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
