@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Trends | Economic Time Series Modeling and Forecasting</title>
   <meta name="description" content="Chapter 4 Trends | Economic Time Series Modeling and Forecasting" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Trends | Economic Time Series Modeling and Forecasting" />
   <meta property="og:type" content="book" />
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="deterministic-time-series-models.html"/>
 <link rel="next" href="seasonality.html"/>
+<script src="libs/header-attrs-2.9.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -49,22 +50,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -117,6 +119,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -136,33 +139,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i>Preliminaries</a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a></li>
-<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a><ul>
+<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity</a></li>
 <li class="chapter" data-level="2.2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence</a></li>
 <li class="chapter" data-level="2.3" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html"><i class="fa fa-check"></i><b>3</b> Basics of Forecasting</a><ul>
+<li class="chapter" data-level="3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html"><i class="fa fa-check"></i><b>3</b> Basics of Forecasting</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#optimal-forecast"><i class="fa fa-check"></i><b>3.1</b> Optimal Forecast</a></li>
 <li class="chapter" data-level="3.2" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#measuring-forecast-accuracy"><i class="fa fa-check"></i><b>3.2</b> Measuring Forecast Accuracy</a></li>
-<li class="chapter" data-level="3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts</a><ul>
+<li class="chapter" data-level="3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#unbiasedness"><i class="fa fa-check"></i><b>3.3.1</b> Unbiasedness</a></li>
 <li class="chapter" data-level="3.3.2" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#efficiency"><i class="fa fa-check"></i><b>3.3.2</b> Efficiency</a></li>
 <li class="chapter" data-level="3.3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.3.3</b> No Autocorrelation</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="deterministic-time-series-models.html"><a href="deterministic-time-series-models.html"><i class="fa fa-check"></i>Deterministic Time Series Models</a></li>
-<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends</a><ul>
+<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#spurious-relationship"><i class="fa fa-check"></i><b>4.1</b> Spurious Relationship</a></li>
 <li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.2</b> Modeling</a></li>
 <li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.3</b> Forecasting</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality</a><ul>
+<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.1</b> Modeling</a></li>
 <li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.2</b> Forecasting</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="dynamic-time-series-models.html"><a href="dynamic-time-series-models.html"><i class="fa fa-check"></i>Dynamic Time Series Models</a></li>
-<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression</a><ul>
-<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling</a><ul>
+<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar1"><i class="fa fa-check"></i><b>6.1.1</b> AR(1)</a></li>
 <li class="chapter" data-level="6.1.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar2"><i class="fa fa-check"></i><b>6.1.2</b> AR(2)</a></li>
 </ul></li>
@@ -173,13 +183,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="forecast-assessment.html"><a href="forecast-assessment.html"><i class="fa fa-check"></i>Forecast Assessment</a></li>
 <li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation</a></li>
 <li class="chapter" data-level="10" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>10</b> Forecast Combination</a></li>
-<li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i>Introduction to R</a><ul>
+<li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i>Introduction to R</a>
+<ul>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-management"><i class="fa fa-check"></i>Data Management</a></li>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-visualisation"><i class="fa fa-check"></i>Data Visualisation</a></li>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#regression-analysis"><i class="fa fa-check"></i>Regression Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="tutorial-1.html"><a href="tutorial-1.html"><i class="fa fa-check"></i>Tutorial 1</a></li>
 <li class="chapter" data-level="" data-path="tutorial-2.html"><a href="tutorial-2.html"><i class="fa fa-check"></i>Tutorial 2</a></li>
+<li class="chapter" data-level="" data-path="tutorial-3.html"><a href="tutorial-3.html"><i class="fa fa-check"></i>Tutorial 3</a></li>
 </ul>
 
       </nav>
@@ -197,10 +209,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trends" class="section level1">
+<div id="trends" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Trends</h1>
 <p>Economic time series usually are characterized by trending behavior, and often present a seasonal pattern as well. Trend is a unidirectional change of time series over an extended period of time that arises from the accumulation of information over time. Seasonality is a repeating pattern <em>within a calendar year</em> that arises from the links of technologies, preferences, and institutions to the calendar. Modeling and forecasting these time series features is a fairly straightforward task. But before we get to it, let’s discuss what may happen if we were to ignore the presence of trends and/or seasonality when analyzing the time series data.</p>
-<div id="spurious-relationship" class="section level2">
+<div id="spurious-relationship" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Spurious Relationship</h2>
 <p>Nothing about trending time series necessarily violates the classical linear regression model assumptions. The issue may arise, however, if an unobserved trending variable is simultaneously correlated with the dependent variable as well as one of the independent variables in a time series regression. In such case, we may find a (statistically significant) relationship between two or more unrelated economic variables simply because they are all trending. Such relationship is referred to a <em>spurious relationship</em>.</p>
 <p>To illustrate, consider two trending variables: <span class="math display">\[y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),\]</span> and <span class="math display">\[x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),\]</span> where <span class="math inline">\(Cov(\nu_t,\upsilon_t) = 0\)</span>. For simplicity, we can assume <span class="math inline">\(\sigma_{\nu}^2=\sigma_{\upsilon}^2=1\)</span>. Suppose, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\delta\)</span> are some positive scalars, say, <span class="math inline">\(0.3\)</span> and <span class="math inline">\(0.5\)</span>, respectively. That is, <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are trending in the same direction. Below is an example of such time series:
@@ -211,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>In fact, this “fix” is equivalent to regressing a de-trended <span class="math inline">\(y\)</span> on a de-trended <span class="math inline">\(x\)</span>. To de-trend a variable, we first run a regression: <span class="math inline">\(y_t = \gamma_0 + \gamma_1 t + \nu_t\)</span>, and then obtain the fitted values for some fixed trend (typically zero), that is: <span class="math inline">\(\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t\)</span>, where <span class="math inline">\(\hat{\gamma}_0\)</span> and <span class="math inline">\(\hat{\nu}_t\)</span> are the parameter estimate and the residuals from the foregoing regression.</p>
 </div>
-<div id="modeling" class="section level2">
+<div id="modeling" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Modeling</h2>
 <p>As seen, accounting for trends in a time series can help us resolve some regression issues. But a trend in and of itself can be an inherent feature of a times series. To that end, we can apply deterministic trends to forecast time series.</p>
 <p>The simplest (and perhaps most frequently applied) model to account for the trending time series is a <em>linear</em> trend model: <span class="math display">\[y_t = \alpha + \beta t\]</span></p>
@@ -232,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Trends are (relatively) easy to model and forecast. Caution is needed, however, with (higher order) polynomial trends, as they may fit well in-sample, but cause major problems out-of-sample.</p>
 <p>Consider a linear trend model with an additive error term: <span class="math display">\[y_t = \alpha + \beta t + \varepsilon_t\]</span> We estimate the model parameters, <span class="math inline">\(\mathbf{\theta}=\{\alpha,\beta\}\)</span>, by fitting the trend model to a time series using the least-squares regression: <span class="math display">\[\hat{\theta} = \operatorname*{argmin}_{\mathbf{\theta}} \sum_{t=1}^{T}\big(y_t - \alpha - \beta t\big)^2.\]</span> Fitted values are then given by: <span class="math display">\[\hat{y}_t = \hat{\alpha} + \hat{\beta} t\]</span></p>
 </div>
-<div id="forecasting" class="section level2">
+<div id="forecasting" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Forecasting</h2>
 <p>If a linear trend model is fitted to the data, then any future realization of the stochastic process is assumed to follow the linear trend model: <span class="math display">\[y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h}.\]</span></p>
 <p>An optimal forecast of <span class="math inline">\(y_{t+h}\)</span>, therefore, is given by: <span class="math display">\[y_{t+h|t} = E(y_{t+h}|\Omega_t) = E[\alpha + \beta (t+h) + \varepsilon_{t+h}] = \alpha + \beta (t+h).\]</span></p>
@@ -276,6 +288,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
