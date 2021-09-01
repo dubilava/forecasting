@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Tutorial 3 | Economic Time Series Modeling and Forecasting</title>
   <meta name="description" content="Tutorial 3 | Economic Time Series Modeling and Forecasting" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Tutorial 3 | Economic Time Series Modeling and Forecasting" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,6 @@
   
 <link rel="prev" href="tutorial-2.html"/>
 
-<script src="libs/header-attrs-2.9.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,23 +49,22 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,7 +84,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -119,7 +117,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -139,52 +136,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i>Preliminaries</a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a></li>
-<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a>
-<ul>
+<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a><ul>
 <li class="chapter" data-level="2.1" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity</a></li>
 <li class="chapter" data-level="2.2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence</a></li>
 <li class="chapter" data-level="2.3" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html"><i class="fa fa-check"></i><b>3</b> Basics of Forecasting</a>
-<ul>
+<li class="chapter" data-level="3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html"><i class="fa fa-check"></i><b>3</b> Basics of Forecasting</a><ul>
 <li class="chapter" data-level="3.1" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#optimal-forecast"><i class="fa fa-check"></i><b>3.1</b> Optimal Forecast</a></li>
 <li class="chapter" data-level="3.2" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#measuring-forecast-accuracy"><i class="fa fa-check"></i><b>3.2</b> Measuring Forecast Accuracy</a></li>
-<li class="chapter" data-level="3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts</a>
-<ul>
+<li class="chapter" data-level="3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#unbiasedness"><i class="fa fa-check"></i><b>3.3.1</b> Unbiasedness</a></li>
 <li class="chapter" data-level="3.3.2" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#efficiency"><i class="fa fa-check"></i><b>3.3.2</b> Efficiency</a></li>
 <li class="chapter" data-level="3.3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.3.3</b> No Autocorrelation</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="deterministic-time-series-models.html"><a href="deterministic-time-series-models.html"><i class="fa fa-check"></i>Deterministic Time Series Models</a></li>
-<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends</a>
-<ul>
+<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends</a><ul>
 <li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#spurious-relationship"><i class="fa fa-check"></i><b>4.1</b> Spurious Relationship</a></li>
 <li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.2</b> Modeling</a></li>
 <li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.3</b> Forecasting</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality</a>
-<ul>
+<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality</a><ul>
 <li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.1</b> Modeling</a></li>
 <li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.2</b> Forecasting</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="dynamic-time-series-models.html"><a href="dynamic-time-series-models.html"><i class="fa fa-check"></i>Dynamic Time Series Models</a></li>
-<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling</a>
-<ul>
+<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression</a><ul>
+<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar1"><i class="fa fa-check"></i><b>6.1.1</b> AR(1)</a></li>
 <li class="chapter" data-level="6.1.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar2"><i class="fa fa-check"></i><b>6.1.2</b> AR(2)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.2</b> Forecasting</a></li>
+<li class="chapter" data-level="6.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.2</b> Forecasting</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.1</b> One-step-ahead forecast from AR(1)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.2</b> Two-step-ahead forecast from AR(1)</a></li>
+<li class="chapter" data-level="6.2.3" data-path="linear-autoregression.html"><a href="linear-autoregression.html#h-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.3</b> h-step-ahead forecast from AR(1)</a></li>
+<li class="chapter" data-level="6.2.4" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.4</b> One-step-ahead forecast from AR(2)</a></li>
+<li class="chapter" data-level="6.2.5" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.5</b> Two-step-ahead forecast from AR(2)</a></li>
+<li class="chapter" data-level="6.2.6" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2-1"><i class="fa fa-check"></i><b>6.2.6</b> One-step-ahead forecast from AR(2)</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression</a></li>
 <li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> Threshold Autoregression</a></li>
 <li class="chapter" data-level="" data-path="forecast-assessment.html"><a href="forecast-assessment.html"><i class="fa fa-check"></i>Forecast Assessment</a></li>
 <li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation</a></li>
 <li class="chapter" data-level="10" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>10</b> Forecast Combination</a></li>
-<li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i>Introduction to R</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i>Introduction to R</a><ul>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-management"><i class="fa fa-check"></i>Data Management</a></li>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-visualisation"><i class="fa fa-check"></i>Data Visualisation</a></li>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#regression-analysis"><i class="fa fa-check"></i>Regression Analysis</a></li>
@@ -213,90 +209,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Tutorial 3</h1>
 <p>In this tutorial, we will generate trending series, we will apply an information criterion to select the most suitable trend model, and we will obtain and compare one-step-ahead forecasts using a rolling window procedure.</p>
 <p>Let’s generate a time series that follows a quadratic trend: <span class="math inline">\(y_{t} = 10+0.01t+0.002t^2+e_{t}\)</span>, where <span class="math inline">\(e_{t} ~ N(0,16)\)</span>, for <span class="math inline">\(t=1,\ldots,180\)</span>.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="tutorial-3.html#cb71-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">180</span></span>
-<span id="cb71-2"><a href="tutorial-3.html#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-3"><a href="tutorial-3.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb71-4"><a href="tutorial-3.html#cb71-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,<span class="dv">4</span>)</span>
-<span id="cb71-5"><a href="tutorial-3.html#cb71-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-6"><a href="tutorial-3.html#cb71-6" aria-hidden="true" tabindex="-1"></a>trend <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb71-7"><a href="tutorial-3.html#cb71-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-8"><a href="tutorial-3.html#cb71-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">10</span><span class="fl">+0.01</span><span class="sc">*</span>trend<span class="fl">+0.002</span><span class="sc">*</span>trend<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>e</span></code></pre></div>
-<p>Store <span class="math inline">\(y\)</span> and <span class="math inline">\(trend\)</span> in a <strong>data.table</strong>, call it ‘dt.’ Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2006).</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="tutorial-3.html#cb72-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(y,trend)</span>
-<span id="cb72-2"><a href="tutorial-3.html#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-3"><a href="tutorial-3.html#cb72-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2006-01-01&quot;</span>),<span class="at">by=</span><span class="st">&quot;month&quot;</span>,<span class="at">along.with=</span>y)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="tutorial-3.html#cb71-1"></a>n &lt;-<span class="st"> </span><span class="dv">180</span></span>
+<span id="cb71-2"><a href="tutorial-3.html#cb71-2"></a></span>
+<span id="cb71-3"><a href="tutorial-3.html#cb71-3"></a><span class="kw">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb71-4"><a href="tutorial-3.html#cb71-4"></a>e &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n,<span class="dv">0</span>,<span class="dv">4</span>)</span>
+<span id="cb71-5"><a href="tutorial-3.html#cb71-5"></a></span>
+<span id="cb71-6"><a href="tutorial-3.html#cb71-6"></a>trend &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>n)</span>
+<span id="cb71-7"><a href="tutorial-3.html#cb71-7"></a></span>
+<span id="cb71-8"><a href="tutorial-3.html#cb71-8"></a>y &lt;-<span class="st"> </span><span class="dv">10</span><span class="fl">+0.01</span><span class="op">*</span>trend<span class="fl">+0.002</span><span class="op">*</span>trend<span class="op">^</span><span class="dv">2</span><span class="op">+</span>e</span></code></pre></div>
+<p>Store <span class="math inline">\(y\)</span> and <span class="math inline">\(trend\)</span> in a <strong>data.table</strong>, call it ‘dt’. Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2006).</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="tutorial-3.html#cb72-1"></a>dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(y,trend)</span>
+<span id="cb72-2"><a href="tutorial-3.html#cb72-2"></a></span>
+<span id="cb72-3"><a href="tutorial-3.html#cb72-3"></a>dt<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">as.Date</span>(<span class="st">&quot;2006-01-01&quot;</span>),<span class="dt">by=</span><span class="st">&quot;month&quot;</span>,<span class="dt">along.with=</span>y)</span></code></pre></div>
 <p>Plot the realized time series using <strong>ggplot</strong> function.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="tutorial-3.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb73-2"><a href="tutorial-3.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb73-3"><a href="tutorial-3.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Year&quot;</span>,<span class="at">y=</span><span class="st">&quot;Trending Series&quot;</span>)<span class="sc">+</span></span>
-<span id="cb73-4"><a href="tutorial-3.html#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="tutorial-3.html#cb73-1"></a><span class="kw">ggplot</span>(dt,<span class="kw">aes</span>(<span class="dt">x=</span>date,<span class="dt">y=</span>y))<span class="op">+</span></span>
+<span id="cb73-2"><a href="tutorial-3.html#cb73-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>)<span class="op">+</span></span>
+<span id="cb73-3"><a href="tutorial-3.html#cb73-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Year&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Trending Series&quot;</span>)<span class="op">+</span></span>
+<span id="cb73-4"><a href="tutorial-3.html#cb73-4"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <p>Calculate Akaike Information Criteria for linear, quadratic, cubic, and exponential trend models, using all observations in the series.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="tutorial-3.html#cb74-1" aria-hidden="true" tabindex="-1"></a>AIC_vec <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span><span class="dv">4</span>,<span class="at">nrow=</span><span class="dv">1</span>)</span>
-<span id="cb74-2"><a href="tutorial-3.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>){</span>
-<span id="cb74-3"><a href="tutorial-3.html#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(i <span class="sc">&lt;</span> <span class="dv">4</span>){</span>
-<span id="cb74-4"><a href="tutorial-3.html#cb74-4" aria-hidden="true" tabindex="-1"></a>    reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="fu">poly</span>(trend,<span class="at">degree=</span>i,<span class="at">raw=</span>T),<span class="at">data=</span>dt)</span>
-<span id="cb74-5"><a href="tutorial-3.html#cb74-5" aria-hidden="true" tabindex="-1"></a>    AIC_vec[i] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">crossprod</span>(reg<span class="sc">$</span>residuals))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span><span class="fu">length</span>(reg<span class="sc">$</span>coefficients)<span class="sc">/</span>n</span>
-<span id="cb74-6"><a href="tutorial-3.html#cb74-6" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
-<span id="cb74-7"><a href="tutorial-3.html#cb74-7" aria-hidden="true" tabindex="-1"></a>    reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(y)<span class="sc">~</span>trend,<span class="at">data=</span>dt)</span>
-<span id="cb74-8"><a href="tutorial-3.html#cb74-8" aria-hidden="true" tabindex="-1"></a>    yhat <span class="ot">&lt;-</span> reg<span class="sc">$</span>fitted.values</span>
-<span id="cb74-9"><a href="tutorial-3.html#cb74-9" aria-hidden="true" tabindex="-1"></a>    sig <span class="ot">&lt;-</span> <span class="fu">sd</span>(reg<span class="sc">$</span>residuals)</span>
-<span id="cb74-10"><a href="tutorial-3.html#cb74-10" aria-hidden="true" tabindex="-1"></a>    ystar <span class="ot">&lt;-</span> <span class="fu">exp</span>(yhat<span class="sc">+</span>sig<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb74-11"><a href="tutorial-3.html#cb74-11" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>ystar</span>
-<span id="cb74-12"><a href="tutorial-3.html#cb74-12" aria-hidden="true" tabindex="-1"></a>    AIC_vec[i] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">crossprod</span>(res))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span><span class="fu">length</span>(reg<span class="sc">$</span>coefficients)<span class="sc">/</span>n</span>
-<span id="cb74-13"><a href="tutorial-3.html#cb74-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb74-14"><a href="tutorial-3.html#cb74-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb74-15"><a href="tutorial-3.html#cb74-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-16"><a href="tutorial-3.html#cb74-16" aria-hidden="true" tabindex="-1"></a>AIC_vec</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="tutorial-3.html#cb74-1"></a>AIC_vec &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">4</span>,<span class="dt">nrow=</span><span class="dv">1</span>)</span>
+<span id="cb74-2"><a href="tutorial-3.html#cb74-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>){</span>
+<span id="cb74-3"><a href="tutorial-3.html#cb74-3"></a>  <span class="cf">if</span>(i <span class="op">&lt;</span><span class="st"> </span><span class="dv">4</span>){</span>
+<span id="cb74-4"><a href="tutorial-3.html#cb74-4"></a>    reg &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span><span class="kw">poly</span>(trend,<span class="dt">degree=</span>i,<span class="dt">raw=</span>T),<span class="dt">data=</span>dt)</span>
+<span id="cb74-5"><a href="tutorial-3.html#cb74-5"></a>    AIC_vec[i] &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">crossprod</span>(reg<span class="op">$</span>residuals))<span class="op">+</span><span class="dv">2</span><span class="op">*</span><span class="kw">length</span>(reg<span class="op">$</span>coefficients)<span class="op">/</span>n</span>
+<span id="cb74-6"><a href="tutorial-3.html#cb74-6"></a>  }<span class="cf">else</span>{</span>
+<span id="cb74-7"><a href="tutorial-3.html#cb74-7"></a>    reg &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(y)<span class="op">~</span>trend,<span class="dt">data=</span>dt)</span>
+<span id="cb74-8"><a href="tutorial-3.html#cb74-8"></a>    yhat &lt;-<span class="st"> </span>reg<span class="op">$</span>fitted.values</span>
+<span id="cb74-9"><a href="tutorial-3.html#cb74-9"></a>    sig &lt;-<span class="st"> </span><span class="kw">sd</span>(reg<span class="op">$</span>residuals)</span>
+<span id="cb74-10"><a href="tutorial-3.html#cb74-10"></a>    ystar &lt;-<span class="st"> </span><span class="kw">exp</span>(yhat<span class="op">+</span>sig<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb74-11"><a href="tutorial-3.html#cb74-11"></a>    res &lt;-<span class="st"> </span>dt<span class="op">$</span>y<span class="op">-</span>ystar</span>
+<span id="cb74-12"><a href="tutorial-3.html#cb74-12"></a>    AIC_vec[i] &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">crossprod</span>(res))<span class="op">+</span><span class="dv">2</span><span class="op">*</span><span class="kw">length</span>(reg<span class="op">$</span>coefficients)<span class="op">/</span>n</span>
+<span id="cb74-13"><a href="tutorial-3.html#cb74-13"></a>  }</span>
+<span id="cb74-14"><a href="tutorial-3.html#cb74-14"></a>}</span>
+<span id="cb74-15"><a href="tutorial-3.html#cb74-15"></a></span>
+<span id="cb74-16"><a href="tutorial-3.html#cb74-16"></a>AIC_vec</span></code></pre></div>
 <pre><code>##          [,1]     [,2]     [,3]     [,4]
 ## [1,] 8.879646 7.841645 7.849521 7.975999</code></pre>
 <p>Generate a sequence of one-step-ahead forecasts from linear, quadratic, cubic, and exponential trend models, using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="tutorial-3.html#cb76-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>t1 <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb76-2"><a href="tutorial-3.html#cb76-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>t2 <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb76-3"><a href="tutorial-3.html#cb76-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>t3 <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb76-4"><a href="tutorial-3.html#cb76-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>te <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb76-5"><a href="tutorial-3.html#cb76-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-6"><a href="tutorial-3.html#cb76-6" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">120</span></span>
-<span id="cb76-7"><a href="tutorial-3.html#cb76-7" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> n<span class="sc">-</span>R</span>
-<span id="cb76-8"><a href="tutorial-3.html#cb76-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
-<span id="cb76-9"><a href="tutorial-3.html#cb76-9" aria-hidden="true" tabindex="-1"></a>  reg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>trend,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb76-10"><a href="tutorial-3.html#cb76-10" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>t1[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> reg1<span class="sc">$</span>coef[<span class="dv">1</span>]<span class="sc">+</span>reg1<span class="sc">$</span>coef[<span class="dv">2</span>]<span class="sc">*</span>(R<span class="sc">+</span>i)</span>
-<span id="cb76-11"><a href="tutorial-3.html#cb76-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb76-12"><a href="tutorial-3.html#cb76-12" aria-hidden="true" tabindex="-1"></a>  reg2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="fu">poly</span>(trend,<span class="at">degree=</span><span class="dv">2</span>,<span class="at">raw=</span>T),<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb76-13"><a href="tutorial-3.html#cb76-13" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>t2[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> reg2<span class="sc">$</span>coef[<span class="dv">1</span>]<span class="sc">+</span>reg2<span class="sc">$</span>coef[<span class="dv">2</span>]<span class="sc">*</span>(R<span class="sc">+</span>i)<span class="sc">+</span>reg2<span class="sc">$</span>coef[<span class="dv">3</span>]<span class="sc">*</span>((R<span class="sc">+</span>i)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb76-14"><a href="tutorial-3.html#cb76-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb76-15"><a href="tutorial-3.html#cb76-15" aria-hidden="true" tabindex="-1"></a>  reg3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="fu">poly</span>(trend,<span class="at">degree=</span><span class="dv">3</span>,<span class="at">raw=</span>T),<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb76-16"><a href="tutorial-3.html#cb76-16" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>t3[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> reg3<span class="sc">$</span>coef[<span class="dv">1</span>]<span class="sc">+</span>reg3<span class="sc">$</span>coef[<span class="dv">2</span>]<span class="sc">*</span>(R<span class="sc">+</span>i)<span class="sc">+</span>reg3<span class="sc">$</span>coef[<span class="dv">3</span>]<span class="sc">*</span>((R<span class="sc">+</span>i)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span>reg3<span class="sc">$</span>coef[<span class="dv">4</span>]<span class="sc">*</span>((R<span class="sc">+</span>i)<span class="sc">^</span><span class="dv">3</span>)</span>
-<span id="cb76-17"><a href="tutorial-3.html#cb76-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb76-18"><a href="tutorial-3.html#cb76-18" aria-hidden="true" tabindex="-1"></a>  rege <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(y)<span class="sc">~</span>trend,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb76-19"><a href="tutorial-3.html#cb76-19" aria-hidden="true" tabindex="-1"></a>  sig <span class="ot">&lt;-</span> <span class="fu">sd</span>(rege<span class="sc">$</span>residuals)</span>
-<span id="cb76-20"><a href="tutorial-3.html#cb76-20" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>te[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> <span class="fu">exp</span>(rege<span class="sc">$</span>coef[<span class="dv">1</span>]<span class="sc">+</span>rege<span class="sc">$</span>coef[<span class="dv">2</span>]<span class="sc">*</span>(R<span class="sc">+</span>i)<span class="sc">+</span>sig<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb76-21"><a href="tutorial-3.html#cb76-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="tutorial-3.html#cb76-1"></a>dt<span class="op">$</span>t1 &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb76-2"><a href="tutorial-3.html#cb76-2"></a>dt<span class="op">$</span>t2 &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb76-3"><a href="tutorial-3.html#cb76-3"></a>dt<span class="op">$</span>t3 &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb76-4"><a href="tutorial-3.html#cb76-4"></a>dt<span class="op">$</span>te &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb76-5"><a href="tutorial-3.html#cb76-5"></a></span>
+<span id="cb76-6"><a href="tutorial-3.html#cb76-6"></a>R &lt;-<span class="st"> </span><span class="dv">120</span></span>
+<span id="cb76-7"><a href="tutorial-3.html#cb76-7"></a>P &lt;-<span class="st"> </span>n<span class="op">-</span>R</span>
+<span id="cb76-8"><a href="tutorial-3.html#cb76-8"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>P){</span>
+<span id="cb76-9"><a href="tutorial-3.html#cb76-9"></a>  reg1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>trend,<span class="dt">data=</span>dt[i<span class="op">:</span>(R<span class="dv">-1</span><span class="op">+</span>i)])</span>
+<span id="cb76-10"><a href="tutorial-3.html#cb76-10"></a>  dt<span class="op">$</span>t1[R<span class="op">+</span>i] &lt;-<span class="st"> </span>reg1<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>reg1<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span>(R<span class="op">+</span>i)</span>
+<span id="cb76-11"><a href="tutorial-3.html#cb76-11"></a>  </span>
+<span id="cb76-12"><a href="tutorial-3.html#cb76-12"></a>  reg2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span><span class="kw">poly</span>(trend,<span class="dt">degree=</span><span class="dv">2</span>,<span class="dt">raw=</span>T),<span class="dt">data=</span>dt[i<span class="op">:</span>(R<span class="dv">-1</span><span class="op">+</span>i)])</span>
+<span id="cb76-13"><a href="tutorial-3.html#cb76-13"></a>  dt<span class="op">$</span>t2[R<span class="op">+</span>i] &lt;-<span class="st"> </span>reg2<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>reg2<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span>(R<span class="op">+</span>i)<span class="op">+</span>reg2<span class="op">$</span>coef[<span class="dv">3</span>]<span class="op">*</span>((R<span class="op">+</span>i)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb76-14"><a href="tutorial-3.html#cb76-14"></a>  </span>
+<span id="cb76-15"><a href="tutorial-3.html#cb76-15"></a>  reg3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span><span class="kw">poly</span>(trend,<span class="dt">degree=</span><span class="dv">3</span>,<span class="dt">raw=</span>T),<span class="dt">data=</span>dt[i<span class="op">:</span>(R<span class="dv">-1</span><span class="op">+</span>i)])</span>
+<span id="cb76-16"><a href="tutorial-3.html#cb76-16"></a>  dt<span class="op">$</span>t3[R<span class="op">+</span>i] &lt;-<span class="st"> </span>reg3<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>reg3<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span>(R<span class="op">+</span>i)<span class="op">+</span>reg3<span class="op">$</span>coef[<span class="dv">3</span>]<span class="op">*</span>((R<span class="op">+</span>i)<span class="op">^</span><span class="dv">2</span>)<span class="op">+</span>reg3<span class="op">$</span>coef[<span class="dv">4</span>]<span class="op">*</span>((R<span class="op">+</span>i)<span class="op">^</span><span class="dv">3</span>)</span>
+<span id="cb76-17"><a href="tutorial-3.html#cb76-17"></a>  </span>
+<span id="cb76-18"><a href="tutorial-3.html#cb76-18"></a>  rege &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(y)<span class="op">~</span>trend,<span class="dt">data=</span>dt[i<span class="op">:</span>(R<span class="dv">-1</span><span class="op">+</span>i)])</span>
+<span id="cb76-19"><a href="tutorial-3.html#cb76-19"></a>  sig &lt;-<span class="st"> </span><span class="kw">sd</span>(rege<span class="op">$</span>residuals)</span>
+<span id="cb76-20"><a href="tutorial-3.html#cb76-20"></a>  dt<span class="op">$</span>te[R<span class="op">+</span>i] &lt;-<span class="st"> </span><span class="kw">exp</span>(rege<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>rege<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span>(R<span class="op">+</span>i)<span class="op">+</span>sig<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb76-21"><a href="tutorial-3.html#cb76-21"></a>}</span></code></pre></div>
 <p>Plot the original series overlay by the one-step-ahead forecasts from the four considered trend models. Note, for convenience we will first ‘melt’ the data.table in to the ‘long’ format.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="tutorial-3.html#cb77-1" aria-hidden="true" tabindex="-1"></a>dt_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(dt[,.(date,y,<span class="at">linear=</span>t1,<span class="at">quadratic=</span>t2,<span class="at">cubic=</span>t3,<span class="at">exponential=</span>te)],<span class="at">id.vars=</span><span class="st">&quot;date&quot;</span>)</span>
-<span id="cb77-2"><a href="tutorial-3.html#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-3"><a href="tutorial-3.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt_long,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>value,<span class="at">color=</span>variable))<span class="sc">+</span></span>
-<span id="cb77-4"><a href="tutorial-3.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
-<span id="cb77-5"><a href="tutorial-3.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;darkgray&quot;</span>,<span class="st">&quot;black&quot;</span>,<span class="st">&quot;goldenrod&quot;</span>,<span class="st">&quot;steelblue&quot;</span>,<span class="st">&quot;indianred&quot;</span>))<span class="sc">+</span></span>
-<span id="cb77-6"><a href="tutorial-3.html#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Year&quot;</span>,<span class="at">y=</span><span class="st">&quot;Trending Series and Forecasts&quot;</span>)<span class="sc">+</span></span>
-<span id="cb77-7"><a href="tutorial-3.html#cb77-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb77-8"><a href="tutorial-3.html#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title=</span><span class="fu">element_blank</span>(),<span class="at">legend.position=</span><span class="fu">c</span>(.<span class="dv">15</span>,.<span class="dv">85</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="tutorial-3.html#cb77-1"></a>dt_long &lt;-<span class="st"> </span><span class="kw">melt</span>(dt[,.(date,y,<span class="dt">linear=</span>t1,<span class="dt">quadratic=</span>t2,<span class="dt">cubic=</span>t3,<span class="dt">exponential=</span>te)],<span class="dt">id.vars=</span><span class="st">&quot;date&quot;</span>)</span>
+<span id="cb77-2"><a href="tutorial-3.html#cb77-2"></a></span>
+<span id="cb77-3"><a href="tutorial-3.html#cb77-3"></a><span class="kw">ggplot</span>(dt_long,<span class="kw">aes</span>(<span class="dt">x=</span>date,<span class="dt">y=</span>value,<span class="dt">color=</span>variable))<span class="op">+</span></span>
+<span id="cb77-4"><a href="tutorial-3.html#cb77-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>,<span class="dt">na.rm=</span>T)<span class="op">+</span></span>
+<span id="cb77-5"><a href="tutorial-3.html#cb77-5"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;darkgray&quot;</span>,<span class="st">&quot;black&quot;</span>,<span class="st">&quot;goldenrod&quot;</span>,<span class="st">&quot;steelblue&quot;</span>,<span class="st">&quot;indianred&quot;</span>))<span class="op">+</span></span>
+<span id="cb77-6"><a href="tutorial-3.html#cb77-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Year&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Trending Series and Forecasts&quot;</span>)<span class="op">+</span></span>
+<span id="cb77-7"><a href="tutorial-3.html#cb77-7"></a><span class="st">  </span><span class="kw">theme_classic</span>()<span class="op">+</span></span>
+<span id="cb77-8"><a href="tutorial-3.html#cb77-8"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title=</span><span class="kw">element_blank</span>(),<span class="dt">legend.position=</span><span class="kw">c</span>(.<span class="dv">15</span>,.<span class="dv">85</span>))</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <p>Calculate the RMSFE measures for each of the two forecasting methods.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="tutorial-3.html#cb78-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e_t1=</span>y<span class="sc">-</span>t1,<span class="at">e_t2=</span>y<span class="sc">-</span>t2,<span class="at">e_t3=</span>y<span class="sc">-</span>t3,<span class="at">e_te=</span>y<span class="sc">-</span>te)]</span>
-<span id="cb78-2"><a href="tutorial-3.html#cb78-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-3"><a href="tutorial-3.html#cb78-3" aria-hidden="true" tabindex="-1"></a>rmsfe_t1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>e_t1<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb78-4"><a href="tutorial-3.html#cb78-4" aria-hidden="true" tabindex="-1"></a>rmsfe_t2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>e_t2<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb78-5"><a href="tutorial-3.html#cb78-5" aria-hidden="true" tabindex="-1"></a>rmsfe_t3 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>e_t3<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb78-6"><a href="tutorial-3.html#cb78-6" aria-hidden="true" tabindex="-1"></a>rmsfe_te <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>e_te<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb78-7"><a href="tutorial-3.html#cb78-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-8"><a href="tutorial-3.html#cb78-8" aria-hidden="true" tabindex="-1"></a>rmsfe_t1</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="tutorial-3.html#cb78-1"></a>dt[,<span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(<span class="dt">e_t1=</span>y<span class="op">-</span>t1,<span class="dt">e_t2=</span>y<span class="op">-</span>t2,<span class="dt">e_t3=</span>y<span class="op">-</span>t3,<span class="dt">e_te=</span>y<span class="op">-</span>te)]</span>
+<span id="cb78-2"><a href="tutorial-3.html#cb78-2"></a></span>
+<span id="cb78-3"><a href="tutorial-3.html#cb78-3"></a>rmsfe_t1 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(dt<span class="op">$</span>e_t1<span class="op">^</span><span class="dv">2</span>,<span class="dt">na.rm=</span>T))</span>
+<span id="cb78-4"><a href="tutorial-3.html#cb78-4"></a>rmsfe_t2 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(dt<span class="op">$</span>e_t2<span class="op">^</span><span class="dv">2</span>,<span class="dt">na.rm=</span>T))</span>
+<span id="cb78-5"><a href="tutorial-3.html#cb78-5"></a>rmsfe_t3 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(dt<span class="op">$</span>e_t3<span class="op">^</span><span class="dv">2</span>,<span class="dt">na.rm=</span>T))</span>
+<span id="cb78-6"><a href="tutorial-3.html#cb78-6"></a>rmsfe_te &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(dt<span class="op">$</span>e_te<span class="op">^</span><span class="dv">2</span>,<span class="dt">na.rm=</span>T))</span>
+<span id="cb78-7"><a href="tutorial-3.html#cb78-7"></a></span>
+<span id="cb78-8"><a href="tutorial-3.html#cb78-8"></a>rmsfe_t1</span></code></pre></div>
 <pre><code>## [1] 6.151904</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="tutorial-3.html#cb80-1" aria-hidden="true" tabindex="-1"></a>rmsfe_t2</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="tutorial-3.html#cb80-1"></a>rmsfe_t2</span></code></pre></div>
 <pre><code>## [1] 3.796861</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="tutorial-3.html#cb82-1" aria-hidden="true" tabindex="-1"></a>rmsfe_t3</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="tutorial-3.html#cb82-1"></a>rmsfe_t3</span></code></pre></div>
 <pre><code>## [1] 3.906023</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="tutorial-3.html#cb84-1" aria-hidden="true" tabindex="-1"></a>rmsfe_te</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="tutorial-3.html#cb84-1"></a>rmsfe_te</span></code></pre></div>
 <pre><code>## [1] 5.132312</code></pre>
 
 </div>
@@ -329,7 +325,6 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
