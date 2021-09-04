@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Linear Autoregression | Economic Time Series Modeling and Forecasting</title>
   <meta name="description" content="Chapter 6 Linear Autoregression | Economic Time Series Modeling and Forecasting" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Linear Autoregression | Economic Time Series Modeling and Forecasting" />
   <meta property="og:type" content="book" />
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="dynamic-time-series-models.html"/>
 <link rel="next" href="vector-autoregression.html"/>
+<script src="libs/header-attrs-2.9.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -49,22 +50,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -117,6 +119,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -136,37 +139,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i>Preliminaries</a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a></li>
-<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a><ul>
+<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity</a></li>
 <li class="chapter" data-level="2.2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence</a></li>
 <li class="chapter" data-level="2.3" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html"><i class="fa fa-check"></i><b>3</b> Basics of Forecasting</a><ul>
+<li class="chapter" data-level="3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html"><i class="fa fa-check"></i><b>3</b> Basics of Forecasting</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#optimal-forecast"><i class="fa fa-check"></i><b>3.1</b> Optimal Forecast</a></li>
 <li class="chapter" data-level="3.2" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#measuring-forecast-accuracy"><i class="fa fa-check"></i><b>3.2</b> Measuring Forecast Accuracy</a></li>
-<li class="chapter" data-level="3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts</a><ul>
+<li class="chapter" data-level="3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#unbiasedness"><i class="fa fa-check"></i><b>3.3.1</b> Unbiasedness</a></li>
 <li class="chapter" data-level="3.3.2" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#efficiency"><i class="fa fa-check"></i><b>3.3.2</b> Efficiency</a></li>
 <li class="chapter" data-level="3.3.3" data-path="basics-of-forecasting.html"><a href="basics-of-forecasting.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.3.3</b> No Autocorrelation</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="deterministic-time-series-models.html"><a href="deterministic-time-series-models.html"><i class="fa fa-check"></i>Deterministic Time Series Models</a></li>
-<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends</a><ul>
+<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#spurious-relationship"><i class="fa fa-check"></i><b>4.1</b> Spurious Relationship</a></li>
 <li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.2</b> Modeling</a></li>
 <li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.3</b> Forecasting</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality</a><ul>
+<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.1</b> Modeling</a></li>
 <li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.2</b> Forecasting</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="dynamic-time-series-models.html"><a href="dynamic-time-series-models.html"><i class="fa fa-check"></i>Dynamic Time Series Models</a></li>
-<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression</a><ul>
-<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling</a><ul>
+<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar1"><i class="fa fa-check"></i><b>6.1.1</b> AR(1)</a></li>
 <li class="chapter" data-level="6.1.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar2"><i class="fa fa-check"></i><b>6.1.2</b> AR(2)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.2</b> Forecasting</a><ul>
+<li class="chapter" data-level="6.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.2</b> Forecasting</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.1</b> One-step-ahead forecast from AR(1)</a></li>
 <li class="chapter" data-level="6.2.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.2</b> Two-step-ahead forecast from AR(1)</a></li>
 <li class="chapter" data-level="6.2.3" data-path="linear-autoregression.html"><a href="linear-autoregression.html#h-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.3</b> h-step-ahead forecast from AR(1)</a></li>
@@ -180,7 +191,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="forecast-assessment.html"><a href="forecast-assessment.html"><i class="fa fa-check"></i>Forecast Assessment</a></li>
 <li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation</a></li>
 <li class="chapter" data-level="10" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>10</b> Forecast Combination</a></li>
-<li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i>Introduction to R</a><ul>
+<li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i>Introduction to R</a>
+<ul>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-management"><i class="fa fa-check"></i>Data Management</a></li>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-visualisation"><i class="fa fa-check"></i>Data Visualisation</a></li>
 <li class="chapter" data-level="" data-path="introduction-to-r.html"><a href="introduction-to-r.html#regression-analysis"><i class="fa fa-check"></i>Regression Analysis</a></li>
@@ -188,6 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="tutorial-1.html"><a href="tutorial-1.html"><i class="fa fa-check"></i>Tutorial 1</a></li>
 <li class="chapter" data-level="" data-path="tutorial-2.html"><a href="tutorial-2.html"><i class="fa fa-check"></i>Tutorial 2</a></li>
 <li class="chapter" data-level="" data-path="tutorial-3.html"><a href="tutorial-3.html"><i class="fa fa-check"></i>Tutorial 3</a></li>
+<li class="chapter" data-level="" data-path="tutorial-4.html"><a href="tutorial-4.html"><i class="fa fa-check"></i>Tutorial 4</a></li>
 </ul>
 
       </nav>
@@ -205,7 +218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-autoregression" class="section level1">
+<div id="linear-autoregression" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Linear Autoregression</h1>
 <p>Economic time series are often characterized by stochastic cycles. A cycle is a pattern of periodic fluctuations, not contained within a calendar year. A stochastic cycle is one generated by random variables. In general terms, the process is given by:
 <span class="math display">\[Y_t = f(Y_{t-1},Y_{t-2},\ldots;\mathbf{\theta})+\varepsilon_t.\;~~t=1,\ldots,T\]</span></p>
@@ -219,9 +232,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The values of <span class="math inline">\(\beta_1,\ldots,\beta_p\)</span> determine the shape of the autocorrelation function (ACF); in any case, the smaller (in absolute terms) is the persistence measure, the faster the ACF decays toward zero.</li>
 <li>The partial autocorrelation function (PACF) is characterized by “statistically significant” first <span class="math inline">\(p\)</span> spikes <span class="math inline">\(\pi_1 \neq 0,\ldots,\pi_p \neq 0\)</span>, and the remaining <span class="math inline">\(\pi_k = 0\)</span>, <span class="math inline">\(\forall k &gt; p\)</span>.</li>
 </ul>
-<div id="modeling-2" class="section level2">
+<div id="modeling-2" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Modeling</h2>
-<div id="ar1" class="section level3">
+<div id="ar1" class="section level3" number="6.1.1">
 <h3><span class="header-section-number">6.1.1</span> AR(1)</h3>
 <p>The first-order autoregression is given by: <span class="math display">\[y_t = \alpha + \beta_1 y_{t-1} + \varepsilon_t,\]</span> where <span class="math inline">\(\alpha\)</span> is a constant term; <span class="math inline">\(\beta_1\)</span> is the <em>persistence</em> parameter; and <span class="math inline">\(\varepsilon_t\)</span> is a white noise process.</p>
 <p>A necessary and sufficient condition for an <span class="math inline">\(AR(1)\)</span> process to be covariance stationary is that <span class="math inline">\(|\beta_1| &lt; 1\)</span>. We can see this by substituting recursively the lagged equations into the lagged dependent variables:
@@ -266,7 +279,7 @@ The end-result is a general linear process with geometrically declining coeffici
 <p>To illustrate the foregoing, let’s generate a series of 100 observations that follow the process: <span class="math inline">\(y_t=0.8y_{t-1}+\varepsilon_t\)</span>, where <span class="math inline">\(y_0=0\)</span> and <span class="math inline">\(\varepsilon\sim N(0,1)\)</span>, and plot the ACF and PACF of this series.</p>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
-<div id="ar2" class="section level3">
+<div id="ar2" class="section level3" number="6.1.2">
 <h3><span class="header-section-number">6.1.2</span> AR(2)</h3>
 <p>Now consider the second-order autoregression: <span class="math display">\[y_t = \alpha + \beta_1 y_{t-1} + \beta_2 y_{t-2} + \varepsilon_t\]</span></p>
 <p>where <span class="math inline">\(\alpha\)</span> is a constant term; <span class="math inline">\(\beta_1+\beta_2\)</span> is the persistence measure; and <span class="math inline">\(\varepsilon_t\)</span> is a white noise process.</p>
@@ -287,10 +300,10 @@ The end-result is a general linear process with geometrically declining coeffici
 <p><img src="forecasting_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 </div>
-<div id="forecasting-2" class="section level2">
+<div id="forecasting-2" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Forecasting</h2>
 <p>To generate forecasts for some future period, <span class="math inline">\(t+h\)</span>, from an AR(p) model that has been fit to the data up to and including period <span class="math inline">\(t+h-1\)</span> can be a straightforward exercise, so long as we have access to the relevant information set. For one-step-ahead forecasts, the information set is readily available. For multi-step-ahead forecasts, we need to ‘come up’ with the value of the variable that has not been realized yet. For example, when making a two-step-ahead forecast for period <span class="math inline">\(t+2\)</span>, we need data from period <span class="math inline">\(t+1\)</span>, which is not available at the time when the forecast is made. Instead, we need to use our forecast for period <span class="math inline">\(t+1\)</span>. The same applies to forecasts for any subsequent periods in the future. This approach is known as an <em>iterative</em> method of forecasting, wherein we make forecast for some period using the available data, then iterate forward by one period and use the most recent forecast to make the next period’s forecast, and so on and so forth.</p>
-<div id="one-step-ahead-forecast-from-ar1" class="section level3">
+<div id="one-step-ahead-forecast-from-ar1" class="section level3" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> One-step-ahead forecast from AR(1)</h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+1\)</span> is: <span class="math display">\[y_{t+1} = \alpha + \beta_1 y_{t} + \varepsilon_{t+1}\]</span></p>
 <p>The optimal one-step-ahead forecast is: <span class="math display">\[y_{t+1|t} = E(y_{t+1}|\Omega_t) = E(\alpha + \beta_1 y_{t} + \varepsilon_{t+1}) = \alpha + \beta_1 y_{t}\]</span></p>
@@ -298,7 +311,7 @@ The end-result is a general linear process with geometrically declining coeffici
 <p>The one-step-ahead forecast variance: <span class="math display">\[\sigma_{t+1|t}^2 = Var(y_{t+1}|\Omega_t) = E(e_{t+1|t}^2) = E(\varepsilon_{t+1}^2) = \sigma_{\varepsilon}^2\]</span></p>
 <p>The one-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+1|t} \pm z_{.025}\sigma_{t+1|t} = y_{t+1|t} \pm 1.96\sigma_{\varepsilon}\]</span></p>
 </div>
-<div id="two-step-ahead-forecast-from-ar1" class="section level3">
+<div id="two-step-ahead-forecast-from-ar1" class="section level3" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Two-step-ahead forecast from AR(1)</h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+2\)</span> is: <span class="math display">\[y_{t+2} = \alpha + \beta_1 y_{t+1} + \varepsilon_{t+2}\]</span></p>
 <p>The optimal two-step-ahead forecast is: <span class="math display">\[y_{t+2|t} = E(y_{t+2}|\Omega_t) = E(\alpha + \beta_1 y_{t+1} + \varepsilon_{t+2}) = \alpha(1+\beta_1) + \beta_1^2 y_t\]</span></p>
@@ -316,7 +329,7 @@ e_{t+2|t} &amp;= y_{t+2} - y_{t+2|t} \\
 \end{aligned}\]</span></p>
 <p>The two-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+2|t} \pm z_{.025}\sigma_{t+2|t} = y_{t+2|t} \pm 1.96\sigma_{\varepsilon}\sqrt{1+\beta_1^2}\]</span></p>
 </div>
-<div id="h-step-ahead-forecast-from-ar1" class="section level3">
+<div id="h-step-ahead-forecast-from-ar1" class="section level3" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> h-step-ahead forecast from AR(1)</h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+h\)</span> is: <span class="math display">\[y_{t+h} = \alpha + \beta_1 y_{t+h-1} + \varepsilon_{t+h}\]</span></p>
 <p>The optimal h-step-ahead forecast: <span class="math display">\[y_{t+h|t} = E(y_{t+h}|\Omega_t) = E(\alpha + \beta_1 y_{t+h-1} + \varepsilon_{t+1}) = \alpha\textstyle\sum_{j=0}^{h-1}\beta_1^j + \beta_1^h y_t\]</span></p>
@@ -328,7 +341,7 @@ e_{t+2|t} &amp;= y_{t+2} - y_{t+2|t} \\
 <p>The forecast variance converges to: <span class="math display">\[\sigma_{t+h|t}^2 = \frac{\sigma_{\varepsilon}^2}{1-\beta_1^2}\]</span></p>
 <p>The (95%) interval forecast converges to: <span class="math display">\[y_{t+h|t} \pm z_{.025}\sigma_{t+h|t} = \frac{\alpha}{1-\beta_1} \pm 1.96\frac{\sigma_{\varepsilon}}{\sqrt{1-\beta_1^2}}\]</span></p>
 </div>
-<div id="one-step-ahead-forecast-from-ar2" class="section level3">
+<div id="one-step-ahead-forecast-from-ar2" class="section level3" number="6.2.4">
 <h3><span class="header-section-number">6.2.4</span> One-step-ahead forecast from AR(2)</h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+1\)</span> is: <span class="math display">\[y_{t+1} = \alpha + \beta_1 y_{t} + \beta_2 y_{t-1} + \varepsilon_{t+1}\]</span></p>
 <p>The optimal one-step-ahead forecast:
@@ -344,7 +357,7 @@ e_{t+1|t} &amp;= y_{t+1} - y_{t+1|t} \\
 <p>The one-step-ahead forecast variance: <span class="math display">\[\sigma_{t+1|t}^2 = Var(y_{t+1}|\Omega_t) = E(e_{t+1|t}^2) = E(\varepsilon_{t+1}^2) = \sigma_{\varepsilon}^2\]</span></p>
 <p>The one-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+1|t} \pm z_{.025}\sigma_{t+1|t} = y_{t+1|t} \pm 1.96\sigma_{\varepsilon}\]</span></p>
 </div>
-<div id="two-step-ahead-forecast-from-ar2" class="section level3">
+<div id="two-step-ahead-forecast-from-ar2" class="section level3" number="6.2.5">
 <h3><span class="header-section-number">6.2.5</span> Two-step-ahead forecast from AR(2)</h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+2\)</span> is: <span class="math display">\[y_{t+2} = \alpha + \beta_1 y_{t+1} + \beta_2 y_{t} + \varepsilon_{t+2}\]</span></p>
 <p>The optimal two-step-ahead forecast:
@@ -361,7 +374,7 @@ e_{t+2|t} = y_{t+2} - y_{t+2|t} =&amp; \alpha + \beta_1 y_{t+1} + \beta_2 y_{t} 
 <span class="math display">\[\sigma_{t+2|t}^2 = Var(y_{t+2}|\Omega_t) = E(e_{t+2|t}^2) = E(\beta_1\varepsilon_{t+1} + \varepsilon_{t+2})^2 = \sigma_{\varepsilon}^2(1+\beta_1^2)\]</span></p>
 <p>The two-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+2|t} \pm z_{.025}\sigma_{t+2|t} = y_{t+2|t} \pm 1.96\sigma_{\varepsilon}\sqrt{1+\beta_1^2}\]</span></p>
 </div>
-<div id="one-step-ahead-forecast-from-ar2-1" class="section level3">
+<div id="one-step-ahead-forecast-from-ar2-1" class="section level3" number="6.2.6">
 <h3><span class="header-section-number">6.2.6</span> One-step-ahead forecast from AR(2)</h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+h\)</span> is: <span class="math display">\[y_{t+h} = \alpha + \beta_1 y_{t+h-1} + \beta_2 y_{t+h-2} + \varepsilon_{t+h}\]</span></p>
 <p>The optimal h-step-ahead forecast (iterated method):
@@ -422,6 +435,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
