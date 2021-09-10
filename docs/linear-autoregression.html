@@ -186,7 +186,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.6" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2-1"><i class="fa fa-check"></i><b>6.2.6</b> One-step-ahead forecast from AR(2)</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression</a></li>
+<li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>7.1</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>7.1.1</b> In-Sample Granger Causality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>7.2</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.1</b> One-step-ahead forecast from bivariate VAR(1)</a></li>
+<li class="chapter" data-level="7.2.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#two-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.2</b> Two-step-ahead forecast from bivariate VAR(1)</a></li>
+<li class="chapter" data-level="7.2.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>7.2.3</b> Out-of-Sample Granger Causality</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> Threshold Autoregression</a></li>
 <li class="chapter" data-level="" data-path="forecast-assessment.html"><a href="forecast-assessment.html"><i class="fa fa-check"></i>Forecast Assessment</a></li>
 <li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation</a></li>
@@ -302,7 +314,7 @@ The end-result is a general linear process with geometrically declining coeffici
 </div>
 <div id="forecasting-2" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Forecasting</h2>
-<p>To generate forecasts for some future period, <span class="math inline">\(t+h\)</span>, from an AR(p) model that has been fit to the data up to and including period <span class="math inline">\(t+h-1\)</span> can be a straightforward exercise, so long as we have access to the relevant information set. For one-step-ahead forecasts, the information set is readily available. For multi-step-ahead forecasts, we need to ‘come up’ with the value of the variable that has not been realized yet. For example, when making a two-step-ahead forecast for period <span class="math inline">\(t+2\)</span>, we need data from period <span class="math inline">\(t+1\)</span>, which is not available at the time when the forecast is made. Instead, we need to use our forecast for period <span class="math inline">\(t+1\)</span>. The same applies to forecasts for any subsequent periods in the future. This approach is known as an <em>iterative</em> method of forecasting, wherein we make forecast for some period using the available data, then iterate forward by one period and use the most recent forecast to make the next period’s forecast, and so on and so forth.</p>
+<p>Making forecasts for some future period, <span class="math inline">\(t+h\)</span>, from an AR(p) model that has been fit to the data up to and including period <span class="math inline">\(t+h-1\)</span> can be a straightforward exercise, so long as we have access to the relevant information set. For one-step-ahead forecasts, the information set is readily available. For multi-step-ahead forecasts, we need to ‘come up’ with the value of the variable that has not been realized yet. For example, when making a two-step-ahead forecast for period <span class="math inline">\(t+2\)</span>, we need data from period <span class="math inline">\(t+1\)</span>, which is not available at the time when the forecast is made. Instead, we need to use our forecast for period <span class="math inline">\(t+1\)</span>. The same applies to forecasts for any subsequent periods in the future. This approach is known as an <em>iterative</em> method of forecasting, wherein we make forecast for some period using the available data, then iterate forward by one period and use the most recent forecast to make the next period’s forecast, and so on and so forth.</p>
 <div id="one-step-ahead-forecast-from-ar1" class="section level3" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> One-step-ahead forecast from AR(1)</h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+1\)</span> is: <span class="math display">\[y_{t+1} = \alpha + \beta_1 y_{t} + \varepsilon_{t+1}\]</span></p>
