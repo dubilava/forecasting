@@ -1960,4 +1960,398 @@ Using the first rolling window as the information set, generate the multi-step-a
 
 \includegraphics{forecasting_files/figure-latex/unnamed-chunk-70-1.pdf}
 
+\hypertarget{tutorial-5}{%
+\chapter*{Tutorial 5}\label{tutorial-5}}
+\addcontentsline{toc}{chapter}{Tutorial 5}
+
+In this tutorial, we will generate bivariate series, we will apply a system-wide information criterion to select a suitable vector autoregressive model, we will perform an in-sample test of Granger causality, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and in so doing we will investigate the evidence of Granger causality in an out-of-sample setting. To run the code, the \texttt{data.table} and \texttt{MASS} packages need to be installed and loaded.
+
+Let's generate a two-dimensional vector of time series that follow a VAR(1) process of the following form: \[\begin{aligned}
+x_{1,t} &= 0.3 + 0.7x_{1,t-1} + 0.1x_{2,t-1} + \varepsilon_{1,t} \\
+x_{2,t} &= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
+\end{aligned}\] where \(\mathbf{e}_{t} \sim N(\mathbf{0},\Sigma)\), and where \(\Sigma\) is the covariance matrix of the residuals such that \(Cov(\varepsilon_{1,t},\varepsilon_{2,t}) = 0.3\) for all \(t=1,\ldots,180\). (Note: in the code, \(x_1\) is denoted by \(y\) and \(x_2\) is denoted by \(x\)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{180}
+
+\NormalTok{R }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\FloatTok{0.3}\NormalTok{,}\FloatTok{0.3}\NormalTok{,}\DecValTok{1}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{2}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{mvrnorm}\NormalTok{(n,}\AttributeTok{mu=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{),}\AttributeTok{Sigma=}\NormalTok{R)}
+
+\NormalTok{e\_y }\OtherTok{\textless{}{-}}\NormalTok{ e[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{e\_x }\OtherTok{\textless{}{-}}\NormalTok{ e[,}\DecValTok{2}\NormalTok{]}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
+
+\NormalTok{y[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ e\_y[}\DecValTok{1}\NormalTok{]}
+\NormalTok{x[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ e\_x[}\DecValTok{1}\NormalTok{]}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{n)\{}
+\NormalTok{  y[i] }\OtherTok{\textless{}{-}} \FloatTok{0.3+0.7}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\FloatTok{0.1}\SpecialCharTok{*}\NormalTok{x[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e\_y[i]}
+\NormalTok{  x[i] }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FloatTok{0.2+0.9}\SpecialCharTok{*}\NormalTok{x[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e\_x[i]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2006), and store these along with \(y\) in a \textbf{data.table}, call it `dt.'
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2006{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(date,y,x)}
+\end{Highlighting}
+\end{Shaded}
+
+Plot the realized time series using \textbf{ggplot} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt\_long }\OtherTok{\textless{}{-}} \FunctionTok{melt}\NormalTok{(dt,}\AttributeTok{id.vars=}\StringTok{"date"}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(dt\_long,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{color=}\NormalTok{variable,}\AttributeTok{linetype=}\NormalTok{variable))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"darkgray"}\NormalTok{,}\StringTok{"steelblue"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-74-1.pdf}
+
+Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{y\_l1=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{1}\NormalTok{),}\AttributeTok{y\_l2=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{2}\NormalTok{),}\AttributeTok{x\_l1=}\FunctionTok{shift}\NormalTok{(x,}\DecValTok{1}\NormalTok{),}\AttributeTok{x\_l2=}\FunctionTok{shift}\NormalTok{(x,}\DecValTok{2}\NormalTok{))]}
+
+\CommentTok{\# VAR(1)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{k }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\NormalTok{var1y }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{x\_l1,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{var1x }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(x}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{x\_l1,}\AttributeTok{data=}\NormalTok{dt)}
+
+\NormalTok{var1r }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(var1y}\SpecialCharTok{$}\NormalTok{residuals,var1x}\SpecialCharTok{$}\NormalTok{residuals)}
+\NormalTok{cov1r }\OtherTok{\textless{}{-}} \FunctionTok{crossprod}\NormalTok{(var1r)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{(p}\SpecialCharTok{*}\NormalTok{k}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{k))}
+
+\NormalTok{AIC1 }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(cov1r))}\SpecialCharTok{+}\DecValTok{2}\SpecialCharTok{*}\NormalTok{(p}\SpecialCharTok{*}\NormalTok{k}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{k)}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(dt)}
+
+\CommentTok{\# VAR(2)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{k }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\NormalTok{var2y }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2}\SpecialCharTok{+}\NormalTok{x\_l1}\SpecialCharTok{+}\NormalTok{x\_l2,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{var2x }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(x}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2}\SpecialCharTok{+}\NormalTok{x\_l1}\SpecialCharTok{+}\NormalTok{x\_l2,}\AttributeTok{data=}\NormalTok{dt)}
+
+\NormalTok{var2r }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(var2y}\SpecialCharTok{$}\NormalTok{residuals,var2x}\SpecialCharTok{$}\NormalTok{residuals)}
+\NormalTok{cov2r }\OtherTok{\textless{}{-}} \FunctionTok{crossprod}\NormalTok{(var2r)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{(p}\SpecialCharTok{*}\NormalTok{k}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{k))}
+
+\NormalTok{AIC2 }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(cov2r))}\SpecialCharTok{+}\DecValTok{2}\SpecialCharTok{*}\NormalTok{(p}\SpecialCharTok{*}\NormalTok{k}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{k)}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(dt)}
+
+\NormalTok{AIC1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.1270596
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AIC2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.047212
+\end{verbatim}
+
+Perfrom tests of (in-sample) Granger causality in each of the two models. Note, in the case of VAR(1), both t tests and F tests are applicable and they both provide identical inference. In the case of VAR(p), where \(p>1\), the only appropriate test is an F test for joint significance of the parameters associated with the lags of the potentially causal variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# VAR(1)}
+
+\DocumentationTok{\#\# t test}
+\FunctionTok{summary}\NormalTok{(var1y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ y_l1 + x_l1, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.32279 -0.63680 -0.00953  0.68826  2.63468 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.34926    0.11146   3.134  0.00202 ** 
+## y_l1         0.68903    0.05877  11.725  < 2e-16 ***
+## x_l1         0.11304    0.04509   2.507  0.01308 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.976 on 176 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.5689, Adjusted R-squared:  0.564 
+## F-statistic: 116.1 on 2 and 176 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(var1x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = x ~ y_l1 + x_l1, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.38491 -0.68087  0.03216  0.66109  2.74762 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.22353    0.10805  -2.069    0.040 *  
+## y_l1         0.05814    0.05697   1.021    0.309    
+## x_l1         0.85285    0.04371  19.511   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9461 on 176 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.7536, Adjusted R-squared:  0.7508 
+## F-statistic: 269.2 on 2 and 176 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# F test}
+\NormalTok{ar1y }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{ar1x }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(x}\SpecialCharTok{\textasciitilde{}}\NormalTok{x\_l1,}\AttributeTok{data=}\NormalTok{dt)}
+
+\FunctionTok{anova}\NormalTok{(var1y,ar1y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: y ~ y_l1 + x_l1
+## Model 2: y ~ y_l1
+##   Res.Df    RSS Df Sum of Sq      F  Pr(>F)  
+## 1    176 167.64                              
+## 2    177 173.62 -1   -5.9866 6.2852 0.01308 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(var1x,ar1x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: x ~ y_l1 + x_l1
+## Model 2: x ~ x_l1
+##   Res.Df    RSS Df Sum of Sq      F Pr(>F)
+## 1    176 157.54                           
+## 2    177 158.47 -1  -0.93231 1.0416 0.3089
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# VAR(2)}
+
+\DocumentationTok{\#\#\# t test (no longer applicable to test GC)}
+\FunctionTok{summary}\NormalTok{(var2y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ y_l1 + y_l2 + x_l1 + x_l2, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.38088 -0.71387 -0.01504  0.72538  2.70511 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.32203    0.11775   2.735  0.00689 ** 
+## y_l1         0.65954    0.07822   8.431  1.3e-14 ***
+## y_l2         0.04964    0.07965   0.623  0.53397    
+## x_l1         0.15919    0.08052   1.977  0.04962 *  
+## x_l2        -0.05991    0.08104  -0.739  0.46080    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9816 on 173 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.5709, Adjusted R-squared:  0.561 
+## F-statistic: 57.55 on 4 and 173 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(var2x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = x ~ y_l1 + y_l2 + x_l1 + x_l2, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.37790 -0.64364  0.05401  0.67542  2.71827 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.24577    0.11419  -2.152   0.0328 *  
+## y_l1         0.03070    0.07586   0.405   0.6862    
+## y_l2         0.04486    0.07724   0.581   0.5621    
+## x_l1         0.86196    0.07809  11.039   <2e-16 ***
+## x_l2        -0.01627    0.07859  -0.207   0.8362    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9519 on 173 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.7546, Adjusted R-squared:  0.7489 
+## F-statistic:   133 on 4 and 173 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# F test}
+\NormalTok{ar2y }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{ar2x }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(x}\SpecialCharTok{\textasciitilde{}}\NormalTok{x\_l1}\SpecialCharTok{+}\NormalTok{x\_l2,}\AttributeTok{data=}\NormalTok{dt)}
+
+\FunctionTok{anova}\NormalTok{(var2y,ar2y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: y ~ y_l1 + y_l2 + x_l1 + x_l2
+## Model 2: y ~ y_l1 + y_l2
+##   Res.Df    RSS Df Sum of Sq      F  Pr(>F)  
+## 1    173 166.68                              
+## 2    175 172.78 -2   -6.0971 3.1641 0.04471 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(var2x,ar2x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: x ~ y_l1 + y_l2 + x_l1 + x_l2
+## Model 2: x ~ x_l1 + x_l2
+##   Res.Df    RSS Df Sum of Sq      F Pr(>F)
+## 1    173 156.76                           
+## 2    175 158.03 -2   -1.2729 0.7024 0.4968
+\end{verbatim}
+
+Generate a sequence of one-step-ahead forecasts from VAR(1) using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{120}
+\NormalTok{P }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{R}
+
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ar1y }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ar1x }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{var1y }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{var1x }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+\NormalTok{  ar1y }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i)])}
+\NormalTok{  ar1x }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(x}\SpecialCharTok{\textasciitilde{}}\NormalTok{x\_l1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i)])}
+  
+\NormalTok{  var1y }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{x\_l1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i)])}
+\NormalTok{  var1x }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(x}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{x\_l1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i)])}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{ar1y[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ ar1y}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{ar1y}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{ar1x[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ ar1x}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{ar1x}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{x[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{var1y[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ var1y}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{var1y}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{+}\NormalTok{var1y}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{x[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{var1x[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ var1x}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{var1x}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{+}\NormalTok{var1x}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{x[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Calculate the RMSFE measures for restricted and unrestricted models, and compare those to each other to make a suggestion about out-of-sample Granger causality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{ar1y\_e=}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{ar1y,}\AttributeTok{ar1x\_e=}\NormalTok{x}\SpecialCharTok{{-}}\NormalTok{ar1x,}\AttributeTok{var1y\_e=}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{var1y,}\AttributeTok{var1x\_e=}\NormalTok{x}\SpecialCharTok{{-}}\NormalTok{var1x)]}
+
+\CommentTok{\# calculate RMSFE for restructed and unrestricted models}
+\NormalTok{rmsfe\_yr }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{ar1y\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\NormalTok{rmsfe\_yu }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{var1y\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+
+\NormalTok{rmsfe\_xr }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{ar1x\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\NormalTok{rmsfe\_xu }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{var1x\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+
+\NormalTok{rmsfe\_yr}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.134867
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rmsfe\_yu}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.104268
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rmsfe\_xr}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.00908
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rmsfe\_xu}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.011653
+\end{verbatim}
+
 \end{document}
