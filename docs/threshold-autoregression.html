@@ -199,7 +199,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>7.2.3</b> Out-of-Sample Granger Causality</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> Threshold Autoregression</a></li>
+<li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> Threshold Autoregression</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#nonlinear-models"><i class="fa fa-check"></i><b>8.1</b> Nonlinear Models</a></li>
+<li class="chapter" data-level="8.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>8.2</b> Modeling</a></li>
+<li class="chapter" data-level="8.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>8.3.1</b> Skeleton Extrapolation</a></li>
+<li class="chapter" data-level="8.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>8.3.2</b> Analytical Method</a></li>
+<li class="chapter" data-level="8.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>8.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="forecast-assessment.html"><a href="forecast-assessment.html"><i class="fa fa-check"></i>Forecast Assessment</a></li>
 <li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation</a></li>
 <li class="chapter" data-level="10" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>10</b> Forecast Combination</a></li>
@@ -214,6 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="tutorial-3.html"><a href="tutorial-3.html"><i class="fa fa-check"></i>Tutorial 3</a></li>
 <li class="chapter" data-level="" data-path="tutorial-4.html"><a href="tutorial-4.html"><i class="fa fa-check"></i>Tutorial 4</a></li>
 <li class="chapter" data-level="" data-path="tutorial-5.html"><a href="tutorial-5.html"><i class="fa fa-check"></i>Tutorial 5</a></li>
+<li class="chapter" data-level="" data-path="tutorial-6.html"><a href="tutorial-6.html"><i class="fa fa-check"></i>Tutorial 6</a></li>
 </ul>
 
       </nav>
@@ -233,7 +244,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="threshold-autoregression" class="section level1" number="8">
 <h1><span class="header-section-number">Chapter 8</span> Threshold Autoregression</h1>
+<p>While a stochastic process can be approximated by a linear model, it is possible that a nonlinear model offers a better fit to the data. Nonlinear models come in many flavours. Here we will consider one type of nonlinear models, which belongs to the family of regime-dependent models.</p>
+<p>A regime-dependent model can be seen as a combination of linear specifications that are linked to each other in some (nonlinear) way. To that end, such nonlinear models are also referred to as the piecewise linear models - each piece in and of itself is linear, but when taken together we have a nonlinear model at hand.</p>
+<div id="nonlinear-models" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Nonlinear Models</h2>
+<p>In what follows, we will consider two representative regime-dependent models: the time-varying threshold autoregression and the self-exciting threshold autoregression. In both instances we will assume that the switch between the regimes happens based on some threshold variable, and that it instantaneously.</p>
+<p>Consider an AR(p) process with a deterministic trend: <span class="math display">\[y_t = \alpha_0 + \alpha_1 t + \sum_{i=1}^{p}\beta_i y_{t-i} + \varepsilon_t,\]</span> where <span class="math inline">\(\alpha_0 + \alpha_1 t\)</span> is the time-specific deterministic component.</p>
+<p>This specification implies a linear trend, but that doesn’t need to be the case. We can have quadratic or cubic trends, for example, or we can have no trend component at all.</p>
+<p>A simple augmentation of the foregoing model is an autoregressive model with a switching trend component: <span class="math display">\[y_t = \delta_{0} + \delta_{1} t + \delta_{2}(t-\tau)I(t&gt;\tau) + \beta y_{t-1} + \varepsilon_t,\]</span> where <span class="math inline">\(\tau\)</span> is the threshold parameter.</p>
+<p>Such switch can be extended to the whole autoregressive process. For example, a two-regime AR(p) with drift can be given by: <span class="math display">\[y_t = \delta_0 + \delta_1 t + \sum_{i=1}^{p}\beta_{1i} y_{t-i} + \left[\delta_2(t-\tau) + \sum_{i=1}^{p}\beta_{2i} y_{t-i}\right]I(t&gt;\tau) + \varepsilon_t.\]</span> This equation implies that not only the trend, but also the autoregressive process changes around the threshold parameter <span class="math inline">\(\tau\)</span>.</p>
+<p>The foregoing nonlinear specifications assumed that the switch in the model occurs at some point in time, i.e. the regime-switching variable is a function of time. But the regime-switching variable can also be a function of the dependent variable, as well as other (potentially) related variables: <span class="math display">\[y_t = \alpha_0 + \sum_{i=1}^{p}\beta_{0i} y_{t-i} + \left(\alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i}\right)I(s_t&gt;c) + \varepsilon_t,\]</span> where <span class="math inline">\(s_t\)</span> is the regime-switching variable, and <span class="math inline">\(c\)</span> is the threshold, such that <span class="math inline">\(\underline{s}_t &lt; c &lt; \overline{s}_t\)</span>, where <span class="math inline">\(\underline{s}_t\)</span> and <span class="math inline">\(\overline{s}_t\)</span> are lower and upper quantiles of the regime-switching variable.</p>
+<p>This equation is referred as threshold autoregression, or TAR(p). More specifically, if in a TAR(p), <span class="math inline">\(s_t = y_{t-d}\)</span>, <span class="math inline">\(d = 1,\ldots,m\)</span>, then it is a self-exciting threshold autoregression, or SETAR(p); alternatively, if <span class="math inline">\(s_t = \Delta y_{t-d}\)</span>, <span class="math inline">\(d = 1,\ldots,m\)</span>, then the model is referred to as a momentum threshold autoregression, or momentum-TAR(p). The latter is typically preferred when <span class="math inline">\(y_t\)</span> is an I(1) process.</p>
+<p>A TAR (any version of it) can take a multiple-regime form: <span class="math display">\[y_t = \alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i} + \sum_{j=2}^{K}{\left(\alpha_j + \sum_{i=1}^{p}\beta_{ji} y_{t-i}\right)I(s_t&gt;c_j)} + \varepsilon_t,\]</span> where <span class="math inline">\(K\)</span> depicts the number of regimes in the equation.</p>
+</div>
+<div id="modeling-4" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Modeling</h2>
+<p>When estimating TAR-type models, we have no <em>a priori</em> knowledge on the number of regimes, the autoregressive order in each regime, the regime-switching (or threshold) variable, and the threshold values.</p>
+<p>When threshold values are unknown (and need to be estimated), standard statistical inference is no longer applicable. Otherwise, and given that the process is stationary, standard statistical inference applies.</p>
+<p>Joint estimation of model parameters would require some nonlinear optimization routine. Alternatively, we can approximate such optimization using a grid-search procedure. The procedure relies on the fact that once the threshold parameter is known, the model reduces to a linear model, and the least squares estimator can be applied then. That is, <span class="math display">\[\hat{\tau} = \arg\min_{\tau}\hat{\sigma}^2(\tau),\]</span> where <span class="math display">\[\hat{\sigma}^2(\tau) = \frac{1}{T-k}\sum_{t=1}^{T}\hat{\epsilon}_t^2(\tau)\]</span> for all candidate values of <span class="math inline">\(\tau\)</span>. The candidate values of <span class="math inline">\(\tau\)</span> typically belong to a range between 10th and 90th percentiles of the transition variable, which is simply the trend in the case of the time-varying TAR, and the lagged dependent variable in the case of the self-exciting TAR.</p>
+</div>
+<div id="forecasting-4" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Forecasting</h2>
+<p>In the case of time-varying shifting trend (mean) models, the most recent trend component is used to obtain forecasts. To that end, the forecasting routine is similar to that of linear trend models.</p>
+<p>In the case of regime-switching models (e.g., TAR), obtaining one-step-ahead forecasts can be a rather straightforward exercise:
+<span class="math display">\[\begin{aligned}
+y_{t+1|t} &amp;= \alpha_0+\beta_{01}y_{t}+\beta_{02}y_{t-1}+\ldots \\
+          &amp;+ (\alpha_1+\beta_{11}y_{t}+\beta_{12}y_{t-1}+\ldots)I(s_t&gt;c)
+\end{aligned}\]</span></p>
+<p>Obtaining h-step-ahead forecasts (where <span class="math inline">\(h\geq2\)</span>) is less trivial, however. Of the available options:</p>
+<ul>
+<li>The iterated method (or, the so-called skeleton extrapolation) is an easy but an inefficient option.</li>
+<li>The analytical method can be unbearably tedious.</li>
+<li>A numerical method is applicable and, moreover, it resolves the caveats of the previous two options.</li>
+</ul>
+<div id="skeleton-extrapolation" class="section level3" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Skeleton Extrapolation</h3>
+<p>One-step-ahead forecast: <span class="math display">\[y_{t+1|t} = E(y_{t+1}|\Omega_{t}) = g(y_{t},y_{t-1},\ldots,y_{t+1-p};\theta)\]</span></p>
+<p>Two-step-ahead forecast: <span class="math display">\[y_{t+2|t} = E(y_{t+2}|\Omega_{t}) = g(y_{t+1|t},y_{t},\ldots,y_{t+2-p};\theta)\]</span></p>
+<p>h-step-ahead forecast: <span class="math display">\[y_{t+h|t} = E(y_{t+h}|\Omega_{t}) = g(y_{t+h-1|t},y_{t+h-2|t},\ldots,y_{t+h-p|t};\theta)\]</span></p>
+<p>This is fine for linear models; but not okay for nonlinear models.</p>
+</div>
+<div id="analytical-method" class="section level3" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Analytical Method</h3>
+<p>One-step-ahead forecast is the same as before (no uncertainty about the observed data).</p>
+<p>Two-step-ahead forecast is: <span class="math display">\[\tilde{y}_{t+2|t} = \int_{-\infty}^{\infty}g(y_{t+1|t}+\varepsilon_{t+1},y_{t},\ldots,y_{t+2-p};\theta)f(\varepsilon_{t+1})d\varepsilon_{t+1}\]</span></p>
+<p>Unless the model is linear, <span class="math inline">\(\tilde{y}_{t+2|t} \ne y_{t+2|t}\)</span>.</p>
+<p>Longer horizon forecasts require multiple integrals.</p>
+</div>
+<div id="numerical-method-bootstrap-resampling" class="section level3" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Numerical Method: Bootstrap Resampling</h3>
+<p>Bootstrap resampling helps approximate the optimal forecast from nonlinear models and circumvents the complexity of integration.</p>
+<p>As an additional benefit, the procedure generates forecast distribution, from which empirical confidence intervals (along with the point forecast) can be obtained.</p>
+<p>Algorithm:</p>
+<ol style="list-style-type: decimal">
+<li>Estimate the time series model and store the residuals.</li>
+<li>From this set of residuals, sample (with replacement) a vector of shocks for a bootstrap iteration, <span class="math inline">\(\varepsilon^b = (\varepsilon_{t+1}^b,\varepsilon_{t+2}^b,\ldots,\varepsilon_{t+h}^b)&#39;\)</span>.</li>
+<li>Use this sample of shocks, along with the estimated parameters and historical observations, to generate a forecast path for the given bootstrap iteration.</li>
+<li>Repeat steps 2-3 many times to generate an empirical distribution of bootstrap forecasts.</li>
+</ol>
+<p>One-step-ahead bootstrap iteration: <span class="math display">\[y_{t+1|t,\varepsilon_{t+1}^b} \equiv y_{t+1|t}^b = g(y_{t},y_{t-1},\ldots,y_{t+1-p};\theta)+\varepsilon_{t+1}^b\]</span></p>
+<p>Two-step-ahead bootstrap iteration: <span class="math display">\[y_{t+2|t,\varepsilon_{t+1}^b,\varepsilon_{t+2}^b} \equiv y_{t+2|t}^b = g(y_{t+1|t,\varepsilon_{t+1}^b},y_{t},\ldots,y_{t+2-p};\theta)+\varepsilon_{t+2}^b\]</span></p>
+<p>For example, consider a linear <span class="math inline">\(\text{AR}(p)\)</span> model.</p>
+<p>One-step-ahead bootstrap iteration: <span class="math display">\[y_{t+1|t}^b = \alpha + \beta_1 y_{t} + \ldots + \beta_p y_{t+1-p}+\varepsilon_{t+1}^b\]</span></p>
+<p>Two-step-ahead bootstrap iteration: <span class="math display">\[y_{t+2|t}^b = \alpha + \beta_1 \hat{y}_{t+1}^b + \ldots + \beta_p y_{t+2-p}+\varepsilon_{t+2}^b\]</span></p>
+<p>Now consider a nonlinear <span class="math inline">\(\text{SETAR}(p,y_{t-1})\)</span> model:</p>
+<p>One-step-ahead bootstrap iteration:
+<span class="math display">\[\begin{aligned}
+y_{t+1|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t} + \ldots + \beta_{1p} y_{t+1-p})I(y_{t} \leq c) \\ 
+                &amp;+ (\alpha_2 + \beta_{21} y_{t} + \ldots + \beta_{2p} y_{t+1-p})I(y_{t} &gt; c)+\varepsilon_{t+1}^b
+\end{aligned}\]</span></p>
+<p>Two-step-ahead bootstrap iteration:
+<span class="math display">\[\begin{aligned}
+y_{t+2|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t+1|t}^b + \ldots + \beta_{1p} y_{t+2-p})I(y_{t+1|t}^b \leq c) \\
+                &amp;+ (\alpha_2 + \beta_{21} y_{t+1|t}^b + \ldots + \beta_{2p} y_{t+2-p})I(y_{t+1|t}^b &gt; c)+\varepsilon_{t+2}^b
+\end{aligned}\]</span></p>
+<p>One-step-ahead bootstrap forecast: <span class="math display">\[\bar{y}_{t+1|t} = B^{-1}\sum_{b=1}^{B}y_{t+1|t}^b\]</span></p>
+<p>Two-step-ahead bootstrap forecast: <span class="math display">\[\bar{y}_{t+2|t} = B^{-1}\sum_{b=1}^{B}y_{t+2|t}^b\]</span></p>
+<p>Here, <span class="math inline">\(B\)</span> is the total number of bootstrap iterations (usually many thousand iterations).</p>
 
+</div>
+</div>
 </div>
             </section>
 

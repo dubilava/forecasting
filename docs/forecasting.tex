@@ -926,6 +926,135 @@ where \(R\) is the size of the (first) estimation window.
 \hypertarget{threshold-autoregression}{%
 \chapter{Threshold Autoregression}\label{threshold-autoregression}}
 
+While a stochastic process can be approximated by a linear model, it is possible that a nonlinear model offers a better fit to the data. Nonlinear models come in many flavours. Here we will consider one type of nonlinear models, which belongs to the family of regime-dependent models.
+
+A regime-dependent model can be seen as a combination of linear specifications that are linked to each other in some (nonlinear) way. To that end, such nonlinear models are also referred to as the piecewise linear models - each piece in and of itself is linear, but when taken together we have a nonlinear model at hand.
+
+\hypertarget{nonlinear-models}{%
+\section{Nonlinear Models}\label{nonlinear-models}}
+
+In what follows, we will consider two representative regime-dependent models: the time-varying threshold autoregression and the self-exciting threshold autoregression. In both instances we will assume that the switch between the regimes happens based on some threshold variable, and that it instantaneously.
+
+Consider an AR(p) process with a deterministic trend: \[y_t = \alpha_0 + \alpha_1 t + \sum_{i=1}^{p}\beta_i y_{t-i} + \varepsilon_t,\] where \(\alpha_0 + \alpha_1 t\) is the time-specific deterministic component.
+
+This specification implies a linear trend, but that doesn't need to be the case. We can have quadratic or cubic trends, for example, or we can have no trend component at all.
+
+A simple augmentation of the foregoing model is an autoregressive model with a switching trend component: \[y_t = \delta_{0} + \delta_{1} t + \delta_{2}(t-\tau)I(t>\tau) + \beta y_{t-1} + \varepsilon_t,\] where \(\tau\) is the threshold parameter.
+
+Such switch can be extended to the whole autoregressive process. For example, a two-regime AR(p) with drift can be given by: \[y_t = \delta_0 + \delta_1 t + \sum_{i=1}^{p}\beta_{1i} y_{t-i} + \left[\delta_2(t-\tau) + \sum_{i=1}^{p}\beta_{2i} y_{t-i}\right]I(t>\tau) + \varepsilon_t.\] This equation implies that not only the trend, but also the autoregressive process changes around the threshold parameter \(\tau\).
+
+The foregoing nonlinear specifications assumed that the switch in the model occurs at some point in time, i.e.~the regime-switching variable is a function of time. But the regime-switching variable can also be a function of the dependent variable, as well as other (potentially) related variables: \[y_t = \alpha_0 + \sum_{i=1}^{p}\beta_{0i} y_{t-i} + \left(\alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i}\right)I(s_t>c) + \varepsilon_t,\] where \(s_t\) is the regime-switching variable, and \(c\) is the threshold, such that \(\underline{s}_t < c < \overline{s}_t\), where \(\underline{s}_t\) and \(\overline{s}_t\) are lower and upper quantiles of the regime-switching variable.
+
+This equation is referred as threshold autoregression, or TAR(p). More specifically, if in a TAR(p), \(s_t = y_{t-d}\), \(d = 1,\ldots,m\), then it is a self-exciting threshold autoregression, or SETAR(p); alternatively, if \(s_t = \Delta y_{t-d}\), \(d = 1,\ldots,m\), then the model is referred to as a momentum threshold autoregression, or momentum-TAR(p). The latter is typically preferred when \(y_t\) is an I(1) process.
+
+A TAR (any version of it) can take a multiple-regime form: \[y_t = \alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i} + \sum_{j=2}^{K}{\left(\alpha_j + \sum_{i=1}^{p}\beta_{ji} y_{t-i}\right)I(s_t>c_j)} + \varepsilon_t,\] where \(K\) depicts the number of regimes in the equation.
+
+\hypertarget{modeling-4}{%
+\section{Modeling}\label{modeling-4}}
+
+When estimating TAR-type models, we have no \emph{a priori} knowledge on the number of regimes, the autoregressive order in each regime, the regime-switching (or threshold) variable, and the threshold values.
+
+When threshold values are unknown (and need to be estimated), standard statistical inference is no longer applicable. Otherwise, and given that the process is stationary, standard statistical inference applies.
+
+Joint estimation of model parameters would require some nonlinear optimization routine. Alternatively, we can approximate such optimization using a grid-search procedure. The procedure relies on the fact that once the threshold parameter is known, the model reduces to a linear model, and the least squares estimator can be applied then. That is, \[\hat{\tau} = \arg\min_{\tau}\hat{\sigma}^2(\tau),\] where \[\hat{\sigma}^2(\tau) = \frac{1}{T-k}\sum_{t=1}^{T}\hat{\epsilon}_t^2(\tau)\] for all candidate values of \(\tau\). The candidate values of \(\tau\) typically belong to a range between 10th and 90th percentiles of the transition variable, which is simply the trend in the case of the time-varying TAR, and the lagged dependent variable in the case of the self-exciting TAR.
+
+\hypertarget{forecasting-4}{%
+\section{Forecasting}\label{forecasting-4}}
+
+In the case of time-varying shifting trend (mean) models, the most recent trend component is used to obtain forecasts. To that end, the forecasting routine is similar to that of linear trend models.
+
+In the case of regime-switching models (e.g., TAR), obtaining one-step-ahead forecasts can be a rather straightforward exercise:
+\[\begin{aligned}
+y_{t+1|t} &= \alpha_0+\beta_{01}y_{t}+\beta_{02}y_{t-1}+\ldots \\
+          &+ (\alpha_1+\beta_{11}y_{t}+\beta_{12}y_{t-1}+\ldots)I(s_t>c)
+\end{aligned}\]
+
+Obtaining h-step-ahead forecasts (where \(h\geq2\)) is less trivial, however. Of the available options:
+
+\begin{itemize}
+\tightlist
+\item
+  The iterated method (or, the so-called skeleton extrapolation) is an easy but an inefficient option.
+\item
+  The analytical method can be unbearably tedious.
+\item
+  A numerical method is applicable and, moreover, it resolves the caveats of the previous two options.
+\end{itemize}
+
+\hypertarget{skeleton-extrapolation}{%
+\subsection{Skeleton Extrapolation}\label{skeleton-extrapolation}}
+
+One-step-ahead forecast: \[y_{t+1|t} = E(y_{t+1}|\Omega_{t}) = g(y_{t},y_{t-1},\ldots,y_{t+1-p};\theta)\]
+
+Two-step-ahead forecast: \[y_{t+2|t} = E(y_{t+2}|\Omega_{t}) = g(y_{t+1|t},y_{t},\ldots,y_{t+2-p};\theta)\]
+
+h-step-ahead forecast: \[y_{t+h|t} = E(y_{t+h}|\Omega_{t}) = g(y_{t+h-1|t},y_{t+h-2|t},\ldots,y_{t+h-p|t};\theta)\]
+
+This is fine for linear models; but not okay for nonlinear models.
+
+\hypertarget{analytical-method}{%
+\subsection{Analytical Method}\label{analytical-method}}
+
+One-step-ahead forecast is the same as before (no uncertainty about the observed data).
+
+Two-step-ahead forecast is: \[\tilde{y}_{t+2|t} = \int_{-\infty}^{\infty}g(y_{t+1|t}+\varepsilon_{t+1},y_{t},\ldots,y_{t+2-p};\theta)f(\varepsilon_{t+1})d\varepsilon_{t+1}\]
+
+Unless the model is linear, \(\tilde{y}_{t+2|t} \ne y_{t+2|t}\).
+
+Longer horizon forecasts require multiple integrals.
+
+\hypertarget{numerical-method-bootstrap-resampling}{%
+\subsection{Numerical Method: Bootstrap Resampling}\label{numerical-method-bootstrap-resampling}}
+
+Bootstrap resampling helps approximate the optimal forecast from nonlinear models and circumvents the complexity of integration.
+
+As an additional benefit, the procedure generates forecast distribution, from which empirical confidence intervals (along with the point forecast) can be obtained.
+
+Algorithm:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Estimate the time series model and store the residuals.
+\item
+  From this set of residuals, sample (with replacement) a vector of shocks for a bootstrap iteration, \(\varepsilon^b = (\varepsilon_{t+1}^b,\varepsilon_{t+2}^b,\ldots,\varepsilon_{t+h}^b)'\).
+\item
+  Use this sample of shocks, along with the estimated parameters and historical observations, to generate a forecast path for the given bootstrap iteration.
+\item
+  Repeat steps 2-3 many times to generate an empirical distribution of bootstrap forecasts.
+\end{enumerate}
+
+One-step-ahead bootstrap iteration: \[y_{t+1|t,\varepsilon_{t+1}^b} \equiv y_{t+1|t}^b = g(y_{t},y_{t-1},\ldots,y_{t+1-p};\theta)+\varepsilon_{t+1}^b\]
+
+Two-step-ahead bootstrap iteration: \[y_{t+2|t,\varepsilon_{t+1}^b,\varepsilon_{t+2}^b} \equiv y_{t+2|t}^b = g(y_{t+1|t,\varepsilon_{t+1}^b},y_{t},\ldots,y_{t+2-p};\theta)+\varepsilon_{t+2}^b\]
+
+For example, consider a linear \(\text{AR}(p)\) model.
+
+One-step-ahead bootstrap iteration: \[y_{t+1|t}^b = \alpha + \beta_1 y_{t} + \ldots + \beta_p y_{t+1-p}+\varepsilon_{t+1}^b\]
+
+Two-step-ahead bootstrap iteration: \[y_{t+2|t}^b = \alpha + \beta_1 \hat{y}_{t+1}^b + \ldots + \beta_p y_{t+2-p}+\varepsilon_{t+2}^b\]
+
+Now consider a nonlinear \(\text{SETAR}(p,y_{t-1})\) model:
+
+One-step-ahead bootstrap iteration:
+\[\begin{aligned}
+y_{t+1|t}^b &= (\alpha_1 + \beta_{11} y_{t} + \ldots + \beta_{1p} y_{t+1-p})I(y_{t} \leq c) \\ 
+                &+ (\alpha_2 + \beta_{21} y_{t} + \ldots + \beta_{2p} y_{t+1-p})I(y_{t} > c)+\varepsilon_{t+1}^b
+\end{aligned}\]
+
+Two-step-ahead bootstrap iteration:
+\[\begin{aligned}
+y_{t+2|t}^b &= (\alpha_1 + \beta_{11} y_{t+1|t}^b + \ldots + \beta_{1p} y_{t+2-p})I(y_{t+1|t}^b \leq c) \\
+                &+ (\alpha_2 + \beta_{21} y_{t+1|t}^b + \ldots + \beta_{2p} y_{t+2-p})I(y_{t+1|t}^b > c)+\varepsilon_{t+2}^b
+\end{aligned}\]
+
+One-step-ahead bootstrap forecast: \[\bar{y}_{t+1|t} = B^{-1}\sum_{b=1}^{B}y_{t+1|t}^b\]
+
+Two-step-ahead bootstrap forecast: \[\bar{y}_{t+2|t} = B^{-1}\sum_{b=1}^{B}y_{t+2|t}^b\]
+
+Here, \(B\) is the total number of bootstrap iterations (usually many thousand iterations).
+
 \hypertarget{forecast-assessment}{%
 \chapter*{Forecast Assessment}\label{forecast-assessment}}
 \addcontentsline{toc}{chapter}{Forecast Assessment}
@@ -2353,5 +2482,283 @@ Calculate the RMSFE measures for restricted and unrestricted models, and compare
 \begin{verbatim}
 ## [1] 1.011653
 \end{verbatim}
+
+\hypertarget{tutorial-6}{%
+\chapter*{Tutorial 6}\label{tutorial-6}}
+\addcontentsline{toc}{chapter}{Tutorial 6}
+
+In this tutorial, we will generate regime-dependent series, we will apply a grid-search method to obtain the threshold parameter, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will apply bootstrap resampling method to generate multi-step-ahead forecasts from a threhsold regression. To run the code, the \texttt{data.table} and \texttt{ggplot2} packages need to be installed and loaded.
+
+Let's generate a time series that follow a TAR(2) process of the following form:
+\[y_t = \left\{\begin{array}
+{ll}
+y_{t-1} + \varepsilon_t & \text{if}~~y_{t-1}\ge0 \\
+1.2y_{t-1}-0.3y_{t-2} + \varepsilon_t & \text{if}~~y_{t-1} < 0
+\end{array}\right.
+\]
+where \(e_{t} \sim N(0,\sigma^2)\). This suggests that the time series follow the unit root process if the lagged dependent variable is non-negative, otherwise the time series is a mean-reverting AR(2) process.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{360}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
+\NormalTok{y[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ e[}\DecValTok{1}\NormalTok{]}
+\ControlFlowTok{if}\NormalTok{(y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{  y[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}  \FloatTok{1.0}\SpecialCharTok{*}\NormalTok{y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{2}\NormalTok{]}
+\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{  y[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{1.2}\SpecialCharTok{*}\NormalTok{y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{2}\NormalTok{]}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{n)\{}
+  \ControlFlowTok{if}\NormalTok{(y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    y[i] }\OtherTok{\textless{}{-}}  \FloatTok{1.0}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[i]}
+\NormalTok{  \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{    y[i] }\OtherTok{\textless{}{-}} \FloatTok{1.2}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{{-}}\FloatTok{0.3}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}2}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[i]}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 1991), and store these along with \(y\) in a \textbf{data.table}, call it `dt.'
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"1991{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(date,y)}
+\end{Highlighting}
+\end{Shaded}
+
+Plot the realized time series using \textbf{ggplot} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-82-1.pdf}
+
+Decide on the optimal lag length based on AIC.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{y\_l1=}\FunctionTok{shift}\NormalTok{(y),}\AttributeTok{y\_l2=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{2}\NormalTok{),}\AttributeTok{y\_l3=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{3}\NormalTok{),}\AttributeTok{y\_l4=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{4}\NormalTok{))]}
+\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ dt[}\FunctionTok{complete.cases}\NormalTok{(dt)]}
+
+\NormalTok{IC\_dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(}\AttributeTok{lag=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{),}\AttributeTok{AIC=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{SIC=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(IC\_dt))\{}
+  
+\NormalTok{  fmla }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"y"}\NormalTok{,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"y\_l"}\NormalTok{,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{i),}\AttributeTok{collapse=}\StringTok{"+"}\NormalTok{),}\AttributeTok{sep=}\StringTok{"\textasciitilde{}"}\NormalTok{))}
+\NormalTok{  reg.ar }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(fmla,}\AttributeTok{data=}\NormalTok{dt)}
+  
+\NormalTok{  IC\_dt}\SpecialCharTok{$}\NormalTok{AIC[i] }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(reg.ar}\SpecialCharTok{$}\NormalTok{residuals))}\SpecialCharTok{+}\DecValTok{2}\SpecialCharTok{*}\NormalTok{(i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(dt)}
+\NormalTok{  IC\_dt}\SpecialCharTok{$}\NormalTok{SIC[i] }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(reg.ar}\SpecialCharTok{$}\NormalTok{residuals))}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(dt))}\SpecialCharTok{*}\NormalTok{(i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(dt)}
+
+\NormalTok{\}}
+
+\NormalTok{IC\_dt}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    lag      AIC      SIC
+## 1:   1 5.822589 5.844358
+## 2:   2 5.821342 5.853996
+## 3:   3 5.826916 5.870454
+## 4:   4 5.832294 5.886717
+\end{verbatim}
+
+We now need to get an estimate of the threshold parameter (i.e., the value at which the switch between the regimes happens). For that, we perform a grid-search routine. We will consider a range of candidate thresholds that are within 10th and 90th percentile of the lagged dependent variable. For each candidate threshold, we will run an OLS and calculate the residual sums of squares. A threshold that yields the lowest residual sum of squares will be the estimate.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qy }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{quantile}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{y,}\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{9}\NormalTok{)),}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{tr }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(qy[}\DecValTok{1}\NormalTok{],qy[}\DecValTok{2}\NormalTok{],}\AttributeTok{by=}\NormalTok{.}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{grid\_dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(tr,}\AttributeTok{ssr=}\ConstantTok{NA}\NormalTok{)}
+\NormalTok{grid\_dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{ssr=}\FunctionTok{as.numeric}\NormalTok{(ssr))]}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ tr)\{}
+  
+\NormalTok{  dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{d=}\FunctionTok{ifelse}\NormalTok{(y\_l1}\SpecialCharTok{\textgreater{}=}\NormalTok{i,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))]}
+  
+\NormalTok{  tar }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(d)}\SpecialCharTok{+}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{d),}\AttributeTok{data=}\NormalTok{dt)}
+  
+\NormalTok{  grid\_dt[tr}\SpecialCharTok{==}\NormalTok{i]}\SpecialCharTok{$}\NormalTok{ssr }\OtherTok{\textless{}{-}} \FunctionTok{crossprod}\NormalTok{(tar}\SpecialCharTok{$}\NormalTok{residuals)}
+  
+\NormalTok{\}}
+
+\NormalTok{tr\_hat }\OtherTok{\textless{}{-}}\NormalTok{ grid\_dt[ssr}\SpecialCharTok{==}\FunctionTok{min}\NormalTok{(ssr)]}\SpecialCharTok{$}\NormalTok{tr}
+\NormalTok{tr\_hat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1
+\end{verbatim}
+
+Estimate the threshold autoregression and compare the parameter estimates with the true parameters of the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{d=}\FunctionTok{ifelse}\NormalTok{(y\_l1}\SpecialCharTok{\textgreater{}=}\NormalTok{tr\_hat,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))]}
+
+\NormalTok{tar }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(d)}\SpecialCharTok{+}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{d),}\AttributeTok{data=}\NormalTok{dt)}
+\FunctionTok{summary}\NormalTok{(tar)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ (y_l1 + y_l2):I(d) + (y_l1 + y_l2):I(1 - d), 
+##     data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.97704 -0.60528 -0.02506  0.61754  2.66733 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   -0.01380    0.07519  -0.183 0.854535    
+## y_l1:I(d)      0.97060    0.06283  15.449  < 2e-16 ***
+## y_l2:I(d)      0.00998    0.06160   0.162 0.871403    
+## y_l1:I(1 - d)  1.24182    0.10229  12.140  < 2e-16 ***
+## y_l2:I(1 - d) -0.34188    0.10158  -3.366 0.000848 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9586 on 351 degrees of freedom
+## Multiple R-squared:  0.916,  Adjusted R-squared:  0.9151 
+## F-statistic: 957.5 on 4 and 351 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Generate a sequence of one-step-ahead forecasts from TAR(2) using the rolling window scheme, where the first rolling window ranges from period 1 to period 240. For comparison, also generate the one-step-ahead forecasts from the AR(2) and the random walk models. Calculate the RMSFE measures for the three models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{240}
+\NormalTok{P }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{R}
+
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{rw=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{ar=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{tar=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+\NormalTok{  ar }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i)])}
+  
+\NormalTok{  tar }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(d)}\SpecialCharTok{+}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{d),}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i)])}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{rw[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{ar[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ ar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{ar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{+}\NormalTok{ar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}2}\SpecialCharTok{+}\NormalTok{i]}
+  
+  \ControlFlowTok{if}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    dt}\SpecialCharTok{$}\NormalTok{tar[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}2}\SpecialCharTok{+}\NormalTok{i]}
+\NormalTok{  \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{    dt}\SpecialCharTok{$}\NormalTok{tar[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{y[R}\DecValTok{{-}2}\SpecialCharTok{+}\NormalTok{i]}
+\NormalTok{  \}}
+  
+\NormalTok{\}}
+
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{rw\_e=}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{rw,}\AttributeTok{ar\_e=}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{ar,}\AttributeTok{tar\_e=}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{tar)]}
+
+\NormalTok{rmsfe\_rw }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\NormalTok{rmsfe\_ar }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{ar\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\NormalTok{rmsfe\_tar }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{tar\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+
+\NormalTok{rmsfe\_rw}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9258102
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rmsfe\_ar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9811523
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rmsfe\_tar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9996084
+\end{verbatim}
+
+Obtain the multi-step-ahead forecasts from period 241 onward using the so-called `skeleton extrapolation' method (which yields biased forecasts) and the bootstrap resampling method (a numerical method that yields valid multi-step-ahead forecasts from nonlinear models). Plot the two forecasts along with the time series.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{tar\_skeleton=}\NormalTok{y)]}
+
+\NormalTok{tar }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(d)}\SpecialCharTok{+}\NormalTok{(y\_l1}\SpecialCharTok{+}\NormalTok{y\_l2)}\SpecialCharTok{:}\FunctionTok{I}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{d),}\AttributeTok{data=}\NormalTok{dt[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{R])}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+  \ControlFlowTok{if}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{tar\_skeleton[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    dt}\SpecialCharTok{$}\NormalTok{tar\_skeleton[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tar\_skeleton[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tar\_skeleton[R}\DecValTok{{-}2}\SpecialCharTok{+}\NormalTok{i]}
+\NormalTok{  \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{    dt}\SpecialCharTok{$}\NormalTok{tar\_skeleton[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tar\_skeleton[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tar\_skeleton[R}\DecValTok{{-}2}\SpecialCharTok{+}\NormalTok{i]}
+\NormalTok{  \}}
+  
+\NormalTok{\}}
+
+\NormalTok{dt[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{R]}\SpecialCharTok{$}\NormalTok{tar\_skeleton }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+
+
+\NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{5000} \CommentTok{\# the number of bootstrap simulations}
+
+\NormalTok{boot\_mat }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(B,dt}\SpecialCharTok{$}\NormalTok{y)}
+
+\ControlFlowTok{for}\NormalTok{(b }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{B)\{}
+\NormalTok{  eps }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(tar}\SpecialCharTok{$}\NormalTok{residuals,P,}\AttributeTok{replace=}\NormalTok{T)}
+  
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+    
+    \ControlFlowTok{if}\NormalTok{(boot\_mat[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i,b]}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{      boot\_mat[R}\SpecialCharTok{+}\NormalTok{i,b] }\OtherTok{\textless{}{-}}\NormalTok{ tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{boot\_mat[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i,b]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{boot\_mat[R}\DecValTok{{-}2}\SpecialCharTok{+}\NormalTok{i,b]}\SpecialCharTok{+}\NormalTok{eps[i]}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{      boot\_mat[R}\SpecialCharTok{+}\NormalTok{i,b] }\OtherTok{\textless{}{-}}\NormalTok{ tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{boot\_mat[R}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{i,b]}\SpecialCharTok{+}\NormalTok{tar}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\NormalTok{boot\_mat[R}\DecValTok{{-}2}\SpecialCharTok{+}\NormalTok{i,b]}\SpecialCharTok{+}\NormalTok{eps[i]}
+\NormalTok{    \}}
+    
+\NormalTok{  \}}
+  
+\NormalTok{\}}
+
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tar\_boot }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(boot\_mat)}
+\NormalTok{dt[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{R]}\SpecialCharTok{$}\NormalTok{tar\_boot }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+
+\NormalTok{sub\_lg }\OtherTok{\textless{}{-}} \FunctionTok{melt}\NormalTok{(dt[,.(date,y,tar\_skeleton,tar\_boot)],}\AttributeTok{id.vars=}\StringTok{"date"}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(sub\_lg,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{color=}\NormalTok{variable,}\AttributeTok{linetype=}\NormalTok{variable))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"darkgray"}\NormalTok{,}\StringTok{"indianred"}\NormalTok{,}\StringTok{"steelblue"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_linetype\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"top"}\NormalTok{,}\AttributeTok{legend.title=}\FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-87-1.pdf}
 
 \end{document}
