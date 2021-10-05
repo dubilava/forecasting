@@ -114,7 +114,7 @@
 
 \title{Economic Time Series Modeling and Forecasting}
 \author{David Ubilava}
-\date{September 2021}
+\date{October 2021}
 
 \begin{document}
 \maketitle
@@ -1061,6 +1061,54 @@ Here, \(B\) is the total number of bootstrap iterations (usually many thousand i
 
 \hypertarget{forecast-evaluation}{%
 \chapter{Forecast Evaluation}\label{forecast-evaluation}}
+
+\hypertarget{the-need-for-the-forecast-evaluation}{%
+\section{The Need for the Forecast Evaluation}\label{the-need-for-the-forecast-evaluation}}
+
+We typically have several candidate econometric models or methods to forecast an economic variable of interest. Among these, we tend to select the most adequate using in-sample goodness of fit measures (e.g., AIC or SIC).
+
+A more sensible approach, at least from the standpoint of a forecaster, would be to assess goodness of fit in an out-of-sample setting. Recall that models that offer the superior in-sample fit don't necessarily produce the most accurate out-of-sample forecasts. That is, while a better in-sample fit can be achieved by incorporating additional parameters in the model, such more complex models extrapolate the estimated parameter uncertainty into the forecasts, thus sabotaging their accuracy.
+
+Thus far we have applied the following algorithm to identify `the best' among the competing forecasts:
+
+\begin{itemize}
+\tightlist
+\item
+  Decide on a loss function (e.g., quadratic loss).
+\item
+  Obtain forecasts, the forecast errors, and the corresponding sample expected loss (e.g., root mean squared forecast error) for each model in consideration.
+\item
+  Rank the models according to their sample expected loss values.
+\item
+  Select the model with the lowest sample expected loss.
+\end{itemize}
+
+But the loss function is a function of a random variable, and in practice we deal with sample information, so sampling variation needs to be taken into the account. Statistical methods of evaluation are, therefore, desirable (at the very least).
+
+\hypertarget{relative-forecast-accuracy-tests}{%
+\section{Relative Forecast Accuracy Tests}\label{relative-forecast-accuracy-tests}}
+
+Here we will cover two tests for the hypothesis that two forecasts are equivalent, in the sense that the associated loss differential is not statistically significantly different from zero.
+
+Consider a time series of length \(T\). Suppose \(h\)-step-ahead forecasts for periods \(R+h\) through \(T\) have been generated from two competing models \(i\) and \(j\): \(y_{t+h|t,i}\) and \(y_{t+h|t,j}\), with corresponding forecast errors: \(e_{t+h,i}\) and \(e_{t+h,j}\). The null hypothesis of equal predictive ability can be given in terms of the unconditional expectation of the loss differential: \[H_0: E\left[d(e_{t+h,ij})\right] = 0,\] where \(d(e_{t+h,ij}) = L(e_{t+h,i})-L(e_{t+h,j})\).
+
+\hypertarget{the-morgan-granger-newbold-test}{%
+\subsection{The Morgan-Granger-Newbold Test}\label{the-morgan-granger-newbold-test}}
+
+The Morgan-Granger-Newbold (MGN) test is based on auxiliary variables: \(u_{1,t+h} = e_{t+h,i}-e_{t+h,j}\) and \(u_{2,t+h} = e_{t+h,i}+e_{t+h,j}\). It follows that: \[E(u_{1,t+h},u_{2,t+h}) = MSFE(i,t+h)-MSFE(j,t+h).\] Thus, the hypothesis of interest is equivalent to testing whether the two auxiliary variables are correlated.
+
+The MGN test statistic is: \[\frac{r}{\sqrt{(P-1)^{-1}(1-r^2)}}\sim t_{P-1},\] where \(t_{P-1}\) is a Student t distribution with \(P-1\) degrees of freedom, \(P\) is the number of out-of-sample forecasts, and \[r=\frac{\sum_{t=R}^{T-h}{u_{1,t+h}u_{2,t+h}}}{\sqrt{\sum_{t=R}^{T-h}{u_{1,t+h}^2}\sum_{t=R}^{T-h}{u_{2,t+h}^2}}}\]
+
+The MGN test relies on the assumption that forecast errors (of the forecasts to be compared) are unbiased, normally distributed, and uncorrelated (with each other). These are rather strict assumptions that are, often, violated in empirical applications.
+
+\hypertarget{the-diebold-mariano-test}{%
+\subsection{The Diebold-Mariano Test}\label{the-diebold-mariano-test}}
+
+The Diebold-Mariano (DM) test relaxes the aforementioned requirements on the forecast errors. The DM test statistic is: \[\frac{\bar{d}_h}{\sqrt{\sigma_d^2/P}} \sim N(0,1),\] where \(\bar{d}_h=P^{-1}\sum_{t=R}^{T-h} d(e_{t+h,ij})\), and where \(P=T-R-h+1\) is the total number of forecasts generated using a rolling or recursive widnow scheme, for example.
+
+A modified version of the DM statistic, due to Harvey, Leybourne, and Newbold (1998), addresses the finite sample properties of the test, so that: \[\sqrt{\frac{P+1-2h+P^{-1}h(h-1)}{P}}DM\sim t_{P-1},\] where \(t_{P-1}\) is a Student t distribution with \(P-1\) degrees of freedom.
+
+In practice, the test of equal predictive ability can be applied within the framework of a regression model as follows: \[d_{t+h} = \delta + \upsilon_{t+h}\;~~t = R,\ldots,T-h,\] where \(d_{t+h} \equiv d(e_{t+h,ij})\). The null of equal predictive ability is equivalent of testing \(H_0: \delta = 0\) in the OLS setting. Moreover, because \(d_{t+h}\) may be serially correlated, autocorrelation consistent standard errors should be used for inference.
 
 \hypertarget{forecast-combination}{%
 \chapter{Forecast Combination}\label{forecast-combination}}
@@ -2487,7 +2535,7 @@ Calculate the RMSFE measures for restricted and unrestricted models, and compare
 \chapter*{Tutorial 6}\label{tutorial-6}}
 \addcontentsline{toc}{chapter}{Tutorial 6}
 
-In this tutorial, we will generate regime-dependent series, we will apply a grid-search method to obtain the threshold parameter, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will apply bootstrap resampling method to generate multi-step-ahead forecasts from a threhsold regression. To run the code, the \texttt{data.table} and \texttt{ggplot2} packages need to be installed and loaded.
+In this tutorial, we will generate regime-dependent series, we will apply a grid-search method to obtain the threshold parameter, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will apply bootstrap resampling method to generate multi-step-ahead forecasts from a threshold regression. To run the code, the \texttt{data.table} and \texttt{ggplot2} packages need to be installed and loaded.
 
 Let's generate a time series that follow a TAR(2) process of the following form:
 \[y_t = \left\{\begin{array}
@@ -2760,5 +2808,175 @@ Obtain the multi-step-ahead forecasts from period 241 onward using the so-called
 \end{Shaded}
 
 \includegraphics{forecasting_files/figure-latex/unnamed-chunk-87-1.pdf}
+
+\hypertarget{tutorial-7}{%
+\chapter*{Tutorial 7}\label{tutorial-7}}
+\addcontentsline{toc}{chapter}{Tutorial 7}
+
+In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from competing models using a rolling window procedure, and we will perform the Diebold-Mariano type regression-based test for equal predictive ability of the competing models. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
+
+Let's generate a time series that follow an AR(2) process of the following form:
+\[y_t = 0.2+1.1y_{t-1}-0.3y_{t-2}+\varepsilon_t\]
+where \(e_{t} \sim N(0,\sigma^2)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{240}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
+\NormalTok{y[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.2}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{1}\NormalTok{]}
+\NormalTok{y[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.2+1.1}\SpecialCharTok{*}\NormalTok{y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{2}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{n)\{}
+\NormalTok{  y[i] }\OtherTok{\textless{}{-}} \FloatTok{0.2+1.1}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{{-}}\FloatTok{0.3}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}2}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[i]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2000), store these along with \(y\) in a \textbf{data.table}, call it `dt,' and plot the realized time series using \textbf{ggplot} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2000{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(date,y)}
+
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-90-1.pdf}
+
+Suppose the candidate models are AR(1), AR(2), and AR(3), and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. Calculate the RMSFE measures for the canddidate models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{y1=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{1}\NormalTok{),}\AttributeTok{y2=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{2}\NormalTok{),}\AttributeTok{y3=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{3}\NormalTok{))]}
+
+\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{180}
+\NormalTok{P }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{R}
+
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{rw=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a3=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{rw[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}
+  
+\NormalTok{  ar1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  ar2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1}\SpecialCharTok{+}\NormalTok{y2,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  ar3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1}\SpecialCharTok{+}\NormalTok{y2}\SpecialCharTok{+}\NormalTok{y3,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ ar1}\SpecialCharTok{$}\NormalTok{coefficients}\SpecialCharTok{\%*\%}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,dt[R}\SpecialCharTok{+}\NormalTok{i,}\FunctionTok{c}\NormalTok{(}\StringTok{"y1"}\NormalTok{)]))}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ ar2}\SpecialCharTok{$}\NormalTok{coefficients}\SpecialCharTok{\%*\%}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,dt[R}\SpecialCharTok{+}\NormalTok{i,}\FunctionTok{c}\NormalTok{(}\StringTok{"y1"}\NormalTok{,}\StringTok{"y2"}\NormalTok{)]))}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a3[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ ar3}\SpecialCharTok{$}\NormalTok{coefficients}\SpecialCharTok{\%*\%}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,dt[R}\SpecialCharTok{+}\NormalTok{i,}\FunctionTok{c}\NormalTok{(}\StringTok{"y1"}\NormalTok{,}\StringTok{"y2"}\NormalTok{,}\StringTok{"y3"}\NormalTok{)]))}
+  
+\NormalTok{\}}
+
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{rw\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{rw}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a3\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a3}
+
+\CommentTok{\# RMSFEs}
+\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9653331
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{a1\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9053279
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{a2\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8842908
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{a3\_e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8877883
+\end{verbatim}
+
+Do the autoregressive models generate `statistically significantly' more accurate forecasts than the random walk model? We will answer this question by performing the regression-based Diebold-Mariano tests. First we will generate the loss differentials; then we will run three separate regressions to assess predictive accuracy of AR(1), AR(2), and AR(3) relative to the random walk; and finally we will base our decision on the heteroskedasticity and autocorrelation consistent standard errors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld1 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld2 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld3 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a3\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+
+\NormalTok{reg.ld1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld1}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{reg.ld2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld2}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{reg.ld3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld3}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+
+\FunctionTok{coeftest}\NormalTok{(reg.ld1,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg.ld1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) 0.112249   0.047525  2.3619   0.0215 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coeftest}\NormalTok{(reg.ld2,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg.ld2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) 0.149898   0.083086  1.8041  0.07632 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coeftest}\NormalTok{(reg.ld3,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg.ld3))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) 0.143700   0.081309  1.7673  0.08235 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
 
 \end{document}
