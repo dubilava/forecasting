@@ -2979,4 +2979,162 @@ Do the autoregressive models generate `statistically significantly' more accurat
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 
+\hypertarget{tutorial-8}{%
+\chapter*{Tutorial 8}\label{tutorial-8}}
+\addcontentsline{toc}{chapter}{Tutorial 8}
+
+In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from a set of models using a rolling window procedure, we will combine these forecasts and assess the accuracy of the combined forecast. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
+
+Let's generate a time series that follow an AR(2) process with the quadratic trend component as follows:
+\[y_t = 0.03t-0.0001t^2+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t\]
+where \(e_{t} \sim N(0,\sigma^2)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{240}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
+\NormalTok{y[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.03}\SpecialCharTok{*}\DecValTok{1}\FloatTok{{-}0.0001}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{1}\NormalTok{]}
+\NormalTok{y[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.03}\SpecialCharTok{*}\DecValTok{2}\FloatTok{{-}0.0001}\SpecialCharTok{*}\NormalTok{(}\DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}\FloatTok{0.6}\SpecialCharTok{*}\NormalTok{y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{2}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{n)\{}
+\NormalTok{  y[i] }\OtherTok{\textless{}{-}} \FloatTok{0.03}\SpecialCharTok{*}\NormalTok{i}\FloatTok{{-}0.0001}\SpecialCharTok{*}\NormalTok{(i}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}\FloatTok{0.6}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\FloatTok{0.2}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}2}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[i]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2000), store these along with \(y\) in a \textbf{data.table}, call it `dt,' and plot the realized time series using \textbf{ggplot} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2000{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(date,y)}
+
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-95-1.pdf}
+
+Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{y1=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{1}\NormalTok{),}\AttributeTok{y2=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{2}\NormalTok{),}\AttributeTok{y3=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{3}\NormalTok{),}\AttributeTok{trend=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(dt)))]}
+
+\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{180}
+\NormalTok{P }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{R}
+
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{rw=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{tr=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{rw[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}
+  
+\NormalTok{  a1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  a2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1}\SpecialCharTok{+}\NormalTok{y2,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  tr }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1}\SpecialCharTok{+}\NormalTok{y2}\SpecialCharTok{+}\NormalTok{trend,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ a1}\SpecialCharTok{$}\NormalTok{coefficients}\SpecialCharTok{\%*\%}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,dt[R}\SpecialCharTok{+}\NormalTok{i,}\FunctionTok{c}\NormalTok{(}\StringTok{"y1"}\NormalTok{)]))}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ a2}\SpecialCharTok{$}\NormalTok{coefficients}\SpecialCharTok{\%*\%}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,dt[R}\SpecialCharTok{+}\NormalTok{i,}\FunctionTok{c}\NormalTok{(}\StringTok{"y1"}\NormalTok{,}\StringTok{"y2"}\NormalTok{)]))}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{tr[R}\SpecialCharTok{+}\NormalTok{i] }\OtherTok{\textless{}{-}}\NormalTok{ tr}\SpecialCharTok{$}\NormalTok{coefficients}\SpecialCharTok{\%*\%}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,dt[R}\SpecialCharTok{+}\NormalTok{i,}\FunctionTok{c}\NormalTok{(}\StringTok{"y1"}\NormalTok{,}\StringTok{"y2"}\NormalTok{,}\StringTok{"trend"}\NormalTok{)]))}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Does either of the considered models `sttaistically significantly' outperform the random walk?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{rw\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{rw}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tr\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tr}
+
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld1 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld2 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ldt }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tr\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+
+\NormalTok{reg.ld1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld1}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{reg.ld2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld2}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{reg.ldt }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ldt}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+
+\FunctionTok{coeftest}\NormalTok{(reg.ld1,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg.ld1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) 0.081204   0.048040  1.6903  0.09624 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coeftest}\NormalTok{(reg.ld2,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg.ld2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)  0.32634    0.14912  2.1883  0.03262 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coeftest}\NormalTok{(reg.ldt,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg.ldt))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  0.24461    0.14943  1.6369    0.107
+\end{verbatim}
+
+All of the models do, on average, generate more accurate forecasts than random walk. The AR(2) generates statistically significantly more accurate forecasts, based on Diebold-Mariano test applied on quadratic loss function.
+
+Might each model contain some useful information for improving forecast accuracy? Let's combine the forecasts from the AR(1) and the linear trend model using equal weights scheme and assess the combined forecast.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{t1 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{a1}\SpecialCharTok{*}\NormalTok{.}\DecValTok{5}\SpecialCharTok{+}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{tr}\SpecialCharTok{*}\NormalTok{.}\DecValTok{5}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{t1\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{t1}
+
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ldt1 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{rw\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{t1\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+
+\NormalTok{reg.ldt1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ldt1}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+
+\FunctionTok{coeftest}\NormalTok{(reg.ldt1,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg.ldt1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) 0.232926   0.098544  2.3637  0.02141 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
 \end{document}
