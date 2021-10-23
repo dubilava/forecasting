@@ -3137,4 +3137,219 @@ Might each model contain some useful information for improving forecast accuracy
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 
+\hypertarget{tutorial-9}{%
+\chapter*{Tutorial 9}\label{tutorial-9}}
+\addcontentsline{toc}{chapter}{Tutorial 9}
+
+In this tutorial, we will generate a time series, we will obtain multi-step-ahead forecasts using direct and iterated methods from autoregressive models using a rolling window procedure, and we will assess the accuracy of the forecast. We will then turn to interval forecasts, and we will assess their coverage accuracy. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
+
+Let's generate a time series that follow an AR(2) process as follows:
+\[y_t = 0.01t+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t\]
+where \(e_{t} \sim N(0,1)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{240}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{9}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
+\NormalTok{y[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.01}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{1}\NormalTok{]}
+\NormalTok{y[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.02+0.6}\SpecialCharTok{*}\NormalTok{y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{2}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{n)\{}
+\NormalTok{  y[i] }\OtherTok{\textless{}{-}} \FloatTok{0.01}\SpecialCharTok{*}\NormalTok{i}\FloatTok{+0.6}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\FloatTok{0.2}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}2}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[i]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with \(y\) in a \textbf{data.table}, call it `dt,' and plot the realized time series using the \textbf{ggplot} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2000{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(date,y)}
+
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-101-1.pdf}
+
+Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h }\OtherTok{\textless{}{-}} \DecValTok{12}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ dt[,.(date,y,}\AttributeTok{y1=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{1}\NormalTok{),}\AttributeTok{y2=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{2}\NormalTok{),}\AttributeTok{y12=}\FunctionTok{shift}\NormalTok{(y,h),}\AttributeTok{y13=}\FunctionTok{shift}\NormalTok{(y,h}\SpecialCharTok{+}\DecValTok{1}\NormalTok{))]}
+\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ dt[}\FunctionTok{complete.cases}\NormalTok{(dt)]}
+
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{a1i=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1d=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2i=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2d=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
+
+\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{180}
+\NormalTok{P }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{R}\SpecialCharTok{{-}}\NormalTok{h}\SpecialCharTok{+}\DecValTok{1}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+  \DocumentationTok{\#\#\# iterated multi{-}step method}
+\NormalTok{  a1i }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  a2i }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1}\SpecialCharTok{+}\NormalTok{y2,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  iter\_dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(}\AttributeTok{hor=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{h,}\AttributeTok{a1=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))}
+  
+  \DocumentationTok{\#\# AR(1)}
+\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a1[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{h)\{}
+\NormalTok{    iter\_dt}\SpecialCharTok{$}\NormalTok{a1[j] }\OtherTok{\textless{}{-}}\NormalTok{ a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a1[j}\DecValTok{{-}1}\NormalTok{]}
+\NormalTok{  \}}
+  
+  \DocumentationTok{\#\# AR(2)}
+\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y1}
+\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{h)\{}
+\NormalTok{    iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j}\DecValTok{{-}2}\NormalTok{]}
+\NormalTok{  \}}
+
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1i[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ iter\_dt}\SpecialCharTok{$}\NormalTok{a1[h]}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2i[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ iter\_dt}\SpecialCharTok{$}\NormalTok{a2[h]}
+  
+  \DocumentationTok{\#\#\# direct multi{-}step method}
+\NormalTok{  a1d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  a2d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12}\SpecialCharTok{+}\NormalTok{y13,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1d[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2d[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{+}\NormalTok{a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y1}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+We can now test whether the forecasts of the iterated method `statistically significantly' outperform those of the direct method?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1d\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1d}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2d\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2d}
+
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld1 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{a1d\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld2 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{a2d\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+
+\NormalTok{reg\_ld1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld1}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{reg\_ld2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld2}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+
+\FunctionTok{coeftest}\NormalTok{(reg\_ld1,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg\_ld1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value  Pr(>|t|)    
+## (Intercept)  -6.9266     1.7170 -4.0342 0.0002828 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coeftest}\NormalTok{(reg\_ld2,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg\_ld2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)  -3.1094     1.3271  -2.343  0.02494 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Obtain interval forecasts for horizon 12 using the direct method for an AR(1) model and a linear trend model; plot these interval forecasts along with the observed series.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{trend }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(dt))}
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{a1dl=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1du=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{trdl=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{trdu=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+\NormalTok{  a1d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  trd }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{trend,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  a1d\_pf }\OtherTok{\textless{}{-}}\NormalTok{ a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+\NormalTok{  trd\_pf }\OtherTok{\textless{}{-}}\NormalTok{ trd}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{trd}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{h]}\SpecialCharTok{$}\NormalTok{trend}
+  
+\NormalTok{  a1d\_sd }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(a1d)}\SpecialCharTok{$}\NormalTok{sigma}
+\NormalTok{  trd\_sd }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(trd)}\SpecialCharTok{$}\NormalTok{sigma}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1dl[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d\_pf}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{a1d\_sd}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1du[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d\_pf}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{a1d\_sd}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{trdl[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ trd\_pf}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{trd\_sd}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{trdu[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ trd\_pf}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{trd\_sd}
+\NormalTok{\}}
+
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{a1dl),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"steelblue"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{a1du),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"steelblue"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{trdl),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"indianred"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{trdu),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"indianred"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-104-1.pdf}
+
+Test the unconditional coverage of the interval forecasts from the considered two models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{i1=}\FunctionTok{ifelse}\NormalTok{(y}\SpecialCharTok{\textgreater{}=}\NormalTok{a1dl }\SpecialCharTok{\&}\NormalTok{ y}\SpecialCharTok{\textless{}=}\NormalTok{a1du,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}\AttributeTok{it=}\FunctionTok{ifelse}\NormalTok{(y}\SpecialCharTok{\textgreater{}=}\NormalTok{trdl }\SpecialCharTok{\&}\NormalTok{ y}\SpecialCharTok{\textless{}=}\NormalTok{trdu,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))]}
+
+
+\CommentTok{\# AR(1)}
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{i1,}\AttributeTok{na.rm=}\NormalTok{T)}
+
+\NormalTok{L10 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\FloatTok{{-}.95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1))}\SpecialCharTok{*}\NormalTok{(.}\DecValTok{95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p1)}
+\NormalTok{L11 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1))}\SpecialCharTok{*}\NormalTok{(p1)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p1)}
+
+\NormalTok{LR1 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(L10}\SpecialCharTok{/}\NormalTok{L11)}
+
+\FunctionTok{pchisq}\NormalTok{(LR1,}\AttributeTok{df=}\DecValTok{1}\NormalTok{,}\AttributeTok{lower.tail=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.01027851
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# AR(2)}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{it,}\AttributeTok{na.rm=}\NormalTok{T)}
+
+\NormalTok{L20 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\FloatTok{{-}.95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2))}\SpecialCharTok{*}\NormalTok{(.}\DecValTok{95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p2)}
+\NormalTok{L21 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2))}\SpecialCharTok{*}\NormalTok{(p2)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p2)}
+
+\NormalTok{LR2 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(L20}\SpecialCharTok{/}\NormalTok{L21)}
+
+\FunctionTok{pchisq}\NormalTok{(LR2,}\AttributeTok{df=}\DecValTok{1}\NormalTok{,}\AttributeTok{lower.tail=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1441849
+\end{verbatim}
+
 \end{document}
