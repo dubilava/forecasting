@@ -430,7 +430,7 @@ Seasonality is typically modeled as monthly or quarterly pattern, but can also b
 
 One way to deal with the seasonality in data is to ``remove'' it prior to the use of the series (i.e., work with a seasonally adjusted time series). Indeed, some economic time series are only/also available in a seasonally-adjusted form.
 
-Otherwise, and perhaps more interestingly, we can directly model seasonality in a regression setting by incorporating seasonal dummy variables.
+Otherwise, and perhaps more interestingly, we can directly model seasonality in a regression setting by incorporating seasonal dummy variables, for example.
 
 \hypertarget{modeling-1}{%
 \section{Modeling}\label{modeling-1}}
@@ -438,9 +438,13 @@ Otherwise, and perhaps more interestingly, we can directly model seasonality in 
 A seasonal model is given by: \[y_t = \sum_{i=1}^{s}\gamma_i d_{it} + \varepsilon_t,\]
 where \(s\) denotes the frequency of the data, and \(d_{it}\) takes the value of 1 repeatedly after every \(s\) periods, and such that \(\sum_{i} d_{it} = 1\), \(\forall t\).
 
-Alternatively the seasonal model can be rewritten as: \[y_t = \alpha + \sum_{i=1}^{s-1}\delta_i d_{it} + \varepsilon_t,\] in which case \(\alpha\) is an intercept of an omitted season, and \(\delta_i\) represents a deviation from it during the \(i^{th}\) season.
+Alternatively the seasonal model can be rewritten as: \[y_t = \alpha + \sum_{i=1}^{s-1}\delta_i d_{it} + \varepsilon_t,\] in which case \(\alpha\) is an intercept of an omitted season, and \(\delta_i\) represents a deviation from it during the \(i^{th}\) season. This is a more typical form of a seasonal model.
 
 Both variants of a seasonal model result in an identical fit and forecasts.
+
+When dealing with weekly or daily data, the dummy variable approach of modeling seasonality may not be practical, nor efficient in most instances, as that will require estimating another 51 or 364 parameters. A way to model seasonality without giving up too many degrees of freedom is by using the so-called harmonic seasonal variables, which are a set of Fourier terms.
+
+The Fourier terms can be applied to model seasonality at any frequency, indeed. Suppose, for example, we are working with monthly time series. A model with Fourier terms will have the following form: \[y_t = \alpha+\sum_{k=1}^{K}\left[\beta_{1k}\sin\left(\frac{2\pi kt}{12}\right)+\beta_{2k}\cos\left(\frac{2\pi kt}{12}\right)\right]+\varepsilon_t,\] where the value of \(K\) can be determined using an information criterion (e.g., AIC or SIC).
 
 \hypertarget{forecasting-1}{%
 \section{Forecasting}\label{forecasting-1}}
