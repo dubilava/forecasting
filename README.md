@@ -1,4 +1,5 @@
 # Economic Time Series Modeling and Forecasting
+usethis::use_logo("logo.png")
 
 ## Current Chapters
 
@@ -18,20 +19,20 @@ The chapters are organized in four parts: *Preliminaries*---chapters 1-3, *Deter
 
 ## Planned Changes
 
-The chapters will be organized as follows. 
+The chapters will be organized as follows: 
 
-I.    Foundations of Time Series Econometrics and Forecasting
+I.    Preliminaries
       1. Introduction to Forecasting
       2. Stochastic Process and Time Series
       3. Forecast Evaluation
-II.   Forecasting with Deterministic Models
+II.   Trends and Seasonality
       4. Trends
       5. Seasonality
-III.  Forecasting with Autoregressive Models
+III.  Dynamic Models
       6. Linear Autoregression
       7. Vector Autoregression
       8. Threshold Autoregression
-IV.   Forecast Assessment and Combination
+IV.   Forecast Inference
       9. Forecast Assessment
       10. Forecast Combination
  
