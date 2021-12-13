@@ -1,5 +1,4 @@
-# Economic Time Series Modeling and Forecasting
-![](forecasting-logo.png){width=192px}
+# Economic Time Series Modeling and Forecasting <img src="forecasting-logo.png" align="right" style="padding-left:10px;background-color:white;" />
 
 ## Current Chapters
 
