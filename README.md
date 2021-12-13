@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Econometric Time Series Modeling and Forecasting <img src="forecasting-logo.png" align="left" style="padding:10px;background-color:white;" height="150"/>
-=======
-# Time Series Modeling and Forecasting <img src="forecasting-logo.png" align="right" style="padding-left:10px;background-color:white;" height="150"/>
->>>>>>> 599a408d93ccdcd7cbcc462c06dcd08352a39a72
 
 ## Current Chapters
 
