@@ -1,4 +1,4 @@
-# Econometric Time Series Modeling and Forecasting <img src="forecasting-logo.png" align="left" style="padding:10px;background-color:white;" height="150"/>
+# Econometric Time Series Modeling and Forecasting <img src="forecasting-logo.png" align="right" style="padding:10px;background-color:white;" height="300"/>
 
 ## Current Chapters
 
