@@ -1,4 +1,4 @@
-# Time Series Modeling and Forecasting <img src="forecasting-logo.png" align="right" style="padding-left:10px;background-color:white;" height="300"/>
+# Time Series Modeling and Forecasting <img src="forecasting-logo.png" align="right" style="padding-left:10px;background-color:white;" height="200"/>
 
 ## Current Chapters
 
