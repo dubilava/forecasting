@@ -1,1 +1,4 @@
 theme: jekyll-theme-minimal
+title: Introduction to Time Series Modeling and Forecasting
+description: An online textbook with emphasis on coding in R.
+logo: forecasting-logo.png
