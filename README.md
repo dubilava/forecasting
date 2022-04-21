@@ -1,6 +1,4 @@
-<img src="forecasting-logo.png" align="right" style="padding:10px;background-color:white;" height="300"/>
-
-# Introduction to Time Series Modeling and Forecasting 
+# Outline 
 
 
 The chapters are organized in four parts: *Preliminaries*---chapters 1-3, *Deterministic Models*---chapters 4-5, *Autoregressive Models*---chapters 6-8, and *Forecast Assessment*--chapters 9-10. 
