@@ -1,22 +1,22 @@
-# Outline 
+This website compiles teaching material based on this [online textbook](docs/index). The textbook is organized in four parts and ten chapters. Each chapter, which covers a topic pertinent to economic forecasting, is accompanied by an R tutorial. The lecture slides, some video recordings, and supplementary reading material for each topic are presented below.
 
-This [online textbook](docs/index)
+## Introduction to Forecasting
 
-The chapters are organized in four parts: *Preliminaries*---chapters 1-3, *Deterministic Models*---chapters 4-5, *Autoregressive Models*---chapters 6-8, and *Forecast Assessment*--chapters 9-10. 
+## Basics of Time Series Econometrics
 
-I.    Preliminaries
-      1. Introduction to Forecasting
-      2. Stochastic Process and Time Series
-      3. Forecast Methods and Routines
-II.   Deterministic Models
-      4. Trends
-      5. Seasonality
-III.  Autoregressive Models
-      6. Linear Autoregression
-      7. Vector Autoregression
-      8. Threshold Autoregression
-IV.   Forecast Assessment
-      9. Forecast Evaluation
-      10. Forecast Combination
+## Forecasting Methods and Routines
 
-Each chapter is accompanied by an R tutorial.
+## Trends
+
+## Seasonality
+
+## Linear Autoregression
+
+## Vector Autoregression
+
+## Threshold Autoregression
+
+## Forecast Evaluation
+
+## Forecast Combination
+
