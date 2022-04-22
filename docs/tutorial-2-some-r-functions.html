@@ -6,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Tutorial 2: Some R Functions | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
   <meta name="description" content="Tutorial 2: Some R Functions | Introduction to Time Series Modeling and Forecasting with Applications in R" />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Tutorial 2: Some R Functions | Introduction to Time Series Modeling and Forecasting with Applications in R" />
   <meta property="og:type" content="book" />
+  
   
   <meta property="og:description" content="Tutorial 2: Some R Functions | Introduction to Time Series Modeling and Forecasting with Applications in R" />
   
@@ -31,8 +32,8 @@
   
 <link rel="prev" href="tutorial-1-introduction-to-r.html"/>
 <link rel="next" href="tutorial-3-forecasting-methods-and-routines.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -40,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -138,11 +140,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="index.html#foreword">Foreword<span></span></a></li>
 <li><a href="preliminaries.html#preliminaries">Preliminaries<span></span></a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting<span></span></a></li>
-<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series<span></span></a>
+<li class="chapter" data-level="2" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html"><i class="fa fa-check"></i><b>2</b> Basics of Time Series Econometics<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity<span></span></a></li>
-<li class="chapter" data-level="2.2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence<span></span></a></li>
-<li class="chapter" data-level="2.3" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations<span></span></a></li>
+<li class="chapter" data-level="2.1" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence<span></span></a></li>
+<li class="chapter" data-level="2.3" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html"><i class="fa fa-check"></i><b>3</b> Forecasting Methods and Routines<span></span></a>
 <ul>
@@ -320,6 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -359,10 +362,6 @@ gitbook.start({
 "text": null
 },
 "download": ["forecasting.pdf", "forecasting.epub", "forecasting.mobi"],
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "section"
 }

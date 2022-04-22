@@ -5,14 +5,10 @@
 \documentclass[
   12pt,
   oneside]{book}
-\title{Introduction to Time Series Modeling and Forecasting with Applications in R}
-\author{David Ubilava}
-\date{April 2022}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -117,9 +113,13 @@
 \pretitle{\begin{center}
 	\includegraphics{forecasting-logo.png}\LARGE\\}
 \posttitle{\end{center}}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+
+\title{Introduction to Time Series Modeling and Forecasting with Applications in R}
+\author{David Ubilava}
+\date{April 2022}
 
 \begin{document}
 \maketitle
@@ -153,8 +153,8 @@ Information is key in forecasting. It comes in many forms, but once it is organi
 
 Accurate forecasting is difficult. Indeed, forecasting is difficult. So, as we forecast, we are bound to make mistakes, which manifest into the \emph{forecast errors}. We have these errors because we don't know the true model, so we make a guess about the most suitable model for time series analysis. We also have the errors because we don't know the true parameters of the model. Instead, using a subset of history we estimate the parameters, which are prone to a sampling error. Finally, even if our guess about the model is exactly correct, and even if our parameter estimates happen to be exactly equal to the true parameters of the `right' model, our forecasts may still be off, because of all those factors that have never happened in past, and only characterize the future. And because of this, there is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved.
 
-\hypertarget{stochastic-process-and-time-series}{%
-\chapter{Stochastic Process and Time Series}\label{stochastic-process-and-time-series}}
+\hypertarget{basics-of-time-series-econometics}{%
+\chapter{Basics of Time Series Econometics}\label{basics-of-time-series-econometics}}
 
 A time series is a realization of a sequence of random variables that are stored chronologically. This sequence is referred to as the \emph{stochastic process}. Thus, a time series is a realization of the stochastic process. We index time periods as \(1,2,\ldots,T\), so that the stochastic process is given by \(\{Y_t:t=1,\ldots,T\}\). A time series is represented by a set of observations: \(\{y_1,\ldots,y_T\}\). One can view a time series as a finite sample from an underlying doubly--infinite sequence: \(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}\). This is to say that the history extends beyond the starting and ending time periods of the sample at hand.
 
@@ -1313,8 +1313,6 @@ We can invert a(n invertible) matrix using the solve() function:
 ## c2  0.6666667  0 -0.1666667
 ## c3 -1.3333333  1  0.3333333
 \end{verbatim}
-
-Try some of this yourself:
 
 \hypertarget{data-visualisation}{%
 \section*{Data Visualisation}\label{data-visualisation}}
