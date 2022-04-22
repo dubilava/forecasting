@@ -1,4 +1,4 @@
-# Stochastic Process and Time Series
+# Basics of Time Series Econometics
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
