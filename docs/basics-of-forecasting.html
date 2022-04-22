@@ -163,6 +163,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.2</b> Modeling</a></li>
 <li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.3</b> Forecasting</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="deterministic-time-series-models-1.html"><a href="deterministic-time-series-models-1.html"><i class="fa fa-check"></i>Deterministic Time Series Models</a></li>
 <li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.1</b> Modeling</a></li>
@@ -266,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         &amp; + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
         &amp; + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
         \end{aligned}\]</span></p>
-<p>where <span class="math inline">\(\Omega_t\)</span> denotes the information set available at the time when the forecast is made; <span class="math inline">\(g(\cdot)\)</span> is a functional form of a model used to fit the data; <span class="math inline">\(\theta\)</span> is a set of parameters of the model, and <span class="math inline">\(\hat{\theta}\)</span> are their estimates</p>
+<p>where <span class="math inline">\(\Omega_t\)</span> denotes the information set available at the time when the forecast is made; <span class="math inline">\(g(\cdot)\)</span> is a functional form of a model applied to the data; <span class="math inline">\(\theta\)</span> is a set of parameters of the model, and <span class="math inline">\(\hat{\theta}\)</span> are their estimates</p>
 <p>Because uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the ‘cost’ associated with the forecast errors. This is achieved by minimizing the expected loss function.</p>
 <p>A loss function, <span class="math inline">\(L(e_{t+h|t})\)</span>, can take many different forms, but is should satisfy the following properties:
 <span class="math display">\[\begin{aligned}

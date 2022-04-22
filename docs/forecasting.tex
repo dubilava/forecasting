@@ -3,11 +3,16 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
+  12pt,
   oneside]{book}
+\title{Introduction to Time Series Modeling and Forecasting with Applications in R}
+\author{David Ubilava}
+\date{April 2022}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -36,7 +41,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Economic Time Series Modeling and Forecasting},
+  pdftitle={Introduction to Time Series Modeling and Forecasting with Applications in R},
   pdfauthor={David Ubilava},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -108,13 +113,13 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-\ifluatex
+\usepackage{titling}
+\pretitle{\begin{center}
+	\includegraphics{forecasting-logo.png}\LARGE\\}
+\posttitle{\end{center}}
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-
-\title{Economic Time Series Modeling and Forecasting}
-\author{David Ubilava}
-\date{October 2021}
 
 \begin{document}
 \maketitle
@@ -123,11 +128,17 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{preamble}{%
-\chapter*{Preamble}\label{preamble}}
-\addcontentsline{toc}{chapter}{Preamble}
+\hypertarget{foreword}{%
+\chapter*{Foreword}\label{foreword}}
+\addcontentsline{toc}{chapter}{Foreword}
 
-These notes are prepared to teach an undergraduate-level course on economic forecasting. The content is presented in four parts. The first part, \emph{Preliminaries}, introduces the concept of forecasting in time series context. The second part, \emph{Deterministic Time Series Models}, covers trends and seasonal models. The third part, \emph{Dynamic Time Series Models}, covers linear, multivariate, and nonlinear autoregressive processes. The fourth part, \emph{Forecast Assessment}, goes over forecast evaluation and combination routines, and forecast accuracy tests.
+`Prediction is very difficult, especially about the future.' -- a perfect quote about our inability to make a perfect forecast, often attributed to Niels Bohr, is very much on-brand for the study of forecasting. And so it goes.
+
+I came across this quote as I was wrapping up my doctoral dissertation at Purdue University. My dissertation topic was `Nonlinear Multivariate Modeling and Forecasting of Commodity Prices.' When I started my doctoral degree, I had not taken a designated time series econometrics or forecasting course. By the time I was completing my degree, I had learned enough to know how difficult it was to achieve accurate forecasts. A chapter of my dissertation, which pretty much was a forecasting exercise, yielded the so-called `null results.' I felt uneasy about it. I had an urge to justify, somehow, these null results. And then I stumbled across this quote, which `saved my day.' I stuck it as an epigraph of my dissertation. It captured my struggles as a forecaster, and provided the context to the results of my work.
+
+Some years later, as I started teaching a course on forecasting, I spend a great deal of time explaining---indeed preparing students for the inevitable---that forecasting is difficult, and that more often than not we will not be able to give accurate forecasts. But I also stress that this should not discourage us from trying because most great achievements in this world have myriads of failed attempts as a foundation.
+
+What is forecast if not a guess? An educated guess, nonetheless. A good guess doesn't have to be spot-on. It almost never is, only if by fluke. In fact, an inaccurate guess can be helpful too. That we were unable to exactly predict an event, tells us something about the underlying processes that result in an outcome different from what we predicted. Such conjecture can be useful. Forecasting, even if inaccurate, can be useful. George Box's `all models are wrong but some are useful' is certainly suitable to the study of forecasting. This book introduces time series models and presents a case of their usefulness in predicting events.
 
 \hypertarget{preliminaries}{%
 \chapter*{Preliminaries}\label{preliminaries}}
@@ -136,27 +147,23 @@ These notes are prepared to teach an undergraduate-level course on economic fore
 \hypertarget{introduction-to-forecasting}{%
 \chapter{Introduction to Forecasting}\label{introduction-to-forecasting}}
 
-Economic events tend to co-occur, precede, or succeed one another. Understanding the essence of such relationships -- that is, identifying causal mechanisms that facilitate correlation among economic variables -- is at the core of econometric analysis. Throughout a relatively brief history of the study of econometrics, numerous methods and techniques have been proposed and developed -- all aimed to give an empirical content to economic models. These methods and techniques allow us to test theories, evaluate policy outcomes, etc.
-
-Econometric models rely on correct (and accurate) identification of the causal mechanism in the underlying process. But they are also predictive by nature -- they help us make economic forecasts even when the causal mechanism may not be well identified. In other words, while correlation does not necessarily imply causality, if the goal is to make a forecast, a mere correlation might as well suffice.
-
 Roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date. Over time, and particularly with the development of the study of econometrics, more rigorous forecasting methods have been introduced and developed. All methods -- primitive or complex, spurious or scientifically substantiated -- have one thing in common: they all rely (or, at least, pretend to rely) on \emph{information}.
 
-Information is key in forecasting. It comes in many forms, but after it is organized and stored, what we end up with is data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series -- chronologically stored data, collected at regular intervals over a period of time. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we \emph{may} be able to forecast an event with some degree of accuracy.
+Information is key in forecasting. It comes in many forms, but once it is organized and stored, we end up with \emph{data}. Data that is organized and stored a certain way -- chronologically and at regular intervals -- are referred to as the \emph{time series}. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we \emph{may} be able to forecast an event with some degree of accuracy.
 
-Accurate forecasting is difficult. No matter how rich the available data are, or how well the econometric model fits the data, there still is a surprise element concerning the forecast -- something that has never happened in past, and is only specific to the future. And because of this, there is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved.
+Accurate forecasting is difficult. Indeed, forecasting is difficult. So, as we forecast, we are bound to make mistakes, which manifest into the \emph{forecast errors}. We have these errors because we don't know the true model, so we make a guess about the most suitable model for time series analysis. We also have the errors because we don't know the true parameters of the model. Instead, using a subset of history we estimate the parameters, which are prone to a sampling error. Finally, even if our guess about the model is exactly correct, and even if our parameter estimates happen to be exactly equal to the true parameters of the `right' model, our forecasts may still be off, because of all those factors that have never happened in past, and only characterize the future. And because of this, there is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved.
 
 \hypertarget{stochastic-process-and-time-series}{%
 \chapter{Stochastic Process and Time Series}\label{stochastic-process-and-time-series}}
 
-Time series are realizations of a chronologically stored sequence of random variables. This sequence of random variables is referred to as the \emph{stochastic process}. Thus, a time series is a realisation of the stochastic process. We index time periods as \(1,2,\ldots,T\), and denote the set of observations as \(\{y_1,\ldots,y_T\}\). One can view a time series as a finite sample from an underlying doubly--infinite sequence: \(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}\).
+A time series is a realization of a sequence of random variables that are stored chronologically. This sequence is referred to as the \emph{stochastic process}. Thus, a time series is a realization of the stochastic process. We index time periods as \(1,2,\ldots,T\), so that the stochastic process is given by \(\{Y_t:t=1,\ldots,T\}\). A time series is represented by a set of observations: \(\{y_1,\ldots,y_T\}\). One can view a time series as a finite sample from an underlying doubly--infinite sequence: \(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}\). This is to say that the history extends beyond the starting and ending time periods of the sample at hand.
 
 \hypertarget{stationarity}{%
 \section{Stationarity}\label{stationarity}}
 
-If all random variables, from where the time series are drawn, have the same distribution, then we refert to such time series as \emph{stationary}. Stationarity is an important feature, and the assumption, on which the time series analysis heavily relies.
+If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as \emph{stationary} time series. Stationarity is an important feature, and the assumption, on which the time series analysis heavily relies.
 
-Before diving any further into the concepts and methods of time series econometrics, consider the simplest kind of time series comprised of realizations from independent and identically distributed random variable with zero mean and constant variance: \(\varepsilon_t \sim iid\left(0,\sigma^2\right)\). The following graph plots this time series against time.
+Before diving any further into the concepts and methods of time series econometrics, consider the simplest kind of time series comprised of realizations from independent and identically distributed normal random variable with zero mean and constant variance: \(\varepsilon_t \sim iid\left(0,\sigma^2\right)\). The following graph plots this time series against time.
 
 \begin{figure}
 \centering
@@ -164,19 +171,19 @@ Before diving any further into the concepts and methods of time series econometr
 \caption{\label{fig:white-noise}White noise: an illustration}
 \end{figure}
 
-Such time series are referred to as \emph{white noise}. That is, a time series, \(y\), is a white noise process if:
+Such time series are referred to as \emph{white noise}. That is, \(\{y_t: t=1,\ldots,T\}\), is a white noise process if:
 \begin{align*}
 & E(y_t) = 0,\;~\forall~t\\
 & Var(y_t) = \sigma^2,\;~\forall~t\\
 & Cov(y_t,y_{t-k}) = 0,\;~\forall~k \ne 0
 \end{align*}
 
-Because each observation is drawn from the same distribution, white noise is a stationary time series. Indeed, it is a special type of stationary time series insofar as its mean, variance, and covariance are time-invariant. Note, for a time series to be stationary, the mean doesn't need to be zero (as long as it is constant over time), nor covariances need to be equal to zero (as long as they are constant over time, though they may vary with \(k\)). Thus, \(\{y_t\}\) is stationary if the mean and variance are independent of \(t\), and the autocovariances are independent of \(t\) for all \(k\).
+Because each observation is drawn from the same distribution, white noise is a stationary time series. Indeed, it is a special type of stationary time series insofar as its mean, variance, and covariance are time-invariant. Note, for a time series to be stationary, neither the mean nor the covariances need to be equal to zero. Thus, \(\{y_t\}\) is stationary if the mean and variance are independent of \(t\), and the autocovariances are independent of \(t\) for all \(k\).
 
 \hypertarget{serial-dependence}{%
 \section{Serial Dependence}\label{serial-dependence}}
 
-In fact, it is more of a norm rather than an exception for a time series to be correlated over time. Indeed, because of the sequential nature of time series, we commonly observe dependence among the temporally adjacent time series. That is, for most economic time series, we would expect \(y_t\) and \(y_{t-1}\) to be correlated. Such correlations are referred to as \emph{autocorrelations}, and are given by: \[\rho_k=Cor(y_t,y_{t-k}) = \frac{Cov(y_t,y_{t-k})}{Var(y_t)},\;~~k=1,2,\ldots\]
+It is more of the norm rather than the exception for a time series to be correlated over time. Indeed, because of the sequential nature of time series, we commonly observe dependence among the temporally adjacent time series. That is, for most economic time series, we would expect \(y_t\) and \(y_{t-1}\) to be correlated. Such correlation, referred to as the first order \emph{autocorrelations}, is given by: \(\rho_1=Cor(y_{t},y_{t-1}) = \frac{Cov(y_{t},y_{t-k})}{Var(y_t)}\). In general, the \(k^{th}\) order autocorrelation is given by: \[\rho_k=Cor(y_{t},y_{t-k}) = \frac{Cov(y_{t},y_{t-k})}{Var(y_{t})},\;~~k=1,2,\ldots\]
 
 Autocorrelations are commonly illustrated via the so-called \emph{autocorrelogram}, which plots the sequence of autocorrelation coefficients against the lags at which these coefficients are obtained. For example, an autocorrelogram of the previously illustrated white noise process is as follows:
 
@@ -188,12 +195,18 @@ Autocorrelations are commonly illustrated via the so-called \emph{autocorrelogra
 
 For each \(k\), the vertical line extending from zero represents the autocorrelation coefficient at that lag. The red dashed lines denote the 90\% confidence interval, given by \(\pm 1.96/\sqrt{T}\), where \(T\) is the length of the time series.
 
-Another relevant measure for time series dependence is partial autocorrelation, which is correlation between \(y_t\) and \(y_{t-k}\) net of any correlations between \(y_t\) and \(y_{t-k+j}\), for all \(j=1,\ldots,k-1\). Similar to autocorrelations, partial autocorrelations can also be illustrated using autocorrelograms:
+Another relevant measure of the time series dependence is partial autocorrelation, which is correlation between \(y_t\) and \(y_{t-k}\) net of any correlations between \(y_t\) and \(y_{t-k+j}\), for all \(j=1,\ldots,k-1\). Similar to autocorrelations, partial autocorrelations can also be illustrated using autocorrelograms:
 
 \begin{figure}
 \centering
 \includegraphics{forecasting_files/figure-latex/pacf-1.pdf}
 \caption{\label{fig:pacf}Partial Autocorrelation}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{forecasting_files/figure-latex/spectral-1.pdf}
+\caption{\label{fig:spectral}Spectral Density}
 \end{figure}
 
 \hypertarget{transformations}{%
@@ -207,8 +220,8 @@ It is common to transform time series by taking logarithms, differences, or diff
 \caption{\label{fig:ts}A time series and its transformations}
 \end{figure}
 
-\hypertarget{basics-of-forecasting}{%
-\chapter{Basics of Forecasting}\label{basics-of-forecasting}}
+\hypertarget{forecasting-methods-and-routines}{%
+\chapter{Forecasting Methods and Routines}\label{forecasting-methods-and-routines}}
 
 \hypertarget{optimal-forecast}{%
 \section{Optimal Forecast}\label{optimal-forecast}}
@@ -226,7 +239,7 @@ Three types of uncertainty contribute to the forecast error:
         & + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
         \end{aligned}\]
 
-where \(\Omega_t\) denotes the information set available at the time when the forecast is made; \(g(\cdot)\) is a functional form of a model used to fit the data; \(\theta\) is a set of parameters of the model, and \(\hat{\theta}\) are their estimates
+where \(\Omega_t\) denotes the information set available at the time when the forecast is made; \(g(\cdot)\) is a functional form of a model applied to the data; \(\theta\) is a set of parameters of the model, and \(\hat{\theta}\) are their estimates
 
 Because uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the `cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
 
@@ -282,6 +295,10 @@ There are different forecasting schemes for updating the information set in the 
 \item
   The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.
 \end{itemize}
+
+The following animation illustrates the distinctive features of these three routines:
+
+\includegraphics{forecasting_files/figure-latex/routines-1.pdf}
 
 \hypertarget{evaluating-time-series-forecasts}{%
 \section{Evaluating Time Series Forecasts}\label{evaluating-time-series-forecasts}}
@@ -449,15 +466,17 @@ The Fourier terms can be applied to model seasonality at any frequency, indeed. 
 \hypertarget{forecasting-1}{%
 \section{Forecasting}\label{forecasting-1}}
 
-Any future realization of a random variable that i assumed to follow a seasonal model is: \[y_{t+h} = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h} + \varepsilon_{t+h}.\]
+The predictors of the seasonal models are pre-determined, which means, after fitting the model, we can directly obtain the point and interval forecasts for any horizon \(h\).
+
+When using the dummy variable approach to model the seasonality, for example, a future realization of a random variable is: \[y_{t+h} = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h} + \varepsilon_{t+h}.\]
 
 The optimal forecast of \(y_{t+h}\) is: \[y_{t+h|t} = E(y_{t+h}|\Omega_t) = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h}\]
 
 The forecast error is: \[e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}\]
 
-The forecast variance is given by: \[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2,\;~~\forall\;h\]
+The forecast variance is: \[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2,\;~~\forall\;h\]
 
-The interval forecast at any horizon is: \[y_{t+h|t} \pm 1.96 \hat{\sigma}.\]
+The interval forecast is: \[y_{t+h|t} \pm 1.96 \hat{\sigma}.\]
 
 \hypertarget{dynamic-time-series-models}{%
 \chapter*{Dynamic Time Series Models}\label{dynamic-time-series-models}}
@@ -558,7 +577,7 @@ The autocorrelation and partial autocorrelation functions of the AR(1) process h
 
 To illustrate the foregoing, let's generate a series of 100 observations that follow the process: \(y_t=0.8y_{t-1}+\varepsilon_t\), where \(y_0=0\) and \(\varepsilon\sim N(0,1)\), and plot the ACF and PACF of this series.
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-10-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-11-1.pdf}
 
 \hypertarget{ar2}{%
 \subsection{AR(2)}\label{ar2}}
@@ -596,7 +615,7 @@ The autocorrelation functions of the AR(2) process have the following distinctiv
 
 Again, to illustrate, let's generate a series of 100 observations that follow the process: \(y_t=1.1y_{t-1}-0.4y_{t-2}+\varepsilon_t\), where \(y_{-1}=y_0=0\) and \(\varepsilon\sim N(0,1)\), and plot the ACF and PACF of this series.
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-11-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-12-1.pdf}
 
 \hypertarget{forecasting-2}{%
 \section{Forecasting}\label{forecasting-2}}
@@ -1117,9 +1136,9 @@ In practice, the test of equal predictive ability can be applied within the fram
 \hypertarget{forecast-combination}{%
 \chapter{Forecast Combination}\label{forecast-combination}}
 
-\hypertarget{introduction-to-r}{%
-\chapter*{Introduction to R}\label{introduction-to-r}}
-\addcontentsline{toc}{chapter}{Introduction to R}
+\hypertarget{tutorial-1-introduction-to-r}{%
+\chapter*{Tutorial 1: Introduction to R}\label{tutorial-1-introduction-to-r}}
+\addcontentsline{toc}{chapter}{Tutorial 1: Introduction to R}
 
 R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial--and--error. To the extent that new features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.
 
@@ -1295,6 +1314,8 @@ We can invert a(n invertible) matrix using the solve() function:
 ## c3 -1.3333333  1  0.3333333
 \end{verbatim}
 
+Try some of this yourself:
+
 \hypertarget{data-visualisation}{%
 \section*{Data Visualisation}\label{data-visualisation}}
 \addcontentsline{toc}{section}{Data Visualisation}
@@ -1340,7 +1361,7 @@ Now, let's load \textbf{ggplot2} and generate a simple scatter plot:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 We can augment this plot in a number of different ways. Here we change the point color to red, add the fitted regression line to the plot, add labels to the figure, and apply a `classic' background theme:
 
@@ -1357,7 +1378,7 @@ We can augment this plot in a number of different ways. Here we change the point
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-29-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 As another example, let's generate a histogram (of the dependent variable):
 
@@ -1370,7 +1391,7 @@ As another example, let's generate a histogram (of the dependent variable):
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 We typically apply a line plot to illustrate a time series (that are ordered by date). In what follows, we add a date column to our data frame and then plot the dependent variable in the chronological order:
 
@@ -1387,7 +1408,7 @@ We typically apply a line plot to illustrate a time series (that are ordered by 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-31-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-32-1.pdf}
 
 \hypertarget{regression-analysis}{%
 \section*{Regression Analysis}\label{regression-analysis}}
@@ -1457,9 +1478,9 @@ We can apply the summary() function to see the complete set of regression result
 ## F-statistic: 12.41 on 1 and 118 DF,  p-value: 0.0006091
 \end{verbatim}
 
-\hypertarget{tutorial-1}{%
-\chapter*{Tutorial 1}\label{tutorial-1}}
-\addcontentsline{toc}{chapter}{Tutorial 1}
+\hypertarget{tutorial-2-some-r-functions}{%
+\chapter*{Tutorial 2: Some R Functions}\label{tutorial-2-some-r-functions}}
+\addcontentsline{toc}{chapter}{Tutorial 2: Some R Functions}
 
 In this tutorial, we will introduce several simple R functions, and will perform a basic forecasting exercise.
 
@@ -1598,9 +1619,9 @@ Using these forecasts, obtain forecast errors, mean absolute forecast errors, an
 
 By comparing the two sets of forecasts, we can observe a somewhat rare and yet not an unlikely scenario: MAFE points to the Model 1 as more accurate of the two models, while RMSFE suggests the Model 2 as the more accurate one. More often than not, however, these two accuracy measures tend to agree.
 
-\hypertarget{tutorial-2}{%
-\chapter*{Tutorial 2}\label{tutorial-2}}
-\addcontentsline{toc}{chapter}{Tutorial 2}
+\hypertarget{tutorial-3-forecasting-methods-and-routines}{%
+\chapter*{Tutorial 3: Forecasting Methods and Routines}\label{tutorial-3-forecasting-methods-and-routines}}
+\addcontentsline{toc}{chapter}{Tutorial 3: Forecasting Methods and Routines}
 
 In this tutorial, we will introduce `for loop,' and use it to generate time series as well as to obtain one-step-ahead forecasts using a rolling window procedure; we will also perform forecast error diagnostics.
 
@@ -1644,7 +1665,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-48-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-49-1.pdf}
 
 Generate a sequence of one-step-ahead forecasts from naive and average methods, using the rolling window scheme, where the first rolling window ranges from period 1 to period 80.
 
@@ -1772,9 +1793,9 @@ No serial correlation in one-step-ahead forecast errors: \(Cov(e_{t+1|t},y_{t|t-
 ## e_naive.l1  0.03780853  0.1631333 0.2317647 0.8179979
 \end{verbatim}
 
-\hypertarget{tutorial-3}{%
-\chapter*{Tutorial 3}\label{tutorial-3}}
-\addcontentsline{toc}{chapter}{Tutorial 3}
+\hypertarget{tutorial-4-deterministic-trends}{%
+\chapter*{Tutorial 4: Deterministic Trends}\label{tutorial-4-deterministic-trends}}
+\addcontentsline{toc}{chapter}{Tutorial 4: Deterministic Trends}
 
 In this tutorial, we will generate trending series, we will apply an information criterion to select the most suitable trend model, and we will obtain and compare one-step-ahead forecasts using a rolling window procedure.
 
@@ -1814,7 +1835,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-58-1.pdf}
 
 Calculate Akaike Information Criteria for linear, quadratic, cubic, and exponential trend models, using all observations in the series.
 
@@ -1887,7 +1908,7 @@ Plot the original series overlay by the one-step-ahead forecasts from the four c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-60-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-61-1.pdf}
 
 Calculate the RMSFE measures for each of the two forecasting methods.
 
@@ -1938,9 +1959,11 @@ Calculate the RMSFE measures for each of the two forecasting methods.
 ## [1] 5.132312
 \end{verbatim}
 
-\hypertarget{tutorial-4}{%
-\chapter*{Tutorial 4}\label{tutorial-4}}
-\addcontentsline{toc}{chapter}{Tutorial 4}
+\hypertarget{tutorial-5-seasonality}{%
+\chapter*{Tutorial 5: Seasonality}\label{tutorial-5-seasonality}}
+\addcontentsline{toc}{chapter}{Tutorial 5: Seasonality}
+
+(this is a AR stuff, will need to move back)
 
 In this tutorial, we will generate autocorrelated series, we will apply an information criterion to select a suitable autoregressive model, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will generate one set of multi-step forecasts to illustrate the convergence to unconditional mean of the series.
 
@@ -1983,7 +2006,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-65-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-66-1.pdf}
 
 Generate and plot the autocorrelation function and the partial autocorrelation function for lags 1 through 18.
 
@@ -2006,7 +2029,7 @@ Generate and plot the autocorrelation function and the partial autocorrelation f
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-66-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2020,7 +2043,7 @@ Generate and plot the autocorrelation function and the partial autocorrelation f
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-66-2.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-67-2.pdf}
 
 Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), AR(3), and AR(4) models, using all observations in the series, to decide on the optimal lag length.
 
@@ -2049,10 +2072,10 @@ Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SI
 
 \begin{verbatim}
 ##    lag      AIC      SIC
-## 1:   1 5.298452 5.334480
-## 2:   2 5.010470 5.064513
-## 3:   3 5.016720 5.088776
-## 4:   4 5.018299 5.108369
+## 1:   1 5.192156 5.228184
+## 2:   2 5.011351 5.065393
+## 3:   3 5.018687 5.090743
+## 4:   4 5.024127 5.114198
 \end{verbatim}
 
 Generate a sequence of one-step-ahead forecasts from random walk, as well as AR(1), AR(2), and AR(3), using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.
@@ -2093,7 +2116,7 @@ Calculate the RMSFE measures for all considered models.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.017931
+## [1] 0.9569683
 \end{verbatim}
 
 \begin{Shaded}
@@ -2103,7 +2126,7 @@ Calculate the RMSFE measures for all considered models.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9782388
+## [1] 0.9298374
 \end{verbatim}
 
 \begin{Shaded}
@@ -2113,7 +2136,7 @@ Calculate the RMSFE measures for all considered models.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.8970604
+## [1] 0.8901728
 \end{verbatim}
 
 Using the first rolling window as the information set, generate the multi-step-ahead forecast for the hold-out period.
@@ -2139,11 +2162,13 @@ Using the first rolling window as the information set, generate the multi-step-a
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-70-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-71-1.pdf}
 
-\hypertarget{tutorial-5}{%
-\chapter*{Tutorial 5}\label{tutorial-5}}
-\addcontentsline{toc}{chapter}{Tutorial 5}
+\hypertarget{tutorial-6-linear-autoregression}{%
+\chapter*{Tutorial 6: Linear Autoregression}\label{tutorial-6-linear-autoregression}}
+\addcontentsline{toc}{chapter}{Tutorial 6: Linear Autoregression}
+
+(this is a VAR stuff, will need to move back)
 
 In this tutorial, we will generate bivariate series, we will apply a system-wide information criterion to select a suitable vector autoregressive model, we will perform an in-sample test of Granger causality, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and in so doing we will investigate the evidence of Granger causality in an out-of-sample setting. To run the code, the \texttt{data.table} and \texttt{MASS} packages need to be installed and loaded.
 
@@ -2200,7 +2225,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-74-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-75-1.pdf}
 
 Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.
 
@@ -2535,9 +2560,11 @@ Calculate the RMSFE measures for restricted and unrestricted models, and compare
 ## [1] 1.011653
 \end{verbatim}
 
-\hypertarget{tutorial-6}{%
-\chapter*{Tutorial 6}\label{tutorial-6}}
-\addcontentsline{toc}{chapter}{Tutorial 6}
+\hypertarget{tutorial-7-vector-autoregression}{%
+\chapter*{Tutorial 7: Vector Autoregression}\label{tutorial-7-vector-autoregression}}
+\addcontentsline{toc}{chapter}{Tutorial 7: Vector Autoregression}
+
+(this is a threshold stuff, will need to move back)
 
 In this tutorial, we will generate regime-dependent series, we will apply a grid-search method to obtain the threshold parameter, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will apply bootstrap resampling method to generate multi-step-ahead forecasts from a threshold regression. To run the code, the \texttt{data.table} and \texttt{ggplot2} packages need to be installed and loaded.
 
@@ -2596,7 +2623,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-82-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-83-1.pdf}
 
 Decide on the optimal lag length based on AIC.
 
@@ -2811,11 +2838,13 @@ Obtain the multi-step-ahead forecasts from period 241 onward using the so-called
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-87-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-88-1.pdf}
 
-\hypertarget{tutorial-7}{%
-\chapter*{Tutorial 7}\label{tutorial-7}}
-\addcontentsline{toc}{chapter}{Tutorial 7}
+\hypertarget{tutorial-8-threshold-autoregression}{%
+\chapter*{Tutorial 8: Threshold Autoregression}\label{tutorial-8-threshold-autoregression}}
+\addcontentsline{toc}{chapter}{Tutorial 8: Threshold Autoregression}
+
+(this is a evaluation stuff, will need to move back)
 
 In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from competing models using a rolling window procedure, and we will perform the Diebold-Mariano type regression-based test for equal predictive ability of the competing models. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
 
@@ -2854,7 +2883,7 @@ Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-90-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-91-1.pdf}
 
 Suppose the candidate models are AR(1), AR(2), and AR(3), and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. Calculate the RMSFE measures for the canddidate models.
 
@@ -2983,9 +3012,11 @@ Do the autoregressive models generate `statistically significantly' more accurat
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 
-\hypertarget{tutorial-8}{%
-\chapter*{Tutorial 8}\label{tutorial-8}}
-\addcontentsline{toc}{chapter}{Tutorial 8}
+\hypertarget{tutorial-9-forecast-evaluation}{%
+\chapter*{Tutorial 9: Forecast Evaluation}\label{tutorial-9-forecast-evaluation}}
+\addcontentsline{toc}{chapter}{Tutorial 9: Forecast Evaluation}
+
+(this is a combination stuff, will need to move back)
 
 In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from a set of models using a rolling window procedure, we will combine these forecasts and assess the accuracy of the combined forecast. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
 
@@ -3024,7 +3055,7 @@ Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-95-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-96-1.pdf}
 
 Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.
 
@@ -3141,9 +3172,11 @@ Might each model contain some useful information for improving forecast accuracy
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 
-\hypertarget{tutorial-9}{%
-\chapter*{Tutorial 9}\label{tutorial-9}}
-\addcontentsline{toc}{chapter}{Tutorial 9}
+\hypertarget{tutorial-10-forecast-combination}{%
+\chapter*{Tutorial 10: Forecast Combination}\label{tutorial-10-forecast-combination}}
+\addcontentsline{toc}{chapter}{Tutorial 10: Forecast Combination}
+
+(this is a direct/iterated stuff, will need to move forward)
 
 In this tutorial, we will generate a time series, we will obtain multi-step-ahead forecasts using direct and iterated methods from autoregressive models using a rolling window procedure, and we will assess the accuracy of the forecast. We will then turn to interval forecasts, and we will assess their coverage accuracy. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
 
@@ -3182,7 +3215,7 @@ Generate a vector of arbitrary dates (e.g., the monthly series beginning from Ja
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-101-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-102-1.pdf}
 
 Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts.
 
@@ -3313,7 +3346,7 @@ Obtain interval forecasts for horizon 12 using the direct method for an AR(1) mo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-104-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-105-1.pdf}
 
 Test the unconditional coverage of the interval forecasts from the considered two models.
 

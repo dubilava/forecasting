@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Tutorial 6: Linear Autoregression | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+  <meta name="description" content="Tutorial 6: Linear Autoregression | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Tutorial 6: Linear Autoregression | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Tutorial 6: Linear Autoregression | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Tutorial 6: Linear Autoregression | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+  
+  <meta name="twitter:description" content="Tutorial 6: Linear Autoregression | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+  
+
+<meta name="author" content="David Ubilava" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tutorial-5-seasonality.html"/>
+<link rel="next" href="tutorial-7-vector-autoregression.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Time Series Modeling and Forecasting</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#foreword">Foreword<span></span></a></li>
+<li><a href="preliminaries.html#preliminaries">Preliminaries<span></span></a></li>
+<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting<span></span></a></li>
+<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence<span></span></a></li>
+<li class="chapter" data-level="2.3" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html"><i class="fa fa-check"></i><b>3</b> Forecasting Methods and Routines<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#optimal-forecast"><i class="fa fa-check"></i><b>3.1</b> Optimal Forecast<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#measuring-forecast-accuracy"><i class="fa fa-check"></i><b>3.2</b> Measuring Forecast Accuracy<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts<span></span></a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#unbiasedness"><i class="fa fa-check"></i><b>3.3.1</b> Unbiasedness<span></span></a></li>
+<li class="chapter" data-level="3.3.2" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#efficiency"><i class="fa fa-check"></i><b>3.3.2</b> Efficiency<span></span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.3.3</b> No Autocorrelation<span></span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="deterministic-time-series-models.html#deterministic-time-series-models">Deterministic Time Series Models<span></span></a></li>
+<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#spurious-relationship"><i class="fa fa-check"></i><b>4.1</b> Spurious Relationship<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.2</b> Modeling<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.3</b> Forecasting<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.1</b> Modeling<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.2</b> Forecasting<span></span></a></li>
+</ul></li>
+<li><a href="dynamic-time-series-models.html#dynamic-time-series-models">Dynamic Time Series Models<span></span></a></li>
+<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar1"><i class="fa fa-check"></i><b>6.1.1</b> AR(1)<span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar2"><i class="fa fa-check"></i><b>6.1.2</b> AR(2)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.2</b> Forecasting<span></span></a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.1</b> One-step-ahead forecast from AR(1)<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.2</b> Two-step-ahead forecast from AR(1)<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="linear-autoregression.html"><a href="linear-autoregression.html#h-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.3</b> h-step-ahead forecast from AR(1)<span></span></a></li>
+<li class="chapter" data-level="6.2.4" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.4</b> One-step-ahead forecast from AR(2)<span></span></a></li>
+<li class="chapter" data-level="6.2.5" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.5</b> Two-step-ahead forecast from AR(2)<span></span></a></li>
+<li class="chapter" data-level="6.2.6" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2-1"><i class="fa fa-check"></i><b>6.2.6</b> One-step-ahead forecast from AR(2)<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>7.1</b> Modeling<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>7.1.1</b> In-Sample Granger Causality<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>7.2</b> Forecasting<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.1</b> One-step-ahead forecast from bivariate VAR(1)<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#two-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.2</b> Two-step-ahead forecast from bivariate VAR(1)<span></span></a></li>
+<li class="chapter" data-level="7.2.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>7.2.3</b> Out-of-Sample Granger Causality<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> Threshold Autoregression<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#nonlinear-models"><i class="fa fa-check"></i><b>8.1</b> Nonlinear Models<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>8.2</b> Modeling<span></span></a></li>
+<li class="chapter" data-level="8.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>8.3</b> Forecasting<span></span></a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>8.3.1</b> Skeleton Extrapolation<span></span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>8.3.2</b> Analytical Method<span></span></a></li>
+<li class="chapter" data-level="8.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>8.3.3</b> Numerical Method: Bootstrap Resampling<span></span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="forecast-assessment.html#forecast-assessment">Forecast Assessment<span></span></a></li>
+<li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>9.1</b> The Need for the Forecast Evaluation<span></span></a></li>
+<li class="chapter" data-level="9.2" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>9.2</b> Relative Forecast Accuracy Tests<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>9.2.1</b> The Morgan-Granger-Newbold Test<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>9.2.2</b> The Diebold-Mariano Test<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>10</b> Forecast Combination<span></span></a></li>
+<li><a href="tutorial-1-introduction-to-r.html#tutorial-1-introduction-to-r">Tutorial 1: Introduction to R<span></span></a>
+<ul>
+<li><a href="tutorial-1-introduction-to-r.html#data-management">Data Management<span></span></a></li>
+<li><a href="tutorial-1-introduction-to-r.html#data-visualisation">Data Visualisation<span></span></a></li>
+<li><a href="tutorial-1-introduction-to-r.html#regression-analysis">Regression Analysis<span></span></a></li>
+</ul></li>
+<li><a href="tutorial-2-some-r-functions.html#tutorial-2-some-r-functions">Tutorial 2: Some R Functions<span></span></a></li>
+<li><a href="tutorial-3-forecasting-methods-and-routines.html#tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines<span></span></a></li>
+<li><a href="tutorial-4-deterministic-trends.html#tutorial-4-deterministic-trends">Tutorial 4: Deterministic Trends<span></span></a></li>
+<li><a href="tutorial-5-seasonality.html#tutorial-5-seasonality">Tutorial 5: Seasonality<span></span></a></li>
+<li><a href="tutorial-6-linear-autoregression.html#tutorial-6-linear-autoregression">Tutorial 6: Linear Autoregression<span></span></a></li>
+<li><a href="tutorial-7-vector-autoregression.html#tutorial-7-vector-autoregression">Tutorial 7: Vector Autoregression<span></span></a></li>
+<li><a href="tutorial-8-threshold-autoregression.html#tutorial-8-threshold-autoregression">Tutorial 8: Threshold Autoregression<span></span></a></li>
+<li><a href="tutorial-9-forecast-evaluation.html#tutorial-9-forecast-evaluation">Tutorial 9: Forecast Evaluation<span></span></a></li>
+<li><a href="tutorial-10-forecast-combination.html#tutorial-10-forecast-combination">Tutorial 10: Forecast Combination<span></span></a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Time Series Modeling and Forecasting with Applications in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tutorial-6-linear-autoregression" class="section level1 unnumbered hasAnchor">
+<h1>Tutorial 6: Linear Autoregression<a href="tutorial-6-linear-autoregression.html#tutorial-6-linear-autoregression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>(this is a VAR stuff, will need to move back)</p>
+<p>In this tutorial, we will generate bivariate series, we will apply a system-wide information criterion to select a suitable vector autoregressive model, we will perform an in-sample test of Granger causality, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and in so doing we will investigate the evidence of Granger causality in an out-of-sample setting. To run the code, the <code>data.table</code> and <code>MASS</code> packages need to be installed and loaded.</p>
+<p>Let’s generate a two-dimensional vector of time series that follow a VAR(1) process of the following form: <span class="math display">\[\begin{aligned}
+x_{1,t} &amp;= 0.3 + 0.7x_{1,t-1} + 0.1x_{2,t-1} + \varepsilon_{1,t} \\
+x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
+\end{aligned}\]</span> where <span class="math inline">\(\mathbf{e}_{t} \sim N(\mathbf{0},\Sigma)\)</span>, and where <span class="math inline">\(\Sigma\)</span> is the covariance matrix of the residuals such that <span class="math inline">\(Cov(\varepsilon_{1,t},\varepsilon_{2,t}) = 0.3\)</span> for all <span class="math inline">\(t=1,\ldots,180\)</span>. (Note: in the code, <span class="math inline">\(x_1\)</span> is denoted by <span class="math inline">\(y\)</span> and <span class="math inline">\(x_2\)</span> is denoted by <span class="math inline">\(x\)</span>).</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="tutorial-6-linear-autoregression.html#cb101-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">180</span></span>
+<span id="cb101-2"><a href="tutorial-6-linear-autoregression.html#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="tutorial-6-linear-autoregression.html#cb101-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb101-4"><a href="tutorial-6-linear-autoregression.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb101-5"><a href="tutorial-6-linear-autoregression.html#cb101-5" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n,<span class="at">mu=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">Sigma=</span>R)</span>
+<span id="cb101-6"><a href="tutorial-6-linear-autoregression.html#cb101-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="tutorial-6-linear-autoregression.html#cb101-7" aria-hidden="true" tabindex="-1"></a>e_y <span class="ot">&lt;-</span> e[,<span class="dv">1</span>]</span>
+<span id="cb101-8"><a href="tutorial-6-linear-autoregression.html#cb101-8" aria-hidden="true" tabindex="-1"></a>e_x <span class="ot">&lt;-</span> e[,<span class="dv">2</span>]</span>
+<span id="cb101-9"><a href="tutorial-6-linear-autoregression.html#cb101-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-10"><a href="tutorial-6-linear-autoregression.html#cb101-10" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
+<span id="cb101-11"><a href="tutorial-6-linear-autoregression.html#cb101-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
+<span id="cb101-12"><a href="tutorial-6-linear-autoregression.html#cb101-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-13"><a href="tutorial-6-linear-autoregression.html#cb101-13" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> e_y[<span class="dv">1</span>]</span>
+<span id="cb101-14"><a href="tutorial-6-linear-autoregression.html#cb101-14" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> e_x[<span class="dv">1</span>]</span>
+<span id="cb101-15"><a href="tutorial-6-linear-autoregression.html#cb101-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-16"><a href="tutorial-6-linear-autoregression.html#cb101-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb101-17"><a href="tutorial-6-linear-autoregression.html#cb101-17" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.3+0.7</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span><span class="fl">0.1</span><span class="sc">*</span>x[i<span class="dv">-1</span>]<span class="sc">+</span>e_y[i]</span>
+<span id="cb101-18"><a href="tutorial-6-linear-autoregression.html#cb101-18" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2+0.9</span><span class="sc">*</span>x[i<span class="dv">-1</span>]<span class="sc">+</span>e_x[i]</span>
+<span id="cb101-19"><a href="tutorial-6-linear-autoregression.html#cb101-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2006), and store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt.’</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="tutorial-6-linear-autoregression.html#cb102-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2006-01-01&quot;</span>),<span class="at">by=</span><span class="st">&quot;month&quot;</span>,<span class="at">along.with=</span>y)</span>
+<span id="cb102-2"><a href="tutorial-6-linear-autoregression.html#cb102-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-3"><a href="tutorial-6-linear-autoregression.html#cb102-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y,x)</span></code></pre></div>
+<p>Plot the realized time series using <strong>ggplot</strong> function.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="tutorial-6-linear-autoregression.html#cb103-1" aria-hidden="true" tabindex="-1"></a>dt_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(dt,<span class="at">id.vars=</span><span class="st">&quot;date&quot;</span>)</span>
+<span id="cb103-2"><a href="tutorial-6-linear-autoregression.html#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-3"><a href="tutorial-6-linear-autoregression.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt_long,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>value,<span class="at">color=</span>variable,<span class="at">linetype=</span>variable))<span class="sc">+</span></span>
+<span id="cb103-4"><a href="tutorial-6-linear-autoregression.html#cb103-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb103-5"><a href="tutorial-6-linear-autoregression.html#cb103-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;darkgray&quot;</span>,<span class="st">&quot;steelblue&quot;</span>))<span class="sc">+</span></span>
+<span id="cb103-6"><a href="tutorial-6-linear-autoregression.html#cb103-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Year&quot;</span>,<span class="at">y=</span><span class="st">&quot;Series&quot;</span>)<span class="sc">+</span></span>
+<span id="cb103-7"><a href="tutorial-6-linear-autoregression.html#cb103-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p>Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="tutorial-6-linear-autoregression.html#cb104-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y_l1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y_l2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">x_l1=</span><span class="fu">shift</span>(x,<span class="dv">1</span>),<span class="at">x_l2=</span><span class="fu">shift</span>(x,<span class="dv">2</span>))]</span>
+<span id="cb104-2"><a href="tutorial-6-linear-autoregression.html#cb104-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-3"><a href="tutorial-6-linear-autoregression.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(1)</span></span>
+<span id="cb104-4"><a href="tutorial-6-linear-autoregression.html#cb104-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb104-5"><a href="tutorial-6-linear-autoregression.html#cb104-5" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb104-6"><a href="tutorial-6-linear-autoregression.html#cb104-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-7"><a href="tutorial-6-linear-autoregression.html#cb104-7" aria-hidden="true" tabindex="-1"></a>var1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt)</span>
+<span id="cb104-8"><a href="tutorial-6-linear-autoregression.html#cb104-8" aria-hidden="true" tabindex="-1"></a>var1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt)</span>
+<span id="cb104-9"><a href="tutorial-6-linear-autoregression.html#cb104-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-10"><a href="tutorial-6-linear-autoregression.html#cb104-10" aria-hidden="true" tabindex="-1"></a>var1r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(var1y<span class="sc">$</span>residuals,var1x<span class="sc">$</span>residuals)</span>
+<span id="cb104-11"><a href="tutorial-6-linear-autoregression.html#cb104-11" aria-hidden="true" tabindex="-1"></a>cov1r <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(var1r)<span class="sc">/</span>(<span class="fu">nrow</span>(dt)<span class="sc">-</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k))</span>
+<span id="cb104-12"><a href="tutorial-6-linear-autoregression.html#cb104-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-13"><a href="tutorial-6-linear-autoregression.html#cb104-13" aria-hidden="true" tabindex="-1"></a>AIC1 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">det</span>(cov1r))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
+<span id="cb104-14"><a href="tutorial-6-linear-autoregression.html#cb104-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-15"><a href="tutorial-6-linear-autoregression.html#cb104-15" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(2)</span></span>
+<span id="cb104-16"><a href="tutorial-6-linear-autoregression.html#cb104-16" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb104-17"><a href="tutorial-6-linear-autoregression.html#cb104-17" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb104-18"><a href="tutorial-6-linear-autoregression.html#cb104-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-19"><a href="tutorial-6-linear-autoregression.html#cb104-19" aria-hidden="true" tabindex="-1"></a>var2y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2<span class="sc">+</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
+<span id="cb104-20"><a href="tutorial-6-linear-autoregression.html#cb104-20" aria-hidden="true" tabindex="-1"></a>var2x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2<span class="sc">+</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
+<span id="cb104-21"><a href="tutorial-6-linear-autoregression.html#cb104-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-22"><a href="tutorial-6-linear-autoregression.html#cb104-22" aria-hidden="true" tabindex="-1"></a>var2r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(var2y<span class="sc">$</span>residuals,var2x<span class="sc">$</span>residuals)</span>
+<span id="cb104-23"><a href="tutorial-6-linear-autoregression.html#cb104-23" aria-hidden="true" tabindex="-1"></a>cov2r <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(var2r)<span class="sc">/</span>(<span class="fu">nrow</span>(dt)<span class="sc">-</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k))</span>
+<span id="cb104-24"><a href="tutorial-6-linear-autoregression.html#cb104-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-25"><a href="tutorial-6-linear-autoregression.html#cb104-25" aria-hidden="true" tabindex="-1"></a>AIC2 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">det</span>(cov2r))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
+<span id="cb104-26"><a href="tutorial-6-linear-autoregression.html#cb104-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-27"><a href="tutorial-6-linear-autoregression.html#cb104-27" aria-hidden="true" tabindex="-1"></a>AIC1</span></code></pre></div>
+<pre><code>## [1] -0.1270596</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="tutorial-6-linear-autoregression.html#cb106-1" aria-hidden="true" tabindex="-1"></a>AIC2</span></code></pre></div>
+<pre><code>## [1] -0.047212</code></pre>
+<p>Perfrom tests of (in-sample) Granger causality in each of the two models. Note, in the case of VAR(1), both t tests and F tests are applicable and they both provide identical inference. In the case of VAR(p), where <span class="math inline">\(p&gt;1\)</span>, the only appropriate test is an F test for joint significance of the parameters associated with the lags of the potentially causal variable.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="tutorial-6-linear-autoregression.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(1)</span></span>
+<span id="cb108-2"><a href="tutorial-6-linear-autoregression.html#cb108-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-3"><a href="tutorial-6-linear-autoregression.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="do">## t test</span></span>
+<span id="cb108-4"><a href="tutorial-6-linear-autoregression.html#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var1y)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ y_l1 + x_l1, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.32279 -0.63680 -0.00953  0.68826  2.63468 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.34926    0.11146   3.134  0.00202 ** 
+## y_l1         0.68903    0.05877  11.725  &lt; 2e-16 ***
+## x_l1         0.11304    0.04509   2.507  0.01308 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.976 on 176 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.5689, Adjusted R-squared:  0.564 
+## F-statistic: 116.1 on 2 and 176 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="tutorial-6-linear-autoregression.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var1x)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = x ~ y_l1 + x_l1, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.38491 -0.68087  0.03216  0.66109  2.74762 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.22353    0.10805  -2.069    0.040 *  
+## y_l1         0.05814    0.05697   1.021    0.309    
+## x_l1         0.85285    0.04371  19.511   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9461 on 176 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.7536, Adjusted R-squared:  0.7508 
+## F-statistic: 269.2 on 2 and 176 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="tutorial-6-linear-autoregression.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="do">## F test</span></span>
+<span id="cb112-2"><a href="tutorial-6-linear-autoregression.html#cb112-2" aria-hidden="true" tabindex="-1"></a>ar1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1,<span class="at">data=</span>dt)</span>
+<span id="cb112-3"><a href="tutorial-6-linear-autoregression.html#cb112-3" aria-hidden="true" tabindex="-1"></a>ar1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1,<span class="at">data=</span>dt)</span>
+<span id="cb112-4"><a href="tutorial-6-linear-autoregression.html#cb112-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-5"><a href="tutorial-6-linear-autoregression.html#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var1y,ar1y)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ y_l1 + x_l1
+## Model 2: y ~ y_l1
+##   Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  
+## 1    176 167.64                              
+## 2    177 173.62 -1   -5.9866 6.2852 0.01308 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="tutorial-6-linear-autoregression.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var1x,ar1x)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: x ~ y_l1 + x_l1
+## Model 2: x ~ x_l1
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1    176 157.54                           
+## 2    177 158.47 -1  -0.93231 1.0416 0.3089</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="tutorial-6-linear-autoregression.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="do">## VAR(2)</span></span>
+<span id="cb116-2"><a href="tutorial-6-linear-autoregression.html#cb116-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-3"><a href="tutorial-6-linear-autoregression.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="do">### t test (no longer applicable to test GC)</span></span>
+<span id="cb116-4"><a href="tutorial-6-linear-autoregression.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var2y)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ y_l1 + y_l2 + x_l1 + x_l2, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.38088 -0.71387 -0.01504  0.72538  2.70511 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.32203    0.11775   2.735  0.00689 ** 
+## y_l1         0.65954    0.07822   8.431  1.3e-14 ***
+## y_l2         0.04964    0.07965   0.623  0.53397    
+## x_l1         0.15919    0.08052   1.977  0.04962 *  
+## x_l2        -0.05991    0.08104  -0.739  0.46080    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9816 on 173 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.5709, Adjusted R-squared:  0.561 
+## F-statistic: 57.55 on 4 and 173 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="tutorial-6-linear-autoregression.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var2x)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = x ~ y_l1 + y_l2 + x_l1 + x_l2, data = dt)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.37790 -0.64364  0.05401  0.67542  2.71827 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.24577    0.11419  -2.152   0.0328 *  
+## y_l1         0.03070    0.07586   0.405   0.6862    
+## y_l2         0.04486    0.07724   0.581   0.5621    
+## x_l1         0.86196    0.07809  11.039   &lt;2e-16 ***
+## x_l2        -0.01627    0.07859  -0.207   0.8362    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9519 on 173 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.7546, Adjusted R-squared:  0.7489 
+## F-statistic:   133 on 4 and 173 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="tutorial-6-linear-autoregression.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="do">### F test</span></span>
+<span id="cb120-2"><a href="tutorial-6-linear-autoregression.html#cb120-2" aria-hidden="true" tabindex="-1"></a>ar2y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2,<span class="at">data=</span>dt)</span>
+<span id="cb120-3"><a href="tutorial-6-linear-autoregression.html#cb120-3" aria-hidden="true" tabindex="-1"></a>ar2x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
+<span id="cb120-4"><a href="tutorial-6-linear-autoregression.html#cb120-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-5"><a href="tutorial-6-linear-autoregression.html#cb120-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var2y,ar2y)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ y_l1 + y_l2 + x_l1 + x_l2
+## Model 2: y ~ y_l1 + y_l2
+##   Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  
+## 1    173 166.68                              
+## 2    175 172.78 -2   -6.0971 3.1641 0.04471 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="tutorial-6-linear-autoregression.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var2x,ar2x)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: x ~ y_l1 + y_l2 + x_l1 + x_l2
+## Model 2: x ~ x_l1 + x_l2
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1    173 156.76                           
+## 2    175 158.03 -2   -1.2729 0.7024 0.4968</code></pre>
+<p>Generate a sequence of one-step-ahead forecasts from VAR(1) using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="tutorial-6-linear-autoregression.html#cb124-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb124-2"><a href="tutorial-6-linear-autoregression.html#cb124-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R</span>
+<span id="cb124-3"><a href="tutorial-6-linear-autoregression.html#cb124-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-4"><a href="tutorial-6-linear-autoregression.html#cb124-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ar1y <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb124-5"><a href="tutorial-6-linear-autoregression.html#cb124-5" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ar1x <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb124-6"><a href="tutorial-6-linear-autoregression.html#cb124-6" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>var1y <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb124-7"><a href="tutorial-6-linear-autoregression.html#cb124-7" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>var1x <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb124-8"><a href="tutorial-6-linear-autoregression.html#cb124-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-9"><a href="tutorial-6-linear-autoregression.html#cb124-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
+<span id="cb124-10"><a href="tutorial-6-linear-autoregression.html#cb124-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb124-11"><a href="tutorial-6-linear-autoregression.html#cb124-11" aria-hidden="true" tabindex="-1"></a>  ar1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb124-12"><a href="tutorial-6-linear-autoregression.html#cb124-12" aria-hidden="true" tabindex="-1"></a>  ar1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb124-13"><a href="tutorial-6-linear-autoregression.html#cb124-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb124-14"><a href="tutorial-6-linear-autoregression.html#cb124-14" aria-hidden="true" tabindex="-1"></a>  var1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb124-15"><a href="tutorial-6-linear-autoregression.html#cb124-15" aria-hidden="true" tabindex="-1"></a>  var1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb124-16"><a href="tutorial-6-linear-autoregression.html#cb124-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb124-17"><a href="tutorial-6-linear-autoregression.html#cb124-17" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>ar1y[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar1y<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>ar1y<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb124-18"><a href="tutorial-6-linear-autoregression.html#cb124-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>ar1x[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar1x<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>ar1x<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb124-19"><a href="tutorial-6-linear-autoregression.html#cb124-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb124-20"><a href="tutorial-6-linear-autoregression.html#cb124-20" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>var1y[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> var1y<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>var1y<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]<span class="sc">+</span>var1y<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb124-21"><a href="tutorial-6-linear-autoregression.html#cb124-21" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>var1x[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> var1x<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>var1x<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]<span class="sc">+</span>var1x<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb124-22"><a href="tutorial-6-linear-autoregression.html#cb124-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb124-23"><a href="tutorial-6-linear-autoregression.html#cb124-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Calculate the RMSFE measures for restricted and unrestricted models, and compare those to each other to make a suggestion about out-of-sample Granger causality.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="tutorial-6-linear-autoregression.html#cb125-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">ar1y_e=</span>y<span class="sc">-</span>ar1y,<span class="at">ar1x_e=</span>x<span class="sc">-</span>ar1x,<span class="at">var1y_e=</span>y<span class="sc">-</span>var1y,<span class="at">var1x_e=</span>x<span class="sc">-</span>var1x)]</span>
+<span id="cb125-2"><a href="tutorial-6-linear-autoregression.html#cb125-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-3"><a href="tutorial-6-linear-autoregression.html#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate RMSFE for restructed and unrestricted models</span></span>
+<span id="cb125-4"><a href="tutorial-6-linear-autoregression.html#cb125-4" aria-hidden="true" tabindex="-1"></a>rmsfe_yr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>ar1y_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb125-5"><a href="tutorial-6-linear-autoregression.html#cb125-5" aria-hidden="true" tabindex="-1"></a>rmsfe_yu <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>var1y_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb125-6"><a href="tutorial-6-linear-autoregression.html#cb125-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-7"><a href="tutorial-6-linear-autoregression.html#cb125-7" aria-hidden="true" tabindex="-1"></a>rmsfe_xr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>ar1x_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb125-8"><a href="tutorial-6-linear-autoregression.html#cb125-8" aria-hidden="true" tabindex="-1"></a>rmsfe_xu <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>var1x_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb125-9"><a href="tutorial-6-linear-autoregression.html#cb125-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-10"><a href="tutorial-6-linear-autoregression.html#cb125-10" aria-hidden="true" tabindex="-1"></a>rmsfe_yr</span></code></pre></div>
+<pre><code>## [1] 1.134867</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="tutorial-6-linear-autoregression.html#cb127-1" aria-hidden="true" tabindex="-1"></a>rmsfe_yu</span></code></pre></div>
+<pre><code>## [1] 1.104268</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="tutorial-6-linear-autoregression.html#cb129-1" aria-hidden="true" tabindex="-1"></a>rmsfe_xr</span></code></pre></div>
+<pre><code>## [1] 1.00908</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="tutorial-6-linear-autoregression.html#cb131-1" aria-hidden="true" tabindex="-1"></a>rmsfe_xu</span></code></pre></div>
+<pre><code>## [1] 1.011653</code></pre>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tutorial-5-seasonality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tutorial-7-vector-autoregression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["forecasting.pdf", "forecasting.epub", "forecasting.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
