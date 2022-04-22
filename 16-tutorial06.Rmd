@@ -1,0 +1,167 @@
+# Tutorial 6: Linear Autoregression {-}
+
+```{r echo=FALSE, include=FALSE, message=FALSE}
+library(data.table)
+library(MASS)
+```
+
+(this is a VAR stuff, will need to move back)
+
+In this tutorial, we will generate bivariate series, we will apply a system-wide information criterion to select a suitable vector autoregressive model, we will perform an in-sample test of Granger causality, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and in so doing we will investigate the evidence of Granger causality in an out-of-sample setting. To run the code, the `data.table` and `MASS` packages need to be installed and loaded.
+
+Let's generate a two-dimensional vector of time series that follow a VAR(1) process of the following form: $$\begin{aligned}
+x_{1,t} &= 0.3 + 0.7x_{1,t-1} + 0.1x_{2,t-1} + \varepsilon_{1,t} \\
+x_{2,t} &= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
+\end{aligned}$$ where $\mathbf{e}_{t} \sim N(\mathbf{0},\Sigma)$, and where $\Sigma$ is the covariance matrix of the residuals such that $Cov(\varepsilon_{1,t},\varepsilon_{2,t}) = 0.3$ for all $t=1,\ldots,180$. (Note: in the code, $x_1$ is denoted by $y$ and $x_2$ is denoted by $x$).
+
+```{r echo=TRUE}
+n <- 180
+
+R <- matrix(c(1,0.3,0.3,1),nrow=2,ncol=2)
+set.seed(1)
+e <- mvrnorm(n,mu=c(0,0),Sigma=R)
+
+e_y <- e[,1]
+e_x <- e[,2]
+
+y <- rep(NA,n)
+x <- rep(NA,n)
+
+y[1] <- e_y[1]
+x[1] <- e_x[1]
+
+for(i in 2:n){
+  y[i] <- 0.3+0.7*y[i-1]+0.1*x[i-1]+e_y[i]
+  x[i] <- -0.2+0.9*x[i-1]+e_x[i]
+}
+```
+
+Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2006), and store these along with $y$ in a **data.table**, call it 'dt'.
+
+```{r echo=TRUE}
+date <- seq(as.Date("2006-01-01"),by="month",along.with=y)
+
+dt <- data.table(date,y,x)
+```
+
+Plot the realized time series using **ggplot** function.
+
+```{r echo=TRUE}
+dt_long <- melt(dt,id.vars="date")
+
+ggplot(dt_long,aes(x=date,y=value,color=variable,linetype=variable))+
+  geom_line(size=1)+
+  scale_color_manual(values=c("darkgray","steelblue"))+
+  labs(x="Year",y="Series")+
+  theme_classic()
+```
+
+Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.
+
+```{r echo=TRUE}
+dt[,`:=`(y_l1=shift(y,1),y_l2=shift(y,2),x_l1=shift(x,1),x_l2=shift(x,2))]
+
+# VAR(1)
+p <- 1
+k <- 2
+
+var1y <- lm(y~y_l1+x_l1,data=dt)
+var1x <- lm(x~y_l1+x_l1,data=dt)
+
+var1r <- cbind(var1y$residuals,var1x$residuals)
+cov1r <- crossprod(var1r)/(nrow(dt)-(p*k^2+k))
+
+AIC1 <- log(det(cov1r))+2*(p*k^2+k)/nrow(dt)
+
+# VAR(2)
+p <- 2
+k <- 2
+
+var2y <- lm(y~y_l1+y_l2+x_l1+x_l2,data=dt)
+var2x <- lm(x~y_l1+y_l2+x_l1+x_l2,data=dt)
+
+var2r <- cbind(var2y$residuals,var2x$residuals)
+cov2r <- crossprod(var2r)/(nrow(dt)-(p*k^2+k))
+
+AIC2 <- log(det(cov2r))+2*(p*k^2+k)/nrow(dt)
+
+AIC1
+AIC2
+```
+
+Perfrom tests of (in-sample) Granger causality in each of the two models. Note, in the case of VAR(1), both t tests and F tests are applicable and they both provide identical inference. In the case of VAR(p), where $p>1$, the only appropriate test is an F test for joint significance of the parameters associated with the lags of the potentially causal variable. 
+
+```{r echo=TRUE}
+# VAR(1)
+
+## t test
+summary(var1y)
+summary(var1x)
+
+## F test
+ar1y <- lm(y~y_l1,data=dt)
+ar1x <- lm(x~x_l1,data=dt)
+
+anova(var1y,ar1y)
+anova(var1x,ar1x)
+
+## VAR(2)
+
+### t test (no longer applicable to test GC)
+summary(var2y)
+summary(var2x)
+
+### F test
+ar2y <- lm(y~y_l1+y_l2,data=dt)
+ar2x <- lm(x~x_l1+x_l2,data=dt)
+
+anova(var2y,ar2y)
+anova(var2x,ar2x)
+```
+
+Generate a sequence of one-step-ahead forecasts from VAR(1) using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.
+
+```{r echo=TRUE}
+R <- 120
+P <- nrow(dt)-R
+
+dt$ar1y <- NA
+dt$ar1x <- NA
+dt$var1y <- NA
+dt$var1x <- NA
+
+for(i in 1:P){
+  
+  ar1y <- lm(y~y_l1,data=dt[i:(R-1+i)])
+  ar1x <- lm(x~x_l1,data=dt[i:(R-1+i)])
+  
+  var1y <- lm(y~y_l1+x_l1,data=dt[i:(R-1+i)])
+  var1x <- lm(x~y_l1+x_l1,data=dt[i:(R-1+i)])
+  
+  dt$ar1y[R+i] <- ar1y$coefficients[1]+ar1y$coefficients[2]*dt$y[R-1+i]
+  dt$ar1x[R+i] <- ar1x$coefficients[1]+ar1x$coefficients[2]*dt$x[R-1+i]
+  
+  dt$var1y[R+i] <- var1y$coefficients[1]+var1y$coefficients[2]*dt$y[R-1+i]+var1y$coefficients[3]*dt$x[R-1+i]
+  dt$var1x[R+i] <- var1x$coefficients[1]+var1x$coefficients[2]*dt$y[R-1+i]+var1x$coefficients[3]*dt$x[R-1+i]
+  
+}
+```
+
+Calculate the RMSFE measures for restricted and unrestricted models, and compare those to each other to make a suggestion about out-of-sample Granger causality.
+
+```{r echo=TRUE}
+dt[,`:=`(ar1y_e=y-ar1y,ar1x_e=x-ar1x,var1y_e=y-var1y,var1x_e=x-var1x)]
+
+# calculate RMSFE for restructed and unrestricted models
+rmsfe_yr <- sqrt(mean(dt$ar1y_e^2,na.rm=T))
+rmsfe_yu <- sqrt(mean(dt$var1y_e^2,na.rm=T))
+
+rmsfe_xr <- sqrt(mean(dt$ar1x_e^2,na.rm=T))
+rmsfe_xu <- sqrt(mean(dt$var1x_e^2,na.rm=T))
+
+rmsfe_yr
+rmsfe_yu
+rmsfe_xr
+rmsfe_xu
+```
+

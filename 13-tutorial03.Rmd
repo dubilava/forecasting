@@ -1,0 +1,93 @@
+# Tutorial 3: Forecasting Methods and Routines {-}
+
+```{r echo=FALSE, include=FALSE, message=FALSE}
+library(ggplot2)
+library(data.table)
+```
+
+In this tutorial, we will introduce 'for loop', and use it to generate time series as well as to obtain one-step-ahead forecasts using a rolling window procedure; we will also perform forecast error diagnostics.
+
+Let's generate a random walk process, such that $y_{t} = y_{t-1}+e_{t}$, where $e_{t} ~ N(0,1)$, and where $y_{0}=0$, for $t=1,\ldots,120$.
+
+```{r echo=TRUE}
+n <- 120
+
+set.seed(1)
+e <- rnorm(n)
+
+y <- rep(NA,n)
+
+y[1] <- e[1]
+
+for(i in 2:n){
+  y[i] <- y[i-1] + e[i]
+}
+```
+
+Store $y$ and $e$ in a **data.table**, call it 'dt'. Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2011).
+
+```{r echo=TRUE}
+dt <- data.table(y,e)
+
+dt$date <- seq(as.Date("2011-01-01"),as.Date("2020-12-01"),by="month")
+```
+
+Plot the realized time series using **ggplot** function.
+
+```{r echo=TRUE}
+ggplot(dt,aes(x=date,y=y))+
+  geom_line(size=1)+
+  labs(x="Year",y="Random Walk")+
+  theme_classic()
+```
+
+Generate a sequence of one-step-ahead forecasts from naive and average methods, using the rolling window scheme, where the first rolling window ranges from period 1 to period 80.
+
+```{r echo=TRUE}
+dt$average <- NA
+dt$naive <- NA
+
+R <- 80
+P <- n-R
+for(i in 1:P){
+  w <- y[i:(R-1+i)]
+  dt$average[R+i] <- mean(w)
+  dt$naive[R+i] <- w[length(w)]
+}
+```
+
+Calculate the RMSFE measures for each of the two forecasting methods.
+
+```{r echo=TRUE}
+dt[,`:=`(e_average=y-average,e_naive=y-naive)]
+
+rmsfe_average <- sqrt(mean(dt$e_average^2,na.rm=T))
+rmsfe_naive <- sqrt(mean(dt$e_naive^2,na.rm=T))
+
+rmsfe_average
+rmsfe_naive
+```
+
+Perform the forecast error diagnostics for the two considered methods.
+
+Zero mean of the forecast errors: $E(e_{t+1|t})=0$.
+We perform this test by regressing the forecast error on the constant, and checking whether the coefficient is statistically significantly different from zero.
+```{r echo=TRUE}
+summary(lm(e_average~1,data=dt))$coefficients
+summary(lm(e_naive~1,data=dt))$coefficients
+```
+
+No correlation of the forecast errors with the forecasts: $Cov(e_{t+1|t},y_{t+1|t})=0$. We perform this test by regressing the forecast error on the forecast, and checking whether the slope coefficient is statistically significantly different from zero.
+```{r echo=TRUE}
+summary(lm(e_average~average,data=dt))$coefficients
+summary(lm(e_naive~naive,data=dt))$coefficients
+```
+
+No serial correlation in one-step-ahead forecast errors: $Cov(e_{t+1|t},y_{t|t-1})=0$. We perform this test by regressing the forecast error on its lag, and checking whether the slope coefficient is statistically significantly different from zero.
+(Note: first we need to generate lagged forecast errors)
+```{r echo=TRUE}
+dt[,`:=`(e_average.l1=shift(e_average),e_naive.l1=shift(e_naive))]
+
+summary(lm(e_average~e_average.l1,data=dt))$coefficients
+summary(lm(e_naive~e_naive.l1,data=dt))$coefficients
+```

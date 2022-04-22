@@ -1,0 +1,22 @@
+bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      before: |
+        <li><a href="./">Time Series Modeling and Forecasting</a></li>
+      after: |
+      collapse: section
+    download: ["pdf", "epub", "mobi"]
+    sharing:
+      facebook: false
+      github: false
+      twitter: true
+      linkedin: false
+      weibo: false
+      instapaper: false
+      vk: false
+      whatsapp: false
+bookdown::pdf_book:
+  keep_tex: yes
+  includes:
+      in_header: preamble.tex

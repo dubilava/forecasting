@@ -1,0 +1,171 @@
+# Tutorial 10: Forecast Combination {-}
+
+```{r echo=FALSE, include=FALSE, message=FALSE}
+library(data.table)
+library(ggplot2)
+library(lmtest)
+library(sandwich)
+```
+
+(this is a direct/iterated stuff, will need to move forward)
+
+In this tutorial, we will generate a time series, we will obtain multi-step-ahead forecasts using direct and iterated methods from autoregressive models using a rolling window procedure, and we will assess the accuracy of the forecast. We will then turn to interval forecasts, and we will assess their coverage accuracy. To run the code, the `data.table`, `ggplot2`, `lmtest`, and `sandwich` packages need to be installed and loaded.
+
+Let's generate a time series that follow an AR(2) process as follows: 
+$$y_t = 0.01t+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t$$
+where $e_{t} \sim N(0,1)$. 
+
+```{r echo=TRUE}
+n <- 240
+
+set.seed(9)
+e <- rnorm(n,0,1)
+
+y <- rep(NA,n)
+y[1] <- 0.01+e[1]
+y[2] <- 0.02+0.6*y[1]+e[2]
+for(i in 3:n){
+  y[i] <- 0.01*i+0.6*y[i-1]+0.2*y[i-2]+e[i]
+}
+```
+
+Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with $y$ in a **data.table**, call it 'dt', and plot the realized time series using the **ggplot** function.
+
+```{r echo=TRUE}
+date <- seq(as.Date("2000-01-01"),by="month",along.with=y)
+
+dt <- data.table(date,y)
+
+ggplot(dt,aes(x=date,y=y))+
+  geom_line(size=1)+
+  labs(x="Year",y="Series")+
+  theme_classic()
+```
+
+Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts. 
+
+```{r echo=TRUE}
+h <- 12
+
+dt <- dt[,.(date,y,y1=shift(y,1),y2=shift(y,2),y12=shift(y,h),y13=shift(y,h+1))]
+dt <- dt[complete.cases(dt)]
+
+dt[,`:=`(a1i=as.numeric(NA),a1d=as.numeric(NA),a2i=as.numeric(NA),a2d=as.numeric(NA))]
+
+R <- 180
+P <- nrow(dt)-R-h+1
+
+for(i in 1:P){
+  
+  ### iterated multi-step method
+  a1i <- lm(y~y1,data=dt[i:(R+i-1)])
+  a2i <- lm(y~y1+y2,data=dt[i:(R+i-1)])
+  
+  iter_dt <- data.table(hor=1:h,a1=as.numeric(NA),a2=as.numeric(NA))
+  
+  ## AR(1)
+  iter_dt$a1[1] <- a1i$coefficients[1]+a1i$coefficients[2]*dt[R+i-1]$y
+  for(j in 2:h){
+    iter_dt$a1[j] <- a1i$coefficients[1]+a1i$coefficients[2]*iter_dt$a1[j-1]
+  }
+  
+  ## AR(2)
+  iter_dt$a2[1] <- a2i$coefficients[1]+a2i$coefficients[2]*dt[R+i-1]$y+a2i$coefficients[3]*dt[R+i-1]$y1
+  iter_dt$a2[2] <- a2i$coefficients[1]+a2i$coefficients[2]*iter_dt$a2[1]+a2i$coefficients[3]*dt[R+i-1]$y
+  for(j in 3:h){
+    iter_dt$a2[j] <- a2i$coefficients[1]+a2i$coefficients[2]*iter_dt$a2[j-1]+a2i$coefficients[3]*iter_dt$a2[j-2]
+  }
+
+  dt$a1i[R+i+h-1] <- iter_dt$a1[h]
+  dt$a2i[R+i+h-1] <- iter_dt$a2[h]
+  
+  ### direct multi-step method
+  a1d <- lm(y~y12,data=dt[i:(R+i-1)])
+  a2d <- lm(y~y12+y13,data=dt[i:(R+i-1)])
+  
+  dt$a1d[R+i+h-1] <- a1d$coefficients[1]+a1d$coefficients[2]*dt[R+i-1]$y
+  dt$a2d[R+i+h-1] <- a2d$coefficients[1]+a2d$coefficients[2]*dt[R+i-1]$y+a2d$coefficients[3]*dt[R+i-1]$y1
+  
+}
+```
+
+We can now test whether the forecasts of the iterated method 'statistically significantly' outperform those of the direct method?
+
+```{r echo=TRUE}
+dt$a1i_e <- dt$y-dt$a1i
+dt$a2i_e <- dt$y-dt$a2i
+dt$a1d_e <- dt$y-dt$a1d
+dt$a2d_e <- dt$y-dt$a2d
+
+dt$ld1 <- dt$a1d_e^2-dt$a1i_e^2
+dt$ld2 <- dt$a2d_e^2-dt$a2i_e^2
+
+reg_ld1 <- lm(ld1~1,data=dt)
+reg_ld2 <- lm(ld2~1,data=dt)
+
+coeftest(reg_ld1,vcov.=vcovHAC(reg_ld1))
+coeftest(reg_ld2,vcov.=vcovHAC(reg_ld2))
+```
+
+Obtain interval forecasts for horizon 12 using the direct method for an AR(1) model and a linear trend model; plot these interval forecasts along with the observed series.
+
+```{r echo=TRUE}
+dt$trend <- c(1:nrow(dt))
+dt[,`:=`(a1dl=as.numeric(NA),a1du=as.numeric(NA),trdl=as.numeric(NA),trdu=as.numeric(NA))]
+
+for(i in 1:P){
+  
+  a1d <- lm(y~y12,data=dt[i:(R+i-1)])
+  trd <- lm(y~trend,data=dt[i:(R+i-1)])
+  
+  a1d_pf <- a1d$coefficients[1]+a1d$coefficients[2]*dt[R+i-1]$y
+  trd_pf <- trd$coefficients[1]+trd$coefficients[2]*dt[R+i-1+h]$trend
+  
+  a1d_sd <- summary(a1d)$sigma
+  trd_sd <- summary(trd)$sigma
+  
+  dt$a1dl[R+i+h-1] <- a1d_pf-1.96*a1d_sd
+  dt$a1du[R+i+h-1] <- a1d_pf+1.96*a1d_sd
+  
+  dt$trdl[R+i+h-1] <- trd_pf-1.96*trd_sd
+  dt$trdu[R+i+h-1] <- trd_pf+1.96*trd_sd
+}
+
+ggplot(dt,aes(x=date,y=y))+
+  geom_line(size=1,color="black")+
+  geom_line(aes(y=a1dl),size=1,color="steelblue",linetype=5,na.rm=T)+
+  geom_line(aes(y=a1du),size=1,color="steelblue",linetype=5,na.rm=T)+
+  geom_line(aes(y=trdl),size=1,color="indianred",linetype=5,na.rm=T)+
+  geom_line(aes(y=trdu),size=1,color="indianred",linetype=5,na.rm=T)+
+  theme_classic()
+```
+
+Test the unconditional coverage of the interval forecasts from the considered two models.
+
+```{r echo=TRUE}
+dt[,`:=`(i1=ifelse(y>=a1dl & y<=a1du,1,0),it=ifelse(y>=trdl & y<=trdu,1,0))]
+
+
+# AR(1)
+p1 <- mean(dt$i1,na.rm=T)
+
+L10 <- (1-.95)^(P*(1-p1))*(.95)^(P*p1)
+L11 <- (1-p1)^(P*(1-p1))*(p1)^(P*p1)
+
+LR1 <- -2*log(L10/L11)
+
+pchisq(LR1,df=1,lower.tail=F)
+
+
+# AR(2)
+p2 <- mean(dt$it,na.rm=T)
+
+L20 <- (1-.95)^(P*(1-p2))*(.95)^(P*p2)
+L21 <- (1-p2)^(P*(1-p2))*(p2)^(P*p2)
+
+LR2 <- -2*log(L20/L21)
+
+pchisq(LR2,df=1,lower.tail=F)
+```
+
+
