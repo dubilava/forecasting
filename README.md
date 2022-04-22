@@ -1,5 +1,6 @@
 # Outline 
 
+This [online textbook](docs/index)
 
 The chapters are organized in four parts: *Preliminaries*---chapters 1-3, *Deterministic Models*---chapters 4-5, *Autoregressive Models*---chapters 6-8, and *Forecast Assessment*--chapters 9-10. 
 
