@@ -2,19 +2,31 @@ This website compiles teaching material based on this [online textbook](docs/ind
 
 ## Introduction to Forecasting
 
-## Basics of Time Series Econometrics
+## Stochastic Process and Time Series
+
+- SW:15.1
 
 ## Forecasting Methods and Routines
 
-## Trends
+- SW: 15.2, 15.5, 17.2
 
-## Seasonality
+## Autoregressive Models
 
-## Linear Autoregression
+- SW: 15.3
 
-## Vector Autoregression
+## Trends and Breaks
 
-## Threshold Autoregression
+- SW: 15.7, 15.8
+
+## Vector Autoregressive Models
+
+- SW: 15.4, 17.1
+
+## Dynamic Factor Models
+
+- SW: 17.6
+
+## Threshold Autoregressive Models
 
 ## Forecast Evaluation
 
