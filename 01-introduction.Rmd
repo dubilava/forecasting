@@ -1,5 +1,3 @@
-# Preliminaries {-}
-
 # Introduction to Forecasting
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
@@ -7,12 +5,9 @@ library(ggplot2)
 library(data.table)
 ```
 
-<!-- Economic events tend to co-occur, precede, or succeed one another. Understanding the essence of such relationships -- that is, identifying causal mechanisms that facilitate correlation among economic variables -- is at the core of econometric analysis. Throughout a relatively brief history of the study of econometrics, numerous methods and techniques have been proposed and developed -- all aimed to give an empirical content to economic models. These methods and techniques allow us to test theories, evaluate policy outcomes, etc.  -->
-
-<!-- At its core, an econometric model aims for the correct (and accurate) identification of the causal mechanism in the underlying process. But econometric models are also predictive by nature. They help us make economic forecasts even when the causal mechanism may not be well identified. In other words, while correlation does not necessarily imply causation, if the goal of an analyst is to make a forecast, a mere correlation might as well suffice.  -->
-
 Roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date. Over time, and particularly with the development of the study of econometrics, more rigorous forecasting methods have been introduced and developed. All methods -- primitive or complex, spurious or scientifically substantiated -- have one thing in common: they all rely (or, at least, pretend to rely) on *information*.
 
 Information is key in forecasting. It comes in many forms, but once it is organized and stored, we end up with *data*. Data that is organized and stored a certain way -- chronologically and at regular intervals -- are referred to as the *time series*. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we *may* be able to forecast an event with some degree of accuracy. 
 
 Accurate forecasting is difficult. Indeed, forecasting is difficult. So, as we forecast, we are bound to make mistakes, which manifest into the *forecast errors*. We have these errors because we don't know the true model, so we make a guess about the most suitable model for time series analysis. We also have the errors because we don't know the true parameters of the model. Instead, using a subset of history we estimate the parameters, which are prone to a sampling error. Finally, even if our guess about the model is exactly correct, and even if our parameter estimates happen to be exactly equal to the true parameters of the 'right' model, our forecasts may still be off, because of all those factors that have never happened in past, and only characterize the future. And because of this, there is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved. 
+

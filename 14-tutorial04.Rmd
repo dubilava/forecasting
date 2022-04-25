@@ -1,4 +1,4 @@
-# Tutorial 4: Deterministic Trends {-}
+# Tutorial 4: Trends and Seasonality {-}
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
@@ -112,3 +112,4 @@ rmsfe_t2
 rmsfe_t3
 rmsfe_te
 ```
+

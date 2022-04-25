@@ -1,4 +1,4 @@
-# Tutorial 6: Linear Autoregression {-}
+# Tutorial 6: Vector Autoregressive Models {-}
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(data.table)

@@ -59,7 +59,7 @@ By solving the optimization problem it follows that: $$\hat{y}_{t+h|t} = E(y_{t+
 Thus, the optimal point forecast under the quadratic loss is the *mean* (for reference, the optimal point forecast under absolute loss is the *median*).
 
 
-## Measuring Forecast Accuracy
+## Measuring the Accuracy of Forecasts
 
 Forecast accuracy should only be determined by considering how well a model performs on data not used in estimation. But to assess forecast accuracy we need access to the data, typically from future time periods, that was not used in estimation. This leads to the so-called 'pseudo forecasting' routine. This routine involves splitting the available data into two segments referred to as 'in-sample' and 'out-of-sample'. The in-sample segment of a series is also known as the 'estimation set' or the 'training set'. The out-of-sample segment of a series is also known as the 'hold-out set' or the 'test set'.
 
@@ -130,7 +130,6 @@ i <- round(mean(c(1,P)))
   plot_grid(gg1,gg2,gg3,align="hv",ncol=1)
 
 ```
-
 
 
 ## Evaluating Time Series Forecasts

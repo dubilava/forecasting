@@ -1,4 +1,4 @@
-# Threshold Autoregression
+# Threshold Autoregressive Models
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)

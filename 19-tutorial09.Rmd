@@ -1,5 +1,6 @@
 # Tutorial 9: Forecast Evaluation {-}
 
+
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(data.table)
 library(ggplot2)
@@ -7,25 +8,25 @@ library(lmtest)
 library(sandwich)
 ```
 
-(this is a combination stuff, will need to move back)
+(this is a evaluation stuff, will need to move back)
 
-In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from a set of models using a rolling window procedure, we will combine these forecasts and assess the accuracy of the combined forecast. To run the code, the `data.table`, `ggplot2`, `lmtest`, and `sandwich` packages need to be installed and loaded.
+In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from competing models using a rolling window procedure, and we will perform the Diebold-Mariano type regression-based test for equal predictive ability of the competing models. To run the code, the `data.table`, `ggplot2`, `lmtest`, and `sandwich` packages need to be installed and loaded.
 
-Let's generate a time series that follow an AR(2) process with the quadratic trend component as follows: 
-$$y_t = 0.03t-0.0001t^2+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t$$
+Let's generate a time series that follow an AR(2) process of the following form: 
+$$y_t = 0.2+1.1y_{t-1}-0.3y_{t-2}+\varepsilon_t$$
 where $e_{t} \sim N(0,\sigma^2)$. 
 
 ```{r echo=TRUE}
 n <- 240
 
-set.seed(4)
+set.seed(6)
 e <- rnorm(n,0,1)
 
 y <- rep(NA,n)
-y[1] <- 0.03*1-0.0001*(1^2)+e[1]
-y[2] <- 0.03*2-0.0001*(2^2)+0.6*y[1]+e[2]
+y[1] <- 0.2+e[1]
+y[2] <- 0.2+1.1*y[1]+e[2]
 for(i in 3:n){
-  y[i] <- 0.03*i-0.0001*(i^2)+0.6*y[i-1]+0.2*y[i-2]+e[i]
+  y[i] <- 0.2+1.1*y[i-1]-0.3*y[i-2]+e[i]
 }
 ```
 
@@ -42,66 +43,57 @@ ggplot(dt,aes(x=date,y=y))+
   theme_classic()
 ```
 
-Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. 
+Suppose the candidate models are AR(1), AR(2), and AR(3), and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. Calculate the RMSFE measures for the canddidate models.
 
 ```{r echo=TRUE}
-dt[,`:=`(y1=shift(y,1),y2=shift(y,2),y3=shift(y,3),trend=c(1:nrow(dt)))]
+dt[,`:=`(y1=shift(y,1),y2=shift(y,2),y3=shift(y,3))]
 
 R <- 180
 P <- nrow(dt)-R
 
-dt[,`:=`(rw=as.numeric(NA),a1=as.numeric(NA),a2=as.numeric(NA),tr=as.numeric(NA))]
+dt[,`:=`(rw=as.numeric(NA),a1=as.numeric(NA),a2=as.numeric(NA),a3=as.numeric(NA))]
 
 for(i in 1:P){
   
   dt$rw[R+i] <- dt$y[R+i-1]
   
-  a1 <- lm(y~y1,data=dt[i:(R+i-1)])
-  a2 <- lm(y~y1+y2,data=dt[i:(R+i-1)])
-  tr <- lm(y~y1+y2+trend,data=dt[i:(R+i-1)])
+  ar1 <- lm(y~y1,data=dt[i:(R+i-1)])
+  ar2 <- lm(y~y1+y2,data=dt[i:(R+i-1)])
+  ar3 <- lm(y~y1+y2+y3,data=dt[i:(R+i-1)])
   
-  dt$a1[R+i] <- a1$coefficients%*%as.numeric(c(1,dt[R+i,c("y1")]))
-  dt$a2[R+i] <- a2$coefficients%*%as.numeric(c(1,dt[R+i,c("y1","y2")]))
-  dt$tr[R+i] <- tr$coefficients%*%as.numeric(c(1,dt[R+i,c("y1","y2","trend")]))
+  dt$a1[R+i] <- ar1$coefficients%*%as.numeric(c(1,dt[R+i,c("y1")]))
+  dt$a2[R+i] <- ar2$coefficients%*%as.numeric(c(1,dt[R+i,c("y1","y2")]))
+  dt$a3[R+i] <- ar3$coefficients%*%as.numeric(c(1,dt[R+i,c("y1","y2","y3")]))
   
 }
 
-```
-
-Does either of the considered models 'sttaistically significantly' outperform the random walk?
-
-```{r echo=TRUE}
 dt$rw_e <- dt$y-dt$rw
 dt$a1_e <- dt$y-dt$a1
 dt$a2_e <- dt$y-dt$a2
-dt$tr_e <- dt$y-dt$tr
+dt$a3_e <- dt$y-dt$a3
 
+# RMSFEs
+sqrt(mean(dt$rw_e^2,na.rm=T))
+sqrt(mean(dt$a1_e^2,na.rm=T))
+sqrt(mean(dt$a2_e^2,na.rm=T))
+sqrt(mean(dt$a3_e^2,na.rm=T))
+```
+
+Do the autoregressive models generate 'statistically significantly' more accurate forecasts than the random walk model? We will answer this question by performing the regression-based Diebold-Mariano tests. First we will generate the loss differentials; then we will run three separate regressions to assess predictive accuracy of AR(1), AR(2), and AR(3) relative to the random walk; and finally we will base our decision on the heteroskedasticity and autocorrelation consistent standard errors.
+
+
+```{r echo=TRUE}
 dt$ld1 <- dt$rw_e^2-dt$a1_e^2
 dt$ld2 <- dt$rw_e^2-dt$a2_e^2
-dt$ldt <- dt$rw_e^2-dt$tr_e^2
+dt$ld3 <- dt$rw_e^2-dt$a3_e^2
 
 reg.ld1 <- lm(ld1~1,data=dt)
 reg.ld2 <- lm(ld2~1,data=dt)
-reg.ldt <- lm(ldt~1,data=dt)
+reg.ld3 <- lm(ld3~1,data=dt)
 
 coeftest(reg.ld1,vcov.=vcovHAC(reg.ld1))
 coeftest(reg.ld2,vcov.=vcovHAC(reg.ld2))
-coeftest(reg.ldt,vcov.=vcovHAC(reg.ldt))
-```
-
-All of the models do, on average, generate more accurate forecasts than random walk. The AR(2) generates statistically significantly more accurate forecasts, based on Diebold-Mariano test applied on quadratic loss function. 
-
-Might each model contain some useful information for improving forecast accuracy? Let's combine the forecasts from the AR(1) and the linear trend model using equal weights scheme and assess the combined forecast.
-
-```{r echo=TRUE}
-dt$t1 <- dt$a1*.5+dt$tr*.5
-dt$t1_e <- dt$y-dt$t1
-
-dt$ldt1 <- dt$rw_e^2-dt$t1_e^2
-
-reg.ldt1 <- lm(ldt1~1,data=dt)
-
-coeftest(reg.ldt1,vcov.=vcovHAC(reg.ldt1))
+coeftest(reg.ld3,vcov.=vcovHAC(reg.ld3))
 ```
 
 

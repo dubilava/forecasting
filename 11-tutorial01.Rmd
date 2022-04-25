@@ -9,8 +9,6 @@ R is a programming language for data analysis and visualisation. Here I introduc
 
 We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former on its own). R is available from [CRAN](https://cran.r-project.org/), and RStudio is available from [RStudio](https://www.rstudio.com/). 
 
-## Data Management {-}
-
 There are a number of ways in which we can work with data in R. Let's begin with matrices. 
 
 Consider a string of observations:
@@ -75,12 +73,7 @@ Di <- solve(D)
 Di
 ```
 
-
-
-## Data Visualisation {-}
-
 One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the **ggplot2** package. Notably, this package requires that the data are maintained in the data.frame or the data.table format (for the latter, you need to load the **data.table** package). Let's create a data.table object and observe its few lines:
-
 
 ```{r echo=TRUE}
 set.seed(1)
@@ -133,9 +126,6 @@ ggplot(dt,aes(x=date,y=y))+
   theme_classic()
 ```
 
-
-## Regression Analysis {-}
-
 To illustrate the OLS regression in R, we apply the previously generated $x$ and $y$ as independent and dependent variables. To begin, we obtain the least squares estimator "by hand" as follows:
 ```{r echo=TRUE}
 X <- cbind(1,x)
@@ -153,4 +143,5 @@ We can apply the summary() function to see the complete set of regression result
 ```{r echo=TRUE}
 summary(ols)
 ```
+
 

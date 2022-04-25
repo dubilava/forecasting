@@ -1,4 +1,4 @@
-# Tutorial 2: Some R Functions {-}
+# Tutorial 2: Data Management {-}
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
@@ -16,7 +16,7 @@ e <- rnorm(200,0,2)
 
 Notice that prior to sampling we set seed to some value (to one in this instance). We do so to ensure that we can exactly replicate the sample in the future.
 
-Nett, generate a sequence of 200 binary variables, call it x.
+Next, generate a sequence of 200 binary variables, call it x.
 
 ```{r echo=TRUE}
 set.seed(2)

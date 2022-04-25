@@ -1,6 +1,4 @@
-# Deterministic Time Series Models {-}
-
-# Trends
+# Trends and Seasonality
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
@@ -104,8 +102,31 @@ Trends are (relatively) easy to model and forecast. Caution is needed, however, 
 
 Consider a linear trend model with an additive error term: $$y_t = \alpha + \beta t + \varepsilon_t$$ We estimate the model parameters, $\mathbf{\theta}=\{\alpha,\beta\}$, by fitting the trend model to a time series using the least-squares regression: $$\hat{\theta} = \operatorname*{argmin}_{\mathbf{\theta}} \sum_{t=1}^{T}\big(y_t - \alpha - \beta t\big)^2.$$ Fitted values are then given by: $$\hat{y}_t = \hat{\alpha} + \hat{\beta} t$$
 
+Seasonality is typically modeled as monthly or quarterly pattern, but can also be modeled as a higher frequency pattern (e.g. weekly). Some examples of time series with apparent seasonal patterns are:
+
+- Agricultural production.
+- Sales of energy products.
+- Airfare (in non-pandemic times).
+
+One way to deal with the seasonality in data is to "remove" it prior to the use of the series (i.e., work with a seasonally adjusted time series). Indeed, some economic time series are only/also available in a seasonally-adjusted form.
+
+Otherwise, and perhaps more interestingly, we can directly model seasonality in a regression setting by incorporating seasonal dummy variables, for example. 
+
+A seasonal model is given by: $$y_t = \sum_{i=1}^{s}\gamma_i d_{it} + \varepsilon_t,$$
+where $s$ denotes the frequency of the data, and $d_{it}$ takes the value of 1 repeatedly after every $s$ periods, and such that $\sum_{i} d_{it} = 1$, $\forall t$.
+
+Alternatively the seasonal model can be rewritten as: $$y_t = \alpha + \sum_{i=1}^{s-1}\delta_i d_{it} + \varepsilon_t,$$ in which case $\alpha$ is an intercept of an omitted season, and $\delta_i$ represents a deviation from it during the $i^{th}$ season. This is a more typical form of a seasonal model.
+
+Both variants of a seasonal model result in an identical fit and forecasts.
+
+When dealing with weekly or daily data, the dummy variable approach of modeling seasonality may not be practical, nor efficient in most instances, as that will require estimating another 51 or 364 parameters. A way to model seasonality without giving up too many degrees of freedom is by using the so-called harmonic seasonal variables, which are a set of Fourier terms. 
+
+The Fourier terms can be applied to model seasonality at any frequency, indeed. Suppose, for example, we are working with monthly time series. A model with Fourier terms will have the following form: $$y_t = \alpha+\sum_{k=1}^{K}\left[\beta_{1k}\sin\left(\frac{2\pi kt}{12}\right)+\beta_{2k}\cos\left(\frac{2\pi kt}{12}\right)\right]+\varepsilon_t,$$ where the value of $K$ can be determined using an information criterion (e.g., AIC or SIC). 
+
 
 ## Forecasting
+
+The predictors of the deterministic trend or seasonal models are pre-determined, which means, after fitting the model, we can directly obtain the point and interval forecasts  for any horizon $h$.
 
 If a linear trend model is fitted to the data, then any future realization of the stochastic process is assumed to follow the linear trend model: $$y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h}.$$ 
 
@@ -117,7 +138,17 @@ The forecast variance, then, is: $$\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varep
 
 From this, we can obtain interval forecast at any horizon, which is: $$y_{t+h|t} \pm 1.96 \hat{\sigma}.$$
 
-A few features of trend forecasts to note:
+When using the dummy variable approach to model the seasonality, for example, a future realization of a random variable is: $$y_{t+h} = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h} + \varepsilon_{t+h}.$$ 
+
+The optimal forecast of $y_{t+h}$ is: $$y_{t+h|t} = E(y_{t+h}|\Omega_t) = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h}$$
+
+The forecast error is: $$e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}$$
+
+The forecast variance is: $$\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2,\;~~\forall\;h$$
+
+The interval forecast is: $$y_{t+h|t} \pm 1.96 \hat{\sigma}.$$
+
+Several characteristics of forecasts from the considered deterministic models:
 
 - they tend to understate uncertainty (at long horizons as the forecast interval doesn not widen with the horizon);
 - short-term trend forecasts can perform poorly; long-term trend forecasts typically perform poorly;
