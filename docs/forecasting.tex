@@ -5,10 +5,14 @@
 \documentclass[
   12pt,
   oneside]{book}
+\title{Introduction to Time Series Modeling and Forecasting with Applications in R}
+\author{David Ubilava}
+\date{April 2022}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,13 +117,9 @@
 \pretitle{\begin{center}
 	\includegraphics{forecasting-logo.png}\LARGE\\}
 \posttitle{\end{center}}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-
-\title{Introduction to Time Series Modeling and Forecasting with Applications in R}
-\author{David Ubilava}
-\date{April 2022}
 
 \begin{document}
 \maketitle
@@ -140,10 +140,6 @@ Some years later, as I started teaching a course on forecasting, I spend a great
 
 What is forecast if not a guess? An educated guess, nonetheless. A good guess doesn't have to be spot-on. It almost never is, only if by fluke. In fact, an inaccurate guess can be helpful too. That we were unable to exactly predict an event, tells us something about the underlying processes that result in an outcome different from what we predicted. Such conjecture can be useful. Forecasting, even if inaccurate, can be useful. George Box's `all models are wrong but some are useful' is certainly suitable to the study of forecasting. This book introduces time series models and presents a case of their usefulness in predicting events.
 
-\hypertarget{preliminaries}{%
-\chapter*{Preliminaries}\label{preliminaries}}
-\addcontentsline{toc}{chapter}{Preliminaries}
-
 \hypertarget{introduction-to-forecasting}{%
 \chapter{Introduction to Forecasting}\label{introduction-to-forecasting}}
 
@@ -153,10 +149,10 @@ Information is key in forecasting. It comes in many forms, but once it is organi
 
 Accurate forecasting is difficult. Indeed, forecasting is difficult. So, as we forecast, we are bound to make mistakes, which manifest into the \emph{forecast errors}. We have these errors because we don't know the true model, so we make a guess about the most suitable model for time series analysis. We also have the errors because we don't know the true parameters of the model. Instead, using a subset of history we estimate the parameters, which are prone to a sampling error. Finally, even if our guess about the model is exactly correct, and even if our parameter estimates happen to be exactly equal to the true parameters of the `right' model, our forecasts may still be off, because of all those factors that have never happened in past, and only characterize the future. And because of this, there is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved.
 
-\hypertarget{basics-of-time-series-econometics}{%
-\chapter{Basics of Time Series Econometics}\label{basics-of-time-series-econometics}}
+\hypertarget{stochastic-process-and-time-series}{%
+\chapter{Stochastic Process and Time Series}\label{stochastic-process-and-time-series}}
 
-A time series is a realization of a sequence of random variables that are stored chronologically. This sequence is referred to as the \emph{stochastic process}. Thus, a time series is a realization of the stochastic process. We index time periods as \(1,2,\ldots,T\), so that the stochastic process is given by \(\{Y_t:t=1,\ldots,T\}\). A time series is represented by a set of observations: \(\{y_1,\ldots,y_T\}\). One can view a time series as a finite sample from an underlying doubly--infinite sequence: \(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}\). This is to say that the history extends beyond the starting and ending time periods of the sample at hand.
+A time series is a realization of a sequence of random variables that are stored chronologically. This sequence is referred to as the \emph{stochastic process}. Thus, a time series is a realization of a stochastic process. We index time periods as \(1,2,\ldots,T\), so that the stochastic process is given by \(\{Y_t:t=1,\ldots,T\}\). A time series is represented by a set of observations: \(\{y_1,\ldots,y_T\}\). One can view a time series as a finite sample from an underlying doubly--infinite sequence: \(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}\). This is to say that the history extends beyond the starting and ending time periods of the sample at hand.
 
 \hypertarget{stationarity}{%
 \section{Stationarity}\label{stationarity}}
@@ -275,8 +271,8 @@ By solving the optimization problem it follows that: \[\hat{y}_{t+h|t} = E(y_{t+
 
 Thus, the optimal point forecast under the quadratic loss is the \emph{mean} (for reference, the optimal point forecast under absolute loss is the \emph{median}).
 
-\hypertarget{measuring-forecast-accuracy}{%
-\section{Measuring Forecast Accuracy}\label{measuring-forecast-accuracy}}
+\hypertarget{measuring-the-accuracy-of-forecasts}{%
+\section{Measuring the Accuracy of Forecasts}\label{measuring-the-accuracy-of-forecasts}}
 
 Forecast accuracy should only be determined by considering how well a model performs on data not used in estimation. But to assess forecast accuracy we need access to the data, typically from future time periods, that was not used in estimation. This leads to the so-called `pseudo forecasting' routine. This routine involves splitting the available data into two segments referred to as `in-sample' and `out-of-sample.' The in-sample segment of a series is also known as the `estimation set' or the `training set.' The out-of-sample segment of a series is also known as the `hold-out set' or the `test set.'
 
@@ -346,12 +342,8 @@ Testing \(Cov(e_{t+h|t},y_{t+h|t})=0\). Set up a regression: \[e_{t+h|t} = \alph
 
 Testing \(Cov(e_{t+1|t},e_{t|t-1})=0\). Set up a regression: \[e_{t+1|t} = \alpha + \gamma e_{t|t-1} + \upsilon_{t+1} \hspace{.5in} t = R+1,\ldots,T-1.\] The null of no forecast error autocorrelation is equivalent of testing \(H_0: \gamma = 0\) in the OLS setting.
 
-\hypertarget{deterministic-time-series-models}{%
-\chapter*{Deterministic Time Series Models}\label{deterministic-time-series-models}}
-\addcontentsline{toc}{chapter}{Deterministic Time Series Models}
-
-\hypertarget{trends}{%
-\chapter{Trends}\label{trends}}
+\hypertarget{trends-and-seasonality}{%
+\chapter{Trends and Seasonality}\label{trends-and-seasonality}}
 
 Economic time series usually are characterized by trending behavior, and often present a seasonal pattern as well. Trend is a unidirectional change of time series over an extended period of time that arises from the accumulation of information over time. Seasonality is a repeating pattern \emph{within a calendar year} that arises from the links of technologies, preferences, and institutions to the calendar. Modeling and forecasting these time series features is a fairly straightforward task. But before we get to it, let's discuss what may happen if we were to ignore the presence of trends and/or seasonality when analyzing the time series data.
 
@@ -405,34 +397,6 @@ Trends are (relatively) easy to model and forecast. Caution is needed, however, 
 
 Consider a linear trend model with an additive error term: \[y_t = \alpha + \beta t + \varepsilon_t\] We estimate the model parameters, \(\mathbf{\theta}=\{\alpha,\beta\}\), by fitting the trend model to a time series using the least-squares regression: \[\hat{\theta} = \operatorname*{argmin}_{\mathbf{\theta}} \sum_{t=1}^{T}\big(y_t - \alpha - \beta t\big)^2.\] Fitted values are then given by: \[\hat{y}_t = \hat{\alpha} + \hat{\beta} t\]
 
-\hypertarget{forecasting}{%
-\section{Forecasting}\label{forecasting}}
-
-If a linear trend model is fitted to the data, then any future realization of the stochastic process is assumed to follow the linear trend model: \[y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h}.\]
-
-An optimal forecast of \(y_{t+h}\), therefore, is given by: \[y_{t+h|t} = E(y_{t+h}|\Omega_t) = E[\alpha + \beta (t+h) + \varepsilon_{t+h}] = \alpha + \beta (t+h).\]
-
-The forecast error is: \[e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}\]
-
-The forecast variance, then, is: \[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2,\;~~\forall\;h\]
-
-From this, we can obtain interval forecast at any horizon, which is: \[y_{t+h|t} \pm 1.96 \hat{\sigma}.\]
-
-A few features of trend forecasts to note:
-
-\begin{itemize}
-\tightlist
-\item
-  they tend to understate uncertainty (at long horizons as the forecast interval doesn not widen with the horizon);
-\item
-  short-term trend forecasts can perform poorly; long-term trend forecasts typically perform poorly;
-\item
-  sometimes it may be beneficial, from the standpoint of achieving better accuracy, to forecast growth rates, and then reconstruct level forecasts.
-\end{itemize}
-
-\hypertarget{seasonality}{%
-\chapter{Seasonality}\label{seasonality}}
-
 Seasonality is typically modeled as monthly or quarterly pattern, but can also be modeled as a higher frequency pattern (e.g.~weekly). Some examples of time series with apparent seasonal patterns are:
 
 \begin{itemize}
@@ -449,9 +413,6 @@ One way to deal with the seasonality in data is to ``remove'' it prior to the us
 
 Otherwise, and perhaps more interestingly, we can directly model seasonality in a regression setting by incorporating seasonal dummy variables, for example.
 
-\hypertarget{modeling-1}{%
-\section{Modeling}\label{modeling-1}}
-
 A seasonal model is given by: \[y_t = \sum_{i=1}^{s}\gamma_i d_{it} + \varepsilon_t,\]
 where \(s\) denotes the frequency of the data, and \(d_{it}\) takes the value of 1 repeatedly after every \(s\) periods, and such that \(\sum_{i} d_{it} = 1\), \(\forall t\).
 
@@ -463,10 +424,20 @@ When dealing with weekly or daily data, the dummy variable approach of modeling 
 
 The Fourier terms can be applied to model seasonality at any frequency, indeed. Suppose, for example, we are working with monthly time series. A model with Fourier terms will have the following form: \[y_t = \alpha+\sum_{k=1}^{K}\left[\beta_{1k}\sin\left(\frac{2\pi kt}{12}\right)+\beta_{2k}\cos\left(\frac{2\pi kt}{12}\right)\right]+\varepsilon_t,\] where the value of \(K\) can be determined using an information criterion (e.g., AIC or SIC).
 
-\hypertarget{forecasting-1}{%
-\section{Forecasting}\label{forecasting-1}}
+\hypertarget{forecasting}{%
+\section{Forecasting}\label{forecasting}}
 
-The predictors of the seasonal models are pre-determined, which means, after fitting the model, we can directly obtain the point and interval forecasts for any horizon \(h\).
+The predictors of the deterministic trend or seasonal models are pre-determined, which means, after fitting the model, we can directly obtain the point and interval forecasts for any horizon \(h\).
+
+If a linear trend model is fitted to the data, then any future realization of the stochastic process is assumed to follow the linear trend model: \[y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h}.\]
+
+An optimal forecast of \(y_{t+h}\), therefore, is given by: \[y_{t+h|t} = E(y_{t+h}|\Omega_t) = E[\alpha + \beta (t+h) + \varepsilon_{t+h}] = \alpha + \beta (t+h).\]
+
+The forecast error is: \[e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}\]
+
+The forecast variance, then, is: \[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2,\;~~\forall\;h\]
+
+From this, we can obtain interval forecast at any horizon, which is: \[y_{t+h|t} \pm 1.96 \hat{\sigma}.\]
 
 When using the dummy variable approach to model the seasonality, for example, a future realization of a random variable is: \[y_{t+h} = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h} + \varepsilon_{t+h}.\]
 
@@ -478,12 +449,20 @@ The forecast variance is: \[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{
 
 The interval forecast is: \[y_{t+h|t} \pm 1.96 \hat{\sigma}.\]
 
-\hypertarget{dynamic-time-series-models}{%
-\chapter*{Dynamic Time Series Models}\label{dynamic-time-series-models}}
-\addcontentsline{toc}{chapter}{Dynamic Time Series Models}
+Several characteristics of forecasts from the considered deterministic models:
 
-\hypertarget{linear-autoregression}{%
-\chapter{Linear Autoregression}\label{linear-autoregression}}
+\begin{itemize}
+\tightlist
+\item
+  they tend to understate uncertainty (at long horizons as the forecast interval doesn not widen with the horizon);
+\item
+  short-term trend forecasts can perform poorly; long-term trend forecasts typically perform poorly;
+\item
+  sometimes it may be beneficial, from the standpoint of achieving better accuracy, to forecast growth rates, and then reconstruct level forecasts.
+\end{itemize}
+
+\hypertarget{autoregressive-models}{%
+\chapter{Autoregressive Models}\label{autoregressive-models}}
 
 Economic time series are often characterized by stochastic cycles. A cycle is a pattern of periodic fluctuations, not contained within a calendar year. A stochastic cycle is one generated by random variables. In general terms, the process is given by:
 \[Y_t = f(Y_{t-1},Y_{t-2},\ldots;\mathbf{\theta})+\varepsilon_t.\;~~t=1,\ldots,T\]
@@ -507,8 +486,8 @@ The autocorrelation, \(\rho\), and partial autocorrelation, \(\pi\), functions o
   The partial autocorrelation function (PACF) is characterized by ``statistically significant'' first \(p\) spikes \(\pi_1 \neq 0,\ldots,\pi_p \neq 0\), and the remaining \(\pi_k = 0\), \(\forall k > p\).
 \end{itemize}
 
-\hypertarget{modeling-2}{%
-\section{Modeling}\label{modeling-2}}
+\hypertarget{modeling-1}{%
+\section{Modeling}\label{modeling-1}}
 
 \hypertarget{ar1}{%
 \subsection{AR(1)}\label{ar1}}
@@ -577,7 +556,7 @@ The autocorrelation and partial autocorrelation functions of the AR(1) process h
 
 To illustrate the foregoing, let's generate a series of 100 observations that follow the process: \(y_t=0.8y_{t-1}+\varepsilon_t\), where \(y_0=0\) and \(\varepsilon\sim N(0,1)\), and plot the ACF and PACF of this series.
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-11-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-10-1.pdf}
 
 \hypertarget{ar2}{%
 \subsection{AR(2)}\label{ar2}}
@@ -615,10 +594,10 @@ The autocorrelation functions of the AR(2) process have the following distinctiv
 
 Again, to illustrate, let's generate a series of 100 observations that follow the process: \(y_t=1.1y_{t-1}-0.4y_{t-2}+\varepsilon_t\), where \(y_{-1}=y_0=0\) and \(\varepsilon\sim N(0,1)\), and plot the ACF and PACF of this series.
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-12-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-11-1.pdf}
 
-\hypertarget{forecasting-2}{%
-\section{Forecasting}\label{forecasting-2}}
+\hypertarget{forecasting-1}{%
+\section{Forecasting}\label{forecasting-1}}
 
 Making forecasts for some future period, \(t+h\), from an AR(p) model that has been fit to the data up to and including period \(t+h-1\) can be a straightforward exercise, so long as we have access to the relevant information set. For one-step-ahead forecasts, the information set is readily available. For multi-step-ahead forecasts, we need to `come up' with the value of the variable that has not been realized yet. For example, when making a two-step-ahead forecast for period \(t+2\), we need data from period \(t+1\), which is not available at the time when the forecast is made. Instead, we need to use our forecast for period \(t+1\). The same applies to forecasts for any subsequent periods in the future. This approach is known as an \emph{iterative} method of forecasting, wherein we make forecast for some period using the available data, then iterate forward by one period and use the most recent forecast to make the next period's forecast, and so on and so forth.
 
@@ -762,15 +741,15 @@ The h-step-ahead forecast variance:
 
 The h-step-ahead (95\%) interval forecast: \[y_{t+h|t} \pm z_{.025}\sigma_{t+h|t} = y_{t+h|t} \pm 1.96\sigma_{t+h|t}\]
 
-\hypertarget{vector-autoregression}{%
-\chapter{Vector Autoregression}\label{vector-autoregression}}
+\hypertarget{vector-autoregressive-models}{%
+\chapter{Vector Autoregressive Models}\label{vector-autoregressive-models}}
 
 Many economic variables are interrelated. For example, changes to household income impact their consumption levels; changes to interest rates impact investments in the economy. Often (albeit not always) the relationship between the variables goes in both directions. For example, higher wages (and, therefore, income) result in higher prices (inflation), which in turn puts an upward pressure on wages.
 
 The foregoing implies that a shock to a variable may propagate a dynamic response not only of that variable, but also of related variables. The dynamic linkages between two (or more) economic variables can be modeled as a \emph{system of equations}, represented by a vector autoregressive (VAR) process.
 
-\hypertarget{modeling-3}{%
-\section{Modeling}\label{modeling-3}}
+\hypertarget{modeling-2}{%
+\section{Modeling}\label{modeling-2}}
 
 To begin, consider a bivariate (two-dimensional) VAR of order one, VAR(1).
 
@@ -839,8 +818,8 @@ It is said that:
 
 So long as the variables of the system are covariance-stationarity, we can apply a F test for the hypotheses testing. If \(p=1\), a t test is equivalently applicable for hypotheses testing.
 
-\hypertarget{forecasting-3}{%
-\section{Forecasting}\label{forecasting-3}}
+\hypertarget{forecasting-2}{%
+\section{Forecasting}\label{forecasting-2}}
 
 Generating forecasts for each of the variable comprising the VAR(p) model can be a straightforward exercise, so long as we have access to the relevant information set. As it was the case with autoregressive models, we make one-step-ahead forecasts based on the readily available data; and we make multi-step-ahead forecasts iteratively, using the forecast in periods for which the data are not present.
 
@@ -946,8 +925,11 @@ where \(R\) is the size of the (first) estimation window.
 
 \(\{X_2\}\) is said to cause \emph{in Granger sense} \(\{X_1\}\) if \(RMSFE_{u} < RMSFE_{r}\).
 
-\hypertarget{threshold-autoregression}{%
-\chapter{Threshold Autoregression}\label{threshold-autoregression}}
+\hypertarget{dynamic-factor-models}{%
+\chapter{Dynamic Factor Models}\label{dynamic-factor-models}}
+
+\hypertarget{threshold-autoregressive-models}{%
+\chapter{Threshold Autoregressive Models}\label{threshold-autoregressive-models}}
 
 While a stochastic process can be approximated by a linear model, it is possible that a nonlinear model offers a better fit to the data. Nonlinear models come in many flavours. Here we will consider one type of nonlinear models, which belongs to the family of regime-dependent models.
 
@@ -972,8 +954,8 @@ This equation is referred as threshold autoregression, or TAR(p). More specifica
 
 A TAR (any version of it) can take a multiple-regime form: \[y_t = \alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i} + \sum_{j=2}^{K}{\left(\alpha_j + \sum_{i=1}^{p}\beta_{ji} y_{t-i}\right)I(s_t>c_j)} + \varepsilon_t,\] where \(K\) depicts the number of regimes in the equation.
 
-\hypertarget{modeling-4}{%
-\section{Modeling}\label{modeling-4}}
+\hypertarget{modeling-3}{%
+\section{Modeling}\label{modeling-3}}
 
 When estimating TAR-type models, we have no \emph{a priori} knowledge on the number of regimes, the autoregressive order in each regime, the regime-switching (or threshold) variable, and the threshold values.
 
@@ -981,8 +963,8 @@ When threshold values are unknown (and need to be estimated), standard statistic
 
 Joint estimation of model parameters would require some nonlinear optimization routine. Alternatively, we can approximate such optimization using a grid-search procedure. The procedure relies on the fact that once the threshold parameter is known, the model reduces to a linear model, and the least squares estimator can be applied then. That is, \[\hat{\tau} = \arg\min_{\tau}\hat{\sigma}^2(\tau),\] where \[\hat{\sigma}^2(\tau) = \frac{1}{T-k}\sum_{t=1}^{T}\hat{\epsilon}_t^2(\tau)\] for all candidate values of \(\tau\). The candidate values of \(\tau\) typically belong to a range between 10th and 90th percentiles of the transition variable, which is simply the trend in the case of the time-varying TAR, and the lagged dependent variable in the case of the self-exciting TAR.
 
-\hypertarget{forecasting-4}{%
-\section{Forecasting}\label{forecasting-4}}
+\hypertarget{forecasting-3}{%
+\section{Forecasting}\label{forecasting-3}}
 
 In the case of time-varying shifting trend (mean) models, the most recent trend component is used to obtain forecasts. To that end, the forecasting routine is similar to that of linear trend models.
 
@@ -1078,10 +1060,6 @@ Two-step-ahead bootstrap forecast: \[\bar{y}_{t+2|t} = B^{-1}\sum_{b=1}^{B}y_{t+
 
 Here, \(B\) is the total number of bootstrap iterations (usually many thousand iterations).
 
-\hypertarget{forecast-assessment}{%
-\chapter*{Forecast Assessment}\label{forecast-assessment}}
-\addcontentsline{toc}{chapter}{Forecast Assessment}
-
 \hypertarget{forecast-evaluation}{%
 \chapter{Forecast Evaluation}\label{forecast-evaluation}}
 
@@ -1143,10 +1121,6 @@ In practice, the test of equal predictive ability can be applied within the fram
 R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial--and--error. To the extent that new features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.
 
 We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will `find' and connect with the former on its own). R is available from \href{https://cran.r-project.org/}{CRAN}, and RStudio is available from \href{https://www.rstudio.com/}{RStudio}.
-
-\hypertarget{data-management}{%
-\section*{Data Management}\label{data-management}}
-\addcontentsline{toc}{section}{Data Management}
 
 There are a number of ways in which we can work with data in R. Let's begin with matrices.
 
@@ -1314,10 +1288,6 @@ We can invert a(n invertible) matrix using the solve() function:
 ## c3 -1.3333333  1  0.3333333
 \end{verbatim}
 
-\hypertarget{data-visualisation}{%
-\section*{Data Visualisation}\label{data-visualisation}}
-\addcontentsline{toc}{section}{Data Visualisation}
-
 One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the \textbf{ggplot2} package. Notably, this package requires that the data are maintained in the data.frame or the data.table format (for the latter, you need to load the \textbf{data.table} package). Let's create a data.table object and observe its few lines:
 
 \begin{Shaded}
@@ -1408,10 +1378,6 @@ We typically apply a line plot to illustrate a time series (that are ordered by 
 
 \includegraphics{forecasting_files/figure-latex/unnamed-chunk-32-1.pdf}
 
-\hypertarget{regression-analysis}{%
-\section*{Regression Analysis}\label{regression-analysis}}
-\addcontentsline{toc}{section}{Regression Analysis}
-
 To illustrate the OLS regression in R, we apply the previously generated \(x\) and \(y\) as independent and dependent variables. To begin, we obtain the least squares estimator ``by hand'' as follows:
 
 \begin{Shaded}
@@ -1476,9 +1442,9 @@ We can apply the summary() function to see the complete set of regression result
 ## F-statistic: 12.41 on 1 and 118 DF,  p-value: 0.0006091
 \end{verbatim}
 
-\hypertarget{tutorial-2-some-r-functions}{%
-\chapter*{Tutorial 2: Some R Functions}\label{tutorial-2-some-r-functions}}
-\addcontentsline{toc}{chapter}{Tutorial 2: Some R Functions}
+\hypertarget{tutorial-2-data-management}{%
+\chapter*{Tutorial 2: Data Management}\label{tutorial-2-data-management}}
+\addcontentsline{toc}{chapter}{Tutorial 2: Data Management}
 
 In this tutorial, we will introduce several simple R functions, and will perform a basic forecasting exercise.
 
@@ -1493,7 +1459,7 @@ Let's generate a sequence of 200 iid random variables with mean zero and varianc
 
 Notice that prior to sampling we set seed to some value (to one in this instance). We do so to ensure that we can exactly replicate the sample in the future.
 
-Nett, generate a sequence of 200 binary variables, call it x.
+Next, generate a sequence of 200 binary variables, call it x.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1791,9 +1757,222 @@ No serial correlation in one-step-ahead forecast errors: \(Cov(e_{t+1|t},y_{t|t-
 ## e_naive.l1  0.03780853  0.1631333 0.2317647 0.8179979
 \end{verbatim}
 
-\hypertarget{tutorial-4-deterministic-trends}{%
-\chapter*{Tutorial 4: Deterministic Trends}\label{tutorial-4-deterministic-trends}}
-\addcontentsline{toc}{chapter}{Tutorial 4: Deterministic Trends}
+\textbf{(this is a direct/iterated stuff)}
+
+In this tutorial, we will generate a time series, we will obtain multi-step-ahead forecasts using direct and iterated methods from autoregressive models using a rolling window procedure, and we will assess the accuracy of the forecast. We will then turn to interval forecasts, and we will assess their coverage accuracy. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
+
+Let's generate a time series that follow an AR(2) process as follows:
+\[y_t = 0.01t+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t\]
+where \(e_{t} \sim N(0,1)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{240}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{9}\NormalTok{)}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
+\NormalTok{y[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.01}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{1}\NormalTok{]}
+\NormalTok{y[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.02+0.6}\SpecialCharTok{*}\NormalTok{y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{2}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{n)\{}
+\NormalTok{  y[i] }\OtherTok{\textless{}{-}} \FloatTok{0.01}\SpecialCharTok{*}\NormalTok{i}\FloatTok{+0.6}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\FloatTok{0.2}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}2}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[i]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with \(y\) in a \textbf{data.table}, call it `dt,' and plot the realized time series using the \textbf{ggplot} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2000{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(date,y)}
+
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-56-1.pdf}
+
+Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h }\OtherTok{\textless{}{-}} \DecValTok{12}
+
+\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ dt[,.(date,y,}\AttributeTok{y1=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{1}\NormalTok{),}\AttributeTok{y2=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{2}\NormalTok{),}\AttributeTok{y12=}\FunctionTok{shift}\NormalTok{(y,h),}\AttributeTok{y13=}\FunctionTok{shift}\NormalTok{(y,h}\SpecialCharTok{+}\DecValTok{1}\NormalTok{))]}
+\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ dt[}\FunctionTok{complete.cases}\NormalTok{(dt)]}
+
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{a1i=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1d=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2i=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2d=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
+
+\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{180}
+\NormalTok{P }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{R}\SpecialCharTok{{-}}\NormalTok{h}\SpecialCharTok{+}\DecValTok{1}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+  \DocumentationTok{\#\#\# iterated multi{-}step method}
+\NormalTok{  a1i }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  a2i }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1}\SpecialCharTok{+}\NormalTok{y2,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  iter\_dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(}\AttributeTok{hor=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{h,}\AttributeTok{a1=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))}
+  
+  \DocumentationTok{\#\# AR(1)}
+\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a1[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{h)\{}
+\NormalTok{    iter\_dt}\SpecialCharTok{$}\NormalTok{a1[j] }\OtherTok{\textless{}{-}}\NormalTok{ a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a1[j}\DecValTok{{-}1}\NormalTok{]}
+\NormalTok{  \}}
+  
+  \DocumentationTok{\#\# AR(2)}
+\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y1}
+\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{h)\{}
+\NormalTok{    iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j}\DecValTok{{-}2}\NormalTok{]}
+\NormalTok{  \}}
+
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1i[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ iter\_dt}\SpecialCharTok{$}\NormalTok{a1[h]}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2i[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ iter\_dt}\SpecialCharTok{$}\NormalTok{a2[h]}
+  
+  \DocumentationTok{\#\#\# direct multi{-}step method}
+\NormalTok{  a1d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  a2d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12}\SpecialCharTok{+}\NormalTok{y13,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1d[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2d[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{+}\NormalTok{a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y1}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+We can now test whether the forecasts of the iterated method `statistically significantly' outperform those of the direct method?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1d\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1d}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2d\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2d}
+
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld1 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{a1d\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld2 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{a2d\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i\_e}\SpecialCharTok{\^{}}\DecValTok{2}
+
+\NormalTok{reg\_ld1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld1}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+\NormalTok{reg\_ld2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld2}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
+
+\FunctionTok{coeftest}\NormalTok{(reg\_ld1,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg\_ld1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value  Pr(>|t|)    
+## (Intercept)  -6.9266     1.7170 -4.0342 0.0002828 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coeftest}\NormalTok{(reg\_ld2,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg\_ld2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)  -3.1094     1.3271  -2.343  0.02494 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Obtain interval forecasts for horizon 12 using the direct method for an AR(1) model and a linear trend model; plot these interval forecasts along with the observed series.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt}\SpecialCharTok{$}\NormalTok{trend }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(dt))}
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{a1dl=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1du=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{trdl=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{trdu=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
+  
+\NormalTok{  a1d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+\NormalTok{  trd }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{trend,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
+  
+\NormalTok{  a1d\_pf }\OtherTok{\textless{}{-}}\NormalTok{ a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
+\NormalTok{  trd\_pf }\OtherTok{\textless{}{-}}\NormalTok{ trd}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{trd}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{h]}\SpecialCharTok{$}\NormalTok{trend}
+  
+\NormalTok{  a1d\_sd }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(a1d)}\SpecialCharTok{$}\NormalTok{sigma}
+\NormalTok{  trd\_sd }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(trd)}\SpecialCharTok{$}\NormalTok{sigma}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1dl[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d\_pf}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{a1d\_sd}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1du[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d\_pf}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{a1d\_sd}
+  
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{trdl[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ trd\_pf}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{trd\_sd}
+\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{trdu[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ trd\_pf}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{trd\_sd}
+\NormalTok{\}}
+
+\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{a1dl),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"steelblue"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{a1du),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"steelblue"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{trdl),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"indianred"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{trdu),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"indianred"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-59-1.pdf}
+
+Test the unconditional coverage of the interval forecasts from the considered two models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{i1=}\FunctionTok{ifelse}\NormalTok{(y}\SpecialCharTok{\textgreater{}=}\NormalTok{a1dl }\SpecialCharTok{\&}\NormalTok{ y}\SpecialCharTok{\textless{}=}\NormalTok{a1du,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}\AttributeTok{it=}\FunctionTok{ifelse}\NormalTok{(y}\SpecialCharTok{\textgreater{}=}\NormalTok{trdl }\SpecialCharTok{\&}\NormalTok{ y}\SpecialCharTok{\textless{}=}\NormalTok{trdu,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))]}
+
+
+\CommentTok{\# AR(1)}
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{i1,}\AttributeTok{na.rm=}\NormalTok{T)}
+
+\NormalTok{L10 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\FloatTok{{-}.95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1))}\SpecialCharTok{*}\NormalTok{(.}\DecValTok{95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p1)}
+\NormalTok{L11 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1))}\SpecialCharTok{*}\NormalTok{(p1)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p1)}
+
+\NormalTok{LR1 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(L10}\SpecialCharTok{/}\NormalTok{L11)}
+
+\FunctionTok{pchisq}\NormalTok{(LR1,}\AttributeTok{df=}\DecValTok{1}\NormalTok{,}\AttributeTok{lower.tail=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.01027851
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# AR(2)}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{it,}\AttributeTok{na.rm=}\NormalTok{T)}
+
+\NormalTok{L20 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\FloatTok{{-}.95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2))}\SpecialCharTok{*}\NormalTok{(.}\DecValTok{95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p2)}
+\NormalTok{L21 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2))}\SpecialCharTok{*}\NormalTok{(p2)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p2)}
+
+\NormalTok{LR2 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(L20}\SpecialCharTok{/}\NormalTok{L21)}
+
+\FunctionTok{pchisq}\NormalTok{(LR2,}\AttributeTok{df=}\DecValTok{1}\NormalTok{,}\AttributeTok{lower.tail=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1441849
+\end{verbatim}
+
+\hypertarget{tutorial-4-trends-and-seasonality}{%
+\chapter*{Tutorial 4: Trends and Seasonality}\label{tutorial-4-trends-and-seasonality}}
+\addcontentsline{toc}{chapter}{Tutorial 4: Trends and Seasonality}
 
 In this tutorial, we will generate trending series, we will apply an information criterion to select the most suitable trend model, and we will obtain and compare one-step-ahead forecasts using a rolling window procedure.
 
@@ -1833,7 +2012,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-64-1.pdf}
 
 Calculate Akaike Information Criteria for linear, quadratic, cubic, and exponential trend models, using all observations in the series.
 
@@ -1906,7 +2085,7 @@ Plot the original series overlay by the one-step-ahead forecasts from the four c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-61-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 Calculate the RMSFE measures for each of the two forecasting methods.
 
@@ -1957,9 +2136,9 @@ Calculate the RMSFE measures for each of the two forecasting methods.
 ## [1] 5.132312
 \end{verbatim}
 
-\hypertarget{tutorial-5-seasonality}{%
-\chapter*{Tutorial 5: Seasonality}\label{tutorial-5-seasonality}}
-\addcontentsline{toc}{chapter}{Tutorial 5: Seasonality}
+\hypertarget{tutorial-5-autoregressive-models}{%
+\chapter*{Tutorial 5: Autoregressive Models}\label{tutorial-5-autoregressive-models}}
+\addcontentsline{toc}{chapter}{Tutorial 5: Autoregressive Models}
 
 (this is a AR stuff, will need to move back)
 
@@ -2004,7 +2183,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-66-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-72-1.pdf}
 
 Generate and plot the autocorrelation function and the partial autocorrelation function for lags 1 through 18.
 
@@ -2027,7 +2206,7 @@ Generate and plot the autocorrelation function and the partial autocorrelation f
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-67-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-73-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2041,7 +2220,7 @@ Generate and plot the autocorrelation function and the partial autocorrelation f
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-67-2.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-73-2.pdf}
 
 Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), AR(3), and AR(4) models, using all observations in the series, to decide on the optimal lag length.
 
@@ -2160,11 +2339,11 @@ Using the first rolling window as the information set, generate the multi-step-a
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-71-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-77-1.pdf}
 
-\hypertarget{tutorial-6-linear-autoregression}{%
-\chapter*{Tutorial 6: Linear Autoregression}\label{tutorial-6-linear-autoregression}}
-\addcontentsline{toc}{chapter}{Tutorial 6: Linear Autoregression}
+\hypertarget{tutorial-6-vector-autoregressive-models}{%
+\chapter*{Tutorial 6: Vector Autoregressive Models}\label{tutorial-6-vector-autoregressive-models}}
+\addcontentsline{toc}{chapter}{Tutorial 6: Vector Autoregressive Models}
 
 (this is a VAR stuff, will need to move back)
 
@@ -2223,7 +2402,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-75-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-81-1.pdf}
 
 Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.
 
@@ -2558,21 +2737,19 @@ Calculate the RMSFE measures for restricted and unrestricted models, and compare
 ## [1] 1.011653
 \end{verbatim}
 
-\hypertarget{tutorial-7-vector-autoregression}{%
-\chapter*{Tutorial 7: Vector Autoregression}\label{tutorial-7-vector-autoregression}}
-\addcontentsline{toc}{chapter}{Tutorial 7: Vector Autoregression}
+\hypertarget{tutorial-7-dynamic-factor-models}{%
+\chapter*{Tutorial 7: Dynamic Factor Models}\label{tutorial-7-dynamic-factor-models}}
+\addcontentsline{toc}{chapter}{Tutorial 7: Dynamic Factor Models}
+
+\hypertarget{tutorial-8-threshold-autoregression}{%
+\chapter*{Tutorial 8: Threshold Autoregression}\label{tutorial-8-threshold-autoregression}}
+\addcontentsline{toc}{chapter}{Tutorial 8: Threshold Autoregression}
 
 (this is a threshold stuff, will need to move back)
 
 In this tutorial, we will generate regime-dependent series, we will apply a grid-search method to obtain the threshold parameter, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will apply bootstrap resampling method to generate multi-step-ahead forecasts from a threshold regression. To run the code, the \texttt{data.table} and \texttt{ggplot2} packages need to be installed and loaded.
 
 Let's generate a time series that follow a TAR(2) process of the following form:
-\[y_t = \left\{\begin{array}
-{ll}
-y_{t-1} + \varepsilon_t & \text{if}~~y_{t-1}\ge0 \\
-1.2y_{t-1}-0.3y_{t-2} + \varepsilon_t & \text{if}~~y_{t-1} < 0
-\end{array}\right.
-\]
 where \(e_{t} \sim N(0,\sigma^2)\). This suggests that the time series follow the unit root process if the lagged dependent variable is non-negative, otherwise the time series is a mean-reverting AR(2) process.
 
 \begin{Shaded}
@@ -2621,7 +2798,7 @@ Plot the realized time series using \textbf{ggplot} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-83-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-89-1.pdf}
 
 Decide on the optimal lag length based on AIC.
 
@@ -2836,11 +3013,11 @@ Obtain the multi-step-ahead forecasts from period 241 onward using the so-called
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-88-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-94-1.pdf}
 
-\hypertarget{tutorial-8-threshold-autoregression}{%
-\chapter*{Tutorial 8: Threshold Autoregression}\label{tutorial-8-threshold-autoregression}}
-\addcontentsline{toc}{chapter}{Tutorial 8: Threshold Autoregression}
+\hypertarget{tutorial-9-forecast-evaluation}{%
+\chapter*{Tutorial 9: Forecast Evaluation}\label{tutorial-9-forecast-evaluation}}
+\addcontentsline{toc}{chapter}{Tutorial 9: Forecast Evaluation}
 
 (this is a evaluation stuff, will need to move back)
 
@@ -2881,7 +3058,7 @@ Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-91-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-97-1.pdf}
 
 Suppose the candidate models are AR(1), AR(2), and AR(3), and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. Calculate the RMSFE measures for the canddidate models.
 
@@ -3010,9 +3187,9 @@ Do the autoregressive models generate `statistically significantly' more accurat
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 
-\hypertarget{tutorial-9-forecast-evaluation}{%
-\chapter*{Tutorial 9: Forecast Evaluation}\label{tutorial-9-forecast-evaluation}}
-\addcontentsline{toc}{chapter}{Tutorial 9: Forecast Evaluation}
+\hypertarget{tutorial-10-forecast-combination}{%
+\chapter*{Tutorial 10: Forecast Combination}\label{tutorial-10-forecast-combination}}
+\addcontentsline{toc}{chapter}{Tutorial 10: Forecast Combination}
 
 (this is a combination stuff, will need to move back)
 
@@ -3053,7 +3230,7 @@ Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-96-1.pdf}
+\includegraphics{forecasting_files/figure-latex/unnamed-chunk-102-1.pdf}
 
 Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.
 
@@ -3168,223 +3345,6 @@ Might each model contain some useful information for improving forecast accuracy
 ## (Intercept) 0.232926   0.098544  2.3637  0.02141 *
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-\hypertarget{tutorial-10-forecast-combination}{%
-\chapter*{Tutorial 10: Forecast Combination}\label{tutorial-10-forecast-combination}}
-\addcontentsline{toc}{chapter}{Tutorial 10: Forecast Combination}
-
-(this is a direct/iterated stuff, will need to move forward)
-
-In this tutorial, we will generate a time series, we will obtain multi-step-ahead forecasts using direct and iterated methods from autoregressive models using a rolling window procedure, and we will assess the accuracy of the forecast. We will then turn to interval forecasts, and we will assess their coverage accuracy. To run the code, the \texttt{data.table}, \texttt{ggplot2}, \texttt{lmtest}, and \texttt{sandwich} packages need to be installed and loaded.
-
-Let's generate a time series that follow an AR(2) process as follows:
-\[y_t = 0.01t+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t\]
-where \(e_{t} \sim N(0,1)\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{240}
-
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{9}\NormalTok{)}
-\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
-
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{,n)}
-\NormalTok{y[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.01}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{1}\NormalTok{]}
-\NormalTok{y[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FloatTok{0.02+0.6}\SpecialCharTok{*}\NormalTok{y[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[}\DecValTok{2}\NormalTok{]}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{n)\{}
-\NormalTok{  y[i] }\OtherTok{\textless{}{-}} \FloatTok{0.01}\SpecialCharTok{*}\NormalTok{i}\FloatTok{+0.6}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\FloatTok{0.2}\SpecialCharTok{*}\NormalTok{y[i}\DecValTok{{-}2}\NormalTok{]}\SpecialCharTok{+}\NormalTok{e[i]}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with \(y\) in a \textbf{data.table}, call it `dt,' and plot the realized time series using the \textbf{ggplot} function.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2000{-}01{-}01"}\NormalTok{),}\AttributeTok{by=}\StringTok{"month"}\NormalTok{,}\AttributeTok{along.with=}\NormalTok{y)}
-
-\NormalTok{dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(date,y)}
-
-\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Series"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{theme\_classic}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-102-1.pdf}
-
-Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{h }\OtherTok{\textless{}{-}} \DecValTok{12}
-
-\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ dt[,.(date,y,}\AttributeTok{y1=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{1}\NormalTok{),}\AttributeTok{y2=}\FunctionTok{shift}\NormalTok{(y,}\DecValTok{2}\NormalTok{),}\AttributeTok{y12=}\FunctionTok{shift}\NormalTok{(y,h),}\AttributeTok{y13=}\FunctionTok{shift}\NormalTok{(y,h}\SpecialCharTok{+}\DecValTok{1}\NormalTok{))]}
-\NormalTok{dt }\OtherTok{\textless{}{-}}\NormalTok{ dt[}\FunctionTok{complete.cases}\NormalTok{(dt)]}
-
-\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{a1i=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1d=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2i=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2d=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
-
-\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{180}
-\NormalTok{P }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dt)}\SpecialCharTok{{-}}\NormalTok{R}\SpecialCharTok{{-}}\NormalTok{h}\SpecialCharTok{+}\DecValTok{1}
-
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
-  
-  \DocumentationTok{\#\#\# iterated multi{-}step method}
-\NormalTok{  a1i }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
-\NormalTok{  a2i }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y1}\SpecialCharTok{+}\NormalTok{y2,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
-  
-\NormalTok{  iter\_dt }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(}\AttributeTok{hor=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{h,}\AttributeTok{a1=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a2=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))}
-  
-  \DocumentationTok{\#\# AR(1)}
-\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a1[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
-  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{h)\{}
-\NormalTok{    iter\_dt}\SpecialCharTok{$}\NormalTok{a1[j] }\OtherTok{\textless{}{-}}\NormalTok{ a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a1[j}\DecValTok{{-}1}\NormalTok{]}
-\NormalTok{  \}}
-  
-  \DocumentationTok{\#\# AR(2)}
-\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y1}
-\NormalTok{  iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
-  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{3}\SpecialCharTok{:}\NormalTok{h)\{}
-\NormalTok{    iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j] }\OtherTok{\textless{}{-}}\NormalTok{ a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2i}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{iter\_dt}\SpecialCharTok{$}\NormalTok{a2[j}\DecValTok{{-}2}\NormalTok{]}
-\NormalTok{  \}}
-
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1i[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ iter\_dt}\SpecialCharTok{$}\NormalTok{a1[h]}
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2i[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ iter\_dt}\SpecialCharTok{$}\NormalTok{a2[h]}
-  
-  \DocumentationTok{\#\#\# direct multi{-}step method}
-\NormalTok{  a1d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
-\NormalTok{  a2d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12}\SpecialCharTok{+}\NormalTok{y13,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
-  
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1d[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a2d[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{+}\NormalTok{a2d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y1}
-  
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-We can now test whether the forecasts of the iterated method `statistically significantly' outperform those of the direct method?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i}
-\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i}
-\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1d\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1d}
-\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2d\_e }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2d}
-
-\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld1 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{a1d\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a1i\_e}\SpecialCharTok{\^{}}\DecValTok{2}
-\NormalTok{dt}\SpecialCharTok{$}\NormalTok{ld2 }\OtherTok{\textless{}{-}}\NormalTok{ dt}\SpecialCharTok{$}\NormalTok{a2d\_e}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{{-}}\NormalTok{dt}\SpecialCharTok{$}\NormalTok{a2i\_e}\SpecialCharTok{\^{}}\DecValTok{2}
-
-\NormalTok{reg\_ld1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld1}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
-\NormalTok{reg\_ld2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ld2}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{dt)}
-
-\FunctionTok{coeftest}\NormalTok{(reg\_ld1,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg\_ld1))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## t test of coefficients:
-## 
-##             Estimate Std. Error t value  Pr(>|t|)    
-## (Intercept)  -6.9266     1.7170 -4.0342 0.0002828 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{coeftest}\NormalTok{(reg\_ld2,}\AttributeTok{vcov.=}\FunctionTok{vcovHAC}\NormalTok{(reg\_ld2))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## t test of coefficients:
-## 
-##             Estimate Std. Error t value Pr(>|t|)  
-## (Intercept)  -3.1094     1.3271  -2.343  0.02494 *
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-Obtain interval forecasts for horizon 12 using the direct method for an AR(1) model and a linear trend model; plot these interval forecasts along with the observed series.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dt}\SpecialCharTok{$}\NormalTok{trend }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(dt))}
-\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{a1dl=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{a1du=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{trdl=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}\AttributeTok{trdu=}\FunctionTok{as.numeric}\NormalTok{(}\ConstantTok{NA}\NormalTok{))]}
-
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{P)\{}
-  
-\NormalTok{  a1d }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{y12,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
-\NormalTok{  trd }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{trend,}\AttributeTok{data=}\NormalTok{dt[i}\SpecialCharTok{:}\NormalTok{(R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{)])}
-  
-\NormalTok{  a1d\_pf }\OtherTok{\textless{}{-}}\NormalTok{ a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{a1d}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\NormalTok{]}\SpecialCharTok{$}\NormalTok{y}
-\NormalTok{  trd\_pf }\OtherTok{\textless{}{-}}\NormalTok{ trd}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\NormalTok{trd}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{dt[R}\SpecialCharTok{+}\NormalTok{i}\DecValTok{{-}1}\SpecialCharTok{+}\NormalTok{h]}\SpecialCharTok{$}\NormalTok{trend}
-  
-\NormalTok{  a1d\_sd }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(a1d)}\SpecialCharTok{$}\NormalTok{sigma}
-\NormalTok{  trd\_sd }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(trd)}\SpecialCharTok{$}\NormalTok{sigma}
-  
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1dl[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d\_pf}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{a1d\_sd}
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{a1du[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ a1d\_pf}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{a1d\_sd}
-  
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{trdl[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ trd\_pf}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{trd\_sd}
-\NormalTok{  dt}\SpecialCharTok{$}\NormalTok{trdu[R}\SpecialCharTok{+}\NormalTok{i}\SpecialCharTok{+}\NormalTok{h}\DecValTok{{-}1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ trd\_pf}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{trd\_sd}
-\NormalTok{\}}
-
-\FunctionTok{ggplot}\NormalTok{(dt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{date,}\AttributeTok{y=}\NormalTok{y))}\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{a1dl),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"steelblue"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{a1du),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"steelblue"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{trdl),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"indianred"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{trdu),}\AttributeTok{size=}\DecValTok{1}\NormalTok{,}\AttributeTok{color=}\StringTok{"indianred"}\NormalTok{,}\AttributeTok{linetype=}\DecValTok{5}\NormalTok{,}\AttributeTok{na.rm=}\NormalTok{T)}\SpecialCharTok{+}
-  \FunctionTok{theme\_classic}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{forecasting_files/figure-latex/unnamed-chunk-105-1.pdf}
-
-Test the unconditional coverage of the interval forecasts from the considered two models.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dt[,}\StringTok{\textasciigrave{}}\AttributeTok{:=}\StringTok{\textasciigrave{}}\NormalTok{(}\AttributeTok{i1=}\FunctionTok{ifelse}\NormalTok{(y}\SpecialCharTok{\textgreater{}=}\NormalTok{a1dl }\SpecialCharTok{\&}\NormalTok{ y}\SpecialCharTok{\textless{}=}\NormalTok{a1du,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}\AttributeTok{it=}\FunctionTok{ifelse}\NormalTok{(y}\SpecialCharTok{\textgreater{}=}\NormalTok{trdl }\SpecialCharTok{\&}\NormalTok{ y}\SpecialCharTok{\textless{}=}\NormalTok{trdu,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))]}
-
-
-\CommentTok{\# AR(1)}
-\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{i1,}\AttributeTok{na.rm=}\NormalTok{T)}
-
-\NormalTok{L10 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\FloatTok{{-}.95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1))}\SpecialCharTok{*}\NormalTok{(.}\DecValTok{95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p1)}
-\NormalTok{L11 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p1))}\SpecialCharTok{*}\NormalTok{(p1)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p1)}
-
-\NormalTok{LR1 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(L10}\SpecialCharTok{/}\NormalTok{L11)}
-
-\FunctionTok{pchisq}\NormalTok{(LR1,}\AttributeTok{df=}\DecValTok{1}\NormalTok{,}\AttributeTok{lower.tail=}\NormalTok{F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.01027851
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# AR(2)}
-\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(dt}\SpecialCharTok{$}\NormalTok{it,}\AttributeTok{na.rm=}\NormalTok{T)}
-
-\NormalTok{L20 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\FloatTok{{-}.95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2))}\SpecialCharTok{*}\NormalTok{(.}\DecValTok{95}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p2)}
-\NormalTok{L21 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p2))}\SpecialCharTok{*}\NormalTok{(p2)}\SpecialCharTok{\^{}}\NormalTok{(P}\SpecialCharTok{*}\NormalTok{p2)}
-
-\NormalTok{LR2 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(L20}\SpecialCharTok{/}\NormalTok{L21)}
-
-\FunctionTok{pchisq}\NormalTok{(LR2,}\AttributeTok{df=}\DecValTok{1}\NormalTok{,}\AttributeTok{lower.tail=}\NormalTok{F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.1441849
 \end{verbatim}
 
 \end{document}

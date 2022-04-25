@@ -2,65 +2,78 @@
 <html lang="" xml:lang="">
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
-  <meta name="description" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R" />
 
-  <meta property="og:title" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R" />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R" />
-  
-  <meta name="twitter:description" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R" />
-  
 
 <meta name="author" content="David Ubilava" />
 
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="description" content="Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R">
+
+<title>Tutorial 9: Forecast Evaluation | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
   
-  
-<link rel="prev" href="tutorial-8-threshold-autoregression.html"/>
-<link rel="next" href="tutorial-10-forecast-combination.html"/>
-<script src="libs/header-attrs-2.13/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
 
 
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-
-
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -121,314 +134,164 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
+
 </head>
 
 <body>
 
 
 
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Time Series Modeling and Forecasting</a></li>
-
-<li class="divider"></li>
-<li><a href="index.html#foreword">Foreword<span></span></a></li>
-<li><a href="preliminaries.html#preliminaries">Preliminaries<span></span></a></li>
-<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting<span></span></a></li>
-<li class="chapter" data-level="2" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html"><i class="fa fa-check"></i><b>2</b> Basics of Time Series Econometics<span></span></a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity<span></span></a></li>
-<li class="chapter" data-level="2.2" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence<span></span></a></li>
-<li class="chapter" data-level="2.3" data-path="basics-of-time-series-econometics.html"><a href="basics-of-time-series-econometics.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html"><i class="fa fa-check"></i><b>3</b> Forecasting Methods and Routines<span></span></a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#optimal-forecast"><i class="fa fa-check"></i><b>3.1</b> Optimal Forecast<span></span></a></li>
-<li class="chapter" data-level="3.2" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#measuring-forecast-accuracy"><i class="fa fa-check"></i><b>3.2</b> Measuring Forecast Accuracy<span></span></a></li>
-<li class="chapter" data-level="3.3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts<span></span></a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#unbiasedness"><i class="fa fa-check"></i><b>3.3.1</b> Unbiasedness<span></span></a></li>
-<li class="chapter" data-level="3.3.2" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#efficiency"><i class="fa fa-check"></i><b>3.3.2</b> Efficiency<span></span></a></li>
-<li class="chapter" data-level="3.3.3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.3.3</b> No Autocorrelation<span></span></a></li>
-</ul></li>
-</ul></li>
-<li><a href="deterministic-time-series-models.html#deterministic-time-series-models">Deterministic Time Series Models<span></span></a></li>
-<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends<span></span></a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#spurious-relationship"><i class="fa fa-check"></i><b>4.1</b> Spurious Relationship<span></span></a></li>
-<li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.2</b> Modeling<span></span></a></li>
-<li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.3</b> Forecasting<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality<span></span></a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.1</b> Modeling<span></span></a></li>
-<li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.2</b> Forecasting<span></span></a></li>
-</ul></li>
-<li><a href="dynamic-time-series-models.html#dynamic-time-series-models">Dynamic Time Series Models<span></span></a></li>
-<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression<span></span></a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling<span></span></a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar1"><i class="fa fa-check"></i><b>6.1.1</b> AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.1.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar2"><i class="fa fa-check"></i><b>6.1.2</b> AR(2)<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.2</b> Forecasting<span></span></a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.1</b> One-step-ahead forecast from AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.2.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.2</b> Two-step-ahead forecast from AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.2.3" data-path="linear-autoregression.html"><a href="linear-autoregression.html#h-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.3</b> h-step-ahead forecast from AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.2.4" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.4</b> One-step-ahead forecast from AR(2)<span></span></a></li>
-<li class="chapter" data-level="6.2.5" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.5</b> Two-step-ahead forecast from AR(2)<span></span></a></li>
-<li class="chapter" data-level="6.2.6" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2-1"><i class="fa fa-check"></i><b>6.2.6</b> One-step-ahead forecast from AR(2)<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>7.1</b> Modeling<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>7.1.1</b> In-Sample Granger Causality<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>7.2</b> Forecasting<span></span></a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.1</b> One-step-ahead forecast from bivariate VAR(1)<span></span></a></li>
-<li class="chapter" data-level="7.2.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#two-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.2</b> Two-step-ahead forecast from bivariate VAR(1)<span></span></a></li>
-<li class="chapter" data-level="7.2.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>7.2.3</b> Out-of-Sample Granger Causality<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> Threshold Autoregression<span></span></a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#nonlinear-models"><i class="fa fa-check"></i><b>8.1</b> Nonlinear Models<span></span></a></li>
-<li class="chapter" data-level="8.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>8.2</b> Modeling<span></span></a></li>
-<li class="chapter" data-level="8.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>8.3</b> Forecasting<span></span></a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>8.3.1</b> Skeleton Extrapolation<span></span></a></li>
-<li class="chapter" data-level="8.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>8.3.2</b> Analytical Method<span></span></a></li>
-<li class="chapter" data-level="8.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>8.3.3</b> Numerical Method: Bootstrap Resampling<span></span></a></li>
-</ul></li>
-</ul></li>
-<li><a href="forecast-assessment.html#forecast-assessment">Forecast Assessment<span></span></a></li>
-<li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation<span></span></a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>9.1</b> The Need for the Forecast Evaluation<span></span></a></li>
-<li class="chapter" data-level="9.2" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>9.2</b> Relative Forecast Accuracy Tests<span></span></a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>9.2.1</b> The Morgan-Granger-Newbold Test<span></span></a></li>
-<li class="chapter" data-level="9.2.2" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>9.2.2</b> The Diebold-Mariano Test<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>10</b> Forecast Combination<span></span></a></li>
-<li><a href="tutorial-1-introduction-to-r.html#tutorial-1-introduction-to-r">Tutorial 1: Introduction to R<span></span></a>
-<ul>
-<li><a href="tutorial-1-introduction-to-r.html#data-management">Data Management<span></span></a></li>
-<li><a href="tutorial-1-introduction-to-r.html#data-visualisation">Data Visualisation<span></span></a></li>
-<li><a href="tutorial-1-introduction-to-r.html#regression-analysis">Regression Analysis<span></span></a></li>
-</ul></li>
-<li><a href="tutorial-2-some-r-functions.html#tutorial-2-some-r-functions">Tutorial 2: Some R Functions<span></span></a></li>
-<li><a href="tutorial-3-forecasting-methods-and-routines.html#tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines<span></span></a></li>
-<li><a href="tutorial-4-deterministic-trends.html#tutorial-4-deterministic-trends">Tutorial 4: Deterministic Trends<span></span></a></li>
-<li><a href="tutorial-5-seasonality.html#tutorial-5-seasonality">Tutorial 5: Seasonality<span></span></a></li>
-<li><a href="tutorial-6-linear-autoregression.html#tutorial-6-linear-autoregression">Tutorial 6: Linear Autoregression<span></span></a></li>
-<li><a href="tutorial-7-vector-autoregression.html#tutorial-7-vector-autoregression">Tutorial 7: Vector Autoregression<span></span></a></li>
-<li><a href="tutorial-8-threshold-autoregression.html#tutorial-8-threshold-autoregression">Tutorial 8: Threshold Autoregression<span></span></a></li>
-<li><a href="tutorial-9-forecast-evaluation.html#tutorial-9-forecast-evaluation">Tutorial 9: Forecast Evaluation<span></span></a></li>
-<li><a href="tutorial-10-forecast-combination.html#tutorial-10-forecast-combination">Tutorial 10: Forecast Combination<span></span></a></li>
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Foreword</a>
+<a href="introduction-to-forecasting.html"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
+<a href="stochastic-process-and-time-series.html"><span class="toc-section-number">2</span> Stochastic Process and Time Series</a>
+<a href="forecasting-methods-and-routines.html"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
+<a href="trends-and-seasonality.html"><span class="toc-section-number">4</span> Trends and Seasonality</a>
+<a href="autoregressive-models.html"><span class="toc-section-number">5</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html"><span class="toc-section-number">9</span> Forecast Evaluation</a>
+<a href="forecast-combination.html"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="tutorial-1-introduction-to-r.html">Tutorial 1: Introduction to R</a>
+<a href="tutorial-2-data-management.html">Tutorial 2: Data Management</a>
+<a href="tutorial-3-forecasting-methods-and-routines.html">Tutorial 3: Forecasting Methods and Routines</a>
+<a href="tutorial-4-trends-and-seasonality.html">Tutorial 4: Trends and Seasonality</a>
+<a href="tutorial-5-autoregressive-models.html">Tutorial 5: Autoregressive Models</a>
+<a href="tutorial-6-vector-autoregressive-models.html">Tutorial 6: Vector Autoregressive Models</a>
+<a href="tutorial-7-dynamic-factor-models.html">Tutorial 7: Dynamic Factor Models</a>
+<a href="tutorial-8-threshold-autoregression.html">Tutorial 8: Threshold Autoregression</a>
+<a id="active-page" href="tutorial-9-forecast-evaluation.html">Tutorial 9: Forecast Evaluation</a>
+<a href="tutorial-10-forecast-combination.html">Tutorial 10: Forecast Combination</a>
+</div>
+</li>
 </ul>
-
-      </nav>
-    </div>
-
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Time Series Modeling and Forecasting with Applications in R</a>
-          </h1>
-        </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="tutorial-9-forecast-evaluation" class="section level1 unnumbered hasAnchor">
-<h1>Tutorial 9: Forecast Evaluation<a href="tutorial-9-forecast-evaluation.html#tutorial-9-forecast-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>(this is a combination stuff, will need to move back)</p>
-<p>In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from a set of models using a rolling window procedure, we will combine these forecasts and assess the accuracy of the combined forecast. To run the code, the <code>data.table</code>, <code>ggplot2</code>, <code>lmtest</code>, and <code>sandwich</code> packages need to be installed and loaded.</p>
-<p>Let’s generate a time series that follow an AR(2) process with the quadratic trend component as follows:
-<span class="math display">\[y_t = 0.03t-0.0001t^2+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t\]</span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="tutorial-9-forecast-evaluation" class="section level1 unnumbered">
+<h1>Tutorial 9: Forecast Evaluation</h1>
+<p>(this is a evaluation stuff, will need to move back)</p>
+<p>In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from competing models using a rolling window procedure, and we will perform the Diebold-Mariano type regression-based test for equal predictive ability of the competing models. To run the code, the <code>data.table</code>, <code>ggplot2</code>, <code>lmtest</code>, and <code>sandwich</code> packages need to be installed and loaded.</p>
+<p>Let’s generate a time series that follow an AR(2) process of the following form:
+<span class="math display">\[y_t = 0.2+1.1y_{t-1}-0.3y_{t-2}+\varepsilon_t\]</span>
 where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="tutorial-9-forecast-evaluation.html#cb165-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">240</span></span>
-<span id="cb165-2"><a href="tutorial-9-forecast-evaluation.html#cb165-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-3"><a href="tutorial-9-forecast-evaluation.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>)</span>
-<span id="cb165-4"><a href="tutorial-9-forecast-evaluation.html#cb165-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb165-5"><a href="tutorial-9-forecast-evaluation.html#cb165-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-6"><a href="tutorial-9-forecast-evaluation.html#cb165-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
-<span id="cb165-7"><a href="tutorial-9-forecast-evaluation.html#cb165-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fl">0.03</span><span class="sc">*</span><span class="dv">1</span><span class="fl">-0.0001</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span>e[<span class="dv">1</span>]</span>
-<span id="cb165-8"><a href="tutorial-9-forecast-evaluation.html#cb165-8" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fl">0.03</span><span class="sc">*</span><span class="dv">2</span><span class="fl">-0.0001</span><span class="sc">*</span>(<span class="dv">2</span><span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fl">0.6</span><span class="sc">*</span>y[<span class="dv">1</span>]<span class="sc">+</span>e[<span class="dv">2</span>]</span>
-<span id="cb165-9"><a href="tutorial-9-forecast-evaluation.html#cb165-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>n){</span>
-<span id="cb165-10"><a href="tutorial-9-forecast-evaluation.html#cb165-10" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.03</span><span class="sc">*</span>i<span class="fl">-0.0001</span><span class="sc">*</span>(i<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fl">0.6</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span><span class="fl">0.2</span><span class="sc">*</span>y[i<span class="dv">-2</span>]<span class="sc">+</span>e[i]</span>
-<span id="cb165-11"><a href="tutorial-9-forecast-evaluation.html#cb165-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="tutorial-9-forecast-evaluation.html#cb161-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">240</span></span>
+<span id="cb161-2"><a href="tutorial-9-forecast-evaluation.html#cb161-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-3"><a href="tutorial-9-forecast-evaluation.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb161-4"><a href="tutorial-9-forecast-evaluation.html#cb161-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb161-5"><a href="tutorial-9-forecast-evaluation.html#cb161-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-6"><a href="tutorial-9-forecast-evaluation.html#cb161-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
+<span id="cb161-7"><a href="tutorial-9-forecast-evaluation.html#cb161-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fl">0.2</span><span class="sc">+</span>e[<span class="dv">1</span>]</span>
+<span id="cb161-8"><a href="tutorial-9-forecast-evaluation.html#cb161-8" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fl">0.2+1.1</span><span class="sc">*</span>y[<span class="dv">1</span>]<span class="sc">+</span>e[<span class="dv">2</span>]</span>
+<span id="cb161-9"><a href="tutorial-9-forecast-evaluation.html#cb161-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>n){</span>
+<span id="cb161-10"><a href="tutorial-9-forecast-evaluation.html#cb161-10" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.2+1.1</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">-</span><span class="fl">0.3</span><span class="sc">*</span>y[i<span class="dv">-2</span>]<span class="sc">+</span>e[i]</span>
+<span id="cb161-11"><a href="tutorial-9-forecast-evaluation.html#cb161-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2000), store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt,’ and plot the realized time series using <strong>ggplot</strong> function.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="tutorial-9-forecast-evaluation.html#cb166-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2000-01-01&quot;</span>),<span class="at">by=</span><span class="st">&quot;month&quot;</span>,<span class="at">along.with=</span>y)</span>
-<span id="cb166-2"><a href="tutorial-9-forecast-evaluation.html#cb166-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb166-3"><a href="tutorial-9-forecast-evaluation.html#cb166-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y)</span>
-<span id="cb166-4"><a href="tutorial-9-forecast-evaluation.html#cb166-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb166-5"><a href="tutorial-9-forecast-evaluation.html#cb166-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb166-6"><a href="tutorial-9-forecast-evaluation.html#cb166-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb166-7"><a href="tutorial-9-forecast-evaluation.html#cb166-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Year&quot;</span>,<span class="at">y=</span><span class="st">&quot;Series&quot;</span>)<span class="sc">+</span></span>
-<span id="cb166-8"><a href="tutorial-9-forecast-evaluation.html#cb166-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
-<p>Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="tutorial-9-forecast-evaluation.html#cb167-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>),<span class="at">trend=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dt)))]</span>
-<span id="cb167-2"><a href="tutorial-9-forecast-evaluation.html#cb167-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-3"><a href="tutorial-9-forecast-evaluation.html#cb167-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">180</span></span>
-<span id="cb167-4"><a href="tutorial-9-forecast-evaluation.html#cb167-4" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R</span>
-<span id="cb167-5"><a href="tutorial-9-forecast-evaluation.html#cb167-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-6"><a href="tutorial-9-forecast-evaluation.html#cb167-6" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">rw=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a1=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a2=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">tr=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>))]</span>
-<span id="cb167-7"><a href="tutorial-9-forecast-evaluation.html#cb167-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-8"><a href="tutorial-9-forecast-evaluation.html#cb167-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
-<span id="cb167-9"><a href="tutorial-9-forecast-evaluation.html#cb167-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb167-10"><a href="tutorial-9-forecast-evaluation.html#cb167-10" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>rw[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> dt<span class="sc">$</span>y[R<span class="sc">+</span>i<span class="dv">-1</span>]</span>
-<span id="cb167-11"><a href="tutorial-9-forecast-evaluation.html#cb167-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb167-12"><a href="tutorial-9-forecast-evaluation.html#cb167-12" aria-hidden="true" tabindex="-1"></a>  a1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb167-13"><a href="tutorial-9-forecast-evaluation.html#cb167-13" aria-hidden="true" tabindex="-1"></a>  a2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb167-14"><a href="tutorial-9-forecast-evaluation.html#cb167-14" aria-hidden="true" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2<span class="sc">+</span>trend,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb167-15"><a href="tutorial-9-forecast-evaluation.html#cb167-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb167-16"><a href="tutorial-9-forecast-evaluation.html#cb167-16" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a1[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> a1<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">&quot;y1&quot;</span>)]))</span>
-<span id="cb167-17"><a href="tutorial-9-forecast-evaluation.html#cb167-17" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a2[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> a2<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">&quot;y1&quot;</span>,<span class="st">&quot;y2&quot;</span>)]))</span>
-<span id="cb167-18"><a href="tutorial-9-forecast-evaluation.html#cb167-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>tr[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> tr<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">&quot;y1&quot;</span>,<span class="st">&quot;y2&quot;</span>,<span class="st">&quot;trend&quot;</span>)]))</span>
-<span id="cb167-19"><a href="tutorial-9-forecast-evaluation.html#cb167-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb167-20"><a href="tutorial-9-forecast-evaluation.html#cb167-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Does either of the considered models ‘sttaistically significantly’ outperform the random walk?</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="tutorial-9-forecast-evaluation.html#cb168-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>rw_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>rw</span>
-<span id="cb168-2"><a href="tutorial-9-forecast-evaluation.html#cb168-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a1_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a1</span>
-<span id="cb168-3"><a href="tutorial-9-forecast-evaluation.html#cb168-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a2_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a2</span>
-<span id="cb168-4"><a href="tutorial-9-forecast-evaluation.html#cb168-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>tr_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>tr</span>
-<span id="cb168-5"><a href="tutorial-9-forecast-evaluation.html#cb168-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-6"><a href="tutorial-9-forecast-evaluation.html#cb168-6" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a1_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb168-7"><a href="tutorial-9-forecast-evaluation.html#cb168-7" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld2 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a2_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb168-8"><a href="tutorial-9-forecast-evaluation.html#cb168-8" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ldt <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>tr_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb168-9"><a href="tutorial-9-forecast-evaluation.html#cb168-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-10"><a href="tutorial-9-forecast-evaluation.html#cb168-10" aria-hidden="true" tabindex="-1"></a>reg.ld1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld1<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb168-11"><a href="tutorial-9-forecast-evaluation.html#cb168-11" aria-hidden="true" tabindex="-1"></a>reg.ld2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld2<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb168-12"><a href="tutorial-9-forecast-evaluation.html#cb168-12" aria-hidden="true" tabindex="-1"></a>reg.ldt <span class="ot">&lt;-</span> <span class="fu">lm</span>(ldt<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb168-13"><a href="tutorial-9-forecast-evaluation.html#cb168-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-14"><a href="tutorial-9-forecast-evaluation.html#cb168-14" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ld1,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ld1))</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="tutorial-9-forecast-evaluation.html#cb162-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2000-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
+<span id="cb162-2"><a href="tutorial-9-forecast-evaluation.html#cb162-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-3"><a href="tutorial-9-forecast-evaluation.html#cb162-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y)</span>
+<span id="cb162-4"><a href="tutorial-9-forecast-evaluation.html#cb162-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-5"><a href="tutorial-9-forecast-evaluation.html#cb162-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
+<span id="cb162-6"><a href="tutorial-9-forecast-evaluation.html#cb162-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb162-7"><a href="tutorial-9-forecast-evaluation.html#cb162-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
+<span id="cb162-8"><a href="tutorial-9-forecast-evaluation.html#cb162-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-97-1.png" width="672"></p>
+<p>Suppose the candidate models are AR(1), AR(2), and AR(3), and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. Calculate the RMSFE measures for the canddidate models.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="tutorial-9-forecast-evaluation.html#cb163-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>))]</span>
+<span id="cb163-2"><a href="tutorial-9-forecast-evaluation.html#cb163-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-3"><a href="tutorial-9-forecast-evaluation.html#cb163-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">180</span></span>
+<span id="cb163-4"><a href="tutorial-9-forecast-evaluation.html#cb163-4" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R</span>
+<span id="cb163-5"><a href="tutorial-9-forecast-evaluation.html#cb163-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-6"><a href="tutorial-9-forecast-evaluation.html#cb163-6" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">rw=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a1=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a2=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a3=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>))]</span>
+<span id="cb163-7"><a href="tutorial-9-forecast-evaluation.html#cb163-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-8"><a href="tutorial-9-forecast-evaluation.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
+<span id="cb163-9"><a href="tutorial-9-forecast-evaluation.html#cb163-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb163-10"><a href="tutorial-9-forecast-evaluation.html#cb163-10" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>rw[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> dt<span class="sc">$</span>y[R<span class="sc">+</span>i<span class="dv">-1</span>]</span>
+<span id="cb163-11"><a href="tutorial-9-forecast-evaluation.html#cb163-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb163-12"><a href="tutorial-9-forecast-evaluation.html#cb163-12" aria-hidden="true" tabindex="-1"></a>  ar1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
+<span id="cb163-13"><a href="tutorial-9-forecast-evaluation.html#cb163-13" aria-hidden="true" tabindex="-1"></a>  ar2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
+<span id="cb163-14"><a href="tutorial-9-forecast-evaluation.html#cb163-14" aria-hidden="true" tabindex="-1"></a>  ar3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2<span class="sc">+</span>y3,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
+<span id="cb163-15"><a href="tutorial-9-forecast-evaluation.html#cb163-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb163-16"><a href="tutorial-9-forecast-evaluation.html#cb163-16" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a1[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar1<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">"y1"</span>)]))</span>
+<span id="cb163-17"><a href="tutorial-9-forecast-evaluation.html#cb163-17" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a2[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar2<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">"y1"</span>,<span class="st">"y2"</span>)]))</span>
+<span id="cb163-18"><a href="tutorial-9-forecast-evaluation.html#cb163-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a3[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar3<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">"y1"</span>,<span class="st">"y2"</span>,<span class="st">"y3"</span>)]))</span>
+<span id="cb163-19"><a href="tutorial-9-forecast-evaluation.html#cb163-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb163-20"><a href="tutorial-9-forecast-evaluation.html#cb163-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb163-21"><a href="tutorial-9-forecast-evaluation.html#cb163-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-22"><a href="tutorial-9-forecast-evaluation.html#cb163-22" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>rw_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>rw</span>
+<span id="cb163-23"><a href="tutorial-9-forecast-evaluation.html#cb163-23" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a1_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a1</span>
+<span id="cb163-24"><a href="tutorial-9-forecast-evaluation.html#cb163-24" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a2_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a2</span>
+<span id="cb163-25"><a href="tutorial-9-forecast-evaluation.html#cb163-25" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a3_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a3</span>
+<span id="cb163-26"><a href="tutorial-9-forecast-evaluation.html#cb163-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-27"><a href="tutorial-9-forecast-evaluation.html#cb163-27" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSFEs</span></span>
+<span id="cb163-28"><a href="tutorial-9-forecast-evaluation.html#cb163-28" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span></code></pre></div>
+<pre><code>## [1] 0.9653331</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="tutorial-9-forecast-evaluation.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>a1_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span></code></pre></div>
+<pre><code>## [1] 0.9053279</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="tutorial-9-forecast-evaluation.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>a2_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span></code></pre></div>
+<pre><code>## [1] 0.8842908</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="tutorial-9-forecast-evaluation.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>a3_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span></code></pre></div>
+<pre><code>## [1] 0.8877883</code></pre>
+<p>Do the autoregressive models generate ‘statistically significantly’ more accurate forecasts than the random walk model? We will answer this question by performing the regression-based Diebold-Mariano tests. First we will generate the loss differentials; then we will run three separate regressions to assess predictive accuracy of AR(1), AR(2), and AR(3) relative to the random walk; and finally we will base our decision on the heteroskedasticity and autocorrelation consistent standard errors.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="tutorial-9-forecast-evaluation.html#cb171-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a1_e<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb171-2"><a href="tutorial-9-forecast-evaluation.html#cb171-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld2 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a2_e<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb171-3"><a href="tutorial-9-forecast-evaluation.html#cb171-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld3 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a3_e<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb171-4"><a href="tutorial-9-forecast-evaluation.html#cb171-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-5"><a href="tutorial-9-forecast-evaluation.html#cb171-5" aria-hidden="true" tabindex="-1"></a>reg.ld1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld1<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
+<span id="cb171-6"><a href="tutorial-9-forecast-evaluation.html#cb171-6" aria-hidden="true" tabindex="-1"></a>reg.ld2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld2<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
+<span id="cb171-7"><a href="tutorial-9-forecast-evaluation.html#cb171-7" aria-hidden="true" tabindex="-1"></a>reg.ld3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld3<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
+<span id="cb171-8"><a href="tutorial-9-forecast-evaluation.html#cb171-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-9"><a href="tutorial-9-forecast-evaluation.html#cb171-9" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ld1,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ld1))</span></code></pre></div>
 <pre><code>## 
 ## t test of coefficients:
 ## 
 ##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept) 0.081204   0.048040  1.6903  0.09624 .
+## (Intercept) 0.112249   0.047525  2.3619   0.0215 *
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="tutorial-9-forecast-evaluation.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ld2,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ld2))</span></code></pre></div>
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="tutorial-9-forecast-evaluation.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ld2,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ld2))</span></code></pre></div>
 <pre><code>## 
 ## t test of coefficients:
 ## 
 ##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)  0.32634    0.14912  2.1883  0.03262 *
+## (Intercept) 0.149898   0.083086  1.8041  0.07632 .
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="tutorial-9-forecast-evaluation.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ldt,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ldt))</span></code></pre></div>
-<pre><code>## 
-## t test of coefficients:
-## 
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  0.24461    0.14943  1.6369    0.107</code></pre>
-<p>All of the models do, on average, generate more accurate forecasts than random walk. The AR(2) generates statistically significantly more accurate forecasts, based on Diebold-Mariano test applied on quadratic loss function.</p>
-<p>Might each model contain some useful information for improving forecast accuracy? Let’s combine the forecasts from the AR(1) and the linear trend model using equal weights scheme and assess the combined forecast.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="tutorial-9-forecast-evaluation.html#cb174-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>t1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>a1<span class="sc">*</span>.<span class="dv">5</span><span class="sc">+</span>dt<span class="sc">$</span>tr<span class="sc">*</span>.<span class="dv">5</span></span>
-<span id="cb174-2"><a href="tutorial-9-forecast-evaluation.html#cb174-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>t1_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>t1</span>
-<span id="cb174-3"><a href="tutorial-9-forecast-evaluation.html#cb174-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-4"><a href="tutorial-9-forecast-evaluation.html#cb174-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ldt1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>t1_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb174-5"><a href="tutorial-9-forecast-evaluation.html#cb174-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-6"><a href="tutorial-9-forecast-evaluation.html#cb174-6" aria-hidden="true" tabindex="-1"></a>reg.ldt1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ldt1<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb174-7"><a href="tutorial-9-forecast-evaluation.html#cb174-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-8"><a href="tutorial-9-forecast-evaluation.html#cb174-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ldt1,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ldt1))</span></code></pre></div>
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="tutorial-9-forecast-evaluation.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ld3,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ld3))</span></code></pre></div>
 <pre><code>## 
 ## t test of coefficients:
 ## 
 ##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept) 0.232926   0.098544  2.3637  0.02141 *
+## (Intercept) 0.143700   0.081309  1.7673  0.08235 .
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 </div>
-            </section>
+<p style="text-align: center;">
+<a href="tutorial-8-threshold-autoregression.html"><button class="btn btn-default">Previous</button></a>
+<a href="tutorial-10-forecast-combination.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2022-04-26
+ using 
+R version 4.1.2 (2021-11-01)
+</p>
+</div>
+</div>
 
-          </div>
-        </div>
-      </div>
-<a href="tutorial-8-threshold-autoregression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tutorial-10-forecast-combination.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["forecasting.pdf", "forecasting.epub", "forecasting.mobi"],
-"toc": {
-"collapse": "section"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
+
 </body>
-
 </html>

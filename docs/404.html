@@ -2,63 +2,78 @@
 <html lang="" xml:lang="">
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Introduction to Time Series Modeling and Forecasting</title>
-  <meta name="description" content="Page not found | Introduction to Time Series Modeling and Forecasting" />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Page not found | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Page not found | Introduction to Time Series Modeling and Forecasting with Applications in R" />
 
-  <meta property="og:title" content="Page not found | Introduction to Time Series Modeling and Forecasting" />
-  <meta property="og:type" content="book" />
-  
-  <meta property="og:description" content="Page not found | Introduction to Time Series Modeling and Forecasting" />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Introduction to Time Series Modeling and Forecasting" />
-  
-  <meta name="twitter:description" content="Page not found | Introduction to Time Series Modeling and Forecasting" />
-  
 
 <meta name="author" content="David Ubilava" />
 
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="description" content="Page not found | Introduction to Time Series Modeling and Forecasting with Applications in R">
+
+<title>Page not found | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
   
-  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
 
 
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-
-
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -119,220 +134,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
+
 </head>
 
 <body>
 
 
 
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Time Series Modeling and Forecasting</a></li>
-
-<li class="divider"></li>
-<li><a href="index.html#foreword">Foreword<span></span></a></li>
-<li><a href="preliminaries.html#preliminaries">Preliminaries<span></span></a></li>
-<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting<span></span></a></li>
-<li class="chapter" data-level="2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html"><i class="fa fa-check"></i><b>2</b> Stochastic Process and Time Series<span></span></a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#stationarity"><i class="fa fa-check"></i><b>2.1</b> Stationarity<span></span></a></li>
-<li class="chapter" data-level="2.2" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#serial-dependence"><i class="fa fa-check"></i><b>2.2</b> Serial Dependence<span></span></a></li>
-<li class="chapter" data-level="2.3" data-path="stochastic-process-and-time-series.html"><a href="stochastic-process-and-time-series.html#transformations"><i class="fa fa-check"></i><b>2.3</b> Transformations<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html"><i class="fa fa-check"></i><b>3</b> Forecasting Methods and Routines<span></span></a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#optimal-forecast"><i class="fa fa-check"></i><b>3.1</b> Optimal Forecast<span></span></a></li>
-<li class="chapter" data-level="3.2" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#measuring-forecast-accuracy"><i class="fa fa-check"></i><b>3.2</b> Measuring Forecast Accuracy<span></span></a></li>
-<li class="chapter" data-level="3.3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#evaluating-time-series-forecasts"><i class="fa fa-check"></i><b>3.3</b> Evaluating Time Series Forecasts<span></span></a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#unbiasedness"><i class="fa fa-check"></i><b>3.3.1</b> Unbiasedness<span></span></a></li>
-<li class="chapter" data-level="3.3.2" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#efficiency"><i class="fa fa-check"></i><b>3.3.2</b> Efficiency<span></span></a></li>
-<li class="chapter" data-level="3.3.3" data-path="forecasting-methods-and-routines.html"><a href="forecasting-methods-and-routines.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.3.3</b> No Autocorrelation<span></span></a></li>
-</ul></li>
-</ul></li>
-<li><a href="deterministic-time-series-models.html#deterministic-time-series-models">Deterministic Time Series Models<span></span></a></li>
-<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> Trends<span></span></a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#spurious-relationship"><i class="fa fa-check"></i><b>4.1</b> Spurious Relationship<span></span></a></li>
-<li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.2</b> Modeling<span></span></a></li>
-<li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.3</b> Forecasting<span></span></a></li>
-</ul></li>
-<li><a href="deterministic-time-series-models-1.html#deterministic-time-series-models-1">Deterministic Time Series Models<span></span></a></li>
-<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> Seasonality<span></span></a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.1</b> Modeling<span></span></a></li>
-<li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.2</b> Forecasting<span></span></a></li>
-</ul></li>
-<li><a href="dynamic-time-series-models.html#dynamic-time-series-models">Dynamic Time Series Models<span></span></a></li>
-<li class="chapter" data-level="6" data-path="linear-autoregression.html"><a href="linear-autoregression.html"><i class="fa fa-check"></i><b>6</b> Linear Autoregression<span></span></a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.1</b> Modeling<span></span></a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar1"><i class="fa fa-check"></i><b>6.1.1</b> AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.1.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#ar2"><i class="fa fa-check"></i><b>6.1.2</b> AR(2)<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.2</b> Forecasting<span></span></a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.1</b> One-step-ahead forecast from AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.2.2" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.2</b> Two-step-ahead forecast from AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.2.3" data-path="linear-autoregression.html"><a href="linear-autoregression.html#h-step-ahead-forecast-from-ar1"><i class="fa fa-check"></i><b>6.2.3</b> h-step-ahead forecast from AR(1)<span></span></a></li>
-<li class="chapter" data-level="6.2.4" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.4</b> One-step-ahead forecast from AR(2)<span></span></a></li>
-<li class="chapter" data-level="6.2.5" data-path="linear-autoregression.html"><a href="linear-autoregression.html#two-step-ahead-forecast-from-ar2"><i class="fa fa-check"></i><b>6.2.5</b> Two-step-ahead forecast from AR(2)<span></span></a></li>
-<li class="chapter" data-level="6.2.6" data-path="linear-autoregression.html"><a href="linear-autoregression.html#one-step-ahead-forecast-from-ar2-1"><i class="fa fa-check"></i><b>6.2.6</b> One-step-ahead forecast from AR(2)<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>7.1</b> Modeling<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>7.1.1</b> In-Sample Granger Causality<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>7.2</b> Forecasting<span></span></a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.1</b> One-step-ahead forecast from bivariate VAR(1)<span></span></a></li>
-<li class="chapter" data-level="7.2.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#two-step-ahead-forecast-from-bivariate-var1"><i class="fa fa-check"></i><b>7.2.2</b> Two-step-ahead forecast from bivariate VAR(1)<span></span></a></li>
-<li class="chapter" data-level="7.2.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>7.2.3</b> Out-of-Sample Granger Causality<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> Threshold Autoregression<span></span></a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#nonlinear-models"><i class="fa fa-check"></i><b>8.1</b> Nonlinear Models<span></span></a></li>
-<li class="chapter" data-level="8.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>8.2</b> Modeling<span></span></a></li>
-<li class="chapter" data-level="8.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>8.3</b> Forecasting<span></span></a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>8.3.1</b> Skeleton Extrapolation<span></span></a></li>
-<li class="chapter" data-level="8.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>8.3.2</b> Analytical Method<span></span></a></li>
-<li class="chapter" data-level="8.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>8.3.3</b> Numerical Method: Bootstrap Resampling<span></span></a></li>
-</ul></li>
-</ul></li>
-<li><a href="forecast-assessment.html#forecast-assessment">Forecast Assessment<span></span></a></li>
-<li class="chapter" data-level="9" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html"><i class="fa fa-check"></i><b>9</b> Forecast Evaluation<span></span></a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>9.1</b> The Need for the Forecast Evaluation<span></span></a></li>
-<li class="chapter" data-level="9.2" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>9.2</b> Relative Forecast Accuracy Tests<span></span></a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>9.2.1</b> The Morgan-Granger-Newbold Test<span></span></a></li>
-<li class="chapter" data-level="9.2.2" data-path="forecast-evaluation.html"><a href="forecast-evaluation.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>9.2.2</b> The Diebold-Mariano Test<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="forecast-combination.html"><a href="forecast-combination.html"><i class="fa fa-check"></i><b>10</b> Forecast Combination<span></span></a></li>
-<li><a href="introduction-to-r.html#introduction-to-r">Introduction to R<span></span></a>
-<ul>
-<li><a href="introduction-to-r.html#data-management">Data Management<span></span></a></li>
-<li><a href="introduction-to-r.html#data-visualisation">Data Visualisation<span></span></a></li>
-<li><a href="introduction-to-r.html#regression-analysis">Regression Analysis<span></span></a></li>
-</ul></li>
-<li><a href="tutorial-1.html#tutorial-1">Tutorial 1<span></span></a></li>
-<li><a href="tutorial-2.html#tutorial-2">Tutorial 2<span></span></a></li>
-<li><a href="tutorial-3.html#tutorial-3">Tutorial 3<span></span></a></li>
-<li><a href="tutorial-4.html#tutorial-4">Tutorial 4<span></span></a></li>
-<li><a href="tutorial-5.html#tutorial-5">Tutorial 5<span></span></a></li>
-<li><a href="tutorial-6.html#tutorial-6">Tutorial 6<span></span></a></li>
-<li><a href="tutorial-7.html#tutorial-7">Tutorial 7<span></span></a></li>
-<li><a href="tutorial-8.html#tutorial-8">Tutorial 8<span></span></a></li>
-<li><a href="tutorial-9.html#tutorial-9">Tutorial 9<span></span></a></li>
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Foreword</a>
+<a href="introduction-to-forecasting.html"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
+<a href="stochastic-process-and-time-series.html"><span class="toc-section-number">2</span> Stochastic Process and Time Series</a>
+<a href="forecasting-methods-and-routines.html"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
+<a href="trends-and-seasonality.html"><span class="toc-section-number">4</span> Trends and Seasonality</a>
+<a href="autoregressive-models.html"><span class="toc-section-number">5</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html"><span class="toc-section-number">9</span> Forecast Evaluation</a>
+<a href="forecast-combination.html"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="tutorial-1-introduction-to-r.html">Tutorial 1: Introduction to R</a>
+<a href="tutorial-2-data-management.html">Tutorial 2: Data Management</a>
+<a href="tutorial-3-forecasting-methods-and-routines.html">Tutorial 3: Forecasting Methods and Routines</a>
+<a href="tutorial-4-trends-and-seasonality.html">Tutorial 4: Trends and Seasonality</a>
+<a href="tutorial-5-autoregressive-models.html">Tutorial 5: Autoregressive Models</a>
+<a href="tutorial-6-vector-autoregressive-models.html">Tutorial 6: Vector Autoregressive Models</a>
+<a href="tutorial-7-dynamic-factor-models.html">Tutorial 7: Dynamic Factor Models</a>
+<a href="tutorial-8-threshold-autoregression.html">Tutorial 8: Threshold Autoregression</a>
+<a href="tutorial-9-forecast-evaluation.html">Tutorial 9: Forecast Evaluation</a>
+<a href="tutorial-10-forecast-combination.html">Tutorial 10: Forecast Combination</a>
+</div>
+</li>
 </ul>
-
-      </nav>
-    </div>
-
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Time Series Modeling and Forecasting</a>
-          </h1>
-        </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
 <div id="page-not-found" class="section level1">
 <h1>Page not found</h1>
 <p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
 <p>You may want to try searching to find the page's new location, or use
 the table of contents to find the page you are looking for.</p>
 </div>
-            </section>
+<p style="text-align: center;">
+</p>
+<p class="build-date">Page built: 
+2022-04-26
+ using 
+R version 4.1.2 (2021-11-01)
+</p>
+</div>
+</div>
 
-          </div>
-        </div>
-      </div>
 
 
-    </div>
-  </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["forecasting.pdf", "forecasting.epub", "forecasting.mobi"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
-});
-});
-</script>
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
-
 </html>
