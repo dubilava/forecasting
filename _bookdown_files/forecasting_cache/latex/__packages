@@ -1,8 +1,7 @@
 ggplot2
 data.table
 cowplot
-MASS
 zoo
 lmtest
 sandwich
-base
+MASS
