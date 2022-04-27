@@ -1,4 +1,4 @@
-This website compiles teaching material for the subject of economic forecasting. The chapters of the [online textbook](_book/index) cover essential topics pertinent to economic forecasting. Each chapter/lecture is accompanied by an R tutorial. The lecture slides, some video recordings, and supplementary reading material for each topic are presented below.
+This website compiles teaching material for the subject of economic forecasting. The chapters of the [online textbook](docs/index) cover essential topics pertinent to economic forecasting. Each chapter/lecture is accompanied by an R tutorial. The lecture slides, some video recordings, and supplementary reading material for each topic are presented below.
 
 ## Introduction to Forecasting
 
