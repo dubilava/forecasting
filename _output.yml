@@ -8,6 +8,7 @@ msmbstyle::msmb_html_book:
       css: style.css
 bookdown::pdf_book:
     keep_tex: yes
+    self_contained: false
     includes:
       in_header: preamble.tex
   
