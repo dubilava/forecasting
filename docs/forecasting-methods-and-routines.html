@@ -193,15 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </h2>
 <p>A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast (usually a mean of the distribution, but can be a median or, indeed, any quantile).</p>
 <p>A point forecast made in period <span class="math inline">\(t\)</span> for horizon <span class="math inline">\(h\)</span> can be denoted as <span class="math inline">\(y_{t+h|t}\)</span>; this is our ‘best guess,’ that is made in period <span class="math inline">\(t\)</span>, about the actual realization of the random variable in period <span class="math inline">\(t+h\)</span>, denoted by <span class="math inline">\(y_{t+h}\)</span>. The difference between the two is the forecast error. That is, <span class="math display">\[e_{t+h|t} = y_{t+h} - y_{t+h|t}\]</span></p>
-<p>The more accurate is the forecast the smaller is the forecast error.</p>
-<p>Three types of uncertainty contribute to the forecast error:
-<span class="math display">\[\begin{aligned}
-        e_{t+h|t} &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(forecast uncertainty)}  \\
-        &amp; + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
-        &amp; + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
-        \end{aligned}\]</span></p>
-<p>where <span class="math inline">\(\Omega_t\)</span> denotes the information set available at the time when the forecast is made; <span class="math inline">\(g(\cdot)\)</span> is a functional form of a model applied to the data; <span class="math inline">\(\theta\)</span> is a set of parameters of the model, and <span class="math inline">\(\hat{\theta}\)</span> are their estimates</p>
-<p>Because uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the ‘cost’ associated with the forecast errors. This is achieved by minimizing the expected loss function.</p>
+<p>The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding a pont forecast. Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the ‘cost’ associated with the forecast errors. This is achieved by minimizing the expected loss function.</p>
 <p>A loss function, <span class="math inline">\(L(e_{t+h|t})\)</span>, can take many different forms, but is should satisfy the following properties:
 <span class="math display">\[\begin{aligned}
         &amp; L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
@@ -290,7 +282,7 @@ where <span class="math inline">\(R\)</span> is the estimation window size, <spa
 <a href="trends-and-seasonality.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-27
+2022-04-29
  using 
 R version 4.1.0 (2021-05-18)
 </p>

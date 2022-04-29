@@ -132,7 +132,7 @@
 \chapter*{Foreword}\label{foreword}}
 \addcontentsline{toc}{chapter}{Foreword}
 
-Our inability to make perfect forecasts is best summarized in a quote typically attributed to Niels Bohr:\footnote{The exact origin of this saying, or its variant, is somewhat murky. It was likely adopted from a Danish proverb.} `it is difficult to make predictions, especially about the future.' I came across this quote as I was wrapping up my doctoral dissertation at Purdue University. The title of my dissertation was: `Nonlinear Multivariate Modeling and Forecasting of Commodity Prices.' A chapter of my dissertation, which was largely a forecasting exercise, yielded the so-called `null result.' I felt uneasy about it. I had an urge to justify, somehow, this null result. And then I stumbled across this quote, which `saved my day.' I stuck it as an epigraph of my dissertation. It captured my struggles as a forecaster, and provided the context to the results of my work.
+Our inability to make perfect forecasts is best summarized in a quote typically attributed to Niels Bohr:\footnote{The exact origin of this saying, or its variant, is somewhat murky. It appears to had been adopted from a Danish proverb.} `it is difficult to make predictions, especially about the future.' I came across this quote as I was wrapping up my doctoral dissertation at Purdue University. The title of my dissertation was: `Nonlinear Multivariate Modeling and Forecasting of Commodity Prices.' A chapter of my dissertation, which was largely a forecasting exercise, yielded the so-called `null result.' I felt uneasy about it. I had an urge to justify, somehow, this null result. And then I stumbled across this quote, which `saved my day.' I stuck it as an epigraph of my dissertation. It captured my struggles as a forecaster, and provided the context to the results of my work.
 
 Some years later, I started teaching a course on economic forecasting. As I introduce the subject, I tend to spend a great deal of time explaining---indeed preparing students for the inevitable---that forecasting is difficult, and that more often than not we will not be able to give accurate forecasts. But I also stress that this should not discourage us from trying, as most great achievements in this world have myriads of failed attempts as a foundation.
 
@@ -141,11 +141,25 @@ What is forecast if not a guess? An educated guess, nonetheless. A good guess do
 \hypertarget{introduction-to-forecasting}{%
 \chapter{Introduction to Forecasting}\label{introduction-to-forecasting}}
 
-Roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date. Over time, and particularly with the development of the study of econometrics, more rigorous forecasting methods have been introduced and developed. All methods -- primitive or complex, spurious or scientifically substantiated -- have one thing in common: they all rely (or, at least, pretend to rely) on \emph{information}.
+Roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date.
 
-Information is key in forecasting. It comes in many forms, but once it is organized and stored, we end up with \emph{data}. Data that is organized and stored a certain way -- chronologically and at regular intervals -- are referred to as the \emph{time series}. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we \emph{may} be able to forecast an event with some degree of accuracy.
+Over time, and particularly with the development of the study of econometrics, more rigorous forecasting methods have been introduced and developed. All methods -- primitive or complex, spurious or scientifically substantiated -- have one thing in common: they all rely (or, at least, pretend to rely) on \emph{information}.
 
-Accurate forecasting is difficult. Indeed, forecasting is difficult. So, as we forecast, we are bound to make mistakes, which manifest into the \emph{forecast errors}. We have these errors because we don't know the true model, so we make a guess about the most suitable model for time series analysis. We also have the errors because we don't know the true parameters of the model. Instead, using a subset of history we estimate the parameters, which are prone to a sampling error. Finally, even if our guess about the model is exactly correct, and even if our parameter estimates happen to be exactly equal to the true parameters of the `right' model, our forecasts may still be off, because of all those factors that have never happened in past, and only characterize the future. And because of this, there is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved.
+Information is key in forecasting. It comes in many forms, and is summarized in \emph{data}. When organized and stored in a certain way -- chronologically and at regular intervals -- we end up with \emph{time series} data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series data. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy.
+
+Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.\footnote{`\emph{As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns---the ones we don't know we don't know.}'
+  --- Donald Ramsfeld} So, as we forecast, we are bound to make mistakes, which manifest into the \emph{forecast errors}. We have these errors because we don't know the true model (known unknowns), so we make a guess about the most suitable model for time series analysis, leading to \emph{model uncertainty}. We also have the errors because we don't know the true parameters of the model (unknown knowns). Instead, using a subset of history we estimate the parameters, which are prone to a sampling error due to \emph{parameter uncertainty}. Finally, even if were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be off because of \emph{temporal uncertainty} for all those factors that have never happened in the past, and only characterize the future (unknown unknowns).
+
+We can summarize the foregoing decomposition of the forecast error as follows:
+\[\begin{aligned}
+        e_{t+h|t} & = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(unknown unknowns)}  \\
+        & + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(known unknowns)}  \\
+        & + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(unknown knowns)}
+        \end{aligned}\]
+
+where \(e_{t+h|t}\) is an error of a forecast made in period \(t\) for horizon \(h\), \(y_{t+h}\) is the realization of an event in period \(t+h\), \(\Omega_t\) is the information set available at the time when the forecast is made; \(g(\cdot)\) is a model of choice of a forecaster applied to the data; \(\theta\) is a set of parameters of the model, and \(\hat{\theta}\) are their estimates.
+
+There is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved.
 
 \hypertarget{stochastic-process-and-time-series}{%
 \chapter{Stochastic Process and Time Series}\label{stochastic-process-and-time-series}}
@@ -224,18 +238,7 @@ A forecast is a random variable which has some distribution and, thus, moments. 
 
 A point forecast made in period \(t\) for horizon \(h\) can be denoted as \(y_{t+h|t}\); this is our `best guess,' that is made in period \(t\), about the actual realization of the random variable in period \(t+h\), denoted by \(y_{t+h}\). The difference between the two is the forecast error. That is, \[e_{t+h|t} = y_{t+h} - y_{t+h|t}\]
 
-The more accurate is the forecast the smaller is the forecast error.
-
-Three types of uncertainty contribute to the forecast error:
-\[\begin{aligned}
-        e_{t+h|t} & = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(forecast uncertainty)}  \\
-        & + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
-        & + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
-        \end{aligned}\]
-
-where \(\Omega_t\) denotes the information set available at the time when the forecast is made; \(g(\cdot)\) is a functional form of a model applied to the data; \(\theta\) is a set of parameters of the model, and \(\hat{\theta}\) are their estimates
-
-Because uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the `cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
+The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding a pont forecast. Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the `cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
 
 A loss function, \(L(e_{t+h|t})\), can take many different forms, but is should satisfy the following properties:
 \[\begin{aligned}

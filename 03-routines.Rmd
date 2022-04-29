@@ -13,18 +13,7 @@ A forecast is a random variable which has some distribution and, thus, moments. 
 
 A point forecast made in period $t$ for horizon $h$ can be denoted as $y_{t+h|t}$; this is our 'best guess', that is made in period $t$, about the actual realization of the random variable in period $t+h$, denoted by $y_{t+h}$. The difference between the two is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - y_{t+h|t}$$
 
-The more accurate is the forecast the smaller is the forecast error. 
-
-Three types of uncertainty contribute to the forecast error:
-$$\begin{aligned}
-		e_{t+h|t} & = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(forecast uncertainty)}  \\
-		& + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
-		& + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
-		\end{aligned}$$
-		
-where $\Omega_t$ denotes the information set available at the time when the forecast is made; $g(\cdot)$ is a functional form of a model applied to the data; $\theta$ is a set of parameters of the model, and $\hat{\theta}$ are their estimates
-
-Because uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
+The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding a pont forecast. Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
 
 A loss function, $L(e_{t+h|t})$, can take many different forms, but is should satisfy the following properties:
 $$\begin{aligned}
