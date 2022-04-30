@@ -153,7 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="dropdown-content">
 <a href="index.html">Foreword</a>
 <a id="active-page" href="introduction-to-forecasting.html"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
-<a href="stochastic-process-and-time-series.html"><span class="toc-section-number">2</span> Stochastic Process and Time Series</a>
+<a href="features-of-time-series-data.html"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
 <a href="trends-and-seasonality.html"><span class="toc-section-number">4</span> Trends and Seasonality</a>
 <a href="autoregressive-models.html"><span class="toc-section-number">5</span> Autoregressive Models</a>
@@ -188,24 +188,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Information is key in forecasting. It comes in many forms, and is summarized in <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with <em>time series</em> data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series data. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy.</p>
 <p>Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’
 — Donald Ramsfeld</span> So, as we forecast, we are bound to make mistakes, which manifest into the <em>forecast errors</em>. We have these errors because we don’t know the true model (known unknowns), so we make a guess about the most suitable model for time series analysis, leading to <em>model uncertainty</em>. We also have the errors because we don’t know the true parameters of the model (unknown knowns). Instead, using a subset of history we estimate the parameters, which are prone to a sampling error due to <em>parameter uncertainty</em>. Finally, even if were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be off because of <em>temporal uncertainty</em> for all those factors that have never happened in the past, and only characterize the future (unknown unknowns).</p>
-<p>We can summarize the foregoing decomposition of the forecast error as follows:
+<p>We can present the foregoing decomposition of the forecast uncertainty, in terms of a forecast error, as follows:
 <span class="math display">\[\begin{aligned}
-        e_{t+h|t} &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(unknown unknowns)}  \\
-        &amp; + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(known unknowns)}  \\
-        &amp; + \big[g(\Omega_{t};\theta)-g(\Omega_{t};\hat{\theta})\big]\;~~\text{(unknown knowns)}
+        e_{t+h} &amp;= y_{t+h}-\hat{y}_{t+h}\;~~\text{(forecast uncertainty)}   \\
+        &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(temporal uncertainty)}  \\
+        &amp; + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
+        &amp; + \big[g(\Omega_{t};\theta)-\hat{y}_{t+h}\big]\;~~\text{(parameter uncertainty)}
         \end{aligned}\]</span></p>
-<p>where <span class="math inline">\(e_{t+h|t}\)</span> is an error of a forecast made in period <span class="math inline">\(t\)</span> for horizon <span class="math inline">\(h\)</span>, <span class="math inline">\(y_{t+h}\)</span> is the realization of an event in period <span class="math inline">\(t+h\)</span>, <span class="math inline">\(\Omega_t\)</span> is the information set available at the time when the forecast is made; <span class="math inline">\(g(\cdot)\)</span> is a model of choice of a forecaster applied to the data; <span class="math inline">\(\theta\)</span> is a set of parameters of the model, and <span class="math inline">\(\hat{\theta}\)</span> are their estimates.</p>
+<p>where <span class="math inline">\(e_{t+h|t}\)</span> is an error of a forecast made in period <span class="math inline">\(t\)</span> for horizon <span class="math inline">\(h\)</span>, <span class="math inline">\(y_{t+h}\)</span> is the realization of an event in period <span class="math inline">\(t+h\)</span>, and <span class="math inline">\(\hat{y}_{t+h}\)</span> is the forecast of the event, which is based on the information set, <span class="math inline">\(\Omega_t\)</span>, at the time when the forecast is made using a forecaster’s model of choice, <span class="math inline">\(g(\cdot)\)</span>, that typically involves a set of parameters, <span class="math inline">\(\theta\)</span>, which we don’t know and need to estimate.</p>
 <p>There is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts are better than others. And in search of such forecasts the study of time series econometrics has evolved.</p>
 
 </div>
 <p style="text-align: center;">
 <a href="index.html"><button class="btn btn-default">Previous</button></a>
-<a href="stochastic-process-and-time-series.html"><button class="btn btn-default">Next</button></a>
+<a href="features-of-time-series-data.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-29
+2022-04-30
  using 
-R version 4.1.0 (2021-05-18)
+R version 4.1.2 (2021-11-01)
 </p>
 </div>
 </div>
