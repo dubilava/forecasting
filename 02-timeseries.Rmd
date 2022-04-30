@@ -1,4 +1,4 @@
-# Stochastic Process and Time Series
+# Features of Time Series Data
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
@@ -6,7 +6,9 @@ library(data.table)
 library(cowplot)
 ```
 
-A time series is a realization of a sequence of random variables that are stored chronologically. This sequence is referred to as the *stochastic process*. Thus, a time series is a realization of a stochastic process. We index time periods as $1,2,\ldots,T$, so that the stochastic process is given by $\{Y_t:t=1,\ldots,T\}$. A time series is represented by a set of observations: $\{y_1,\ldots,y_T\}$. One can view a time series as a finite sample from an underlying doubly--infinite sequence: $\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}$. This is to say that the history extends beyond the starting and ending time periods of the sample at hand.
+A time series is a realization of a sequence of random variables that are stored chronologically. The sequence of random variables is referred to as the *stochastic process*. Thus, a time series is a realization of a stochastic process. 
+
+We index time periods as $1,2,\ldots,T$, so that a time series is represented by a set of observations $\{y_t:t=1,\ldots,T\}$. We can think of a time series as a finite sample from an underlying doubly--infinite sequence: $\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}$. This is to say that the history extends beyond the starting and ending time periods of the sample at hand.
 
 ## Stationarity
 
