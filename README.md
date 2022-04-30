@@ -2,7 +2,7 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Introduction to Forecasting
 
-## Stochastic Process and Time Series
+## Features of Time Series Data
 
 - SW:15.1
 
@@ -14,7 +14,7 @@ This website compiles teaching material for the subject of economic forecasting.
 
 - SW: 15.3
 
-## Trends and Breaks
+## Trends and Seasonality
 
 - SW: 15.7, 15.8
 
