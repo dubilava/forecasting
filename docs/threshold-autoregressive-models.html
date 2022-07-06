@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 8 Threshold Autoregressive Models | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:title" content="Chapter 8 Threshold Autoregressive Models | Forecasting With Econometric Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 8 Threshold Autoregressive Models | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:description" content="Chapter 8 Threshold Autoregressive Models | Forecasting With Econometric Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 8 Threshold Autoregressive Models | Introduction to Time Series Modeling and Forecasting with Applications in R">
+<meta name="description" content="Chapter 8 Threshold Autoregressive Models | Forecasting With Econometric Time Series Models Using R">
 
-<title>Chapter 8 Threshold Autoregressive Models | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+<title>Chapter 8 Threshold Autoregressive Models | Forecasting With Econometric Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Forecasting With Econometric Time Series Models Using R<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -265,7 +265,7 @@ y_{t+1|t} &amp;= \alpha_0+\beta_{01}y_{t}+\beta_{02}y_{t-1}+\ldots \\
 <p>Now consider a nonlinear <span class="math inline">\(\text{SETAR}(p,y_{t-1})\)</span> model:</p>
 <p>One-step-ahead bootstrap iteration:
 <span class="math display">\[\begin{aligned}
-y_{t+1|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t} + \ldots + \beta_{1p} y_{t+1-p})I(y_{t} \leq c) \\ 
+y_{t+1|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t} + \ldots + \beta_{1p} y_{t+1-p})I(y_{t} \leq c) \\
                 &amp;+ (\alpha_2 + \beta_{21} y_{t} + \ldots + \beta_{2p} y_{t+1-p})I(y_{t} &gt; c)+\varepsilon_{t+1}^b
 \end{aligned}\]</span></p>
 <p>Two-step-ahead bootstrap iteration:
@@ -285,7 +285,7 @@ y_{t+2|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t+1|t}^b + \ldots + \beta_{1p} y_{t
 <a href="forecast-evaluation.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-30
+2022-07-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>

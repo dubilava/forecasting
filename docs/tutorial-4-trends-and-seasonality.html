@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Tutorial 4: Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:title" content="Tutorial 4: Trends and Seasonality | Forecasting With Econometric Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Tutorial 4: Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:description" content="Tutorial 4: Trends and Seasonality | Forecasting With Econometric Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Tutorial 4: Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R">
+<meta name="description" content="Tutorial 4: Trends and Seasonality | Forecasting With Econometric Time Series Models Using R">
 
-<title>Tutorial 4: Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+<title>Tutorial 4: Trends and Seasonality | Forecasting With Econometric Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Forecasting With Econometric Time Series Models Using R<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -192,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb83-6"><a href="tutorial-4-trends-and-seasonality.html#cb83-6" aria-hidden="true" tabindex="-1"></a>trend <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
 <span id="cb83-7"><a href="tutorial-4-trends-and-seasonality.html#cb83-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb83-8"><a href="tutorial-4-trends-and-seasonality.html#cb83-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">10</span><span class="fl">+0.01</span><span class="sc">*</span>trend<span class="fl">+0.002</span><span class="sc">*</span>trend<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>e</span></code></pre></div>
-<p>Store <span class="math inline">\(y\)</span> and <span class="math inline">\(trend\)</span> in a <strong>data.table</strong>, call it ‘dt.’ Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2006).</p>
+<p>Store <span class="math inline">\(y\)</span> and <span class="math inline">\(trend\)</span> in a <strong>data.table</strong>, call it ‘dt’. Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2006).</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="tutorial-4-trends-and-seasonality.html#cb84-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(y,trend)</span>
 <span id="cb84-2"><a href="tutorial-4-trends-and-seasonality.html#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb84-3"><a href="tutorial-4-trends-and-seasonality.html#cb84-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2006-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span></code></pre></div>
@@ -201,7 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb85-2"><a href="tutorial-4-trends-and-seasonality.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb85-3"><a href="tutorial-4-trends-and-seasonality.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Trending Series"</span>)<span class="sc">+</span></span>
 <span id="cb85-4"><a href="tutorial-4-trends-and-seasonality.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-64-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-64-1.png" width="624"></p>
 <p>Calculate Akaike Information Criteria for linear, quadratic, cubic, and exponential trend models, using all observations in the series.</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="tutorial-4-trends-and-seasonality.html#cb86-1" aria-hidden="true" tabindex="-1"></a>AIC_vec <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span><span class="dv">4</span>,<span class="at">nrow=</span><span class="dv">1</span>)</span>
 <span id="cb86-2"><a href="tutorial-4-trends-and-seasonality.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>){</span>
@@ -252,7 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb89-6"><a href="tutorial-4-trends-and-seasonality.html#cb89-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Trending Series and Forecasts"</span>)<span class="sc">+</span></span>
 <span id="cb89-7"><a href="tutorial-4-trends-and-seasonality.html#cb89-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
 <span id="cb89-8"><a href="tutorial-4-trends-and-seasonality.html#cb89-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title=</span><span class="fu">element_blank</span>(),<span class="at">legend.position=</span><span class="fu">c</span>(.<span class="dv">15</span>,.<span class="dv">85</span>))</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-67-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-67-1.png" width="624"></p>
 <p>Calculate the RMSFE measures for each of the two forecasting methods.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="tutorial-4-trends-and-seasonality.html#cb90-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e_t1=</span>y<span class="sc">-</span>t1,<span class="at">e_t2=</span>y<span class="sc">-</span>t2,<span class="at">e_t3=</span>y<span class="sc">-</span>t3,<span class="at">e_te=</span>y<span class="sc">-</span>te)]</span>
 <span id="cb90-2"><a href="tutorial-4-trends-and-seasonality.html#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -276,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="tutorial-5-autoregressive-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-30
+2022-07-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>

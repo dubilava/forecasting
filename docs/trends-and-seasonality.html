@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 4 Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:title" content="Chapter 4 Trends and Seasonality | Forecasting With Econometric Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 4 Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:description" content="Chapter 4 Trends and Seasonality | Forecasting With Econometric Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 4 Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R">
+<meta name="description" content="Chapter 4 Trends and Seasonality | Forecasting With Econometric Time Series Models Using R">
 
-<title>Chapter 4 Trends and Seasonality | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+<title>Chapter 4 Trends and Seasonality | Forecasting With Econometric Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Forecasting With Econometric Time Series Models Using R<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -194,11 +194,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </h2>
 <p>Nothing about trending time series necessarily violates the classical linear regression model assumptions. The issue may arise, however, if an unobserved trending variable is simultaneously correlated with the dependent variable as well as one of the independent variables in a time series regression. In such case, we may find a (statistically significant) relationship between two or more unrelated economic variables simply because they are all trending. Such relationship is referred to a <em>spurious relationship</em>.</p>
 <p>To illustrate, consider two trending variables: <span class="math display">\[y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),\]</span> and <span class="math display">\[x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),\]</span> where <span class="math inline">\(Cov(\nu_t,\upsilon_t) = 0\)</span>. For simplicity, we can assume <span class="math inline">\(\sigma_{\nu}^2=\sigma_{\upsilon}^2=1\)</span>. Suppose, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\delta\)</span> are some positive scalars, say, <span class="math inline">\(0.3\)</span> and <span class="math inline">\(0.5\)</span>, respectively. That is, <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are trending in the same direction. Below is an example of such time series:
-<img src="forecasting_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-6-1.png" width="624"></p>
 <p>If we were to estimate <span class="math display">\[y_t = \alpha+\beta x_t + \varepsilon_t,\]</span> we are likely to find the relationship between the two – in this case <span class="math inline">\(\beta&gt;0\)</span> – even though, we know, the two are not related. To illustrate this, we will generate 1000 samples of size 120 for <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, and in each case we will estimate the parameter <span class="math inline">\(\beta\)</span>. The following graph illustrates the empirical distribution of these parameter estimates:
-<img src="forecasting_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-7-1.png" width="624"></p>
 <p>Luckily, we can easily “fix” the issue, by incorporating a trend in the regression: <span class="math display">\[y_t = \alpha+\beta x_t + \eta t + \varepsilon_t.\]</span> Once the trend is accounted for, the previously illustrated “bias” disappears. Using a similar simulation exercise as before, the following graph illustrates the empirical distribution of these parameter estimates:
-<img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="624"></p>
 <p>In fact, this “fix” is equivalent to regressing a de-trended <span class="math inline">\(y\)</span> on a de-trended <span class="math inline">\(x\)</span>. To de-trend a variable, we first run a regression: <span class="math inline">\(y_t = \gamma_0 + \gamma_1 t + \nu_t\)</span>, and then obtain the fitted values for some fixed trend (typically zero), that is: <span class="math inline">\(\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t\)</span>, where <span class="math inline">\(\hat{\gamma}_0\)</span> and <span class="math inline">\(\hat{\nu}_t\)</span> are the parameter estimate and the residuals from the foregoing regression.</p>
 </div>
 <div id="modeling" class="section level2" number="4.2">
@@ -211,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="math display">\[\begin{aligned}
     y_t &amp;= \alpha + \beta_1 t + \beta_2 t^2 + \ldots + \beta_p t^p \\
     y_t &amp;= e^{\alpha + \beta t}\;~~\mbox{or}\;~~\ln{y_t} = \alpha + \beta t \\
-    y_t &amp;= \alpha + \beta_1 t + \beta_2 (t-\tau)I(t&gt;\tau),\;~~\tau\in\mathsf{T} 
+    y_t &amp;= \alpha + \beta_1 t + \beta_2 (t-\tau)I(t&gt;\tau),\;~~\tau\in\mathsf{T}
     \end{aligned}\]</span></p>
 <p>Of these, here we will primarily consider linear and quadratic trends. An exponential trend, from the standpoint of modeling and forecasting, is equivalent to a linear trend fitted to natural logarithm of the series. For a time series <span class="math inline">\(\{y_t: t=1,\ldots,T\}\)</span>, the natural logarithm is: <span class="math inline">\(z_t = \ln{y_t}\)</span>. Some of the benefits of such a transformation are that:</p>
 <ul>
@@ -266,7 +266,7 @@ where <span class="math inline">\(s\)</span> denotes the frequency of the data, 
 <a href="autoregressive-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-30
+2022-07-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>

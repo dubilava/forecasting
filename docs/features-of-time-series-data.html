@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 2 Features of Time Series Data | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:title" content="Chapter 2 Features of Time Series Data | Forecasting With Econometric Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 2 Features of Time Series Data | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:description" content="Chapter 2 Features of Time Series Data | Forecasting With Econometric Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 2 Features of Time Series Data | Introduction to Time Series Modeling and Forecasting with Applications in R">
+<meta name="description" content="Chapter 2 Features of Time Series Data | Forecasting With Econometric Time Series Models Using R">
 
-<title>Chapter 2 Features of Time Series Data | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+<title>Chapter 2 Features of Time Series Data | Forecasting With Econometric Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Forecasting With Econometric Time Series Models Using R<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -200,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p class="caption marginnote shownote">
 Figure 2.1: White noise: an illustration
 </p>
-<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise: an illustration" width="672">
+<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise: an illustration" width="624">
 </div>
 <p>Such time series are referred to as <em>white noise</em>. That is, <span class="math inline">\(\{y_t: t=1,\ldots,T\}\)</span>, is a white noise process if:
 <span class="math display">\[\begin{align*}
@@ -221,7 +221,7 @@ Figure 2.1: White noise: an illustration
 <p class="caption marginnote shownote">
 Figure 2.2: Autocorrelation
 </p>
-<img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="672">
+<img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="624">
 </div>
 <p>For each <span class="math inline">\(k\)</span>, the vertical line extending from zero represents the autocorrelation coefficient at that lag. The red dashed lines denote the 90% confidence interval, given by <span class="math inline">\(\pm 1.96/\sqrt{T}\)</span>, where <span class="math inline">\(T\)</span> is the length of the time series.</p>
 <p>Another relevant measure of the time series dependence is partial autocorrelation, which is correlation between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-k}\)</span> net of any correlations between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-k+j}\)</span>, for all <span class="math inline">\(j=1,\ldots,k-1\)</span>. Similar to autocorrelations, partial autocorrelations can also be illustrated using autocorrelograms:</p>
@@ -230,28 +230,29 @@ Figure 2.2: Autocorrelation
 <p class="caption marginnote shownote">
 Figure 2.3: Partial Autocorrelation
 </p>
-<img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="672">
+<img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="624">
 </div>
 <div class="figure">
 <span style="display:block;" id="fig:spectral"></span>
 <p class="caption marginnote shownote">
 Figure 2.4: Spectral Density
 </p>
-<img src="forecasting_files/figure-html/spectral-1.png" alt="Spectral Density" width="672">
+<img src="forecasting_files/figure-html/spectral-1.png" alt="Spectral Density" width="624">
 </div>
 </div>
 <div id="transformations" class="section level2" number="2.3">
 <h2>
 <span class="header-section-number">2.3</span> Transformations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('transformations')" onmouseout="reset_tooltip('transformations-tooltip')"><span class="tooltiptext" id="transformations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations usually are done to work with the suitable variable for the desired econometric analysis. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms the time series ``flatten’’ and the fluctuations become proportionate. The difference operator is denoted by <span class="math inline">\(\Delta\)</span>, so that <span class="math inline">\(\Delta y_t = y_t-y_{t-1}\)</span>. The following three graphs illustrate (i) a time series with an apparent exponential growth, (ii) the natural logarithm of this time series, and (iii) their differences (i.e., the log-differences of the original series).</p>
+<p>It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issue of the series. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms we ‘flatten’ the curve and make the fluctuations around the trend proportionate over time. The following graph illustrates this.</p>
 <div class="figure">
 <span style="display:block;" id="fig:ts"></span>
 <p class="caption marginnote shownote">
-Figure 2.5: A time series and its transformations
+Figure 2.5: Australian Real GDP and its transformations.
 </p>
-<img src="forecasting_files/figure-html/ts-1.png" alt="A time series and its transformations" width="672">
+<img src="forecasting_files/figure-html/ts-1.png" alt="Australian Real GDP and its transformations." width="624">
 </div>
+<p>The three panels of the graph illustrate (i) a time series with an apparent exponential growth, (ii) the natural logarithm of this time series, and (iii) their differences (i.e., the log-differences of the original series).</p>
 
 </div>
 </div>
@@ -260,7 +261,7 @@ Figure 2.5: A time series and its transformations
 <a href="forecasting-methods-and-routines.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-30
+2022-07-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>

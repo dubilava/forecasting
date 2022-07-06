@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Tutorial 3: Forecasting Methods and Routines | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:title" content="Tutorial 3: Forecasting Methods and Routines | Forecasting With Econometric Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Tutorial 3: Forecasting Methods and Routines | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:description" content="Tutorial 3: Forecasting Methods and Routines | Forecasting With Econometric Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Tutorial 3: Forecasting Methods and Routines | Introduction to Time Series Modeling and Forecasting with Applications in R">
+<meta name="description" content="Tutorial 3: Forecasting Methods and Routines | Forecasting With Econometric Time Series Models Using R">
 
-<title>Tutorial 3: Forecasting Methods and Routines | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+<title>Tutorial 3: Forecasting Methods and Routines | Forecasting With Econometric Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Forecasting With Econometric Time Series Models Using R<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="tutorial-3-forecasting-methods-and-routines" class="section level1 unnumbered">
 <h1>Tutorial 3: Forecasting Methods and Routines</h1>
-<p>In this tutorial, we will introduce ‘for loop,’ and use it to generate time series as well as to obtain one-step-ahead forecasts using a rolling window procedure; we will also perform forecast error diagnostics.</p>
+<p>In this tutorial, we will introduce ‘for loop’, and use it to generate time series as well as to obtain one-step-ahead forecasts using a rolling window procedure; we will also perform forecast error diagnostics.</p>
 <p>Let’s generate a random walk process, such that <span class="math inline">\(y_{t} = y_{t-1}+e_{t}\)</span>, where <span class="math inline">\(e_{t} ~ N(0,1)\)</span>, and where <span class="math inline">\(y_{0}=0\)</span>, for <span class="math inline">\(t=1,\ldots,120\)</span>.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb51-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
 <span id="cb51-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -196,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb51-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
 <span id="cb51-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb51-11" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> y[i<span class="dv">-1</span>] <span class="sc">+</span> e[i]</span>
 <span id="cb51-12"><a href="tutorial-3-forecasting-methods-and-routines.html#cb51-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Store <span class="math inline">\(y\)</span> and <span class="math inline">\(e\)</span> in a <strong>data.table</strong>, call it ‘dt.’ Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2011).</p>
+<p>Store <span class="math inline">\(y\)</span> and <span class="math inline">\(e\)</span> in a <strong>data.table</strong>, call it ‘dt’. Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2011).</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb52-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(y,e)</span>
 <span id="cb52-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb52-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2011-01-01"</span>),<span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>),<span class="at">by=</span><span class="st">"month"</span>)</span></code></pre></div>
@@ -205,7 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb53-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb53-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Random Walk"</span>)<span class="sc">+</span></span>
 <span id="cb53-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-49-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-49-1.png" width="624"></p>
 <p>Generate a sequence of one-step-ahead forecasts from naive and average methods, using the rolling window scheme, where the first rolling window ranges from period 1 to period 80.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb54-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>average <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb54-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb54-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>naive <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
@@ -273,7 +273,7 @@ where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>.</p>
 <span id="cb71-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb71-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>n){</span>
 <span id="cb71-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb71-10" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.01</span><span class="sc">*</span>i<span class="fl">+0.6</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span><span class="fl">0.2</span><span class="sc">*</span>y[i<span class="dv">-2</span>]<span class="sc">+</span>e[i]</span>
 <span id="cb71-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb71-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt,’ and plot the realized time series using the <strong>ggplot</strong> function.</p>
+<p>Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt’, and plot the realized time series using the <strong>ggplot</strong> function.</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb72-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2000-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
 <span id="cb72-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb72-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y)</span>
@@ -282,7 +282,7 @@ where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>.</p>
 <span id="cb72-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb72-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb72-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb72-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
 <span id="cb72-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb72-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-56-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-56-1.png" width="624"></p>
 <p>Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts.</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb73-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span></span>
 <span id="cb73-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -383,7 +383,7 @@ where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>.</p>
 <span id="cb78-26"><a href="tutorial-3-forecasting-methods-and-routines.html#cb78-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>trdl),<span class="at">size=</span><span class="dv">1</span>,<span class="at">color=</span><span class="st">"indianred"</span>,<span class="at">linetype=</span><span class="dv">5</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
 <span id="cb78-27"><a href="tutorial-3-forecasting-methods-and-routines.html#cb78-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>trdu),<span class="at">size=</span><span class="dv">1</span>,<span class="at">color=</span><span class="st">"indianred"</span>,<span class="at">linetype=</span><span class="dv">5</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
 <span id="cb78-28"><a href="tutorial-3-forecasting-methods-and-routines.html#cb78-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-59-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-59-1.png" width="624"></p>
 <p>Test the unconditional coverage of the interval forecasts from the considered two models.</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb79-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">i1=</span><span class="fu">ifelse</span>(y<span class="sc">&gt;=</span>a1dl <span class="sc">&amp;</span> y<span class="sc">&lt;=</span>a1du,<span class="dv">1</span>,<span class="dv">0</span>),<span class="at">it=</span><span class="fu">ifelse</span>(y<span class="sc">&gt;=</span>trdl <span class="sc">&amp;</span> y<span class="sc">&lt;=</span>trdu,<span class="dv">1</span>,<span class="dv">0</span>))]</span>
 <span id="cb79-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -415,7 +415,7 @@ where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>.</p>
 <a href="tutorial-4-trends-and-seasonality.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-30
+2022-07-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>

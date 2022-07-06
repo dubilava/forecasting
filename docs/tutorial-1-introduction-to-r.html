@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Tutorial 1: Introduction to R | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:title" content="Tutorial 1: Introduction to R | Forecasting With Econometric Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Tutorial 1: Introduction to R | Introduction to Time Series Modeling and Forecasting with Applications in R" />
+<meta property="og:description" content="Tutorial 1: Introduction to R | Forecasting With Econometric Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Tutorial 1: Introduction to R | Introduction to Time Series Modeling and Forecasting with Applications in R">
+<meta name="description" content="Tutorial 1: Introduction to R | Forecasting With Econometric Time Series Models Using R">
 
-<title>Tutorial 1: Introduction to R | Introduction to Time Series Modeling and Forecasting with Applications in R</title>
+<title>Tutorial 1: Introduction to R | Forecasting With Econometric Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Introduction to Time Series Modeling and Forecasting with Applications in R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Forecasting With Econometric Time Series Models Using R<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -277,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb25-2"><a href="tutorial-1-introduction-to-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="tutorial-1-introduction-to-r.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb25-4"><a href="tutorial-1-introduction-to-r.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-29-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-29-1.png" width="624"></p>
 <p>We can augment this plot in a number of different ways. Here we change the point color to red, add the fitted regression line to the plot, add labels to the figure, and apply a ‘classic’ background theme:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="tutorial-1-introduction-to-r.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb26-2"><a href="tutorial-1-introduction-to-r.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"goldenrod"</span>)<span class="sc">+</span></span>
@@ -287,13 +287,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb26-6"><a href="tutorial-1-introduction-to-r.html#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Outcome Variable"</span>, </span>
 <span id="cb26-7"><a href="tutorial-1-introduction-to-r.html#cb26-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Caption: in case if needed."</span>)<span class="sc">+</span></span>
 <span id="cb26-8"><a href="tutorial-1-introduction-to-r.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-30-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-30-1.png" width="624"></p>
 <p>As another example, let’s generate a histogram (of the dependent variable):</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tutorial-1-introduction-to-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>y))<span class="sc">+</span></span>
 <span id="cb27-2"><a href="tutorial-1-introduction-to-r.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">"white"</span>,<span class="at">fill=</span><span class="st">"goldenrod"</span>,<span class="at">binwidth=</span>.<span class="dv">5</span>)<span class="sc">+</span></span>
 <span id="cb27-3"><a href="tutorial-1-introduction-to-r.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"A basic histogram"</span>)<span class="sc">+</span></span>
 <span id="cb27-4"><a href="tutorial-1-introduction-to-r.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-31-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-31-1.png" width="624"></p>
 <p>We typically apply a line plot to illustrate a time series (that are ordered by date). In what follows, we add a date column to our data frame and then plot the dependent variable in the chronological order:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="tutorial-1-introduction-to-r.html#cb28-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="fu">as.Date</span>(<span class="st">"2000-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
 <span id="cb28-2"><a href="tutorial-1-introduction-to-r.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -303,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb28-6"><a href="tutorial-1-introduction-to-r.html#cb28-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Year"</span>, </span>
 <span id="cb28-7"><a href="tutorial-1-introduction-to-r.html#cb28-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Outcome Variable"</span>)<span class="sc">+</span></span>
 <span id="cb28-8"><a href="tutorial-1-introduction-to-r.html#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-32-1.png" width="672"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-32-1.png" width="624"></p>
 <p>To illustrate the OLS regression in R, we apply the previously generated <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> as independent and dependent variables. To begin, we obtain the least squares estimator “by hand” as follows:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tutorial-1-introduction-to-r.html#cb29-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>,x)</span>
 <span id="cb29-2"><a href="tutorial-1-introduction-to-r.html#cb29-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span>
@@ -348,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="tutorial-2-data-management.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-04-30
+2022-07-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>
