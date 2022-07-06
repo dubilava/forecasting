@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
-title: Introduction to Time Series Modeling and Forecasting
-description: An online textbook for forecasting using time seried models with emphasis on coding in R.
+title: Forecasting With Econometric Time Series Models Using R
+description: An online textbook for forecasting economic data using time series models with emphasis on coding in R.
 logo: forecasting-logo.png
