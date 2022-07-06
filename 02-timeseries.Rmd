@@ -137,45 +137,31 @@ ggplot(lg_dt,aes(x=lambda,y=spectrum,color=cutoff,linetype=cutoff))+
 
 ## Transformations
 
-It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations usually are done to work with the suitable variable for the desired econometric analysis. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms the time series ``flatten'' and the fluctuations become proportionate. The difference operator is denoted by $\Delta$, so that $\Delta y_t = y_t-y_{t-1}$. The following three graphs illustrate (i) a time series with an apparent exponential growth, (ii) the natural logarithm of this time series, and (iii) their differences (i.e., the log-differences of the original series).
+It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issue of the series. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms we 'flatten' the curve and make the fluctuations around the trend proportionate over time. The following graph illustrates this.
 
-```{r ts, fig.cap="A time series and its transformations", echo=FALSE, message=FALSE}
-n <- 120
-a <- 0.05
-b <- 0.05
-s <- 0.05
-set.seed(n)
-e <- rnorm(n,0,s)
-dlny <- e
-for(i in 2:n){
-  dlny[i] <- .05+.05*dlny[i-1]+e[i]
-}
-lny <- cumsum(dlny)
-y <- exp(lny)
+```{r ts, fig.cap="Australian Real GDP and its transformations.", echo=FALSE, message=FALSE}
 
-dt <- data.table(t=c(1:n),y=y,lny=lny,dlny=dlny)
+dt <- fread("data/AusRealGDP.csv")
+colnames(dt) <- c("date","gdp")
+dt$date <- as.Date(dt$date)
+dt[,lngdp := log(gdp)]
+dt[,llgdp := shift(lngdp)]
+dt[,ggdp := (lngdp-llgdp)]
+dt <- dt[date>="1960-01-01"]
+dt$llgdp <- NULL
 
-gg_p1 <- ggplot(dt,aes(x=t,y=y))+
+dt_lg <- melt(dt,id.vars="date")
+
+ggplot(dt_lg,aes(x=date,y=value,color=variable))+
   geom_line(size=1)+
-  labs(y=expression(paste(y[t],sep="")))+
+  facet_wrap(.~variable,scales="free",ncol=1)+
+  scale_color_manual(values=c("goldenrod","darkgray","steelblue"))+
   theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
-
-gg_p2 <- ggplot(dt,aes(x=t,y=lny))+
-  geom_line(size=1)+
-  labs(y=expression(paste("ln",y[t],sep="")))+
-  theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
-
-gg_p3 <- ggplot(dt,aes(x=t,y=dlny))+
-  geom_line(size=1)+
-  labs(y=expression(paste(Delta,"ln",y[t],sep="")))+
-  theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
-
-plot_grid(gg_p1,gg_p2,gg_p3,ncol=1)
+  labs(x="Year",y="",caption="Source: IMF, Real GDP for Australia [NGDPSAXDCAUQ]\nretrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/NGDPRSAXDCAUQ; April 30, 2022")+
+  theme(axis.title = element_text(size=14),axis.text = element_text(size=12),legend.position = "none",strip.text = element_text(size=10),strip.background = element_blank(),plot.caption = element_text(color="gray"))
 
 ```
 
+The three panels of the graph illustrate (i) a time series with an apparent exponential growth, (ii) the natural logarithm of this time series, and (iii) their differences (i.e., the log-differences of the original series).
 
 
