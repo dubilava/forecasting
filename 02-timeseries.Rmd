@@ -93,53 +93,12 @@ ggplot(dt,aes(x=k,y=rho))+
 ```
 
 
-# ```{r spectral, fig.cap="Spectral Density", echo=FALSE, message=FALSE}
-# n <- 120
-# 
-# set.seed(n)
-# y <- rnorm(n)
-# for(i in 2:n){
-#   y[i]=.7*y[i-1]+.00*i+y[i]
-# }
-# 
-# dt <- data.table(y)
-# dt[,`:=`(y1=shift(y,1))]
-# 
-# ar1 <- lm(y~y1,dt)
-# b1 <- ar1$coefficients["y1"]
-# e1 <- ar1$residuals
-# 
-# spec_dense <- function(x,mt=10){
-#   gamma <- c(acf(y,plot=F,type="covariance",lag.max = mt)[0:mt]$acf)
-#   j <- 0:mt
-#   omega <- ifelse(j<=mt/2,1-6*(j/mt)^2+6*(j/mt)^3,2*(1-j/mt)^3)
-#   (1/(2*pi))*(omega[1]*gamma[1]+2*sum(omega[2:(mt+1)]*gamma[2:(mt+1)]*cos(x*c(1:mt))))
-# }
-# 
-# lambda <- seq(0,pi,.01)
-# 
-# fl1 <- sapply(lambda,spec_dense,mt=round(n^(1/2)))
-# fl2 <- sapply(lambda,spec_dense,mt=round(n^(1/3)))
-# 
-# dt <- data.table(lambda,fl1,fl2)
-# lg_dt <- melt(dt,id.vars="lambda",variable.name="cutoff",value.name="spectrum")
-# lg_dt$cutoff <- factor(lg_dt$cutoff,levels=c("fl1","fl2"),labels=c(paste0("m=",round(n^(1/2))),paste0("m=",round(n^(1/3)))))
-# 
-# ggplot(lg_dt,aes(x=lambda,y=spectrum,color=cutoff,linetype=cutoff))+
-#   geom_line(size=1)+
-#   scale_color_manual(values=c("steelblue","indianred"))+
-#   scale_linetype_manual(values=c(1,5))+
-#   labs(x=expression(lambda),y=expression(f(lambda,m)))+
-#   theme_classic()+
-#   theme(axis.title=element_text(size=14),axis.text=element_text(size=12),legend.position=c(.82,.78),legend.text=element_text(hjust=0,size=12),legend.title=element_blank())
-# ```
-
 
 ## Transformations
 
-It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issue of the series. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms we 'flatten' the curve and make the fluctuations around the trend proportionate over time. The following graph illustrates this.
+It is common to transform time series by taking logarithms (if possible), differences, or differences of logarithms (growth rates). Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issues of the series. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms we 'flatten' the curve and make the fluctuations around the trend proportionate over time. The following graph illustrates this.
 
-```{r ts, fig.cap="Australian Real GDP and its transformations.", echo=FALSE, message=FALSE}
+```{r ts, fig.height=6.5, fig.cap="Australian Real GDP and its transformations.", echo=FALSE, message=FALSE}
 
 dt <- fread("data/AusRealGDP.csv")
 colnames(dt) <- c("date","gdp")
@@ -155,7 +114,7 @@ dt_lg <- melt(dt,id.vars="date")
 ggplot(dt_lg,aes(x=date,y=value,color=variable))+
   geom_line(size=1)+
   facet_wrap(.~variable,scales="free",ncol=1)+
-  scale_color_manual(values=c("goldenrod","darkgray","steelblue"))+
+  scale_color_manual(values=c("skyblue","darkgray","coral"),labels=c("Real GDP","Logarithm of Real GDP","Real GDP Growth"))+
   theme_classic()+
   labs(x="Year",y="",caption="Source: IMF, Real GDP for Australia [NGDPSAXDCAUQ]\nretrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/NGDPRSAXDCAUQ; April 30, 2022")+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12),legend.position = "none",strip.text = element_text(size=10),strip.background = element_blank(),plot.caption = element_text(color="gray"))

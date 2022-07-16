@@ -189,35 +189,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="features-of-time-series-data" class="section level1" number="2">
 <h1>
 <span class="header-section-number">Chapter 2</span> Features of Time Series Data</h1>
-<p>A time series is a realization of a sequence of random variables that are stored chronologically. The sequence of random variables is referred to as the <em>stochastic process</em>. Thus, a time series is a realization of a stochastic process.</p>
+<p><span class="newthought">A time series</span> is an observed sequence of realizations of chronologically stored random variables. The sequence of random variables is referred to as the <em>stochastic process</em>. Thus, a time series is a realization of a stochastic process.</p>
 <p>We index time periods as <span class="math inline">\(1,2,\ldots,T\)</span>, so that a time series is represented by a set of observations <span class="math inline">\(\{y_t:t=1,\ldots,T\}\)</span>. We can think of a time series as a finite sample from an underlying doubly–infinite sequence: <span class="math inline">\(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}\)</span>. This is to say that the history extends beyond the starting and ending time periods of the sample at hand.</p>
 <div id="stationarity" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> Stationarity<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stationarity')" onmouseout="reset_tooltip('stationarity-tooltip')"><span class="tooltiptext" id="stationarity-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as <em>stationary</em> time series. Stationarity is an important feature, and the assumption, on which the time series analysis heavily relies.</p>
-<p>Before diving any further into the concepts and methods of time series econometrics, consider the simplest kind of time series comprised of realizations from independent and identically distributed normal random variable with zero mean and constant variance: <span class="math inline">\(\varepsilon_t \sim iid\left(0,\sigma^2\right)\)</span>. The following graph plots this time series against time.</p>
+<p>If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as <em>stationary</em> time series. Stationarity is an important feature, and the assumption on which the time series analysis heavily relies.</p>
+<p>Consider a simplest kind of a time series comprised of realizations from independent and identically distributed normal random variable with zero mean and constant variance: <span class="math inline">\(\e_t \sim iid\left(0,\sigma^2\right)\)</span>. The following graph plots this time series against time.</p>
 <div class="figure">
 <span style="display:block;" id="fig:white-noise"></span>
 <p class="caption marginnote shownote">
-Figure 2.1: White noise: an illustration
+Figure 2.1: White noise
 </p>
-<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise: an illustration" width="624">
+<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise" width="624">
 </div>
-<p>Such time series are referred to as <em>white noise</em>. That is, <span class="math inline">\(\{y_t: t=1,\ldots,T\}\)</span>, is a white noise process if:
+<p>Such time series are referred to as <em>white noise</em>. That is, a time series <span class="math inline">\(\{x_t: t=1,\ldots,T\}\)</span>, is a white noise process if:
 <span class="math display">\[\begin{align*}
-&amp; E(y_t) = 0,\;~\forall~t\\
-&amp; Var(y_t) = \sigma^2,\;~\forall~t\\
-&amp; Cov(y_t,y_{t-k}) = 0,\;~\forall~k \ne 0
+&amp; E(x_t) = 0,\;~\forall~t\\
+&amp; Var(x_t) = \sigma^2,\;~\forall~t\\
+&amp; Cov(x_t,x_{t-k}) = 0,\;~\forall~k \ne 0
 \end{align*}\]</span></p>
-<p>Because each observation is drawn from the same distribution, white noise is a stationary time series. Indeed, it is a special type of stationary time series insofar as its mean, variance, and covariance are time-invariant. Note, for a time series to be stationary, neither the mean nor the covariances need to be equal to zero. Thus, <span class="math inline">\(\{y_t\}\)</span> is stationary if the mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
+<p>Because each observation is drawn from the same distribution, white noise is a stationary time series. Indeed, it is a special type of stationary time series insofar as its mean, variance, and covariance are time-invariant. Note, for a time series to be stationary, neither the mean nor the covariances need to be equal to zero. Thus, <span class="math inline">\(\{x_t\}\)</span> is stationary if the mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
 </div>
 <div id="serial-dependence" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> Serial Dependence<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('serial-dependence')" onmouseout="reset_tooltip('serial-dependence-tooltip')"><span class="tooltiptext" id="serial-dependence-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>It is more of the norm rather than the exception for a time series to be correlated over time. Indeed, because of the sequential nature of time series, we commonly observe dependence among the temporally adjacent time series. That is, for most economic time series, we would expect <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-1}\)</span> to be correlated. Such correlation, referred to as the first order <em>autocorrelations</em>, is given by: <span class="math inline">\(\rho_1=Cor(y_{t},y_{t-1}) = \frac{Cov(y_{t},y_{t-k})}{Var(y_t)}\)</span>. In general, the <span class="math inline">\(k^{th}\)</span> order autocorrelation is given by: <span class="math display">\[\rho_k=Cor(y_{t},y_{t-k}) = \frac{Cov(y_{t},y_{t-k})}{Var(y_{t})},\;~~k=1,2,\ldots\]</span></p>
-<p>Autocorrelations are commonly illustrated via the so-called <em>autocorrelogram</em>, which plots the sequence of autocorrelation coefficients against the lags at which these coefficients are obtained. For example, an autocorrelogram of the previously illustrated white noise process is as follows:</p>
+<p>It is more of the norm rather than the exception for a time series to be correlated over time. Indeed, because of the sequential nature of time series, we commonly observe dependence among the temporally adjacent time series. That is, for most economic time series, we would expect <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t-1}\)</span> to be correlated. Such correlation, referred to as the first order <em>autocorrelations</em>, is given by: <span class="math inline">\(\rho_1=Cor(x_{t},x_{t-1}) = \frac{Cov(x_{t},x_{t-k})}{Var(x_t)}\)</span>. In general, the <span class="math inline">\(k^{th}\)</span> order autocorrelation is given by: <span class="math display">\[\rho_k=Cor(x_{t},x_{t-k}) = \frac{Cov(x_{t},x_{t-k})}{Var(x_{t})},\;~~k=1,2,\ldots\]</span></p>
+<p>Autocorrelations are commonly illustrated via the so-called <em>autocorrelogram</em>, which plots the sequence of autocorrelation coefficients against the lags at which these coefficients are obtained. The following figure illustrates an autocorrelogram up to the 12th lag:</p>
 <div class="figure">
 <span style="display:block;" id="fig:acf"></span>
 <p class="caption marginnote shownote">
@@ -225,8 +225,8 @@ Figure 2.2: Autocorrelation
 </p>
 <img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="624">
 </div>
-<p>For each <span class="math inline">\(k\)</span>, the vertical line extending from zero represents the autocorrelation coefficient at that lag. The red dashed lines denote the 90% confidence interval, given by <span class="math inline">\(\pm 1.96/\sqrt{T}\)</span>, where <span class="math inline">\(T\)</span> is the length of the time series.</p>
-<p>Another relevant measure of the time series dependence is partial autocorrelation, which is correlation between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-k}\)</span> net of any correlations between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-k+j}\)</span>, for all <span class="math inline">\(j=1,\ldots,k-1\)</span>. Similar to autocorrelations, partial autocorrelations can also be illustrated using autocorrelograms:</p>
+<p>For each lag, <span class="math inline">\(k\)</span>, the vertical line extending from zero represents the autocorrelation coefficient at that lag. The dashed lines denote the 95% confidence interval, given by <span class="math inline">\(\pm 1.96/\sqrt{T}\)</span>, where <span class="math inline">\(T\)</span> is the length of the time series.</p>
+<p>Another relevant measure of the time series dependence is <em>partial</em> autocorrelation, which is correlation between <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t-k}\)</span> net of any correlations between <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t-k+j}\)</span>, for all <span class="math inline">\(j=1,\ldots,k-1\)</span>. Similar to autocorrelations, partial autocorrelations can also be illustrated using autocorrelograms:</p>
 <div class="figure">
 <span style="display:block;" id="fig:pacf"></span>
 <p class="caption marginnote shownote">
@@ -234,23 +234,16 @@ Figure 2.3: Partial Autocorrelation
 </p>
 <img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="624">
 </div>
-<div class="figure">
-<span style="display:block;" id="fig:spectral"></span>
-<p class="caption marginnote shownote">
-Figure 2.4: Spectral Density
-</p>
-<img src="forecasting_files/figure-html/spectral-1.png" alt="Spectral Density" width="624">
-</div>
 </div>
 <div id="transformations" class="section level2" number="2.3">
 <h2>
 <span class="header-section-number">2.3</span> Transformations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('transformations')" onmouseout="reset_tooltip('transformations-tooltip')"><span class="tooltiptext" id="transformations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>It is common to transform time series by taking logarithms, differences, or differences of logarithms (growth rates). Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issue of the series. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms we ‘flatten’ the curve and make the fluctuations around the trend proportionate over time. The following graph illustrates this.</p>
+<p>It is common to transform time series by taking logarithms (if possible), differences, or differences of logarithms (growth rates). Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issues of the series. For example, if an economic time series is characterized by an apparent exponential growth (e.g., real GDP), by taking natural logarithms we ‘flatten’ the curve and make the fluctuations around the trend proportionate over time. The following graph illustrates this.</p>
 <div class="figure">
 <span style="display:block;" id="fig:ts"></span>
 <p class="caption marginnote shownote">
-Figure 2.5: Australian Real GDP and its transformations.
+Figure 2.4: Australian Real GDP and its transformations.
 </p>
 <img src="forecasting_files/figure-html/ts-1.png" alt="Australian Real GDP and its transformations." width="624">
 </div>

@@ -10,13 +10,13 @@ This website compiles teaching material for the subject of economic forecasting.
 
 - SW: 15.2, 15.5, 17.2
 
-## Autoregressive Models
-
-- SW: 15.3
-
 ## Trends and Seasonality
 
 - SW: 15.7, 15.8
+
+## Autoregressive Models
+
+- SW: 15.3
 
 ## Vector Autoregressive Models
 

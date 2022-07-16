@@ -6,7 +6,6 @@ introduction-to-forecasting
 features-of-time-series-data
 stationarity
 serial-dependence
-r-spectral-fig.capspectral-density-echofalse-messagefalse-n---120-set.seedn-y---rnormn-fori-in-2n-yi.7yi-1.00iyi-dt---data.tabley-dty1shifty1-ar1---lmyy1dt-b1---ar1coefficientsy1-e1---ar1residuals-spec_dense---functionxmt10-gamma---cacfyplotftypecovariancelag.max-mt0mtacf-j---0mt-omega---ifelsejmt21-6jmt26jmt321-jmt3-12piomega1gamma12sumomega2mt1gamma2mt1cosxc1mt-lambda---seq0pi.01-fl1---sapplylambdaspec_densemtroundn12-fl2---sapplylambdaspec_densemtroundn13-dt---data.tablelambdafl1fl2-lg_dt---meltdtid.varslambdavariable.namecutoffvalue.namespectrum-lg_dtcutoff---factorlg_dtcutofflevelscfl1fl2labelscpaste0mroundn12paste0mroundn13-ggplotlg_dtaesxlambdayspectrumcolorcutofflinetypecutoff-geom_linesize1-scale_color_manualvaluescsteelblueindianred-scale_linetype_manualvaluesc15-labsxexpressionlambdayexpressionflambdam-theme_classic-themeaxis.titleelement_textsize14axis.textelement_textsize12legend.positionc.82.78legend.textelement_texthjust0size12legend.titleelement_blank
 transformations
 forecasting-methods-and-routines
 optimal-forecast
