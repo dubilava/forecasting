@@ -1,3 +1,5 @@
+# Forecasting With Time Series Models {-}
+
 # Introduction to Forecasting
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
@@ -5,7 +7,7 @@ library(ggplot2)
 library(data.table)
 ```
 
-Roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date. 
+`r newthought('Roots of forecasting')` extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date. 
 
 Over time, and particularly with the development of the study of econometrics, more rigorous forecasting methods have been introduced and developed. All methods -- primitive or complex, spurious or scientifically substantiated -- have one thing in common: they all rely (or, at least, pretend to rely) on *information*.
 

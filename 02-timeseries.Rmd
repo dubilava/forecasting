@@ -6,46 +6,46 @@ library(data.table)
 library(cowplot)
 ```
 
-A time series is a realization of a sequence of random variables that are stored chronologically. The sequence of random variables is referred to as the *stochastic process*. Thus, a time series is a realization of a stochastic process. 
+`r newthought('A time series')` is an observed sequence of realizations of chronologically stored random variables. The sequence of random variables is referred to as the *stochastic process*. Thus, a time series is a realization of a stochastic process. 
 
 We index time periods as $1,2,\ldots,T$, so that a time series is represented by a set of observations $\{y_t:t=1,\ldots,T\}$. We can think of a time series as a finite sample from an underlying doubly--infinite sequence: $\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}$. This is to say that the history extends beyond the starting and ending time periods of the sample at hand.
 
 ## Stationarity
 
-If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as *stationary* time series. Stationarity is an important feature, and the assumption, on which the time series analysis heavily relies. 
+If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as *stationary* time series. Stationarity is an important feature, and the assumption on which the time series analysis heavily relies. 
 
-Before diving any further into the concepts and methods of time series econometrics, consider the simplest kind of time series comprised of realizations from independent and identically distributed normal random variable with zero mean and constant variance: $\varepsilon_t \sim iid\left(0,\sigma^2\right)$. The following graph plots this time series against time.
+Consider a simplest kind of a time series comprised of realizations from independent and identically distributed normal random variable with zero mean and constant variance: $\e_t \sim iid\left(0,\sigma^2\right)$. The following graph plots this time series against time.
 
-```{r white-noise, fig.cap="White noise: an illustration", echo=FALSE, message=FALSE}
+```{r white-noise, fig.cap="White noise", echo=FALSE, message=FALSE}
 n <- 120
 
 set.seed(n)
-y <- rnorm(n)
+e <- rnorm(n)
 
-dt <- data.table(t=c(1:n),y=y)
+dt <- data.table(t=c(1:n),e=e)
 
-ggplot(dt,aes(x=t,y=y))+
-  geom_line(size=1,col="steelblue")+
-  labs(y=expression(paste(y[t],sep="")))+
+ggplot(dt,aes(x=t,y=e))+
+  geom_line(size=1,col="coral")+
+  labs(y=expression(paste(e[t],sep="")))+
   theme_classic()+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
 ```
 
-Such time series are referred to as *white noise*. That is, $\{y_t: t=1,\ldots,T\}$, is a white noise process if: 
+Such time series are referred to as *white noise*. That is, a time series $\{x_t: t=1,\ldots,T\}$, is a white noise process if: 
 \begin{align*}
-& E(y_t) = 0,\;~\forall~t\\
-& Var(y_t) = \sigma^2,\;~\forall~t\\
-& Cov(y_t,y_{t-k}) = 0,\;~\forall~k \ne 0
+& E(x_t) = 0,\;~\forall~t\\
+& Var(x_t) = \sigma^2,\;~\forall~t\\
+& Cov(x_t,x_{t-k}) = 0,\;~\forall~k \ne 0
 \end{align*}
 
-Because each observation is drawn from the same distribution, white noise is a stationary time series. Indeed, it is a special type of stationary time series insofar as its mean, variance, and covariance are time-invariant. Note, for a time series to be stationary, neither the mean nor the covariances need to be equal to zero. Thus, $\{y_t\}$ is stationary if the mean and variance are independent of $t$, and the autocovariances are independent of $t$ for all $k$.
+Because each observation is drawn from the same distribution, white noise is a stationary time series. Indeed, it is a special type of stationary time series insofar as its mean, variance, and covariance are time-invariant. Note, for a time series to be stationary, neither the mean nor the covariances need to be equal to zero. Thus, $\{x_t\}$ is stationary if the mean and variance are independent of $t$, and the autocovariances are independent of $t$ for all $k$.
 
 
 ## Serial Dependence
 
-It is more of the norm rather than the exception for a time series to be correlated over time. Indeed, because of the sequential nature of time series, we commonly observe dependence among the temporally adjacent time series. That is, for most economic time series, we would expect $y_t$ and $y_{t-1}$ to be correlated. Such correlation, referred to as the first order *autocorrelations*, is given by: $\rho_1=Cor(y_{t},y_{t-1}) = \frac{Cov(y_{t},y_{t-k})}{Var(y_t)}$. In general, the $k^{th}$ order autocorrelation is given by: $$\rho_k=Cor(y_{t},y_{t-k}) = \frac{Cov(y_{t},y_{t-k})}{Var(y_{t})},\;~~k=1,2,\ldots$$ 
+It is more of the norm rather than the exception for a time series to be correlated over time. Indeed, because of the sequential nature of time series, we commonly observe dependence among the temporally adjacent time series. That is, for most economic time series, we would expect $x_t$ and $x_{t-1}$ to be correlated. Such correlation, referred to as the first order *autocorrelations*, is given by: $\rho_1=Cor(x_{t},x_{t-1}) = \frac{Cov(x_{t},x_{t-k})}{Var(x_t)}$. In general, the $k^{th}$ order autocorrelation is given by: $$\rho_k=Cor(x_{t},x_{t-k}) = \frac{Cov(x_{t},x_{t-k})}{Var(x_{t})},\;~~k=1,2,\ldots$$ 
 
-Autocorrelations are commonly illustrated via the so-called *autocorrelogram*, which plots the sequence of autocorrelation coefficients against the lags at which these coefficients are obtained. For example, an autocorrelogram of the previously illustrated white noise process is as follows: 
+Autocorrelations are commonly illustrated via the so-called *autocorrelogram*, which plots the sequence of autocorrelation coefficients against the lags at which these coefficients are obtained. The following figure illustrates an autocorrelogram up to the 12th lag: 
 
 ```{r acf, fig.cap="Autocorrelation", echo=FALSE, message=FALSE}
 
@@ -65,7 +65,7 @@ dt <- data.table(k=c(1:maxlag),rho=c(acf(y,plot=F)[1:maxlag]$acf))
 ggplot(dt,aes(x=k,y=rho))+
   geom_segment(aes(xend=k,yend=0))+
   geom_hline(yintercept=0,size=1)+
-  geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="indianred")+
+  geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="coral")+
   scale_x_continuous(breaks=c(1:maxlag),labels=c(1:maxlag))+
   labs(x="k",y="ACF")+
   coord_cartesian(ylim=c(-1,1))+
@@ -73,9 +73,9 @@ ggplot(dt,aes(x=k,y=rho))+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
 ```
 
-For each $k$, the vertical line extending from zero represents the autocorrelation coefficient at that lag. The red dashed lines denote the 90\% confidence interval, given by $\pm 1.96/\sqrt{T}$, where $T$ is the length of the time series.
+For each lag, $k$, the vertical line extending from zero represents the autocorrelation coefficient at that lag. The dashed lines denote the 95\% confidence interval, given by $\pm 1.96/\sqrt{T}$, where $T$ is the length of the time series.
 
-Another relevant measure of the time series dependence is partial autocorrelation, which is correlation between $y_t$ and $y_{t-k}$ net of any correlations between $y_t$ and $y_{t-k+j}$, for all $j=1,\ldots,k-1$. Similar to autocorrelations, partial autocorrelations can also be illustrated using autocorrelograms:
+Another relevant measure of the time series dependence is *partial* autocorrelation, which is correlation between $x_t$ and $x_{t-k}$ net of any correlations between $x_t$ and $x_{t-k+j}$, for all $j=1,\ldots,k-1$. Similar to autocorrelations, partial autocorrelations can also be illustrated using autocorrelograms:
 
 ```{r pacf, fig.cap="Partial Autocorrelation", echo=FALSE, message=FALSE}
 maxlag <- 12
@@ -84,7 +84,7 @@ dt <- data.table(k=c(1:maxlag),rho=c(pacf(y,plot=F)[1:maxlag]$acf))
 ggplot(dt,aes(x=k,y=rho))+
   geom_segment(aes(xend=k,yend=0))+
   geom_hline(yintercept=0,size=1)+
-  geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="indianred")+
+  geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="coral")+
   scale_x_continuous(breaks=c(1:maxlag),labels=c(1:maxlag))+
   labs(x="k",y="PACF")+
   coord_cartesian(ylim=c(-1,1))+
@@ -93,46 +93,46 @@ ggplot(dt,aes(x=k,y=rho))+
 ```
 
 
-```{r spectral, fig.cap="Spectral Density", echo=FALSE, message=FALSE}
-n <- 120
-
-set.seed(n)
-y <- rnorm(n)
-for(i in 2:n){
-  y[i]=.7*y[i-1]+.00*i+y[i]
-}
-
-dt <- data.table(y)
-dt[,`:=`(y1=shift(y,1))]
-
-ar1 <- lm(y~y1,dt)
-b1 <- ar1$coefficients["y1"]
-e1 <- ar1$residuals
-
-spec_dense <- function(x,mt=10){
-  gamma <- c(acf(y,plot=F,type="covariance",lag.max = mt)[0:mt]$acf)
-  j <- 0:mt
-  omega <- ifelse(j<=mt/2,1-6*(j/mt)^2+6*(j/mt)^3,2*(1-j/mt)^3)
-  (1/(2*pi))*(omega[1]*gamma[1]+2*sum(omega[2:(mt+1)]*gamma[2:(mt+1)]*cos(x*c(1:mt))))
-}
-
-lambda <- seq(0,pi,.01)
-
-fl1 <- sapply(lambda,spec_dense,mt=round(n^(1/2)))
-fl2 <- sapply(lambda,spec_dense,mt=round(n^(1/3)))
-
-dt <- data.table(lambda,fl1,fl2)
-lg_dt <- melt(dt,id.vars="lambda",variable.name="cutoff",value.name="spectrum")
-lg_dt$cutoff <- factor(lg_dt$cutoff,levels=c("fl1","fl2"),labels=c(paste0("m=",round(n^(1/2))),paste0("m=",round(n^(1/3)))))
-
-ggplot(lg_dt,aes(x=lambda,y=spectrum,color=cutoff,linetype=cutoff))+
-  geom_line(size=1)+
-  scale_color_manual(values=c("steelblue","indianred"))+
-  scale_linetype_manual(values=c(1,5))+
-  labs(x=expression(lambda),y=expression(f(lambda,m)))+
-  theme_classic()+
-  theme(axis.title=element_text(size=14),axis.text=element_text(size=12),legend.position=c(.82,.78),legend.text=element_text(hjust=0,size=12),legend.title=element_blank())
-```
+# ```{r spectral, fig.cap="Spectral Density", echo=FALSE, message=FALSE}
+# n <- 120
+# 
+# set.seed(n)
+# y <- rnorm(n)
+# for(i in 2:n){
+#   y[i]=.7*y[i-1]+.00*i+y[i]
+# }
+# 
+# dt <- data.table(y)
+# dt[,`:=`(y1=shift(y,1))]
+# 
+# ar1 <- lm(y~y1,dt)
+# b1 <- ar1$coefficients["y1"]
+# e1 <- ar1$residuals
+# 
+# spec_dense <- function(x,mt=10){
+#   gamma <- c(acf(y,plot=F,type="covariance",lag.max = mt)[0:mt]$acf)
+#   j <- 0:mt
+#   omega <- ifelse(j<=mt/2,1-6*(j/mt)^2+6*(j/mt)^3,2*(1-j/mt)^3)
+#   (1/(2*pi))*(omega[1]*gamma[1]+2*sum(omega[2:(mt+1)]*gamma[2:(mt+1)]*cos(x*c(1:mt))))
+# }
+# 
+# lambda <- seq(0,pi,.01)
+# 
+# fl1 <- sapply(lambda,spec_dense,mt=round(n^(1/2)))
+# fl2 <- sapply(lambda,spec_dense,mt=round(n^(1/3)))
+# 
+# dt <- data.table(lambda,fl1,fl2)
+# lg_dt <- melt(dt,id.vars="lambda",variable.name="cutoff",value.name="spectrum")
+# lg_dt$cutoff <- factor(lg_dt$cutoff,levels=c("fl1","fl2"),labels=c(paste0("m=",round(n^(1/2))),paste0("m=",round(n^(1/3)))))
+# 
+# ggplot(lg_dt,aes(x=lambda,y=spectrum,color=cutoff,linetype=cutoff))+
+#   geom_line(size=1)+
+#   scale_color_manual(values=c("steelblue","indianred"))+
+#   scale_linetype_manual(values=c(1,5))+
+#   labs(x=expression(lambda),y=expression(f(lambda,m)))+
+#   theme_classic()+
+#   theme(axis.title=element_text(size=14),axis.text=element_text(size=12),legend.position=c(.82,.78),legend.text=element_text(hjust=0,size=12),legend.title=element_blank())
+# ```
 
 
 ## Transformations

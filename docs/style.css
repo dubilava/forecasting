@@ -48,12 +48,12 @@ pre code {
 }
 
 ul.navbar {
-		background-color: #4682b4;
+		background-color: #87ceeb;
 }
 
 #active-page {
 		background-color: #ffffff;
-		color: #4682b4;
+		color: #87ceeb;
 }
 
 li.toc {
@@ -62,18 +62,18 @@ li.toc {
 }
 
 h1 {
-	color: #4682b4;
-	border-bottom-color: #4682b4;
+	color: #ff7f50;
+	border-bottom-color: #ff7f50;
 }
 
 h2 {
-	color: #daa520;
-	border-bottom-color: #daa520;
+	color: #ff7f50;
+	border-bottom-color: #ff7f50;
 }
 
 h3 {
-	color: #777777;
-	border-bottom-color: #555555;
+	color: #ff7f50;
+	border-bottom-color: #ff7f50;
 }
 
 .title {
