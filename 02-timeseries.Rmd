@@ -14,7 +14,7 @@ We index time periods as $1,2,\ldots,T$, so that a time series is represented by
 
 If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as *stationary* time series. Stationarity is an important feature, and the assumption on which the time series analysis heavily relies. 
 
-Consider a simplest kind of a time series comprised of realizations from independent and identically distributed normal random variable with zero mean and constant variance: $\e_t \sim iid\left(0,\sigma^2\right)$. The following graph plots this time series against time.
+Consider a simplest kind of a time series comprised of realizations from independent and identically distributed normal random variable with zero mean and constant variance: $e_t \sim iid\left(0,\sigma^2\right)$. The following graph plots this time series against time.
 
 ```{r white-noise, fig.cap="White noise", echo=FALSE, message=FALSE}
 n <- 120

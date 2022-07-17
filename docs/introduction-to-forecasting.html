@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 1 Introduction to Forecasting | Forecasting With Econometric Time Series Models Using R" />
+<meta property="og:title" content="Chapter 1 Introduction to Forecasting | Forecasting With Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 1 Introduction to Forecasting | Forecasting With Econometric Time Series Models Using R" />
+<meta property="og:description" content="Chapter 1 Introduction to Forecasting | Forecasting With Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 1 Introduction to Forecasting | Forecasting With Econometric Time Series Models Using R">
+<meta name="description" content="Chapter 1 Introduction to Forecasting | Forecasting With Time Series Models Using R">
 
-<title>Chapter 1 Introduction to Forecasting | Forecasting With Econometric Time Series Models Using R</title>
+<title>Chapter 1 Introduction to Forecasting | Forecasting With Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Forecasting With Econometric Time Series Models Using R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Forecasting With Time Series Models Using R<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -189,11 +189,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Over time, and particularly with the development of the study of econometrics, more rigorous forecasting methods have been introduced and developed. All methods – primitive or complex, spurious or scientifically substantiated – have one thing in common: they all rely (or, at least, pretend to rely) on <em>information</em>.</p>
 <p>Information is key in forecasting. It comes in many forms, and is summarized in <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with <em>time series</em> data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series data. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy.</p>
 <p>Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’
-— Donald Ramsfeld</span> So, as we forecast, we are bound to make mistakes, which manifest into the <em>forecast errors</em>. We have these errors because we don’t know the true model (known unknowns), so we make a guess about the most suitable model for time series analysis, leading to <em>model uncertainty</em>. We also have the errors because we don’t know the true parameters of the model (unknown knowns). Instead, using a subset of history we estimate the parameters, which are prone to a sampling error due to <em>parameter uncertainty</em>. Finally, even if were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be off because of <em>temporal uncertainty</em> for all those factors that have never happened in the past, and only characterize the future (unknown unknowns).</p>
+— Donald Ramsfeld</span> So, as we forecast, we are bound to make mistakes, which manifest into the <em>forecast errors</em>. We have these errors because we don’t know the true model (known unknowns), so we make a guess about the most suitable model for time series analysis, leading to <em>model uncertainty</em>. We also have the errors because we don’t know the true parameters of the model (unknown knowns). Instead, using a subset of history we estimate the parameters, which are prone to a sampling error due to <em>parameter uncertainty</em>. Finally, even if we were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be inaccurate because of <em>information uncertainty</em> for all those factors that have never happened in the past, and only characterize the future (unknown unknowns).</p>
 <p>We can present the foregoing decomposition of the forecast uncertainty, in terms of a forecast error, as follows:
 <span class="math display">\[\begin{aligned}
         e_{t+h} &amp;= y_{t+h}-\hat{y}_{t+h}\;~~\text{(forecast uncertainty)}   \\
-        &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(temporal uncertainty)}  \\
+        &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
         &amp; + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
         &amp; + \big[g(\Omega_{t};\theta)-\hat{y}_{t+h}\big]\;~~\text{(parameter uncertainty)}
         \end{aligned}\]</span></p>
@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="features-of-time-series-data.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-07-16
+2022-07-17
  using 
 R version 4.1.2 (2021-11-01)
 </p>

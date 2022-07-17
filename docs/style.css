@@ -1,6 +1,6 @@
 p.caption {
   color: #777;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 p code {
   white-space: inherit;
@@ -47,13 +47,17 @@ pre code {
 		padding-top: 0;
 }
 
+.dropdown-content a:hover {
+    background-color: #fff8dc;
+}
+
 ul.navbar {
-		background-color: #87ceeb;
+		background-color: #fff8dc;
 }
 
 #active-page {
 		background-color: #ffffff;
-		color: #87ceeb;
+		color: #ff7f50;
 }
 
 li.toc {
@@ -77,10 +81,10 @@ h3 {
 }
 
 .title {
-	color: #ffffff;
+	color: #ff7f50;
 	line-height: 1.2;
 }
 
 .author {
-	color: #ffffff;
+	color: #ff7f50;
 }
