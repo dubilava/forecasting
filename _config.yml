@@ -1,4 +1,3 @@
 theme: jekyll-theme-minimal
 title: Forecasting With Time Series Models Using R
 description: An online textbook that introduces techniques to forecast economic data using time series models with emphasis on coding in R.
-logo: forecasting-logo.png
