@@ -1,5 +1,5 @@
 p.caption {
-  color: #777;
+  color: darkgray;
   margin-top: 0px;
 }
 p code {
@@ -48,16 +48,21 @@ pre code {
 }
 
 .dropdown-content a:hover {
-    background-color: #fff8dc;
+    background-color: cornsilk;
+}
+
+li .dropbtn {
+    color: darkgray;
 }
 
 ul.navbar {
-		background-color: #fff8dc;
+		background-color: cornsilk;
+		color: coral;
 }
 
 #active-page {
 		background-color: #ffffff;
-		color: #ff7f50;
+		color: coral;
 }
 
 li.toc {
@@ -66,25 +71,25 @@ li.toc {
 }
 
 h1 {
-	color: #ff7f50;
-	border-bottom-color: #ff7f50;
+	color: coral;
+	border-bottom-color: coral;
 }
 
 h2 {
-	color: #ff7f50;
-	border-bottom-color: #ff7f50;
+	color: coral;
+	border-bottom-color: coral;
 }
 
 h3 {
-	color: #ff7f50;
-	border-bottom-color: #ff7f50;
+	color: coral;
+	border-bottom-color: coral;
 }
 
 .title {
-	color: #ff7f50;
+	color: coral;
 	line-height: 1.2;
 }
 
 .author {
-	color: #ff7f50;
+	color: coral;
 }

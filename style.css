@@ -51,9 +51,13 @@ pre code {
     background-color: cornsilk;
 }
 
+li .dropbtn {
+    color: darkgray;
+}
+
 ul.navbar {
-		color: darkgray;
 		background-color: cornsilk;
+		color: coral;
 }
 
 #active-page {
