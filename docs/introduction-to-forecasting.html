@@ -189,18 +189,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Over time, and particularly with the development of the study of econometrics, more rigorous forecasting methods have been introduced and developed. All methods – primitive or complex, spurious or scientifically substantiated – have one thing in common: they all rely (or, at least, pretend to rely) on <em>information</em>.</p>
 <p>Information is key in forecasting. It comes in many forms, and is summarized in <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with <em>time series</em> data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series data. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy.</p>
 <p>Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’
-— Donald Ramsfeld</span> So, as we forecast, we are bound to make mistakes, which manifest into the <em>forecast errors</em>. We have these errors because we don’t know the true model (known unknowns), so we make a guess about the most suitable model for time series analysis, leading to <em>model uncertainty</em>.</p>
-<p>We also have the errors because we don’t know the true parameters of the model (unknown knowns). Instead, using a subset of history we estimate the parameters, which are prone to a sampling error due to <em>parameter uncertainty</em>.</p>
-<p>Finally, even if we were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be inaccurate because of <em>information uncertainty</em> for all those factors that have never happened in the past, and only characterize the future (unknown unknowns).</p>
-<p>We can present the foregoing decomposition of the forecast uncertainty, in terms of a forecast error, as follows:
-<span class="math display">\[\begin{aligned}
-        e_{t+h} &amp;= y_{t+h}-\hat{y}_{t+h}\;~~\text{(forecast uncertainty)}   \\
-        &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
-        &amp; + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
-        &amp; + \big[g(\Omega_{t};\theta)-\hat{y}_{t+h}\big]\;~~\text{(parameter uncertainty)}
-        \end{aligned}\]</span></p>
-<p>where <span class="math inline">\(e_{t+h|t}\)</span> is an error of a forecast made in period <span class="math inline">\(t\)</span> for horizon <span class="math inline">\(h\)</span>, <span class="math inline">\(y_{t+h}\)</span> is the realization of an event in period <span class="math inline">\(t+h\)</span>, and <span class="math inline">\(\hat{y}_{t+h}\)</span> is the forecast of the event, which is based on the information set, <span class="math inline">\(\Omega_t\)</span>, at the time when the forecast is made using a forecaster’s model of choice, <span class="math inline">\(g(\cdot)\)</span>, that typically involves a set of parameters, <span class="math inline">\(\theta\)</span>, which we don’t know and need to estimate.</p>
-<p>There is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts, on average, are better than others. And in search of such forecasts the study of time series econometrics has evolved.</p>
+— Donald Ramsfeld</span> As a result, there is no such thing as precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some forecasts, on average, are better than others. And in search of such forecasts the study of time series econometrics has evolved.</p>
 
 </div>
 <p style="text-align: center;">
@@ -208,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="features-of-time-series-data.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-07-19
+2022-07-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>

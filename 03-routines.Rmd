@@ -9,11 +9,29 @@ library(cowplot)
 
 ## Optimal Forecast
 
-A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast (usually a mean of the distribution, but can be a median or, indeed, any quantile).
+A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster's choice of the loss function.
 
-A point forecast made in period $t$ for horizon $h$ can be denoted as $y_{t+h|t}$; this is our 'best guess', that is made in period $t$, about the actual realization of the random variable in period $t+h$, denoted by $y_{t+h}$. The difference between the two is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - y_{t+h|t}$$
+Let $\hat{y}_{t+h|t}$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript $t+h|t$ is to indicate that the forecast is made in period $t$; or, more specifically, using information available in period $t$.] for period $t+h$ made in period $t$. This is our 'best guess' about the actual realization of the random variable in period $t+h$, $y_{t+h}$. The difference between the realization and the forecast of the random variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}$$
 
-The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding a pont forecast. Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
+The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding the point forecast. 
+
+There are three key sources of uncertainty that manifest into a forecast error. First, we never know the true model, so we make a guess about the most suitable model for time series analysis, leading to *model uncertainty*. 
+
+Second, we don't know the true parameters of the model. Instead, using a subset of history (available to us) we estimate the parameters, which are prone to a sampling error due to *parameter uncertainty*. 
+
+Finally, even if we were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be inaccurate because of *information uncertainty* for all those factors that have never happened in the past, and only characterize the future. 
+
+We can present the foregoing decomposition of the forecast uncertainty, in terms of a forecast error, as follows:
+$$\begin{aligned}
+		e_{t+h} &= y_{t+h}-\hat{y}_{t+h}\;~~\text{(forecast uncertainty)}   \\
+		& = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
+		& + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
+		& + \big[g(\Omega_{t};\theta)-\hat{y}_{t+h}\big]\;~~\text{(parameter uncertainty)}
+		\end{aligned}$$
+		
+where $e_{t+h|t}$ is an error of a forecast made in period $t$ for horizon $h$, $y_{t+h}$ is the realization of an event in period $t+h$, and $\hat{y}_{t+h}$ is the forecast of the event, which is based on the information set, $\Omega_t$, at the time when the forecast is made using a forecaster's model of choice, $g(\cdot)$, that typically involves a set of parameters, $\theta$, which we don't know and need to estimate.
+
+Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
 
 A loss function, $L(e_{t+h|t})$, can take many different forms, but is should satisfy the following properties:
 $$\begin{aligned}
@@ -31,9 +49,9 @@ $$\begin{aligned}
 The quadratic loss function is popular, partly because we typically select models based on 'in-sample' quadratic loss (i.e. by minimizing the sum of squared residuals).
 
 Optimal forecast is the forecast that minimizes the expected loss:
-		$$\min_{y_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{y_{t+h|t}} E\left[L\left(y_{t+h}-y_{t+h|t}\right)\right]$$
+		$$\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]$$
 		where the expected loss is given by:
-		$$E\left[L\left(y_{t+h}-y_{t+h|t}\right)\right]=\int L\left(y_{t+h}-y_{t+h|t}\right) f(y_{t+h}|\Omega_t)dy$$
+		$$E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]=\int L\left(y_{t+h}-\hat{y}_{t+h|t}\right) f(y_{t+h}|\Omega_t)dy$$
 
 We can assume that the conditional density is a normal density with mean $\mu_{t+h} \equiv E(y_{t+h})$, and variance $\sigma_{t+h}^2 \equiv Var(y_{t+h})$.
 
@@ -151,7 +169,7 @@ where $R$ is the estimation window size, $T$ is the sample size, and $h$ is the 
 
 ### Efficiency
 
-Testing $Cov(e_{t+h|t},y_{t+h|t})=0$. Set up a regression: $$e_{t+h|t} = \alpha + \beta y_{t+h|t} + \upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h.$$ The null of forecast error independence of the information set is equivalent of testing $H_0: \beta = 0$ in the OLS setting. For $h$-step-ahead forecast errors, when $h>1$, autocorrelation consistent standard errors should be used.
+Testing $Cov(e_{t+h|t},\hat{y}_{t+h|t})=0$. Set up a regression: $$e_{t+h|t} = \alpha + \beta \hat{y}_{t+h|t} + \upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h.$$ The null of forecast error independence of the information set is equivalent of testing $H_0: \beta = 0$ in the OLS setting. For $h$-step-ahead forecast errors, when $h>1$, autocorrelation consistent standard errors should be used.
 
 ### No Autocorrelation
 
