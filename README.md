@@ -2,9 +2,9 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Introduction to Forecasting
 
-- [Lecture slides](https://davidubilava.com/forecasting_slides/01-Intro.html)
+- [Lecture slides](https://davidubilava.com/forecasting_slides/01-Intro.html){target="_blank"}
 - Additional material:
-  - [The Birth of the Weather Forecast](https://www.bbc.com/news/magazine-32483678)
+  - [The Birth of the Weather Forecast](https://www.bbc.com/news/magazine-32483678){target="_blank"}
 
 ## Features of Time Series Data
 
