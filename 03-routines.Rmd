@@ -7,13 +7,15 @@ library(cowplot)
 ```
 
 
-## Optimal Forecast
+## Point Forecast and Forecast Error
 
 A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster's choice of the loss function.
 
 Let $\hat{y}_{t+h|t}$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript $t+h|t$ is to indicate that the forecast is made in period $t$; or, more specifically, using information available in period $t$.] for period $t+h$ made in period $t$. This is our 'best guess' about the actual realization of the random variable in period $t+h$, $y_{t+h}$. The difference between the realization and the forecast of the random variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}$$
 
 The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding the point forecast. 
+
+## Forecast Uncertainty
 
 There are three key sources of uncertainty that manifest into a forecast error. First, we never know the true model, so we make a guess about the most suitable model for time series analysis, leading to *model uncertainty*. 
 
@@ -33,6 +35,9 @@ where $e_{t+h|t}$ is an error of a forecast made in period $t$ for horizon $h$, 
 
 Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
 
+
+## Loss Function
+
 A loss function, $L(e_{t+h|t})$, can take many different forms, but is should satisfy the following properties:
 $$\begin{aligned}
 		& L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
@@ -47,6 +52,9 @@ $$\begin{aligned}
 		\end{aligned}$$
 
 The quadratic loss function is popular, partly because we typically select models based on 'in-sample' quadratic loss (i.e. by minimizing the sum of squared residuals).
+
+
+## Optimal Forecast
 
 Optimal forecast is the forecast that minimizes the expected loss:
 		$$\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]$$
@@ -66,7 +74,7 @@ By solving the optimization problem it follows that: $$\hat{y}_{t+h|t} = E(y_{t+
 Thus, the optimal point forecast under the quadratic loss is the *mean* (for reference, the optimal point forecast under absolute loss is the *median*).
 
 
-## Measuring the Accuracy of Forecasts
+## Pseudo-Forecasting Routine
 
 Forecast accuracy should only be determined by considering how well a model performs on data not used in estimation. But to assess forecast accuracy we need access to the data, typically from future time periods, that was not used in estimation. This leads to the so-called 'pseudo forecasting' routine. This routine involves splitting the available data into two segments referred to as 'in-sample' and 'out-of-sample'. The in-sample segment of a series is also known as the 'estimation set' or the 'training set'. The out-of-sample segment of a series is also known as the 'hold-out set' or the 'test set'.
 
@@ -80,7 +88,7 @@ There are different forecasting schemes for updating the information set in the 
 - The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.
 - The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.
 
-The following animation illustrates the distinctive features of these three routines: 
+The following graph illustrates the distinctive features of these three routines: 
 
 ```{r, routines, echo=FALSE, message=FALSE}
 n <- 20
@@ -139,7 +147,7 @@ i <- round(mean(c(1,P)))
 ```
 
 
-## Evaluating Time Series Forecasts
+## Forecast Assessment
 
 To evaluate forecasts of a time series, $\{y_t\}$, with a total of $T$ observations, we divide the sample into two parts, the in-sample set with a total of $R$ observations, such that $R < T$ (typically, $R \approx 0.75T$), and the out-of-sample set. 
 

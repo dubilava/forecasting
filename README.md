@@ -2,29 +2,21 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Introduction to Forecasting
 
-## Features of Time Series Data
+- [Lecture slides](https://davidubilava.com/forecasting_slides/01-Intro.html)
+- Additional material:
+  - [The Birth of the Weather Forecast](https://www.bbc.com/news/magazine-32483678)
 
-- SW:15.1
+## Features of Time Series Data
 
 ## Forecasting Methods and Routines
 
-- SW: 15.2, 15.5, 17.2
-
 ## Trends and Seasonality
-
-- SW: 15.7, 15.8
 
 ## Autoregressive Models
 
-- SW: 15.3
-
 ## Vector Autoregressive Models
 
-- SW: 15.4, 17.1
-
 ## Dynamic Factor Models
-
-- SW: 17.6
 
 ## Threshold Autoregressive Models
 

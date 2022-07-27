@@ -156,9 +156,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="introduction-to-forecasting.html"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a id="active-page" href="forecasting-methods-and-routines.html"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a><ul class="toc-sections">
+<li class="toc"><a href="#point-forecast-and-forecast-error"> Point Forecast and Forecast Error</a></li>
+<li class="toc"><a href="#forecast-uncertainty"> Forecast Uncertainty</a></li>
+<li class="toc"><a href="#loss-function"> Loss Function</a></li>
 <li class="toc"><a href="#optimal-forecast"> Optimal Forecast</a></li>
-<li class="toc"><a href="#measuring-the-accuracy-of-forecasts"> Measuring the Accuracy of Forecasts</a></li>
-<li class="toc"><a href="#evaluating-time-series-forecasts"> Evaluating Time Series Forecasts</a></li>
+<li class="toc"><a href="#pseudo-forecasting-routine"> Pseudo-Forecasting Routine</a></li>
+<li class="toc"><a href="#forecast-assessment"> Forecast Assessment</a></li>
 </ul>
 <a href="trends-and-seasonality.html"><span class="toc-section-number">4</span> Trends and Seasonality</a>
 <a href="autoregressive-models.html"><span class="toc-section-number">5</span> Autoregressive Models</a>
@@ -189,13 +192,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="forecasting-methods-and-routines" class="section level1" number="3">
 <h1>
 <span class="header-section-number">Chapter 3</span> Forecasting Methods and Routines</h1>
-<div id="optimal-forecast" class="section level2" number="3.1">
+<div id="point-forecast-and-forecast-error" class="section level2" number="3.1">
 <h2>
-<span class="header-section-number">3.1</span> Optimal Forecast<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('optimal-forecast')" onmouseout="reset_tooltip('optimal-forecast-tooltip')"><span class="tooltiptext" id="optimal-forecast-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.1</span> Point Forecast and Forecast Error<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('point-forecast-and-forecast-error')" onmouseout="reset_tooltip('point-forecast-and-forecast-error-tooltip')"><span class="tooltiptext" id="point-forecast-and-forecast-error-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster’s choice of the loss function.</p>
 <p>Let <span class="math inline">\(\hat{y}_{t+h|t}\)</span> be a point forecast<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> We use ‘hat’ to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript <span class="math inline">\(t+h|t\)</span> is to indicate that the forecast is made in period <span class="math inline">\(t\)</span>; or, more specifically, using information available in period <span class="math inline">\(t\)</span>.</span> for period <span class="math inline">\(t+h\)</span> made in period <span class="math inline">\(t\)</span>. This is our ‘best guess’ about the actual realization of the random variable in period <span class="math inline">\(t+h\)</span>, <span class="math inline">\(y_{t+h}\)</span>. The difference between the realization and the forecast of the random variable is the forecast error. That is, <span class="math display">\[e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}\]</span></p>
 <p>The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding the point forecast.</p>
+</div>
+<div id="forecast-uncertainty" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Forecast Uncertainty<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecast-uncertainty')" onmouseout="reset_tooltip('forecast-uncertainty-tooltip')"><span class="tooltiptext" id="forecast-uncertainty-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
 <p>There are three key sources of uncertainty that manifest into a forecast error. First, we never know the true model, so we make a guess about the most suitable model for time series analysis, leading to <em>model uncertainty</em>.</p>
 <p>Second, we don’t know the true parameters of the model. Instead, using a subset of history (available to us) we estimate the parameters, which are prone to a sampling error due to <em>parameter uncertainty</em>.</p>
 <p>Finally, even if we were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be inaccurate because of <em>information uncertainty</em> for all those factors that have never happened in the past, and only characterize the future.</p>
@@ -208,6 +216,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(e_{t+h|t}\)</span> is an error of a forecast made in period <span class="math inline">\(t\)</span> for horizon <span class="math inline">\(h\)</span>, <span class="math inline">\(y_{t+h}\)</span> is the realization of an event in period <span class="math inline">\(t+h\)</span>, and <span class="math inline">\(\hat{y}_{t+h}\)</span> is the forecast of the event, which is based on the information set, <span class="math inline">\(\Omega_t\)</span>, at the time when the forecast is made using a forecaster’s model of choice, <span class="math inline">\(g(\cdot)\)</span>, that typically involves a set of parameters, <span class="math inline">\(\theta\)</span>, which we don’t know and need to estimate.</p>
 <p>Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the ‘cost’ associated with the forecast errors. This is achieved by minimizing the expected loss function.</p>
+</div>
+<div id="loss-function" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Loss Function<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('loss-function')" onmouseout="reset_tooltip('loss-function-tooltip')"><span class="tooltiptext" id="loss-function-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
 <p>A loss function, <span class="math inline">\(L(e_{t+h|t})\)</span>, can take many different forms, but is should satisfy the following properties:
 <span class="math display">\[\begin{aligned}
         &amp; L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
@@ -220,6 +233,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         &amp; L{(e_{t+h|t})} = (e_{t+h|t})^2\;~~\text{(quadratic loss function)}
         \end{aligned}\]</span></p>
 <p>The quadratic loss function is popular, partly because we typically select models based on ‘in-sample’ quadratic loss (i.e. by minimizing the sum of squared residuals).</p>
+</div>
+<div id="optimal-forecast" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Optimal Forecast<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('optimal-forecast')" onmouseout="reset_tooltip('optimal-forecast-tooltip')"><span class="tooltiptext" id="optimal-forecast-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
 <p>Optimal forecast is the forecast that minimizes the expected loss:
 <span class="math display">\[\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]\]</span>
 where the expected loss is given by:
@@ -233,9 +251,9 @@ where the expected loss is given by:
 <p>By solving the optimization problem it follows that: <span class="math display">\[\hat{y}_{t+h|t} = E(y_{t+h}) \equiv \mu_{t+h}\]</span></p>
 <p>Thus, the optimal point forecast under the quadratic loss is the <em>mean</em> (for reference, the optimal point forecast under absolute loss is the <em>median</em>).</p>
 </div>
-<div id="measuring-the-accuracy-of-forecasts" class="section level2" number="3.2">
+<div id="pseudo-forecasting-routine" class="section level2" number="3.5">
 <h2>
-<span class="header-section-number">3.2</span> Measuring the Accuracy of Forecasts<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('measuring-the-accuracy-of-forecasts')" onmouseout="reset_tooltip('measuring-the-accuracy-of-forecasts-tooltip')"><span class="tooltiptext" id="measuring-the-accuracy-of-forecasts-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.5</span> Pseudo-Forecasting Routine<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('pseudo-forecasting-routine')" onmouseout="reset_tooltip('pseudo-forecasting-routine-tooltip')"><span class="tooltiptext" id="pseudo-forecasting-routine-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Forecast accuracy should only be determined by considering how well a model performs on data not used in estimation. But to assess forecast accuracy we need access to the data, typically from future time periods, that was not used in estimation. This leads to the so-called ‘pseudo forecasting’ routine. This routine involves splitting the available data into two segments referred to as ‘in-sample’ and ‘out-of-sample’. The in-sample segment of a series is also known as the ‘estimation set’ or the ‘training set’. The out-of-sample segment of a series is also known as the ‘hold-out set’ or the ‘test set’.</p>
 <p>Thus, we make the so-called ‘genuine’ forecasts using only the information from the estimation set, and assess the accuracy of these forecasts in an out-of-sample setting.</p>
@@ -246,12 +264,12 @@ where the expected loss is given by:
 <li>The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.</li>
 <li>The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.</li>
 </ul>
-<p>The following animation illustrates the distinctive features of these three routines:</p>
+<p>The following graph illustrates the distinctive features of these three routines:</p>
 <p><img src="forecasting_files/figure-html/routines-1.png" width="624"></p>
 </div>
-<div id="evaluating-time-series-forecasts" class="section level2" number="3.3">
+<div id="forecast-assessment" class="section level2" number="3.6">
 <h2>
-<span class="header-section-number">3.3</span> Evaluating Time Series Forecasts<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('evaluating-time-series-forecasts')" onmouseout="reset_tooltip('evaluating-time-series-forecasts-tooltip')"><span class="tooltiptext" id="evaluating-time-series-forecasts-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.6</span> Forecast Assessment<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecast-assessment')" onmouseout="reset_tooltip('forecast-assessment-tooltip')"><span class="tooltiptext" id="forecast-assessment-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>To evaluate forecasts of a time series, <span class="math inline">\(\{y_t\}\)</span>, with a total of <span class="math inline">\(T\)</span> observations, we divide the sample into two parts, the in-sample set with a total of <span class="math inline">\(R\)</span> observations, such that <span class="math inline">\(R &lt; T\)</span> (typically, <span class="math inline">\(R \approx 0.75T\)</span>), and the out-of-sample set.</p>
 <p>For example, if we are interested in one-step-ahead forecast assessment, this way we will produce a sequence of forecasts: <span class="math inline">\(\{y_{R+1|R},y_{R+2|{R+1}},\ldots,y_{T|{T-1}}\}\)</span> for <span class="math inline">\(\{Y_{R+1},Y_{R+2},\ldots,Y_{T}\}\)</span>.</p>
@@ -269,22 +287,22 @@ where <span class="math inline">\(P\)</span> is the total number of out-of-sampl
 <li>no serial correlation among one-step-ahead forecast errors. Note that <span class="math inline">\(k\)</span>-step-ahead forecasts, for <span class="math inline">\(k&gt;1\)</span>, can be, and usually are, serially correlated.</li>
 </ul>
 <p>Any forecasting method that does not satisfy these properties has a potential to be improved.</p>
-<div id="unbiasedness" class="section level3" number="3.3.1">
+<div id="unbiasedness" class="section level3" number="3.6.1">
 <h3>
-<span class="header-section-number">3.3.1</span> Unbiasedness<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('unbiasedness')" onmouseout="reset_tooltip('unbiasedness-tooltip')"><span class="tooltiptext" id="unbiasedness-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.6.1</span> Unbiasedness<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('unbiasedness')" onmouseout="reset_tooltip('unbiasedness-tooltip')"><span class="tooltiptext" id="unbiasedness-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Testing <span class="math inline">\(E(e_{t+h|t})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+h|t} = \alpha+\upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h,\]</span>
 where <span class="math inline">\(R\)</span> is the estimation window size, <span class="math inline">\(T\)</span> is the sample size, and <span class="math inline">\(h\)</span> is the forecast horizon length. The null of zero-mean forecast error is equivalent of testing <span class="math inline">\(H_0: \alpha = 0\)</span> in the OLS setting. For <span class="math inline">\(h\)</span>-step-ahead forecast errors, when <span class="math inline">\(h&gt;1\)</span>, autocorrelation consistent standard errors should be used.</p>
 </div>
-<div id="efficiency" class="section level3" number="3.3.2">
+<div id="efficiency" class="section level3" number="3.6.2">
 <h3>
-<span class="header-section-number">3.3.2</span> Efficiency<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('efficiency')" onmouseout="reset_tooltip('efficiency-tooltip')"><span class="tooltiptext" id="efficiency-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.6.2</span> Efficiency<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('efficiency')" onmouseout="reset_tooltip('efficiency-tooltip')"><span class="tooltiptext" id="efficiency-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Testing <span class="math inline">\(Cov(e_{t+h|t},\hat{y}_{t+h|t})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+h|t} = \alpha + \beta \hat{y}_{t+h|t} + \upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h.\]</span> The null of forecast error independence of the information set is equivalent of testing <span class="math inline">\(H_0: \beta = 0\)</span> in the OLS setting. For <span class="math inline">\(h\)</span>-step-ahead forecast errors, when <span class="math inline">\(h&gt;1\)</span>, autocorrelation consistent standard errors should be used.</p>
 </div>
-<div id="no-autocorrelation" class="section level3" number="3.3.3">
+<div id="no-autocorrelation" class="section level3" number="3.6.3">
 <h3>
-<span class="header-section-number">3.3.3</span> No Autocorrelation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('no-autocorrelation')" onmouseout="reset_tooltip('no-autocorrelation-tooltip')"><span class="tooltiptext" id="no-autocorrelation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.6.3</span> No Autocorrelation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('no-autocorrelation')" onmouseout="reset_tooltip('no-autocorrelation-tooltip')"><span class="tooltiptext" id="no-autocorrelation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Testing <span class="math inline">\(Cov(e_{t+1|t},e_{t|t-1})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+1|t} = \alpha + \gamma e_{t|t-1} + \upsilon_{t+1} \hspace{.5in} t = R+1,\ldots,T-1.\]</span> The null of no forecast error autocorrelation is equivalent of testing <span class="math inline">\(H_0: \gamma = 0\)</span> in the OLS setting.</p>
 
