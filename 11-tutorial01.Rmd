@@ -7,32 +7,32 @@ library(ggplot2)
 library(data.table)
 ```
 
-R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial--and--error. To the extent that new features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. 
+R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial--and--error (which has been my own time-tested routine for mastering R). To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. 
 
-We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former on its own). R is available from [CRAN](https://cran.r-project.org/), and RStudio is available from [RStudio](https://www.rstudio.com/). 
+We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former seamlessly). R is available from [CRAN](https://cran.r-project.org/){target="_blank"}, and RStudio is available from [RStudio](https://www.rstudio.com/){target="_blank"}. 
 
-There are a number of ways in which we can work with data in R. Let's begin with matrices. 
+There are a number of ways in which we can work with data in R. To develop an intuition, let's start off with matrices. 
 
-Consider a string of observations:
+Consider a sequence of observations:
 ```{r echo=TRUE}
 a <- c(1,0,4,3,2,6)
 a
 ```
 
-A *string*, unlike a *vector*, has no dimensions. But we can transform it to a $n \times 1$ vector using the as.matrix() function: 
+This sequence, unlike a *vector*, has no dimensions. But we can transform it to a $n \times 1$ vector using the `as.matrix()` function: 
 ```{r echo=TRUE}
 b <- as.matrix(a)
 b
 ```
 
-The result is a $6 \times 1$ vector, or a column matrix. To obtain a $1 \times 6$ vector, or a row matrix, we *transpose* the foregoing vector using the t() function:
+The result is a $6 \times 1$ vector, or a column matrix. To obtain a $1 \times 6$ vector, or a row matrix, we *transpose* the aforementioned vector using the `t()` function:
 ```{r echo=TRUE}
 bt <- t(b)
 bt
 dim(bt)
 ```
 
-We can create any $n \times k$ matrix, using the matrix() function. For example, consider a $3 \times 2$ matrix:
+We can create any $n \times k$ matrix, using the `matrix()` function. For example, consider a $3 \times 2$ matrix:
 ```{r echo=TRUE}
 B <- matrix(a,nrow=3,ncol=2)
 B
@@ -45,37 +45,37 @@ rownames(B) <- c("r1","r2","r3")
 B
 ```
 
-If, at this point, we would like to only work with, say, the first column of the matrix, we can call it using its column number, (1), or the column name, ("c1"), as follows:
+If, at this point, we would like to only work with, say, the first column of the matrix, we can call it using its column number or the column name as follows:
 ```{r echo=TRUE}
 B[,"c1"]
 ```
 
-Similarly, if we want to refer to a matrix element, say $b_{3,2}$, we can do this as follows:
+Similarly, if we want to refer to a matrix element, say $b_{3,2}$, we can do this by entering the respective indices in the brackets:
 ```{r echo=TRUE}
 B[3,2]
 ```
 
-Matrix multiplication is done using %*% command, granted that the two matrices are compatible. For example, we obtain a product of matrix $B$ and a new $2 \times 1$ vector, $d$, as follows:
+Matrix multiplication is done using `%*%` command, granted that the two matrices are compatible. For example, we obtain a product of matrix $B$ and a new $2 \times 1$ vector, $d$, as follows:
 ```{r echo=TRUE}
 d <- as.matrix(c(5,-2))
 Bd <- B%*%d
 Bd
 ```
 
-We can add columns (and rows) to the existing matrix using a cbind() function:
+We can add columns (and rows) to the existing matrix using a `cbind()` function:
 ```{r echo=TRUE}
 c3 <- c(0,1,0)
 D <- cbind(B,c3)
 D
 ```
 
-We can invert a(n invertible) matrix using the solve() function:
+We can invert a(n invertible) matrix using the `solve()` function:
 ```{r echo=TRUE}
 Di <- solve(D)
 Di
 ```
 
-One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the **ggplot2** package. Notably, this package requires that the data are maintained in the data.frame or the data.table format (for the latter, you need to load the **data.table** package). Let's create a data.table object and observe its few lines:
+One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the **ggplot2** package. Notably, this package requires that the data are maintained in the `data.frame` or the `data.table` format (for the latter, you need to load the **data.table** package). Let's create a data.table object and observe its few lines:
 
 ```{r echo=TRUE}
 set.seed(1)
@@ -96,12 +96,12 @@ ggplot(dt,aes(x=x,y=y))+
   geom_point()
 ```
 
-We can augment this plot in a number of different ways. Here we change the point color to red, add the fitted regression line to the plot, add labels to the figure, and apply a 'classic' background theme:
+We can augment this plot in a number of different ways. Here we change the point color to coral, add the fitted regression line to the plot, add labels to the figure, and apply a 'classic' background theme:
 ```{r echo=TRUE}
 ggplot(dt,aes(x=x,y=y))+
-  geom_point(color="goldenrod")+
+  geom_point(color="coral")+
   geom_smooth(method="lm",formula=y~x,se=F,color="darkgray")+
-  labs(title="A scatterplot with fitted regression line", 
+  labs(title="A scatterplot with a fitted regression line", 
        x="Treatment Variable", 
        y="Outcome Variable", 
        caption="Caption: in case if needed.")+
@@ -111,7 +111,7 @@ ggplot(dt,aes(x=x,y=y))+
 As another example, let's generate a histogram (of the dependent variable):
 ```{r echo=TRUE}
 ggplot(dt,aes(x=y))+
-  geom_histogram(color="white",fill="goldenrod",binwidth=.5)+
+  geom_histogram(color="white",fill="coral",binwidth=.5)+
   labs(title="A basic histogram")+
   theme_classic()
 ```
@@ -121,7 +121,7 @@ We typically apply a line plot to illustrate a time series (that are ordered by 
 dt$date <- seq(from=as.Date("2000-01-01"),by="month",along.with=y)
 
 ggplot(dt,aes(x=date,y=y))+
-  geom_line(color="goldenrod")+
+  geom_line(color="coral")+
   labs(title="A basic time series plot",  
        x="Year", 
        y="Outcome Variable")+
@@ -135,13 +135,13 @@ b <- solve(t(X)%*%X)%*%t(X)%*%y
 b
 ```
 
-This can be easily done using the lm() function:
+This can be easily done using the `lm()` function:
 ```{r echo=TRUE}
 ols <- lm(y~x)
 ols
 ```
 
-We can apply the summary() function to see the complete set of regression results:
+We can apply the `summary()` function to see the complete set of regression results:
 ```{r echo=TRUE}
 summary(ols)
 ```
