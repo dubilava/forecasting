@@ -8,6 +8,8 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Features of Time Series Data
 
+- [Lecture slides](https://davidubilava.com/forecasting_slides/02-TimeSeries.html)
+
 ## Forecasting Methods and Routines
 
 ## Trends and Seasonality
