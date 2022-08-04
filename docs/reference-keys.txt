@@ -1,7 +1,9 @@
 fig:white-noise
 fig:acf
 fig:pacf
-fig:ts
+fig:dji
+fig:ddji
+fig:dlndji
 introduction-to-forecasting
 features-of-time-series-data
 stationarity
