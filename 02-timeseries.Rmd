@@ -101,7 +101,7 @@ ggplot(dt,aes(x=k,y=rho))+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
 ```
 
-Autocorrelations of the stationary and ergodic stochastic process dissipate to zero as $k$ increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the time series are stationary.^[There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.] If the time series are non-stationary, we can make changes to it, so that the transformed series are stationary.
+Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as $k$ increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.^[There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.] If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.
 
 
 

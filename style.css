@@ -48,7 +48,7 @@ pre code {
 }
 
 .dropdown-content a:hover {
-    background-color: cornsilk;
+    background-color: powderblue;
 }
 
 li .dropbtn {
@@ -56,7 +56,7 @@ li .dropbtn {
 }
 
 ul.navbar {
-		background-color: cornsilk;
+		background-color: powderblue;
 		color: coral;
 }
 
@@ -91,5 +91,5 @@ h3 {
 }
 
 .author {
-	color: coral;
+	color: white;
 }
