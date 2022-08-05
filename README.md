@@ -3,12 +3,14 @@ This website compiles teaching material for the subject of economic forecasting.
 ## Introduction to Forecasting
 
 - [Lecture slides](https://davidubilava.com/forecasting_slides/01-Intro.html)
+- [Book chapter](https://davidubilava.com/forecasting/docs/introduction-to-forecasting.html)
 - Additional material:
   - [The Birth of the Weather Forecast](https://www.bbc.com/news/magazine-32483678)
 
 ## Features of Time Series Data
 
 - [Lecture slides](https://davidubilava.com/forecasting_slides/02-TimeSeries.html)
+- [Book chapter](https://davidubilava.com/forecasting/docs/features-of-time-series-data.html)
 
 ## Forecasting Methods and Routines
 
