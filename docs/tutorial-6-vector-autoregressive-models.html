@@ -187,7 +187,7 @@ div.csl-indent {
 <a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management.html" id="toc-tutorial-2-data-management">Tutorial 2: Data Management</a>
+<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -212,74 +212,74 @@ div.csl-indent {
 x_{1,t} &amp;= 0.3 + 0.7x_{1,t-1} + 0.1x_{2,t-1} + \varepsilon_{1,t} \\
 x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 \end{aligned}\]</span> where <span class="math inline">\(\mathbf{e}_{t} \sim N(\mathbf{0},\Sigma)\)</span>, and where <span class="math inline">\(\Sigma\)</span> is the covariance matrix of the residuals such that <span class="math inline">\(Cov(\varepsilon_{1,t},\varepsilon_{2,t}) = 0.3\)</span> for all <span class="math inline">\(t=1,\ldots,180\)</span>. (Note: in the code, <span class="math inline">\(x_1\)</span> is denoted by <span class="math inline">\(y\)</span> and <span class="math inline">\(x_2\)</span> is denoted by <span class="math inline">\(x\)</span>).</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="tutorial-6-vector-autoregressive-models.html#cb113-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">180</span></span>
-<span id="cb113-2"><a href="tutorial-6-vector-autoregressive-models.html#cb113-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-3"><a href="tutorial-6-vector-autoregressive-models.html#cb113-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span>
-<span id="cb113-4"><a href="tutorial-6-vector-autoregressive-models.html#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb113-5"><a href="tutorial-6-vector-autoregressive-models.html#cb113-5" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n,<span class="at">mu=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">Sigma=</span>R)</span>
-<span id="cb113-6"><a href="tutorial-6-vector-autoregressive-models.html#cb113-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-7"><a href="tutorial-6-vector-autoregressive-models.html#cb113-7" aria-hidden="true" tabindex="-1"></a>e_y <span class="ot">&lt;-</span> e[,<span class="dv">1</span>]</span>
-<span id="cb113-8"><a href="tutorial-6-vector-autoregressive-models.html#cb113-8" aria-hidden="true" tabindex="-1"></a>e_x <span class="ot">&lt;-</span> e[,<span class="dv">2</span>]</span>
-<span id="cb113-9"><a href="tutorial-6-vector-autoregressive-models.html#cb113-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-10"><a href="tutorial-6-vector-autoregressive-models.html#cb113-10" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
-<span id="cb113-11"><a href="tutorial-6-vector-autoregressive-models.html#cb113-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
-<span id="cb113-12"><a href="tutorial-6-vector-autoregressive-models.html#cb113-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-13"><a href="tutorial-6-vector-autoregressive-models.html#cb113-13" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> e_y[<span class="dv">1</span>]</span>
-<span id="cb113-14"><a href="tutorial-6-vector-autoregressive-models.html#cb113-14" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> e_x[<span class="dv">1</span>]</span>
-<span id="cb113-15"><a href="tutorial-6-vector-autoregressive-models.html#cb113-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-16"><a href="tutorial-6-vector-autoregressive-models.html#cb113-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
-<span id="cb113-17"><a href="tutorial-6-vector-autoregressive-models.html#cb113-17" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.3+0.7</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span><span class="fl">0.1</span><span class="sc">*</span>x[i<span class="dv">-1</span>]<span class="sc">+</span>e_y[i]</span>
-<span id="cb113-18"><a href="tutorial-6-vector-autoregressive-models.html#cb113-18" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2+0.9</span><span class="sc">*</span>x[i<span class="dv">-1</span>]<span class="sc">+</span>e_x[i]</span>
-<span id="cb113-19"><a href="tutorial-6-vector-autoregressive-models.html#cb113-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="tutorial-6-vector-autoregressive-models.html#cb98-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">180</span></span>
+<span id="cb98-2"><a href="tutorial-6-vector-autoregressive-models.html#cb98-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-3"><a href="tutorial-6-vector-autoregressive-models.html#cb98-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb98-4"><a href="tutorial-6-vector-autoregressive-models.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb98-5"><a href="tutorial-6-vector-autoregressive-models.html#cb98-5" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n,<span class="at">mu=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">Sigma=</span>R)</span>
+<span id="cb98-6"><a href="tutorial-6-vector-autoregressive-models.html#cb98-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-7"><a href="tutorial-6-vector-autoregressive-models.html#cb98-7" aria-hidden="true" tabindex="-1"></a>e_y <span class="ot">&lt;-</span> e[,<span class="dv">1</span>]</span>
+<span id="cb98-8"><a href="tutorial-6-vector-autoregressive-models.html#cb98-8" aria-hidden="true" tabindex="-1"></a>e_x <span class="ot">&lt;-</span> e[,<span class="dv">2</span>]</span>
+<span id="cb98-9"><a href="tutorial-6-vector-autoregressive-models.html#cb98-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-10"><a href="tutorial-6-vector-autoregressive-models.html#cb98-10" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
+<span id="cb98-11"><a href="tutorial-6-vector-autoregressive-models.html#cb98-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
+<span id="cb98-12"><a href="tutorial-6-vector-autoregressive-models.html#cb98-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-13"><a href="tutorial-6-vector-autoregressive-models.html#cb98-13" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> e_y[<span class="dv">1</span>]</span>
+<span id="cb98-14"><a href="tutorial-6-vector-autoregressive-models.html#cb98-14" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> e_x[<span class="dv">1</span>]</span>
+<span id="cb98-15"><a href="tutorial-6-vector-autoregressive-models.html#cb98-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-16"><a href="tutorial-6-vector-autoregressive-models.html#cb98-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb98-17"><a href="tutorial-6-vector-autoregressive-models.html#cb98-17" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.3+0.7</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span><span class="fl">0.1</span><span class="sc">*</span>x[i<span class="dv">-1</span>]<span class="sc">+</span>e_y[i]</span>
+<span id="cb98-18"><a href="tutorial-6-vector-autoregressive-models.html#cb98-18" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2+0.9</span><span class="sc">*</span>x[i<span class="dv">-1</span>]<span class="sc">+</span>e_x[i]</span>
+<span id="cb98-19"><a href="tutorial-6-vector-autoregressive-models.html#cb98-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2006), and store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt’.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="tutorial-6-vector-autoregressive-models.html#cb114-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2006-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
-<span id="cb114-2"><a href="tutorial-6-vector-autoregressive-models.html#cb114-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb114-3"><a href="tutorial-6-vector-autoregressive-models.html#cb114-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y,x)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="tutorial-6-vector-autoregressive-models.html#cb99-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2006-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
+<span id="cb99-2"><a href="tutorial-6-vector-autoregressive-models.html#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="tutorial-6-vector-autoregressive-models.html#cb99-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y,x)</span></code></pre></div>
 <p>Plot the realized time series using <strong>ggplot</strong> function.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="tutorial-6-vector-autoregressive-models.html#cb115-1" aria-hidden="true" tabindex="-1"></a>dt_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(dt,<span class="at">id.vars=</span><span class="st">"date"</span>)</span>
-<span id="cb115-2"><a href="tutorial-6-vector-autoregressive-models.html#cb115-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-3"><a href="tutorial-6-vector-autoregressive-models.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt_long,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>value,<span class="at">color=</span>variable,<span class="at">linetype=</span>variable))<span class="sc">+</span></span>
-<span id="cb115-4"><a href="tutorial-6-vector-autoregressive-models.html#cb115-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb115-5"><a href="tutorial-6-vector-autoregressive-models.html#cb115-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"darkgray"</span>,<span class="st">"steelblue"</span>))<span class="sc">+</span></span>
-<span id="cb115-6"><a href="tutorial-6-vector-autoregressive-models.html#cb115-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
-<span id="cb115-7"><a href="tutorial-6-vector-autoregressive-models.html#cb115-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-81-1.png" width="624"></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="tutorial-6-vector-autoregressive-models.html#cb100-1" aria-hidden="true" tabindex="-1"></a>dt_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(dt,<span class="at">id.vars=</span><span class="st">"date"</span>)</span>
+<span id="cb100-2"><a href="tutorial-6-vector-autoregressive-models.html#cb100-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-3"><a href="tutorial-6-vector-autoregressive-models.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt_long,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>value,<span class="at">color=</span>variable,<span class="at">linetype=</span>variable))<span class="sc">+</span></span>
+<span id="cb100-4"><a href="tutorial-6-vector-autoregressive-models.html#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb100-5"><a href="tutorial-6-vector-autoregressive-models.html#cb100-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"darkgray"</span>,<span class="st">"steelblue"</span>))<span class="sc">+</span></span>
+<span id="cb100-6"><a href="tutorial-6-vector-autoregressive-models.html#cb100-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
+<span id="cb100-7"><a href="tutorial-6-vector-autoregressive-models.html#cb100-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-73-1.png" width="624"></p>
 <p>Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="tutorial-6-vector-autoregressive-models.html#cb116-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y_l1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y_l2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">x_l1=</span><span class="fu">shift</span>(x,<span class="dv">1</span>),<span class="at">x_l2=</span><span class="fu">shift</span>(x,<span class="dv">2</span>))]</span>
-<span id="cb116-2"><a href="tutorial-6-vector-autoregressive-models.html#cb116-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-3"><a href="tutorial-6-vector-autoregressive-models.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(1)</span></span>
-<span id="cb116-4"><a href="tutorial-6-vector-autoregressive-models.html#cb116-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb116-5"><a href="tutorial-6-vector-autoregressive-models.html#cb116-5" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb116-6"><a href="tutorial-6-vector-autoregressive-models.html#cb116-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-7"><a href="tutorial-6-vector-autoregressive-models.html#cb116-7" aria-hidden="true" tabindex="-1"></a>var1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt)</span>
-<span id="cb116-8"><a href="tutorial-6-vector-autoregressive-models.html#cb116-8" aria-hidden="true" tabindex="-1"></a>var1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt)</span>
-<span id="cb116-9"><a href="tutorial-6-vector-autoregressive-models.html#cb116-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-10"><a href="tutorial-6-vector-autoregressive-models.html#cb116-10" aria-hidden="true" tabindex="-1"></a>var1r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(var1y<span class="sc">$</span>residuals,var1x<span class="sc">$</span>residuals)</span>
-<span id="cb116-11"><a href="tutorial-6-vector-autoregressive-models.html#cb116-11" aria-hidden="true" tabindex="-1"></a>cov1r <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(var1r)<span class="sc">/</span>(<span class="fu">nrow</span>(dt)<span class="sc">-</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k))</span>
-<span id="cb116-12"><a href="tutorial-6-vector-autoregressive-models.html#cb116-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-13"><a href="tutorial-6-vector-autoregressive-models.html#cb116-13" aria-hidden="true" tabindex="-1"></a>AIC1 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">det</span>(cov1r))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
-<span id="cb116-14"><a href="tutorial-6-vector-autoregressive-models.html#cb116-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-15"><a href="tutorial-6-vector-autoregressive-models.html#cb116-15" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(2)</span></span>
-<span id="cb116-16"><a href="tutorial-6-vector-autoregressive-models.html#cb116-16" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb116-17"><a href="tutorial-6-vector-autoregressive-models.html#cb116-17" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb116-18"><a href="tutorial-6-vector-autoregressive-models.html#cb116-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-19"><a href="tutorial-6-vector-autoregressive-models.html#cb116-19" aria-hidden="true" tabindex="-1"></a>var2y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2<span class="sc">+</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
-<span id="cb116-20"><a href="tutorial-6-vector-autoregressive-models.html#cb116-20" aria-hidden="true" tabindex="-1"></a>var2x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2<span class="sc">+</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
-<span id="cb116-21"><a href="tutorial-6-vector-autoregressive-models.html#cb116-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-22"><a href="tutorial-6-vector-autoregressive-models.html#cb116-22" aria-hidden="true" tabindex="-1"></a>var2r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(var2y<span class="sc">$</span>residuals,var2x<span class="sc">$</span>residuals)</span>
-<span id="cb116-23"><a href="tutorial-6-vector-autoregressive-models.html#cb116-23" aria-hidden="true" tabindex="-1"></a>cov2r <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(var2r)<span class="sc">/</span>(<span class="fu">nrow</span>(dt)<span class="sc">-</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k))</span>
-<span id="cb116-24"><a href="tutorial-6-vector-autoregressive-models.html#cb116-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-25"><a href="tutorial-6-vector-autoregressive-models.html#cb116-25" aria-hidden="true" tabindex="-1"></a>AIC2 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">det</span>(cov2r))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
-<span id="cb116-26"><a href="tutorial-6-vector-autoregressive-models.html#cb116-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-27"><a href="tutorial-6-vector-autoregressive-models.html#cb116-27" aria-hidden="true" tabindex="-1"></a>AIC1</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="tutorial-6-vector-autoregressive-models.html#cb101-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y_l1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y_l2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">x_l1=</span><span class="fu">shift</span>(x,<span class="dv">1</span>),<span class="at">x_l2=</span><span class="fu">shift</span>(x,<span class="dv">2</span>))]</span>
+<span id="cb101-2"><a href="tutorial-6-vector-autoregressive-models.html#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="tutorial-6-vector-autoregressive-models.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(1)</span></span>
+<span id="cb101-4"><a href="tutorial-6-vector-autoregressive-models.html#cb101-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb101-5"><a href="tutorial-6-vector-autoregressive-models.html#cb101-5" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb101-6"><a href="tutorial-6-vector-autoregressive-models.html#cb101-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="tutorial-6-vector-autoregressive-models.html#cb101-7" aria-hidden="true" tabindex="-1"></a>var1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt)</span>
+<span id="cb101-8"><a href="tutorial-6-vector-autoregressive-models.html#cb101-8" aria-hidden="true" tabindex="-1"></a>var1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt)</span>
+<span id="cb101-9"><a href="tutorial-6-vector-autoregressive-models.html#cb101-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-10"><a href="tutorial-6-vector-autoregressive-models.html#cb101-10" aria-hidden="true" tabindex="-1"></a>var1r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(var1y<span class="sc">$</span>residuals,var1x<span class="sc">$</span>residuals)</span>
+<span id="cb101-11"><a href="tutorial-6-vector-autoregressive-models.html#cb101-11" aria-hidden="true" tabindex="-1"></a>cov1r <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(var1r)<span class="sc">/</span>(<span class="fu">nrow</span>(dt)<span class="sc">-</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k))</span>
+<span id="cb101-12"><a href="tutorial-6-vector-autoregressive-models.html#cb101-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-13"><a href="tutorial-6-vector-autoregressive-models.html#cb101-13" aria-hidden="true" tabindex="-1"></a>AIC1 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">det</span>(cov1r))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
+<span id="cb101-14"><a href="tutorial-6-vector-autoregressive-models.html#cb101-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-15"><a href="tutorial-6-vector-autoregressive-models.html#cb101-15" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(2)</span></span>
+<span id="cb101-16"><a href="tutorial-6-vector-autoregressive-models.html#cb101-16" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb101-17"><a href="tutorial-6-vector-autoregressive-models.html#cb101-17" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb101-18"><a href="tutorial-6-vector-autoregressive-models.html#cb101-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-19"><a href="tutorial-6-vector-autoregressive-models.html#cb101-19" aria-hidden="true" tabindex="-1"></a>var2y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2<span class="sc">+</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
+<span id="cb101-20"><a href="tutorial-6-vector-autoregressive-models.html#cb101-20" aria-hidden="true" tabindex="-1"></a>var2x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2<span class="sc">+</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
+<span id="cb101-21"><a href="tutorial-6-vector-autoregressive-models.html#cb101-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-22"><a href="tutorial-6-vector-autoregressive-models.html#cb101-22" aria-hidden="true" tabindex="-1"></a>var2r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(var2y<span class="sc">$</span>residuals,var2x<span class="sc">$</span>residuals)</span>
+<span id="cb101-23"><a href="tutorial-6-vector-autoregressive-models.html#cb101-23" aria-hidden="true" tabindex="-1"></a>cov2r <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(var2r)<span class="sc">/</span>(<span class="fu">nrow</span>(dt)<span class="sc">-</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k))</span>
+<span id="cb101-24"><a href="tutorial-6-vector-autoregressive-models.html#cb101-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-25"><a href="tutorial-6-vector-autoregressive-models.html#cb101-25" aria-hidden="true" tabindex="-1"></a>AIC2 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">det</span>(cov2r))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(p<span class="sc">*</span>k<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
+<span id="cb101-26"><a href="tutorial-6-vector-autoregressive-models.html#cb101-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-27"><a href="tutorial-6-vector-autoregressive-models.html#cb101-27" aria-hidden="true" tabindex="-1"></a>AIC1</span></code></pre></div>
 <pre><code>## [1] -0.1270596</code></pre>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="tutorial-6-vector-autoregressive-models.html#cb118-1" aria-hidden="true" tabindex="-1"></a>AIC2</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="tutorial-6-vector-autoregressive-models.html#cb103-1" aria-hidden="true" tabindex="-1"></a>AIC2</span></code></pre></div>
 <pre><code>## [1] -0.047212</code></pre>
 <p>Perfrom tests of (in-sample) Granger causality in each of the two models. Note, in the case of VAR(1), both t tests and F tests are applicable and they both provide identical inference. In the case of VAR(p), where <span class="math inline">\(p&gt;1\)</span>, the only appropriate test is an F test for joint significance of the parameters associated with the lags of the potentially causal variable.</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="tutorial-6-vector-autoregressive-models.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(1)</span></span>
-<span id="cb120-2"><a href="tutorial-6-vector-autoregressive-models.html#cb120-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb120-3"><a href="tutorial-6-vector-autoregressive-models.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="do">## t test</span></span>
-<span id="cb120-4"><a href="tutorial-6-vector-autoregressive-models.html#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var1y)</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="tutorial-6-vector-autoregressive-models.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VAR(1)</span></span>
+<span id="cb105-2"><a href="tutorial-6-vector-autoregressive-models.html#cb105-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-3"><a href="tutorial-6-vector-autoregressive-models.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="do">## t test</span></span>
+<span id="cb105-4"><a href="tutorial-6-vector-autoregressive-models.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var1y)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ y_l1 + x_l1, data = dt)
@@ -300,7 +300,7 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ##   (1 observation deleted due to missingness)
 ## Multiple R-squared:  0.5689, Adjusted R-squared:  0.564 
 ## F-statistic: 116.1 on 2 and 176 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="tutorial-6-vector-autoregressive-models.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var1x)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="tutorial-6-vector-autoregressive-models.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var1x)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = x ~ y_l1 + x_l1, data = dt)
@@ -321,11 +321,11 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ##   (1 observation deleted due to missingness)
 ## Multiple R-squared:  0.7536, Adjusted R-squared:  0.7508 
 ## F-statistic: 269.2 on 2 and 176 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="tutorial-6-vector-autoregressive-models.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="do">## F test</span></span>
-<span id="cb124-2"><a href="tutorial-6-vector-autoregressive-models.html#cb124-2" aria-hidden="true" tabindex="-1"></a>ar1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1,<span class="at">data=</span>dt)</span>
-<span id="cb124-3"><a href="tutorial-6-vector-autoregressive-models.html#cb124-3" aria-hidden="true" tabindex="-1"></a>ar1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1,<span class="at">data=</span>dt)</span>
-<span id="cb124-4"><a href="tutorial-6-vector-autoregressive-models.html#cb124-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-5"><a href="tutorial-6-vector-autoregressive-models.html#cb124-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var1y,ar1y)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="tutorial-6-vector-autoregressive-models.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="do">## F test</span></span>
+<span id="cb109-2"><a href="tutorial-6-vector-autoregressive-models.html#cb109-2" aria-hidden="true" tabindex="-1"></a>ar1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1,<span class="at">data=</span>dt)</span>
+<span id="cb109-3"><a href="tutorial-6-vector-autoregressive-models.html#cb109-3" aria-hidden="true" tabindex="-1"></a>ar1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1,<span class="at">data=</span>dt)</span>
+<span id="cb109-4"><a href="tutorial-6-vector-autoregressive-models.html#cb109-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-5"><a href="tutorial-6-vector-autoregressive-models.html#cb109-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var1y,ar1y)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: y ~ y_l1 + x_l1
@@ -335,7 +335,7 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ## 2    177 173.62 -1   -5.9866 6.2852 0.01308 *
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="tutorial-6-vector-autoregressive-models.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var1x,ar1x)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="tutorial-6-vector-autoregressive-models.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var1x,ar1x)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: x ~ y_l1 + x_l1
@@ -343,10 +343,10 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
 ## 1    176 157.54                           
 ## 2    177 158.47 -1  -0.93231 1.0416 0.3089</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="tutorial-6-vector-autoregressive-models.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="do">## VAR(2)</span></span>
-<span id="cb128-2"><a href="tutorial-6-vector-autoregressive-models.html#cb128-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-3"><a href="tutorial-6-vector-autoregressive-models.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="do">### t test (no longer applicable to test GC)</span></span>
-<span id="cb128-4"><a href="tutorial-6-vector-autoregressive-models.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var2y)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="tutorial-6-vector-autoregressive-models.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="do">## VAR(2)</span></span>
+<span id="cb113-2"><a href="tutorial-6-vector-autoregressive-models.html#cb113-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-3"><a href="tutorial-6-vector-autoregressive-models.html#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="do">### t test (no longer applicable to test GC)</span></span>
+<span id="cb113-4"><a href="tutorial-6-vector-autoregressive-models.html#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var2y)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ y_l1 + y_l2 + x_l1 + x_l2, data = dt)
@@ -369,7 +369,7 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ##   (2 observations deleted due to missingness)
 ## Multiple R-squared:  0.5709, Adjusted R-squared:  0.561 
 ## F-statistic: 57.55 on 4 and 173 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="tutorial-6-vector-autoregressive-models.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var2x)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="tutorial-6-vector-autoregressive-models.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var2x)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = x ~ y_l1 + y_l2 + x_l1 + x_l2, data = dt)
@@ -392,11 +392,11 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ##   (2 observations deleted due to missingness)
 ## Multiple R-squared:  0.7546, Adjusted R-squared:  0.7489 
 ## F-statistic:   133 on 4 and 173 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="tutorial-6-vector-autoregressive-models.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="do">### F test</span></span>
-<span id="cb132-2"><a href="tutorial-6-vector-autoregressive-models.html#cb132-2" aria-hidden="true" tabindex="-1"></a>ar2y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2,<span class="at">data=</span>dt)</span>
-<span id="cb132-3"><a href="tutorial-6-vector-autoregressive-models.html#cb132-3" aria-hidden="true" tabindex="-1"></a>ar2x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
-<span id="cb132-4"><a href="tutorial-6-vector-autoregressive-models.html#cb132-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb132-5"><a href="tutorial-6-vector-autoregressive-models.html#cb132-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var2y,ar2y)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="tutorial-6-vector-autoregressive-models.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="do">### F test</span></span>
+<span id="cb117-2"><a href="tutorial-6-vector-autoregressive-models.html#cb117-2" aria-hidden="true" tabindex="-1"></a>ar2y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2,<span class="at">data=</span>dt)</span>
+<span id="cb117-3"><a href="tutorial-6-vector-autoregressive-models.html#cb117-3" aria-hidden="true" tabindex="-1"></a>ar2x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1<span class="sc">+</span>x_l2,<span class="at">data=</span>dt)</span>
+<span id="cb117-4"><a href="tutorial-6-vector-autoregressive-models.html#cb117-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-5"><a href="tutorial-6-vector-autoregressive-models.html#cb117-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var2y,ar2y)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: y ~ y_l1 + y_l2 + x_l1 + x_l2
@@ -406,7 +406,7 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ## 2    175 172.78 -2   -6.0971 3.1641 0.04471 *
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="tutorial-6-vector-autoregressive-models.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var2x,ar2x)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="tutorial-6-vector-autoregressive-models.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(var2x,ar2x)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: x ~ y_l1 + y_l2 + x_l1 + x_l2
@@ -415,46 +415,46 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 ## 1    173 156.76                           
 ## 2    175 158.03 -2   -1.2729 0.7024 0.4968</code></pre>
 <p>Generate a sequence of one-step-ahead forecasts from VAR(1) using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="tutorial-6-vector-autoregressive-models.html#cb136-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">120</span></span>
-<span id="cb136-2"><a href="tutorial-6-vector-autoregressive-models.html#cb136-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R</span>
-<span id="cb136-3"><a href="tutorial-6-vector-autoregressive-models.html#cb136-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb136-4"><a href="tutorial-6-vector-autoregressive-models.html#cb136-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ar1y <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb136-5"><a href="tutorial-6-vector-autoregressive-models.html#cb136-5" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ar1x <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb136-6"><a href="tutorial-6-vector-autoregressive-models.html#cb136-6" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>var1y <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb136-7"><a href="tutorial-6-vector-autoregressive-models.html#cb136-7" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>var1x <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb136-8"><a href="tutorial-6-vector-autoregressive-models.html#cb136-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb136-9"><a href="tutorial-6-vector-autoregressive-models.html#cb136-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
-<span id="cb136-10"><a href="tutorial-6-vector-autoregressive-models.html#cb136-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb136-11"><a href="tutorial-6-vector-autoregressive-models.html#cb136-11" aria-hidden="true" tabindex="-1"></a>  ar1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb136-12"><a href="tutorial-6-vector-autoregressive-models.html#cb136-12" aria-hidden="true" tabindex="-1"></a>  ar1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb136-13"><a href="tutorial-6-vector-autoregressive-models.html#cb136-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb136-14"><a href="tutorial-6-vector-autoregressive-models.html#cb136-14" aria-hidden="true" tabindex="-1"></a>  var1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb136-15"><a href="tutorial-6-vector-autoregressive-models.html#cb136-15" aria-hidden="true" tabindex="-1"></a>  var1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
-<span id="cb136-16"><a href="tutorial-6-vector-autoregressive-models.html#cb136-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb136-17"><a href="tutorial-6-vector-autoregressive-models.html#cb136-17" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>ar1y[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar1y<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>ar1y<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
-<span id="cb136-18"><a href="tutorial-6-vector-autoregressive-models.html#cb136-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>ar1x[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar1x<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>ar1x<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
-<span id="cb136-19"><a href="tutorial-6-vector-autoregressive-models.html#cb136-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb136-20"><a href="tutorial-6-vector-autoregressive-models.html#cb136-20" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>var1y[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> var1y<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>var1y<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]<span class="sc">+</span>var1y<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
-<span id="cb136-21"><a href="tutorial-6-vector-autoregressive-models.html#cb136-21" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>var1x[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> var1x<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>var1x<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]<span class="sc">+</span>var1x<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
-<span id="cb136-22"><a href="tutorial-6-vector-autoregressive-models.html#cb136-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb136-23"><a href="tutorial-6-vector-autoregressive-models.html#cb136-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="tutorial-6-vector-autoregressive-models.html#cb121-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb121-2"><a href="tutorial-6-vector-autoregressive-models.html#cb121-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R</span>
+<span id="cb121-3"><a href="tutorial-6-vector-autoregressive-models.html#cb121-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-4"><a href="tutorial-6-vector-autoregressive-models.html#cb121-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ar1y <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb121-5"><a href="tutorial-6-vector-autoregressive-models.html#cb121-5" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ar1x <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb121-6"><a href="tutorial-6-vector-autoregressive-models.html#cb121-6" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>var1y <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb121-7"><a href="tutorial-6-vector-autoregressive-models.html#cb121-7" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>var1x <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb121-8"><a href="tutorial-6-vector-autoregressive-models.html#cb121-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-9"><a href="tutorial-6-vector-autoregressive-models.html#cb121-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
+<span id="cb121-10"><a href="tutorial-6-vector-autoregressive-models.html#cb121-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb121-11"><a href="tutorial-6-vector-autoregressive-models.html#cb121-11" aria-hidden="true" tabindex="-1"></a>  ar1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb121-12"><a href="tutorial-6-vector-autoregressive-models.html#cb121-12" aria-hidden="true" tabindex="-1"></a>  ar1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb121-13"><a href="tutorial-6-vector-autoregressive-models.html#cb121-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb121-14"><a href="tutorial-6-vector-autoregressive-models.html#cb121-14" aria-hidden="true" tabindex="-1"></a>  var1y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb121-15"><a href="tutorial-6-vector-autoregressive-models.html#cb121-15" aria-hidden="true" tabindex="-1"></a>  var1x <span class="ot">&lt;-</span> <span class="fu">lm</span>(x<span class="sc">~</span>y_l1<span class="sc">+</span>x_l1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb121-16"><a href="tutorial-6-vector-autoregressive-models.html#cb121-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb121-17"><a href="tutorial-6-vector-autoregressive-models.html#cb121-17" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>ar1y[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar1y<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>ar1y<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb121-18"><a href="tutorial-6-vector-autoregressive-models.html#cb121-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>ar1x[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> ar1x<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>ar1x<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb121-19"><a href="tutorial-6-vector-autoregressive-models.html#cb121-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb121-20"><a href="tutorial-6-vector-autoregressive-models.html#cb121-20" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>var1y[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> var1y<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>var1y<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]<span class="sc">+</span>var1y<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb121-21"><a href="tutorial-6-vector-autoregressive-models.html#cb121-21" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>var1x[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> var1x<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>var1x<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]<span class="sc">+</span>var1x<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt<span class="sc">$</span>x[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
+<span id="cb121-22"><a href="tutorial-6-vector-autoregressive-models.html#cb121-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb121-23"><a href="tutorial-6-vector-autoregressive-models.html#cb121-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Calculate the RMSFE measures for restricted and unrestricted models, and compare those to each other to make a suggestion about out-of-sample Granger causality.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="tutorial-6-vector-autoregressive-models.html#cb137-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">ar1y_e=</span>y<span class="sc">-</span>ar1y,<span class="at">ar1x_e=</span>x<span class="sc">-</span>ar1x,<span class="at">var1y_e=</span>y<span class="sc">-</span>var1y,<span class="at">var1x_e=</span>x<span class="sc">-</span>var1x)]</span>
-<span id="cb137-2"><a href="tutorial-6-vector-autoregressive-models.html#cb137-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-3"><a href="tutorial-6-vector-autoregressive-models.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate RMSFE for restructed and unrestricted models</span></span>
-<span id="cb137-4"><a href="tutorial-6-vector-autoregressive-models.html#cb137-4" aria-hidden="true" tabindex="-1"></a>rmsfe_yr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>ar1y_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb137-5"><a href="tutorial-6-vector-autoregressive-models.html#cb137-5" aria-hidden="true" tabindex="-1"></a>rmsfe_yu <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>var1y_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb137-6"><a href="tutorial-6-vector-autoregressive-models.html#cb137-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-7"><a href="tutorial-6-vector-autoregressive-models.html#cb137-7" aria-hidden="true" tabindex="-1"></a>rmsfe_xr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>ar1x_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb137-8"><a href="tutorial-6-vector-autoregressive-models.html#cb137-8" aria-hidden="true" tabindex="-1"></a>rmsfe_xu <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>var1x_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb137-9"><a href="tutorial-6-vector-autoregressive-models.html#cb137-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-10"><a href="tutorial-6-vector-autoregressive-models.html#cb137-10" aria-hidden="true" tabindex="-1"></a>rmsfe_yr</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="tutorial-6-vector-autoregressive-models.html#cb122-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">ar1y_e=</span>y<span class="sc">-</span>ar1y,<span class="at">ar1x_e=</span>x<span class="sc">-</span>ar1x,<span class="at">var1y_e=</span>y<span class="sc">-</span>var1y,<span class="at">var1x_e=</span>x<span class="sc">-</span>var1x)]</span>
+<span id="cb122-2"><a href="tutorial-6-vector-autoregressive-models.html#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="tutorial-6-vector-autoregressive-models.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate RMSFE for restructed and unrestricted models</span></span>
+<span id="cb122-4"><a href="tutorial-6-vector-autoregressive-models.html#cb122-4" aria-hidden="true" tabindex="-1"></a>rmsfe_yr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>ar1y_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb122-5"><a href="tutorial-6-vector-autoregressive-models.html#cb122-5" aria-hidden="true" tabindex="-1"></a>rmsfe_yu <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>var1y_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb122-6"><a href="tutorial-6-vector-autoregressive-models.html#cb122-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-7"><a href="tutorial-6-vector-autoregressive-models.html#cb122-7" aria-hidden="true" tabindex="-1"></a>rmsfe_xr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>ar1x_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb122-8"><a href="tutorial-6-vector-autoregressive-models.html#cb122-8" aria-hidden="true" tabindex="-1"></a>rmsfe_xu <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>var1x_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb122-9"><a href="tutorial-6-vector-autoregressive-models.html#cb122-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-10"><a href="tutorial-6-vector-autoregressive-models.html#cb122-10" aria-hidden="true" tabindex="-1"></a>rmsfe_yr</span></code></pre></div>
 <pre><code>## [1] 1.134867</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="tutorial-6-vector-autoregressive-models.html#cb139-1" aria-hidden="true" tabindex="-1"></a>rmsfe_yu</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="tutorial-6-vector-autoregressive-models.html#cb124-1" aria-hidden="true" tabindex="-1"></a>rmsfe_yu</span></code></pre></div>
 <pre><code>## [1] 1.104268</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="tutorial-6-vector-autoregressive-models.html#cb141-1" aria-hidden="true" tabindex="-1"></a>rmsfe_xr</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="tutorial-6-vector-autoregressive-models.html#cb126-1" aria-hidden="true" tabindex="-1"></a>rmsfe_xr</span></code></pre></div>
 <pre><code>## [1] 1.00908</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="tutorial-6-vector-autoregressive-models.html#cb143-1" aria-hidden="true" tabindex="-1"></a>rmsfe_xu</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="tutorial-6-vector-autoregressive-models.html#cb128-1" aria-hidden="true" tabindex="-1"></a>rmsfe_xu</span></code></pre></div>
 <pre><code>## [1] 1.011653</code></pre>
 
 </div>
@@ -463,7 +463,7 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 <a href="tutorial-7-dynamic-factor-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-06
+2022-08-08
  using 
 R version 4.1.2 (2021-11-01)
 </p>

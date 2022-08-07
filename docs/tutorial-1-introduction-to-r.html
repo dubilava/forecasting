@@ -187,7 +187,7 @@ div.csl-indent {
 <a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a id="active-page" href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management.html" id="toc-tutorial-2-data-management">Tutorial 2: Data Management</a>
+<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -206,7 +206,7 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="tutorial-1-introduction-to-r" class="section level1 unnumbered">
 <h1>Tutorial 1: Introduction to R</h1>
-<p>R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial–and–error (which has been my own time-tested routine for mastering R). To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.</p>
+<p>R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial–and–error (which has been my own time-tested routine for mastering R). To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.</p>
 <p>We will work in RStudio—the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will ‘find’ and connect with the former seamlessly). R is available from <a href="https://cran.r-project.org/" target="_blank">CRAN</a>, and RStudio is available from <a href="https://www.rstudio.com/" target="_blank">RStudio</a>.</p>
 <p>There are a number of ways in which we can work with data in R. To develop an intuition, let’s start off with matrices.</p>
 <p>Consider a sequence of observations:</p>
@@ -275,104 +275,51 @@ div.csl-indent {
 ## c1 -1.0000000  0  0.5000000
 ## c2  0.6666667  0 -0.1666667
 ## c3 -1.3333333  1  0.3333333</code></pre>
-<p>One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the <strong>ggplot2</strong> package. Notably, this package requires that the data are maintained in the <code>data.frame</code> or the <code>data.table</code> format (for the latter, you need to load the <strong>data.table</strong> package). Let’s create a data.table object and observe its few lines:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tutorial-1-introduction-to-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb23-2"><a href="tutorial-1-introduction-to-r.html#cb23-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">120</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span>
-<span id="cb23-3"><a href="tutorial-1-introduction-to-r.html#cb23-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.2+0.7</span><span class="sc">*</span>x<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">120</span>)</span>
-<span id="cb23-4"><a href="tutorial-1-introduction-to-r.html#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="tutorial-1-introduction-to-r.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb23-6"><a href="tutorial-1-introduction-to-r.html#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="tutorial-1-introduction-to-r.html#cb23-7" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">y=</span>y,<span class="at">x=</span>x)</span>
-<span id="cb23-8"><a href="tutorial-1-introduction-to-r.html#cb23-8" aria-hidden="true" tabindex="-1"></a>dt</span></code></pre></div>
-<pre><code>##               y          x
-##   1:  2.9733299 0.53101733
-##   2:  0.6817335 0.74424780
-##   3:  1.6917341 1.14570673
-##   4:  1.4994931 1.81641558
-##   5: -0.2609185 0.40336386
-##  ---                      
-## 116:  0.1835826 0.02615515
-## 117:  1.9894321 1.43113213
-## 118:  2.4197029 0.20636847
-## 119:  1.8521905 0.89256870
-## 120:  2.3040499 1.28020209</code></pre>
-<p>Now, let’s load <strong>ggplot2</strong> and generate a simple scatter plot:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tutorial-1-introduction-to-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb25-2"><a href="tutorial-1-introduction-to-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="tutorial-1-introduction-to-r.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb25-4"><a href="tutorial-1-introduction-to-r.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-29-1.png" width="624"></p>
-<p>We can augment this plot in a number of different ways. Here we change the point color to coral, add the fitted regression line to the plot, add labels to the figure, and apply a ‘classic’ background theme:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="tutorial-1-introduction-to-r.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb26-2"><a href="tutorial-1-introduction-to-r.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"coral"</span>)<span class="sc">+</span></span>
-<span id="cb26-3"><a href="tutorial-1-introduction-to-r.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">formula=</span>y<span class="sc">~</span>x,<span class="at">se=</span>F,<span class="at">color=</span><span class="st">"darkgray"</span>)<span class="sc">+</span></span>
-<span id="cb26-4"><a href="tutorial-1-introduction-to-r.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"A scatterplot with a fitted regression line"</span>, </span>
-<span id="cb26-5"><a href="tutorial-1-introduction-to-r.html#cb26-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Treatment Variable"</span>, </span>
-<span id="cb26-6"><a href="tutorial-1-introduction-to-r.html#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Outcome Variable"</span>, </span>
-<span id="cb26-7"><a href="tutorial-1-introduction-to-r.html#cb26-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Caption: in case if needed."</span>)<span class="sc">+</span></span>
-<span id="cb26-8"><a href="tutorial-1-introduction-to-r.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-30-1.png" width="624"></p>
-<p>As another example, let’s generate a histogram (of the dependent variable):</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tutorial-1-introduction-to-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>y))<span class="sc">+</span></span>
-<span id="cb27-2"><a href="tutorial-1-introduction-to-r.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">"white"</span>,<span class="at">fill=</span><span class="st">"coral"</span>,<span class="at">binwidth=</span>.<span class="dv">5</span>)<span class="sc">+</span></span>
-<span id="cb27-3"><a href="tutorial-1-introduction-to-r.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"A basic histogram"</span>)<span class="sc">+</span></span>
-<span id="cb27-4"><a href="tutorial-1-introduction-to-r.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-31-1.png" width="624"></p>
-<p>We typically apply a line plot to illustrate a time series (that are ordered by date). In what follows, we add a date column to our data frame and then plot the dependent variable in the chronological order:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="tutorial-1-introduction-to-r.html#cb28-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="fu">as.Date</span>(<span class="st">"2000-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
-<span id="cb28-2"><a href="tutorial-1-introduction-to-r.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="tutorial-1-introduction-to-r.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb28-4"><a href="tutorial-1-introduction-to-r.html#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color=</span><span class="st">"coral"</span>)<span class="sc">+</span></span>
-<span id="cb28-5"><a href="tutorial-1-introduction-to-r.html#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"A basic time series plot"</span>,  </span>
-<span id="cb28-6"><a href="tutorial-1-introduction-to-r.html#cb28-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Year"</span>, </span>
-<span id="cb28-7"><a href="tutorial-1-introduction-to-r.html#cb28-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Outcome Variable"</span>)<span class="sc">+</span></span>
-<span id="cb28-8"><a href="tutorial-1-introduction-to-r.html#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-32-1.png" width="624"></p>
 <p>To illustrate the OLS regression in R, we apply the previously generated <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> as independent and dependent variables. To begin, we obtain the least squares estimator “by hand” as follows:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tutorial-1-introduction-to-r.html#cb29-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>,x)</span>
-<span id="cb29-2"><a href="tutorial-1-introduction-to-r.html#cb29-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span>
-<span id="cb29-3"><a href="tutorial-1-introduction-to-r.html#cb29-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
-<pre><code>##        [,1]
-##   0.3577680
-## x 0.5781188</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tutorial-1-introduction-to-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>,x)</span>
+<span id="cb23-2"><a href="tutorial-1-introduction-to-r.html#cb23-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span>
+<span id="cb23-3"><a href="tutorial-1-introduction-to-r.html#cb23-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>##          [,1]
+##    0.54398368
+## x -0.01708796</code></pre>
 <p>This can be easily done using the <code>lm()</code> function:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tutorial-1-introduction-to-r.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
-<span id="cb31-2"><a href="tutorial-1-introduction-to-r.html#cb31-2" aria-hidden="true" tabindex="-1"></a>ols</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tutorial-1-introduction-to-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
+<span id="cb25-2"><a href="tutorial-1-introduction-to-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a>ols</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x)
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      0.3578       0.5781</code></pre>
+##     0.54398     -0.01709</code></pre>
 <p>We can apply the <code>summary()</code> function to see the complete set of regression results:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tutorial-1-introduction-to-r.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tutorial-1-introduction-to-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.9662 -0.5983 -0.1127  0.5639  2.3882 
+## -4.3649 -0.9688  0.0148  1.2708  3.3194 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   0.3578     0.1904   1.879 0.062717 .  
-## x             0.5781     0.1641   3.522 0.000609 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  0.543984   0.290250   1.874   0.0634 .
+## x           -0.017088   0.008302  -2.058   0.0418 *
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.9716 on 118 degrees of freedom
-## Multiple R-squared:  0.09514,    Adjusted R-squared:  0.08748 
-## F-statistic: 12.41 on 1 and 118 DF,  p-value: 0.0006091</code></pre>
+## Residual standard error: 1.582 on 118 degrees of freedom
+## Multiple R-squared:  0.03466,    Adjusted R-squared:  0.02648 
+## F-statistic: 4.236 on 1 and 118 DF,  p-value: 0.04177</code></pre>
 
 </div>
 <p style="text-align: center;">
 <a href="forecasting-using-r.html"><button class="btn btn-default">Previous</button></a>
-<a href="tutorial-2-data-management.html"><button class="btn btn-default">Next</button></a>
+<a href="tutorial-2-data-management-and-plotting.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-06
+2022-08-08
  using 
 R version 4.1.2 (2021-11-01)
 </p>
