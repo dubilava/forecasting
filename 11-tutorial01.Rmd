@@ -7,7 +7,7 @@ library(ggplot2)
 library(data.table)
 ```
 
-R is a programming language for data analysis and visualisation. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial--and--error (which has been my own time-tested routine for mastering R). To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. 
+R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial--and--error (which has been my own time-tested routine for mastering R). To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. 
 
 We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former seamlessly). R is available from [CRAN](https://cran.r-project.org/){target="_blank"}, and RStudio is available from [RStudio](https://www.rstudio.com/){target="_blank"}. 
 
@@ -73,59 +73,6 @@ We can invert a(n invertible) matrix using the `solve()` function:
 ```{r echo=TRUE}
 Di <- solve(D)
 Di
-```
-
-One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the **ggplot2** package. Notably, this package requires that the data are maintained in the `data.frame` or the `data.table` format (for the latter, you need to load the **data.table** package). Let's create a data.table object and observe its few lines:
-
-```{r echo=TRUE}
-set.seed(1)
-x <- runif(120,0,2)
-y <- 0.2+0.7*x+rnorm(120)
-
-library(data.table)
-
-dt <- data.table(y=y,x=x)
-dt
-```
-
-Now, let's load **ggplot2** and generate a simple scatter plot:
-```{r echo=TRUE, message=FALSE}
-library(ggplot2)
-
-ggplot(dt,aes(x=x,y=y))+
-  geom_point()
-```
-
-We can augment this plot in a number of different ways. Here we change the point color to coral, add the fitted regression line to the plot, add labels to the figure, and apply a 'classic' background theme:
-```{r echo=TRUE}
-ggplot(dt,aes(x=x,y=y))+
-  geom_point(color="coral")+
-  geom_smooth(method="lm",formula=y~x,se=F,color="darkgray")+
-  labs(title="A scatterplot with a fitted regression line", 
-       x="Treatment Variable", 
-       y="Outcome Variable", 
-       caption="Caption: in case if needed.")+
-  theme_classic()
-```
-
-As another example, let's generate a histogram (of the dependent variable):
-```{r echo=TRUE}
-ggplot(dt,aes(x=y))+
-  geom_histogram(color="white",fill="coral",binwidth=.5)+
-  labs(title="A basic histogram")+
-  theme_classic()
-```
-
-We typically apply a line plot to illustrate a time series (that are ordered by date). In what follows, we add a date column to our data frame and then plot the dependent variable in the chronological order:
-```{r echo=TRUE}
-dt$date <- seq(from=as.Date("2000-01-01"),by="month",along.with=y)
-
-ggplot(dt,aes(x=date,y=y))+
-  geom_line(color="coral")+
-  labs(title="A basic time series plot",  
-       x="Year", 
-       y="Outcome Variable")+
-  theme_classic()
 ```
 
 To illustrate the OLS regression in R, we apply the previously generated $x$ and $y$ as independent and dependent variables. To begin, we obtain the least squares estimator "by hand" as follows:

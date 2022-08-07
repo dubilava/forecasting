@@ -11,7 +11,7 @@ library(cowplot)
 
 A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster's choice of the loss function.
 
-Let $\hat{y}_{t+h|t}$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript $t+h|t$ is to indicate that the forecast is made in period $t$; or, more specifically, using information available in period $t$.] for period $t+h$ made in period $t$. This is our 'best guess' about the actual realization of the random variable in period $t+h$, $y_{t+h}$. The difference between the realization and the forecast of the random variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}$$
+Let $\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript $t+h|t$ is to indicate that the forecast is made in period $t$.] for period $t+h$ made in period $t$, that is, using using the available information at the time, $\Omega_t$. This is our 'best guess' about the actual realization of the random variable in period $t+h$, $y_{t+h}$. The difference between the realization and the forecast of the random variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}$$
 
 The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding the point forecast. 
 
@@ -21,37 +21,37 @@ There are three key sources of uncertainty that manifest into a forecast error. 
 
 Second, we don't know the true parameters of the model. Instead, using a subset of history (available to us) we estimate the parameters, which are prone to a sampling error due to *parameter uncertainty*. 
 
-Finally, even if we were to perfectly guess the true model, and even if we were to generate precise parameter estimates, our forecasts may still be inaccurate because of *information uncertainty* for all those factors that have never happened in the past, and only characterize the future. 
+Finally, whether or not we well approximate the true model, and whether or not we succeed in generating precise parameter estimates, our forecasts may still be inaccurate because of *information uncertainty* for all those factors that have never happened in the past, and only characterize the future. 
 
 We can present the foregoing decomposition of the forecast uncertainty, in terms of a forecast error, as follows:
 $$\begin{aligned}
-		e_{t+h} &= y_{t+h}-\hat{y}_{t+h}\;~~\text{(forecast uncertainty)}   \\
+		e_{t+h} &= y_{t+h}-\hat{y}_{t+h|t}\;~~\text{(forecast uncertainty)}   \\
 		& = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
-		& + \big[E(y_{t+h}|\Omega_{t}) - g(\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
-		& + \big[g(\Omega_{t};\theta)-\hat{y}_{t+h}\big]\;~~\text{(parameter uncertainty)}
+		& + \big[E(y_{t+h}|\Omega_{t}) - E(y_{t+h}|\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
+		& + \big[E(y_{t+h}|\Omega_{t};\theta)-E(y_{t+h}|\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
 		\end{aligned}$$
 		
-where $e_{t+h|t}$ is an error of a forecast made in period $t$ for horizon $h$, $y_{t+h}$ is the realization of an event in period $t+h$, and $\hat{y}_{t+h}$ is the forecast of the event, which is based on the information set, $\Omega_t$, at the time when the forecast is made using a forecaster's model of choice, $g(\cdot)$, that typically involves a set of parameters, $\theta$, which we don't know and need to estimate.
+where $E(y_{t+h}|\Omega_{t};\theta)$ indicates that the forecast is made using a parametric model, and $E(y_{t+h}|\Omega_{t};\hat{\theta})$ indicates that the parameters of the model are estimated. 
 
-Thus, as uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
+To the extent that uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
 
 
 ## Loss Function
 
-A loss function, $L(e_{t+h|t})$, can take many different forms, but is should satisfy the following properties:
+A loss function, $L(e_{t+h|t})$, can take many different forms so long as it satisfies the following properties:
 $$\begin{aligned}
 		& L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
 		& L(e_{t+h|t}) \geq 0,\;~~\forall\;e_{t+h|t} \neq 0 \\
 		& L(e_{t+h|t}^{(i)}) > L(e_{t+h|t}^{(j)}),\;~~\forall\;|e_{t+h|t}^{(i)}| > |e_{t+h|t}^{(j)}|
 		\end{aligned}$$
 
-Two commonly used symmetric loss functions are *absolute* and *quadratic* loss functions:
+Two commonly used symmetric^[There are also asymmetric loss functions, which are relevant in instances when it makes sense to 'penalize' the forecast error more so in one direction than another.] loss functions are *absolute* and *quadratic* loss functions:
 $$\begin{aligned}
 		& L{(e_{t+h|t})} = |e_{t+h|t}|\;~~\text{(absolute loss function)} \\
 		& L{(e_{t+h|t})} = (e_{t+h|t})^2\;~~\text{(quadratic loss function)}
 		\end{aligned}$$
 
-The quadratic loss function is popular, partly because we typically select models based on 'in-sample' quadratic loss (i.e. by minimizing the sum of squared residuals).
+The quadratic loss function is arguably the most popular loss function, partly because we already select models based on 'in-sample' quadratic loss (i.e. by minimizing the sum of squared residuals).
 
 
 ## Optimal Forecast
