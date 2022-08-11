@@ -5,16 +5,16 @@ library(ggplot2)
 library(data.table)
 ```
 
-In this tutorial, we will introduce several simple R functions, and will perform a basic forecasting exercise. For this tutorial we will only need to load the `data.table` and `ggplot2` libraries, for data management and plotting, respectively.
+In this tutorial, we will introduce several functions of the the `data.table` and `ggplot2` packages, which allow data management and plotting, respectively, in an efficient and aesthetically pleasing way. These two packages are not part of the base R, so we need to load them in the beginning of each session (for the very first time, we will need to download these packages from a repository).
 
 ```{r echo=TRUE, message=FALSE}
 library(data.table)
 library(ggplot2)
 ```
 
-One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the **ggplot2** package. Notably, this package requires that the data are maintained in the `data.frame` or the `data.table` format (i.e., if your data are stored as a matrix, you will need to convert it to one of the two aforementioned formats; the conversion is pretty much seamless).
+One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the `ggplot2` package. Notably, this package requires that the data are maintained in the `data.frame` or the `data.table` format (i.e., if your data are stored as a matrix, you will need to convert it to one of the two aforementioned formats; the conversion is pretty much seamless).
 
-Let's create a data.table object and observe its few lines:
+Let's create a `data.table` object and observe its few lines:
 ```{r echo=TRUE}
 set.seed(1)
 x <- runif(120,0,2)
@@ -24,13 +24,13 @@ dt <- data.table(y=y,x=x)
 dt
 ```
 
-So, we have generated^[Notice that prior to sampling we set seed to some value (to `1` in this instance). We do so to ensure that we can exactly replicate the sample in the future.] a dataset that contains two variables (`x` which is a realization of the uniformly distributed random variable, and `y` which consists of a deterministic component, function of `x`, and of an idiosyncratic component), stored in two columns, each of length 120. To get the feeling about any relationship between these two variables, we can generate a simple scatterplot.
+So, we have generated^[Notice that prior to sampling we set seed to some value (to `1` in this instance). We do so to ensure that we can exactly replicate the sample in the future.] a dataset that contains two variables (`x` which is a realization of the uniformly distributed random variable, and `y` which consists of a deterministic component, function of `x`, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.
 ```{r echo=TRUE, message=FALSE}
 ggplot(dt,aes(x=x,y=y))+
   geom_point()
 ```
 
-We can augment this plot in a number of different ways. Here we change the point color to *coral*, add the fitted regression line to the plot, add labels to the figure, and apply a 'classic' background theme:
+We can augment this plot in a number of different ways. Here we change the point color, add the fitted regression line to the plot, add labels to the figure, and change the background theme:
 ```{r echo=TRUE}
 ggplot(dt,aes(x=x,y=y))+
   geom_point(color="coral")+
@@ -50,7 +50,7 @@ ggplot(dt,aes(x=y))+
   theme_classic()
 ```
 
-It is customary to illustrate a time series via a line plot. In what follows, we add a date column to our dataset and then plot `y` in the chronological order:
+It is customary to illustrate a time series via a line plot. So, we add a date column to our dataset, and then plot `y` in the chronological order:
 ```{r echo=TRUE}
 dt$date <- seq(from=as.Date("2000-01-01"),by="month",along.with=y)
 

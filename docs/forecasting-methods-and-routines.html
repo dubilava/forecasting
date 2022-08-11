@@ -219,8 +219,8 @@ div.csl-indent {
 <span class="header-section-number">3.1</span> Point Forecast and Forecast Error<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('point-forecast-and-forecast-error')" onmouseout="reset_tooltip('point-forecast-and-forecast-error-tooltip')"><span class="tooltiptext" id="point-forecast-and-forecast-error-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster’s choice of the loss function.</p>
-<p>Let <span class="math inline">\(\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> be a point forecast<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> We use ‘hat’ to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript <span class="math inline">\(t+h|t\)</span> is to indicate that the forecast is made in period <span class="math inline">\(t\)</span>.</span> for period <span class="math inline">\(t+h\)</span> made in period <span class="math inline">\(t\)</span>, that is, using using the available information at the time, <span class="math inline">\(\Omega_t\)</span>. This is our ‘best guess’ about the actual realization of the random variable in period <span class="math inline">\(t+h\)</span>, <span class="math inline">\(y_{t+h}\)</span>. The difference between the realization and the forecast of the random variable is the forecast error. That is, <span class="math display">\[e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}\]</span></p>
-<p>The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding the point forecast.</p>
+<p>Let <span class="math inline">\(\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> be a point forecast<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> We use ‘hat’ to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript <span class="math inline">\(t+h|t\)</span> indicates that the forecast is made using information set in period <span class="math inline">\(t\)</span>.</span> for period <span class="math inline">\(t+h\)</span> made in period <span class="math inline">\(t\)</span>, that is, using using the available information at the time, <span class="math inline">\(\Omega_t\)</span>. This is our ‘best guess’ about the actual realization of the random variable in period <span class="math inline">\(t+h\)</span>, <span class="math inline">\(y_{t+h}\)</span>. The difference between the realization and the forecast of the random variable is the forecast error. That is, <span class="math display">\[e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}\]</span></p>
+<p>The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding point forecast.</p>
 </div>
 <div id="forecast-uncertainty" class="section level2" number="3.2">
 <h2>
@@ -229,21 +229,20 @@ div.csl-indent {
 <p>There are three key sources of uncertainty that manifest into a forecast error. First, we never know the true model, so we make a guess about the most suitable model for time series analysis, leading to <em>model uncertainty</em>.</p>
 <p>Second, we don’t know the true parameters of the model. Instead, using a subset of history (available to us) we estimate the parameters, which are prone to a sampling error due to <em>parameter uncertainty</em>.</p>
 <p>Finally, whether or not we well approximate the true model, and whether or not we succeed in generating precise parameter estimates, our forecasts may still be inaccurate because of <em>information uncertainty</em> for all those factors that have never happened in the past, and only characterize the future.</p>
-<p>We can present the foregoing decomposition of the forecast uncertainty, in terms of a forecast error, as follows:
+<p>To illustrate the foregoing, we can decompose forecast error into its three components:
 <span class="math display">\[\begin{aligned}
-        e_{t+h} &amp;= y_{t+h}-\hat{y}_{t+h|t}\;~~\text{(forecast uncertainty)}   \\
-        &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
+        e_{t+h} &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
         &amp; + \big[E(y_{t+h}|\Omega_{t}) - E(y_{t+h}|\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
         &amp; + \big[E(y_{t+h}|\Omega_{t};\theta)-E(y_{t+h}|\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
         \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(E(y_{t+h}|\Omega_{t};\theta)\)</span> indicates that the forecast is made using a parametric model, and <span class="math inline">\(E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> indicates that the parameters of the model are estimated.</p>
-<p>To the extent that uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the ‘cost’ associated with the forecast errors. This is achieved by minimizing the expected loss function.</p>
+<p>To the extent that at least the information uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The aim is to minimize the ‘cost’ associated with these errors. This is achieved by minimizing the expected loss function.</p>
 </div>
 <div id="loss-function" class="section level2" number="3.3">
 <h2>
 <span class="header-section-number">3.3</span> Loss Function<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('loss-function')" onmouseout="reset_tooltip('loss-function-tooltip')"><span class="tooltiptext" id="loss-function-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>A loss function, <span class="math inline">\(L(e_{t+h|t})\)</span>, can take many different forms so long as it satisfies the following properties:
+<p>A loss function, <span class="math inline">\(L(e_{t+h|t})\)</span>, may take many different forms so long as it satisfies the following properties:
 <span class="math display">\[\begin{aligned}
         &amp; L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
         &amp; L(e_{t+h|t}) \geq 0,\;~~\forall\;e_{t+h|t} \neq 0 \\
@@ -261,17 +260,15 @@ div.csl-indent {
 <span class="header-section-number">3.4</span> Optimal Forecast<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('optimal-forecast')" onmouseout="reset_tooltip('optimal-forecast-tooltip')"><span class="tooltiptext" id="optimal-forecast-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Optimal forecast is the forecast that minimizes the expected loss:
-<span class="math display">\[\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]\]</span>
-where the expected loss is given by:
-<span class="math display">\[E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]=\int L\left(y_{t+h}-\hat{y}_{t+h|t}\right) f(y_{t+h}|\Omega_t)dy\]</span></p>
-<p>We can assume that the conditional density is a normal density with mean <span class="math inline">\(\mu_{t+h} \equiv E(y_{t+h})\)</span>, and variance <span class="math inline">\(\sigma_{t+h}^2 \equiv Var(y_{t+h})\)</span>.</p>
-<p>Under the assumption of the quadratic loss function:
+<span class="math display">\[\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right].\]</span></p>
+<p>Assuming the quadratic loss function:
 <span class="math display">\[\begin{aligned}
         E\left[L(e_{t+h|t})\right] &amp; = E(e_{t+h|t}^2) = E(y_{t+h} - \hat{y}_{t+h|t})^2 \\
         &amp; = E(y_{t+h}^2)-2E(y_{t+h})\hat{y}_{t+h|t} + \hat{y}_{t+h|t}^2
         \end{aligned}\]</span></p>
-<p>By solving the optimization problem it follows that: <span class="math display">\[\hat{y}_{t+h|t} = E(y_{t+h}) \equiv \mu_{t+h}\]</span></p>
-<p>Thus, the optimal point forecast under the quadratic loss is the <em>mean</em> (for reference, the optimal point forecast under absolute loss is the <em>median</em>).</p>
+<p>By solving the optimization problem it follows that: <span class="math display">\[\hat{y}_{t+h|t} = E(y_{t+h})\]</span></p>
+<p>If we assume that the conditional density of a forecast is a normal density, then: <span class="math inline">\(E(y_{t+h}) = \mu_{t+h}\)</span>.</p>
+<p>Thus, the optimal point forecast under the quadratic loss is the <em>mean</em> of the forecast distribution (for reference, the optimal point forecast under the absolute loss is the <em>median</em> of the distribution).</p>
 </div>
 <div id="pseudo-forecasting-routine" class="section level2" number="3.5">
 <h2>
@@ -286,22 +283,23 @@ where the expected loss is given by:
 <li>The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.</li>
 <li>The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.</li>
 </ul>
-<p>The following graph illustrates the distinctive features of these three routines:</p>
-<p><img src="forecasting_files/figure-html/routines-1.png" width="624"></p>
+<p>The following graph illustrates the distinctive features of these three routines:
+<img src="forecasting_files/figure-html/routines-1.png" width="624"></p>
+<p>The forecasts are made in period 13 for periods 14 and onward. The first estimation window of the pseudo-forecasting routine covers periods one–through–ten. In this illustration, shaded segments illustrate the range of the data used for estimation of model parameters.</p>
 </div>
 <div id="forecast-assessment" class="section level2" number="3.6">
 <h2>
 <span class="header-section-number">3.6</span> Forecast Assessment<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecast-assessment')" onmouseout="reset_tooltip('forecast-assessment-tooltip')"><span class="tooltiptext" id="forecast-assessment-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>To evaluate forecasts of a time series, <span class="math inline">\(\{y_t\}\)</span>, with a total of <span class="math inline">\(T\)</span> observations, we divide the sample into two parts, the in-sample set with a total of <span class="math inline">\(R\)</span> observations, such that <span class="math inline">\(R &lt; T\)</span> (typically, <span class="math inline">\(R \approx 0.75T\)</span>), and the out-of-sample set.</p>
+<p>To assess the accuracy of a forecast method, we compare forecast errors from two (or more) methods to each other. Consider a time series, <span class="math inline">\(\{y_t\}\)</span>, with a total of <span class="math inline">\(T\)</span> observations. To generate genuine forecasts, we decide on the size of the in-sample set consisting of <span class="math inline">\(R\)</span> observations so that <span class="math inline">\(R &lt; T\)</span> (typically, <span class="math inline">\(R \approx 0.75T\)</span>), and the out-of-sample set consisting of <span class="math inline">\(P\)</span> observations, where <span class="math inline">\(P=T-R-h+1\)</span> and where <span class="math inline">\(h\)</span> is the forecast horizon.</p>
 <p>For example, if we are interested in one-step-ahead forecast assessment, this way we will produce a sequence of forecasts: <span class="math inline">\(\{y_{R+1|R},y_{R+2|{R+1}},\ldots,y_{T|{T-1}}\}\)</span> for <span class="math inline">\(\{Y_{R+1},Y_{R+2},\ldots,Y_{T}\}\)</span>.</p>
 <p>Forecast errors, <span class="math inline">\(e_{R+j} = y_{R+j} - y_{R+j|{R+j-1}}\)</span>, then can be computed for <span class="math inline">\(j = 1,\ldots,T-R\)</span>.</p>
-<p>The most commonly applied accuracy measures are the mean absolute forecast error (MAFE) and the root mean squared forecast error (RMSFE):
+<p>Two most commonly applied measures of forecast accuracy are the <em>mean absolute forecast error</em> (MAFE) and the <em>root mean squared forecast error</em> (RMSFE):
 <span class="math display">\[\begin{aligned}
 \text{MAFE}  = &amp; \frac{1}{P}\sum_{i=1}^{P}|e_i|\\
 \text{RMSFE} = &amp; \sqrt{\frac{1}{P}\sum_{i=1}^{P}e_i^2}
 \end{aligned}\]</span>
-where <span class="math inline">\(P\)</span> is the total number of out-of-sample forecasts. The lower is the accuracy measure (of choice), the better a given model performs in generating accurate forecasts. As noted earlier, ‘better’ does not mean ‘without errors’.</p>
+The lower is the measure of accuracy associated with a given method, the better this method performs in generating accurate forecasts. As noted earlier, ‘better’ does not mean ‘without errors’.</p>
 <p>Forecast errors of a ‘good’ forecasting method will have the following properties:</p>
 <ul>
 <li>zero mean; otherwise, the forecasts are biased.</li>
@@ -309,6 +307,7 @@ where <span class="math inline">\(P\)</span> is the total number of out-of-sampl
 <li>no serial correlation among one-step-ahead forecast errors. Note that <span class="math inline">\(k\)</span>-step-ahead forecasts, for <span class="math inline">\(k&gt;1\)</span>, can be, and usually are, serially correlated.</li>
 </ul>
 <p>Any forecasting method that does not satisfy these properties has a potential to be improved.</p>
+<p>The aforementioned three desired properties of forecast errors are, in effect, hypotheses that can be tested. This can be done in a basic regression setting.</p>
 <div id="unbiasedness" class="section level3" number="3.6.1">
 <h3>
 <span class="header-section-number">3.6.1</span> Unbiasedness<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('unbiasedness')" onmouseout="reset_tooltip('unbiasedness-tooltip')"><span class="tooltiptext" id="unbiasedness-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -336,7 +335,7 @@ where <span class="math inline">\(R\)</span> is the estimation window size, <spa
 <a href="trends-and-seasonality.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-08
+2022-08-12
  using 
 R version 4.1.2 (2021-11-01)
 </p>

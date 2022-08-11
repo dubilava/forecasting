@@ -237,6 +237,7 @@ div.csl-indent {
 ## [1,]    1    3
 ## [2,]    0    2
 ## [3,]    4    6</code></pre>
+<p>Note that we included the earlier generated sequence of six values, which we assigned to <code>a</code>, as the elements of this matrix.</p>
 <p>We can add column names and row names to this matrix:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="tutorial-1-introduction-to-r.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(B) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"c1"</span>,<span class="st">"c2"</span>)</span>
 <span id="cb11-2"><a href="tutorial-1-introduction-to-r.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(B) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"r1"</span>,<span class="st">"r2"</span>,<span class="st">"r3"</span>)</span>
@@ -275,14 +276,20 @@ div.csl-indent {
 ## c1 -1.0000000  0  0.5000000
 ## c2  0.6666667  0 -0.1666667
 ## c3 -1.3333333  1  0.3333333</code></pre>
-<p>To illustrate the OLS regression in R, we apply the previously generated <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> as independent and dependent variables. To begin, we obtain the least squares estimator “by hand” as follows:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tutorial-1-introduction-to-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>,x)</span>
-<span id="cb23-2"><a href="tutorial-1-introduction-to-r.html#cb23-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span>
-<span id="cb23-3"><a href="tutorial-1-introduction-to-r.html#cb23-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
-<pre><code>##          [,1]
-##    0.54398368
-## x -0.01708796</code></pre>
-<p>This can be easily done using the <code>lm()</code> function:</p>
+<p>By now, we have covered enough ground to obtain the least squares estimator. For that, we will generate vectors of dependent and independent variables, and then estimate the vector of parameters. Specifically, we will generate a sequence of 200 binary variables, which will serve as our independent variable <code>x</code>, and then we will construct the dependent variable <code>y</code> using the following formula: <span class="math inline">\(y=2+0.5x+e\)</span>, where <code>e</code> is a sequence of 200 standard normal random variables.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tutorial-1-introduction-to-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb23-2"><a href="tutorial-1-introduction-to-r.html#cb23-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">200</span>,<span class="at">replace=</span>T)</span>
+<span id="cb23-3"><a href="tutorial-1-introduction-to-r.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb23-4"><a href="tutorial-1-introduction-to-r.html#cb23-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>)</span>
+<span id="cb23-5"><a href="tutorial-1-introduction-to-r.html#cb23-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span><span class="fl">+0.5</span><span class="sc">*</span>x<span class="sc">+</span>e</span>
+<span id="cb23-6"><a href="tutorial-1-introduction-to-r.html#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="tutorial-1-introduction-to-r.html#cb23-7" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>,x)</span>
+<span id="cb23-8"><a href="tutorial-1-introduction-to-r.html#cb23-8" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span>
+<span id="cb23-9"><a href="tutorial-1-introduction-to-r.html#cb23-9" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>##        [,1]
+##   1.8699318
+## x 0.7639315</code></pre>
+<p>The foregoing “do it by hand” exercise can be easily replicated using the <code>lm()</code> function:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tutorial-1-introduction-to-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
 <span id="cb25-2"><a href="tutorial-1-introduction-to-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a>ols</span></code></pre></div>
 <pre><code>## 
@@ -291,7 +298,7 @@ div.csl-indent {
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##     0.54398     -0.01709</code></pre>
+##      1.8699       0.7639</code></pre>
 <p>We can apply the <code>summary()</code> function to see the complete set of regression results:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tutorial-1-introduction-to-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols)</span></code></pre></div>
 <pre><code>## 
@@ -299,19 +306,19 @@ div.csl-indent {
 ## lm(formula = y ~ x)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.3649 -0.9688  0.0148  1.2708  3.3194 
+##      Min       1Q   Median       3Q      Max 
+## -2.44493 -0.77746 -0.06555  0.80647  2.22089 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)  0.543984   0.290250   1.874   0.0634 .
-## x           -0.017088   0.008302  -2.058   0.0418 *
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.8699     0.1058  17.674  &lt; 2e-16 ***
+## x             0.7639     0.1511   5.054  9.8e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.582 on 118 degrees of freedom
-## Multiple R-squared:  0.03466,    Adjusted R-squared:  0.02648 
-## F-statistic: 4.236 on 1 and 118 DF,  p-value: 0.04177</code></pre>
+## Residual standard error: 1.069 on 198 degrees of freedom
+## Multiple R-squared:  0.1143, Adjusted R-squared:  0.1098 
+## F-statistic: 25.55 on 1 and 198 DF,  p-value: 9.8e-07</code></pre>
 
 </div>
 <p style="text-align: center;">
@@ -319,7 +326,7 @@ div.csl-indent {
 <a href="tutorial-2-data-management-and-plotting.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-08
+2022-08-12
  using 
 R version 4.1.2 (2021-11-01)
 </p>

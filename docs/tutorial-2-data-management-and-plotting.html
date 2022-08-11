@@ -206,11 +206,11 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="tutorial-2-data-management-and-plotting" class="section level1 unnumbered">
 <h1>Tutorial 2: Data Management and Plotting</h1>
-<p>In this tutorial, we will introduce several simple R functions, and will perform a basic forecasting exercise. For this tutorial we will only need to load the <code>data.table</code> and <code>ggplot2</code> libraries, for data management and plotting, respectively.</p>
+<p>In this tutorial, we will introduce several functions of the the <code>data.table</code> and <code>ggplot2</code> packages, which allow data management and plotting, respectively, in an efficient and aesthetically pleasing way. These two packages are not part of the base R, so we need to load them in the beginning of each session (for the very first time, we will need to download these packages from a repository).</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tutorial-2-data-management-and-plotting.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb29-2"><a href="tutorial-2-data-management-and-plotting.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
-<p>One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the <strong>ggplot2</strong> package. Notably, this package requires that the data are maintained in the <code>data.frame</code> or the <code>data.table</code> format (i.e., if your data are stored as a matrix, you will need to convert it to one of the two aforementioned formats; the conversion is pretty much seamless).</p>
-<p>Let’s create a data.table object and observe its few lines:</p>
+<p>One of the comparative advantages of R is in its graphing aesthetics. Currently, the best graphs are plotted via the <code>ggplot2</code> package. Notably, this package requires that the data are maintained in the <code>data.frame</code> or the <code>data.table</code> format (i.e., if your data are stored as a matrix, you will need to convert it to one of the two aforementioned formats; the conversion is pretty much seamless).</p>
+<p>Let’s create a <code>data.table</code> object and observe its few lines:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="tutorial-2-data-management-and-plotting.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb30-2"><a href="tutorial-2-data-management-and-plotting.html#cb30-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">120</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span>
 <span id="cb30-3"><a href="tutorial-2-data-management-and-plotting.html#cb30-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.2+0.7</span><span class="sc">*</span>x<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">120</span>)</span>
@@ -229,11 +229,11 @@ div.csl-indent {
 ## 118:  2.4197029 0.20636847
 ## 119:  1.8521905 0.89256870
 ## 120:  2.3040499 1.28020209</code></pre>
-<p>So, we have generated<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.</span> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get the feeling about any relationship between these two variables, we can generate a simple scatterplot.</p>
+<p>So, we have generated<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.</span> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tutorial-2-data-management-and-plotting.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb32-2"><a href="tutorial-2-data-management-and-plotting.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-34-1.png" width="624"></p>
-<p>We can augment this plot in a number of different ways. Here we change the point color to <em>coral</em>, add the fitted regression line to the plot, add labels to the figure, and apply a ‘classic’ background theme:</p>
+<p>We can augment this plot in a number of different ways. Here we change the point color, add the fitted regression line to the plot, add labels to the figure, and change the background theme:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tutorial-2-data-management-and-plotting.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb33-2"><a href="tutorial-2-data-management-and-plotting.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"coral"</span>)<span class="sc">+</span></span>
 <span id="cb33-3"><a href="tutorial-2-data-management-and-plotting.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">formula=</span>y<span class="sc">~</span>x,<span class="at">se=</span>F,<span class="at">color=</span><span class="st">"darkgray"</span>)<span class="sc">+</span></span>
@@ -249,7 +249,7 @@ div.csl-indent {
 <span id="cb34-3"><a href="tutorial-2-data-management-and-plotting.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"A basic histogram"</span>)<span class="sc">+</span></span>
 <span id="cb34-4"><a href="tutorial-2-data-management-and-plotting.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-36-1.png" width="624"></p>
-<p>It is customary to illustrate a time series via a line plot. In what follows, we add a date column to our dataset and then plot <code>y</code> in the chronological order:</p>
+<p>It is customary to illustrate a time series via a line plot. So, we add a date column to our dataset, and then plot <code>y</code> in the chronological order:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tutorial-2-data-management-and-plotting.html#cb35-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="fu">as.Date</span>(<span class="st">"2000-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
 <span id="cb35-2"><a href="tutorial-2-data-management-and-plotting.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="tutorial-2-data-management-and-plotting.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
@@ -319,7 +319,7 @@ div.csl-indent {
 <a href="tutorial-3-forecasting-methods-and-routines.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-08
+2022-08-12
  using 
 R version 4.1.2 (2021-11-01)
 </p>

@@ -11,9 +11,9 @@ library(cowplot)
 
 A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster's choice of the loss function.
 
-Let $\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript $t+h|t$ is to indicate that the forecast is made in period $t$.] for period $t+h$ made in period $t$, that is, using using the available information at the time, $\Omega_t$. This is our 'best guess' about the actual realization of the random variable in period $t+h$, $y_{t+h}$. The difference between the realization and the forecast of the random variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}$$
+Let $\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript $t+h|t$ indicates that the forecast is made using information set in period $t$.] for period $t+h$ made in period $t$, that is, using using the available information at the time, $\Omega_t$. This is our 'best guess' about the actual realization of the random variable in period $t+h$, $y_{t+h}$. The difference between the realization and the forecast of the random variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}$$
 
-The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding the point forecast. 
+The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding point forecast. 
 
 ## Forecast Uncertainty
 
@@ -23,22 +23,21 @@ Second, we don't know the true parameters of the model. Instead, using a subset 
 
 Finally, whether or not we well approximate the true model, and whether or not we succeed in generating precise parameter estimates, our forecasts may still be inaccurate because of *information uncertainty* for all those factors that have never happened in the past, and only characterize the future. 
 
-We can present the foregoing decomposition of the forecast uncertainty, in terms of a forecast error, as follows:
+To illustrate the foregoing, we can decompose forecast error into its three components:
 $$\begin{aligned}
-		e_{t+h} &= y_{t+h}-\hat{y}_{t+h|t}\;~~\text{(forecast uncertainty)}   \\
-		& = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
+		e_{t+h} & = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
 		& + \big[E(y_{t+h}|\Omega_{t}) - E(y_{t+h}|\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
 		& + \big[E(y_{t+h}|\Omega_{t};\theta)-E(y_{t+h}|\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
 		\end{aligned}$$
 		
 where $E(y_{t+h}|\Omega_{t};\theta)$ indicates that the forecast is made using a parametric model, and $E(y_{t+h}|\Omega_{t};\hat{\theta})$ indicates that the parameters of the model are estimated. 
 
-To the extent that uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The goal of the forecaster is to minimize the 'cost' associated with the forecast errors. This is achieved by minimizing the expected loss function.
+To the extent that at least the information uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The aim is to minimize the 'cost' associated with these errors. This is achieved by minimizing the expected loss function.
 
 
 ## Loss Function
 
-A loss function, $L(e_{t+h|t})$, can take many different forms so long as it satisfies the following properties:
+A loss function, $L(e_{t+h|t})$, may take many different forms so long as it satisfies the following properties:
 $$\begin{aligned}
 		& L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
 		& L(e_{t+h|t}) \geq 0,\;~~\forall\;e_{t+h|t} \neq 0 \\
@@ -57,21 +56,20 @@ The quadratic loss function is arguably the most popular loss function, partly b
 ## Optimal Forecast
 
 Optimal forecast is the forecast that minimizes the expected loss:
-		$$\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]$$
-		where the expected loss is given by:
-		$$E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right]=\int L\left(y_{t+h}-\hat{y}_{t+h|t}\right) f(y_{t+h}|\Omega_t)dy$$
+		$$\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right].$$
 
-We can assume that the conditional density is a normal density with mean $\mu_{t+h} \equiv E(y_{t+h})$, and variance $\sigma_{t+h}^2 \equiv Var(y_{t+h})$.
 
-Under the assumption of the quadratic loss function:
+Assuming the quadratic loss function:
 $$\begin{aligned}
 		E\left[L(e_{t+h|t})\right] & = E(e_{t+h|t}^2) = E(y_{t+h} - \hat{y}_{t+h|t})^2 \\
 		& = E(y_{t+h}^2)-2E(y_{t+h})\hat{y}_{t+h|t} + \hat{y}_{t+h|t}^2
 		\end{aligned}$$
 
-By solving the optimization problem it follows that: $$\hat{y}_{t+h|t} = E(y_{t+h}) \equiv \mu_{t+h}$$
+By solving the optimization problem it follows that: $$\hat{y}_{t+h|t} = E(y_{t+h})$$
 
-Thus, the optimal point forecast under the quadratic loss is the *mean* (for reference, the optimal point forecast under absolute loss is the *median*).
+If we assume that the conditional density of a forecast is a normal density, then: $E(y_{t+h}) = \mu_{t+h}$.
+
+Thus, the optimal point forecast under the quadratic loss is the *mean* of the forecast distribution (for reference, the optimal point forecast under the absolute loss is the *median* of the distribution).
 
 
 ## Pseudo-Forecasting Routine
@@ -89,8 +87,7 @@ There are different forecasting schemes for updating the information set in the 
 - The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.
 
 The following graph illustrates the distinctive features of these three routines: 
-
-```{r, routines, echo=FALSE, message=FALSE}
+```{r, routines, echo=FALSE, message=FALSE, fig.height=6.5}
 n <- 20
 set.seed(1)
 y <- rnorm(n,0,.5)
@@ -116,27 +113,27 @@ i <- round(mean(c(1,P)))
   y_lg <- melt(y_dt[,.(x,y,recursive,rolling,fixed)],id.vars="x")
   
   gg1 <- ggplot(melt(y_dt[,.(x,y,recursive)],id.vars="x"),aes(x=x,y=value,color=variable,linetype=variable))+
-    annotate("rect",xmin=1,xmax=R-1+i,ymin=-Inf,ymax=Inf,fill="indianred",color=NA,alpha=.2)+
+    annotate("rect",xmin=1,xmax=R-1+i,ymin=-Inf,ymax=Inf,fill="coral",color=NA,alpha=.2)+
     geom_line(size=.8,na.rm=T)+
-    scale_color_manual(values=c("gray50","indianred"))+
+    scale_color_manual(values=c("gray50","coral"))+
     scale_linetype_manual(values=c(1,5))+
     labs(title="recursive",x="t",y=expression(y[t]))+
     theme_classic()+
     theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title = element_text(size=12),axis.text = element_text(size=10))
   
   gg2 <- ggplot(melt(y_dt[,.(x,y,rolling)],id.vars="x"),aes(x=x,y=value,color=variable,linetype=variable))+
-    annotate("rect",xmin=i,xmax=R-1+i,ymin=-Inf,ymax=Inf,fill="steelblue",color=NA,alpha=.2)+
+    annotate("rect",xmin=i,xmax=R-1+i,ymin=-Inf,ymax=Inf,fill="coral",color=NA,alpha=.2)+
     geom_line(size=.8,na.rm=T)+
-    scale_color_manual(values=c("gray50","steelblue"))+
+    scale_color_manual(values=c("gray50","coral"))+
     scale_linetype_manual(values=c(1,5))+
     labs(title="rolling",x="t",y=expression(y[t]))+
     theme_classic()+
     theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title = element_text(size=12),axis.text = element_text(size=10))
   
   gg3 <- ggplot(melt(y_dt[,.(x,y,fixed)],id.vars="x"),aes(x=x,y=value,color=variable,linetype=variable))+
-    annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="goldenrod",color=NA,alpha=.2)+
+    annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="coral",color=NA,alpha=.2)+
     geom_line(size=.8,na.rm=T)+
-    scale_color_manual(values=c("gray50","goldenrod"))+
+    scale_color_manual(values=c("gray50","coral"))+
     scale_linetype_manual(values=c(1,5))+
     labs(title="fixed",x="t",y=expression(y[t]))+
     theme_classic()+
@@ -146,21 +143,23 @@ i <- round(mean(c(1,P)))
 
 ```
 
+The forecasts are made in period 13 for periods 14 and onward. The first estimation window of the pseudo-forecasting routine covers periods one--through--ten. In this illustration, shaded segments illustrate the range of the data used for estimation of model parameters. 
+
 
 ## Forecast Assessment
 
-To evaluate forecasts of a time series, $\{y_t\}$, with a total of $T$ observations, we divide the sample into two parts, the in-sample set with a total of $R$ observations, such that $R < T$ (typically, $R \approx 0.75T$), and the out-of-sample set. 
+To assess the accuracy of a forecast method, we compare forecast errors from two (or more) methods to each other. Consider a time series, $\{y_t\}$, with a total of $T$ observations. To generate genuine forecasts, we decide on the size of the in-sample set consisting of $R$ observations so that $R < T$ (typically, $R \approx 0.75T$), and the out-of-sample set consisting of $P$ observations, where $P=T-R-h+1$ and where $h$ is the forecast horizon. 
 
 For example, if we are interested in one-step-ahead forecast assessment, this way we will produce a sequence of forecasts: $\{y_{R+1|R},y_{R+2|{R+1}},\ldots,y_{T|{T-1}}\}$ for $\{Y_{R+1},Y_{R+2},\ldots,Y_{T}\}$.
 
 Forecast errors, $e_{R+j} = y_{R+j} - y_{R+j|{R+j-1}}$, then can be computed for $j = 1,\ldots,T-R$.
 
-The most commonly applied accuracy measures are the mean absolute forecast error (MAFE) and the root mean squared forecast error (RMSFE):
+Two most commonly applied measures of forecast accuracy are the *mean absolute forecast error* (MAFE) and the *root mean squared forecast error* (RMSFE):
 $$\begin{aligned}
 \text{MAFE}  = & \frac{1}{P}\sum_{i=1}^{P}|e_i|\\
 \text{RMSFE} = & \sqrt{\frac{1}{P}\sum_{i=1}^{P}e_i^2}
 \end{aligned}$$
-where $P$ is the total number of out-of-sample forecasts. The lower is the accuracy measure (of choice), the better a given model performs in generating accurate forecasts. As noted earlier, 'better' does not mean 'without errors'. 
+The lower is the measure of accuracy associated with a given method, the better this method performs in generating accurate forecasts. As noted earlier, 'better' does not mean 'without errors'. 
 
 Forecast errors of a 'good' forecasting method will have the following properties:
 
@@ -169,6 +168,8 @@ Forecast errors of a 'good' forecasting method will have the following propertie
 - no serial correlation among one-step-ahead forecast errors. Note that $k$-step-ahead forecasts, for $k>1$, can be, and usually are, serially correlated.
 
 Any forecasting method that does not satisfy these properties has a potential to be improved. 
+
+The aforementioned three desired properties of forecast errors are, in effect, hypotheses that can be tested. This can be done in a basic regression setting.
 
 ### Unbiasedness
 

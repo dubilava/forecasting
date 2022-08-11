@@ -37,6 +37,7 @@ We can create any $n \times k$ matrix, using the `matrix()` function. For exampl
 B <- matrix(a,nrow=3,ncol=2)
 B
 ```
+Note that we included the earlier generated sequence of six values, which we assigned to `a`, as the elements of this matrix. 
 
 We can add column names and row names to this matrix:
 ```{r echo=TRUE}
@@ -75,21 +76,27 @@ Di <- solve(D)
 Di
 ```
 
-To illustrate the OLS regression in R, we apply the previously generated $x$ and $y$ as independent and dependent variables. To begin, we obtain the least squares estimator "by hand" as follows:
+By now, we have covered enough ground to obtain the least squares estimator. For that, we will generate vectors of dependent and independent variables, and then estimate the vector of parameters. Specifically, we will generate a sequence of 200 binary variables, which will serve as our independent variable `x`, and then we will construct the dependent variable `y` using the following formula: $y=2+0.5x+e$, where `e` is a sequence of 200 standard normal random variables.
 ```{r echo=TRUE}
+set.seed(1)
+x <- sample(c(0,1),200,replace=T)
+set.seed(2)
+e <- rnorm(200)
+y <- 2+0.5*x+e
+
 X <- cbind(1,x)
 b <- solve(t(X)%*%X)%*%t(X)%*%y
 b
 ```
 
-This can be easily done using the `lm()` function:
-```{r echo=TRUE}
+The foregoing "do it by hand" exercise can be easily replicated using the `lm()` function:
+```{r echo=TRUE, cache=FALSE}
 ols <- lm(y~x)
 ols
 ```
 
 We can apply the `summary()` function to see the complete set of regression results:
-```{r echo=TRUE}
+```{r echo=TRUE, cache=FALSE}
 summary(ols)
 ```
 
