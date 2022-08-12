@@ -14,6 +14,9 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Forecasting Methods and Routines
 
+- [Lecture slides](https://davidubilava.com/forecasting_slides/03-Routines.html)
+- [Book chapter](https://davidubilava.com/forecasting/docs/forecasting-methods-and-routines.html)
+
 ## Trends and Seasonality
 
 ## Autoregressive Models
