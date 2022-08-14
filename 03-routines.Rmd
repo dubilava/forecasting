@@ -173,16 +173,16 @@ The aforementioned three desired properties of forecast errors are, in effect, h
 
 ### Unbiasedness
 
-Testing $E(e_{t+h|t})=0$. Set up a regression: $$e_{t+h|t} = \alpha+\upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h,$$
+Testing $E(e_{t+h|t})=0$. Set up a regression: $$e_{t+h|t} = \alpha+\upsilon_{t+h},\;~~t = R,\ldots,T-h,$$
 where $R$ is the estimation window size, $T$ is the sample size, and $h$ is the forecast horizon length. The null of zero-mean forecast error is equivalent of testing $H_0: \alpha = 0$ in the OLS setting. For $h$-step-ahead forecast errors, when $h>1$, autocorrelation consistent standard errors should be used.
 
 ### Efficiency
 
-Testing $Cov(e_{t+h|t},\hat{y}_{t+h|t})=0$. Set up a regression: $$e_{t+h|t} = \alpha + \beta \hat{y}_{t+h|t} + \upsilon_{t+h} \hspace{.5in} t = R,\ldots,T-h.$$ The null of forecast error independence of the information set is equivalent of testing $H_0: \beta = 0$ in the OLS setting. For $h$-step-ahead forecast errors, when $h>1$, autocorrelation consistent standard errors should be used.
+Testing $Cov(e_{t+h|t},\hat{y}_{t+h|t})=0$. Set up a regression: $$e_{t+h|t} = \alpha + \beta \hat{y}_{t+h|t} + \upsilon_{t+h},\;~~t = R,\ldots,T-h.$$ The null of forecast error independence of the information set is equivalent of testing $H_0: \beta = 0$ in the OLS setting. For $h$-step-ahead forecast errors, when $h>1$, autocorrelation consistent standard errors should be used.
 
 ### No Autocorrelation
 
-Testing $Cov(e_{t+1|t},e_{t|t-1})=0$. Set up a regression: $$e_{t+1|t} = \alpha + \gamma e_{t|t-1} + \upsilon_{t+1} \hspace{.5in} t = R+1,\ldots,T-1.$$ The null of no forecast error autocorrelation is equivalent of testing $H_0: \gamma = 0$ in the OLS setting.
+Testing $Cov(e_{t+1|t},e_{t|t-1})=0$. Set up a regression: $$e_{t+1|t} = \alpha + \gamma e_{t|t-1} + \upsilon_{t+1},\;~~t = R+1,\ldots,T-1.$$ The null of no forecast error autocorrelation is equivalent of testing $H_0: \gamma = 0$ in the OLS setting.
 
 
 

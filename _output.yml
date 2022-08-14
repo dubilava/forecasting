@@ -6,5 +6,7 @@ msmbstyle::msmb_html_book:
     margin_references: FALSE
     output_file: forecasting
     css: style.css
+    includes:
+      in_header: thishtmlfile.html
   
   

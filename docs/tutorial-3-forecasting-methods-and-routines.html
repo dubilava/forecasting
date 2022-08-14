@@ -64,6 +64,34 @@ function reset_tooltip(id) {
   tooltip.innerHTML = 'Copy link';
 }
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var element_label= $("label[for *= 'tufte-sn-']");
+    var count = $(element_label).length;
+    $(element_label).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('for','tufte-sn-'+ ++index);
+      $(this).text(index);
+    });
+  });
+  $(document).ready(function () {
+    var element_input= $("input[id *= 'tufte-sn-']");
+    var count = $(element_input).length;
+    $(element_input).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('id','tufte-sn-'+ ++index);
+    }); 
+  });
+  $(document).ready(function () {
+    var element_span= $("span[class *= 'sidenote-number']");
+    var count = $(element_span).length;
+    $(element_span).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).text(++index);
+    }); 
+  });
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -206,232 +234,178 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="tutorial-3-forecasting-methods-and-routines" class="section level1 unnumbered">
 <h1>Tutorial 3: Forecasting Methods and Routines</h1>
-<p>In this tutorial, we will introduce ‘for loop’, and use it to generate time series as well as to obtain one-step-ahead forecasts using a rolling window procedure; we will also perform forecast error diagnostics.</p>
-<p>Let’s generate a random walk process, such that <span class="math inline">\(y_{t} = y_{t-1}+e_{t}\)</span>, where <span class="math inline">\(e_{t} ~ N(0,1)\)</span>, and where <span class="math inline">\(y_{0}=0\)</span>, for <span class="math inline">\(t=1,\ldots,120\)</span>.</p>
+<p>In this tutorial, we will introduce ‘for loop’, and illustrate its use by generating time series as well as by generating one-step-ahead forecasts. We will also perform forecast error diagnostics. To run the code, the <code>data.table</code> and <code>ggplot2</code> packages need to be installed and loaded.</p>
+<p>Let’s generate a random walk process, such that <span class="math inline">\(y_{t} = y_{t-1}+e_{t}\)</span>, where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>, and where <span class="math inline">\(y_{0}=0\)</span>, for <span class="math inline">\(t=1,\ldots,120\)</span>.<label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> The following code is deliberately done inefficiently to illustrate the use of the ‘for loop’. For reference, a much more efficient code, after setting the seed, would have been
+<code>y &lt;- cumsum(rnorm(n))</code></span></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
 <span id="cb36-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb36-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb36-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-4" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
 <span id="cb36-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
 <span id="cb36-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-8" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> e[<span class="dv">1</span>]</span>
+<span id="cb36-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-8" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> r[<span class="dv">1</span>]</span>
 <span id="cb36-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
-<span id="cb36-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-11" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> y[i<span class="dv">-1</span>] <span class="sc">+</span> e[i]</span>
+<span id="cb36-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-11" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> y[i<span class="dv">-1</span>] <span class="sc">+</span> r[i]</span>
 <span id="cb36-12"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Store <span class="math inline">\(y\)</span> and <span class="math inline">\(e\)</span> in a <strong>data.table</strong>, call it ‘dt’. Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2011).</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb37-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(y,e)</span>
+<p>Store <span class="math inline">\(y\)</span> in a <strong>data.table</strong> along with some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2011).</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb37-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(y)</span>
 <span id="cb37-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb37-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2011-01-01"</span>),<span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>),<span class="at">by=</span><span class="st">"month"</span>)</span></code></pre></div>
-<p>Plot the realized time series using <strong>ggplot</strong> function.</p>
+<span id="cb37-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb37-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2011-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span></code></pre></div>
+<p>Plot the realized time series using the <code>ggplot</code> function.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb38-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb38-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Random Walk"</span>)<span class="sc">+</span></span>
 <span id="cb38-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-41-1.png" width="624"></p>
-<p>Generate a sequence of one-step-ahead forecasts from naive and average methods, using the rolling window scheme, where the first rolling window ranges from period 1 to period 80.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>average <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb39-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>naive <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb39-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-4" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">80</span></span>
-<span id="cb39-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-5" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> n<span class="sc">-</span>R</span>
-<span id="cb39-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
-<span id="cb39-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-7" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> y[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)]</span>
-<span id="cb39-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-8" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>average[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(w)</span>
-<span id="cb39-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-9" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>naive[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> w[<span class="fu">length</span>(w)]</span>
-<span id="cb39-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Calculate the RMSFE measures for each of the two forecasting methods.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e_average=</span>y<span class="sc">-</span>average,<span class="at">e_naive=</span>y<span class="sc">-</span>naive)]</span>
+<p>Generate a sequence of one-step-ahead forecasts from January 2017 onward by simply averaging the observed time series up to the period when the forecast is made.<label for="tufte-sn-11" class="margin-toggle sidenote-number">11</label><input type="checkbox" id="tufte-sn-11" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">11</span> This is equivalent to the <em>expanding window</em> scheme for generating forecasts.</span></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>f <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb39-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">which</span>(dt<span class="sc">$</span>date<span class="sc">==</span><span class="fu">as.Date</span>(<span class="st">"2017-01-01"</span>))<span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb39-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-4" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> n<span class="sc">-</span>R</span>
+<span id="cb39-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
+<span id="cb39-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>f[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(dt<span class="sc">$</span>y[<span class="dv">1</span><span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
+<span id="cb39-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Obtain the RMSFE measure the forecast.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>f</span>
 <span id="cb40-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-3" aria-hidden="true" tabindex="-1"></a>rmsfe_average <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>e_average<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb40-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-4" aria-hidden="true" tabindex="-1"></a>rmsfe_naive <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>e_naive<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb40-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-6" aria-hidden="true" tabindex="-1"></a>rmsfe_average</span></code></pre></div>
-<pre><code>## [1] 4.672947</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb42-1" aria-hidden="true" tabindex="-1"></a>rmsfe_naive</span></code></pre></div>
-<pre><code>## [1] 0.850081</code></pre>
-<p>Perform the forecast error diagnostics for the two considered methods.</p>
+<span id="cb40-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-3" aria-hidden="true" tabindex="-1"></a>rmsfe <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb40-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-5" aria-hidden="true" tabindex="-1"></a>rmsfe</span></code></pre></div>
+<pre><code>## [1] 5.665095</code></pre>
+<p>Perform the forecast error diagnostics of the forecast.</p>
 <p>Zero mean of the forecast errors: <span class="math inline">\(E(e_{t+1|t})=0\)</span>.
-We perform this test by regressing the forecast error on the constant, and checking whether the coefficient is statistically significantly different from zero.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e_average<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
+We test this hypothesis by regressing the forecast error on the constant, and checking whether the coefficient is statistically significantly different from zero.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>##             Estimate Std. Error  t value     Pr(&gt;|t|)
-## (Intercept) 4.434858  0.2358002 18.80769 3.682273e-21</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e_naive<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
-<pre><code>##              Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) 0.1168396    0.13483 0.86657 0.391478</code></pre>
+## (Intercept) 5.421519  0.2396999 22.61794 6.604031e-27</code></pre>
+<p>We reject the null, which suggests that we are consistently underestimating (in this case) the one-step-ahead forecasts.</p>
 <p>No correlation of the forecast errors with the forecasts: <span class="math inline">\(Cov(e_{t+1|t},y_{t+1|t})=0\)</span>. We perform this test by regressing the forecast error on the forecast, and checking whether the slope coefficient is statistically significantly different from zero.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e_average<span class="sc">~</span>average,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
-<pre><code>##              Estimate Std. Error  t value   Pr(&gt;|t|)
-## (Intercept) 2.4180785  1.2929708 1.870172 0.06917788
-## average     0.2942557  0.1856048 1.585389 0.12116580</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e_naive<span class="sc">~</span>naive,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
-<pre><code>##                Estimate Std. Error   t value  Pr(&gt;|t|)
-## (Intercept)  1.06489905 0.69740557  1.526944 0.1350565
-## naive       -0.08486143 0.06127484 -1.384931 0.1741512</code></pre>
-<p>No serial correlation in one-step-ahead forecast errors: <span class="math inline">\(Cov(e_{t+1|t},y_{t|t-1})=0\)</span>. We perform this test by regressing the forecast error on its lag, and checking whether the slope coefficient is statistically significantly different from zero.
-(Note: first we need to generate lagged forecast errors)</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb52-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e_average.l1=</span><span class="fu">shift</span>(e_average),<span class="at">e_naive.l1=</span><span class="fu">shift</span>(e_naive))]</span>
-<span id="cb52-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e_average<span class="sc">~</span>e_average.l1,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
-<pre><code>##               Estimate Std. Error  t value     Pr(&gt;|t|)
-## (Intercept)  0.7898068 0.42027705 1.879253 6.810403e-02
-## e_average.l1 0.8275396 0.08966026 9.229726 3.892504e-11</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e_naive<span class="sc">~</span>e_naive.l1,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
-<pre><code>##               Estimate Std. Error   t value  Pr(&gt;|t|)
-## (Intercept) 0.12971406  0.1403668 0.9241081 0.3614178
-## e_naive.l1  0.03780853  0.1631333 0.2317647 0.8179979</code></pre>
-<p><strong>(this is a direct/iterated stuff)</strong></p>
-<p>In this tutorial, we will generate a time series, we will obtain multi-step-ahead forecasts using direct and iterated methods from autoregressive models using a rolling window procedure, and we will assess the accuracy of the forecast. We will then turn to interval forecasts, and we will assess their coverage accuracy. To run the code, the <code>data.table</code>, <code>ggplot2</code>, <code>lmtest</code>, and <code>sandwich</code> packages need to be installed and loaded.</p>
-<p>Let’s generate a time series that follow an AR(2) process as follows:
-<span class="math display">\[y_t = 0.01t+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t\]</span>
-where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">240</span></span>
-<span id="cb56-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9</span>)</span>
-<span id="cb56-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb56-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
-<span id="cb56-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fl">0.01</span><span class="sc">+</span>e[<span class="dv">1</span>]</span>
-<span id="cb56-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-8" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fl">0.02+0.6</span><span class="sc">*</span>y[<span class="dv">1</span>]<span class="sc">+</span>e[<span class="dv">2</span>]</span>
-<span id="cb56-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>n){</span>
-<span id="cb56-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-10" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.01</span><span class="sc">*</span>i<span class="fl">+0.6</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span><span class="fl">0.2</span><span class="sc">*</span>y[i<span class="dv">-2</span>]<span class="sc">+</span>e[i]</span>
-<span id="cb56-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb56-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt’, and plot the realized time series using the <strong>ggplot</strong> function.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2000-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
-<span id="cb57-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y)</span>
-<span id="cb57-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb57-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb57-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
-<span id="cb57-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-48-1.png" width="624"></p>
-<p>Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb58-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[,.(date,y,<span class="at">y1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y12=</span><span class="fu">shift</span>(y,h),<span class="at">y13=</span><span class="fu">shift</span>(y,h<span class="sc">+</span><span class="dv">1</span>))]</span>
-<span id="cb58-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-4" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[<span class="fu">complete.cases</span>(dt)]</span>
-<span id="cb58-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-6" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">a1i=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a1d=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a2i=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a2d=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>))]</span>
-<span id="cb58-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-8" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">180</span></span>
-<span id="cb58-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-9" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R<span class="sc">-</span>h<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb58-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
-<span id="cb58-12"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-13"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="do">### iterated multi-step method</span></span>
-<span id="cb58-14"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-14" aria-hidden="true" tabindex="-1"></a>  a1i <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb58-15"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-15" aria-hidden="true" tabindex="-1"></a>  a2i <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb58-16"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-17"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-17" aria-hidden="true" tabindex="-1"></a>  iter_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">hor=</span><span class="dv">1</span><span class="sc">:</span>h,<span class="at">a1=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a2=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>))</span>
-<span id="cb58-18"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-19"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-19" aria-hidden="true" tabindex="-1"></a>  <span class="do">## AR(1)</span></span>
-<span id="cb58-20"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-20" aria-hidden="true" tabindex="-1"></a>  iter_dt<span class="sc">$</span>a1[<span class="dv">1</span>] <span class="ot">&lt;-</span> a1i<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a1i<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y</span>
-<span id="cb58-21"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>h){</span>
-<span id="cb58-22"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-22" aria-hidden="true" tabindex="-1"></a>    iter_dt<span class="sc">$</span>a1[j] <span class="ot">&lt;-</span> a1i<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a1i<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>iter_dt<span class="sc">$</span>a1[j<span class="dv">-1</span>]</span>
-<span id="cb58-23"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-23" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb58-24"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-25"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-25" aria-hidden="true" tabindex="-1"></a>  <span class="do">## AR(2)</span></span>
-<span id="cb58-26"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-26" aria-hidden="true" tabindex="-1"></a>  iter_dt<span class="sc">$</span>a2[<span class="dv">1</span>] <span class="ot">&lt;-</span> a2i<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a2i<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y<span class="sc">+</span>a2i<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y1</span>
-<span id="cb58-27"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-27" aria-hidden="true" tabindex="-1"></a>  iter_dt<span class="sc">$</span>a2[<span class="dv">2</span>] <span class="ot">&lt;-</span> a2i<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a2i<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>iter_dt<span class="sc">$</span>a2[<span class="dv">1</span>]<span class="sc">+</span>a2i<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y</span>
-<span id="cb58-28"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>h){</span>
-<span id="cb58-29"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-29" aria-hidden="true" tabindex="-1"></a>    iter_dt<span class="sc">$</span>a2[j] <span class="ot">&lt;-</span> a2i<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a2i<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>iter_dt<span class="sc">$</span>a2[j<span class="dv">-1</span>]<span class="sc">+</span>a2i<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>iter_dt<span class="sc">$</span>a2[j<span class="dv">-2</span>]</span>
-<span id="cb58-30"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-30" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb58-31"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-32"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-32" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a1i[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> iter_dt<span class="sc">$</span>a1[h]</span>
-<span id="cb58-33"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-33" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a2i[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> iter_dt<span class="sc">$</span>a2[h]</span>
-<span id="cb58-34"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-35"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-35" aria-hidden="true" tabindex="-1"></a>  <span class="do">### direct multi-step method</span></span>
-<span id="cb58-36"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-36" aria-hidden="true" tabindex="-1"></a>  a1d <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y12,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb58-37"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-37" aria-hidden="true" tabindex="-1"></a>  a2d <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y12<span class="sc">+</span>y13,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb58-38"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-39"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-39" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a1d[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> a1d<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a1d<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y</span>
-<span id="cb58-40"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-40" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a2d[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> a2d<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a2d<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y<span class="sc">+</span>a2d<span class="sc">$</span>coefficients[<span class="dv">3</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y1</span>
-<span id="cb58-41"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-41" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-42"><a href="tutorial-3-forecasting-methods-and-routines.html#cb58-42" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>We can now test whether the forecasts of the iterated method ‘statistically significantly’ outperform those of the direct method?</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a1i_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a1i</span>
-<span id="cb59-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a2i_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a2i</span>
-<span id="cb59-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a1d_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a1d</span>
-<span id="cb59-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a2d_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a2d</span>
-<span id="cb59-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-6" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>a1d_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a1i_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb59-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-7" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld2 <span class="ot">&lt;-</span> dt<span class="sc">$</span>a2d_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a2i_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb59-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-9" aria-hidden="true" tabindex="-1"></a>reg_ld1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld1<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb59-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-10" aria-hidden="true" tabindex="-1"></a>reg_ld2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld2<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb59-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-12"><a href="tutorial-3-forecasting-methods-and-routines.html#cb59-12" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg_ld1,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg_ld1))</span></code></pre></div>
-<pre><code>## 
-## t test of coefficients:
-## 
-##             Estimate Std. Error t value  Pr(&gt;|t|)    
-## (Intercept)  -6.9266     1.7170 -4.0342 0.0002828 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg_ld2,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg_ld2))</span></code></pre></div>
-<pre><code>## 
-## t test of coefficients:
-## 
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)  -3.1094     1.3271  -2.343  0.02494 *
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-<p>Obtain interval forecasts for horizon 12 using the direct method for an AR(1) model and a linear trend model; plot these interval forecasts along with the observed series.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>trend <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dt))</span>
-<span id="cb63-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-2" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">a1dl=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">a1du=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">trdl=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">trdu=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>))]</span>
-<span id="cb63-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
-<span id="cb63-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb63-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-6" aria-hidden="true" tabindex="-1"></a>  a1d <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y12,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb63-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-7" aria-hidden="true" tabindex="-1"></a>  trd <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>trend,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb63-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb63-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-9" aria-hidden="true" tabindex="-1"></a>  a1d_pf <span class="ot">&lt;-</span> a1d<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>a1d<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span>]<span class="sc">$</span>y</span>
-<span id="cb63-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-10" aria-hidden="true" tabindex="-1"></a>  trd_pf <span class="ot">&lt;-</span> trd<span class="sc">$</span>coefficients[<span class="dv">1</span>]<span class="sc">+</span>trd<span class="sc">$</span>coefficients[<span class="dv">2</span>]<span class="sc">*</span>dt[R<span class="sc">+</span>i<span class="dv">-1</span><span class="sc">+</span>h]<span class="sc">$</span>trend</span>
-<span id="cb63-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb63-12"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-12" aria-hidden="true" tabindex="-1"></a>  a1d_sd <span class="ot">&lt;-</span> <span class="fu">summary</span>(a1d)<span class="sc">$</span>sigma</span>
-<span id="cb63-13"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-13" aria-hidden="true" tabindex="-1"></a>  trd_sd <span class="ot">&lt;-</span> <span class="fu">summary</span>(trd)<span class="sc">$</span>sigma</span>
-<span id="cb63-14"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb63-15"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-15" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a1dl[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> a1d_pf<span class="fl">-1.96</span><span class="sc">*</span>a1d_sd</span>
-<span id="cb63-16"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-16" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a1du[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> a1d_pf<span class="fl">+1.96</span><span class="sc">*</span>a1d_sd</span>
-<span id="cb63-17"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb63-18"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>trdl[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> trd_pf<span class="fl">-1.96</span><span class="sc">*</span>trd_sd</span>
-<span id="cb63-19"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-19" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>trdu[R<span class="sc">+</span>i<span class="sc">+</span>h<span class="dv">-1</span>] <span class="ot">&lt;-</span> trd_pf<span class="fl">+1.96</span><span class="sc">*</span>trd_sd</span>
-<span id="cb63-20"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb63-21"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-22"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb63-23"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>,<span class="at">color=</span><span class="st">"black"</span>)<span class="sc">+</span></span>
-<span id="cb63-24"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>a1dl),<span class="at">size=</span><span class="dv">1</span>,<span class="at">color=</span><span class="st">"steelblue"</span>,<span class="at">linetype=</span><span class="dv">5</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
-<span id="cb63-25"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>a1du),<span class="at">size=</span><span class="dv">1</span>,<span class="at">color=</span><span class="st">"steelblue"</span>,<span class="at">linetype=</span><span class="dv">5</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
-<span id="cb63-26"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>trdl),<span class="at">size=</span><span class="dv">1</span>,<span class="at">color=</span><span class="st">"indianred"</span>,<span class="at">linetype=</span><span class="dv">5</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
-<span id="cb63-27"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>trdu),<span class="at">size=</span><span class="dv">1</span>,<span class="at">color=</span><span class="st">"indianred"</span>,<span class="at">linetype=</span><span class="dv">5</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
-<span id="cb63-28"><a href="tutorial-3-forecasting-methods-and-routines.html#cb63-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-51-1.png" width="624"></p>
-<p>Test the unconditional coverage of the interval forecasts from the considered two models.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">i1=</span><span class="fu">ifelse</span>(y<span class="sc">&gt;=</span>a1dl <span class="sc">&amp;</span> y<span class="sc">&lt;=</span>a1du,<span class="dv">1</span>,<span class="dv">0</span>),<span class="at">it=</span><span class="fu">ifelse</span>(y<span class="sc">&gt;=</span>trdl <span class="sc">&amp;</span> y<span class="sc">&lt;=</span>trdu,<span class="dv">1</span>,<span class="dv">0</span>))]</span>
-<span id="cb64-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co"># AR(1)</span></span>
-<span id="cb64-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(dt<span class="sc">$</span>i1,<span class="at">na.rm=</span>T)</span>
-<span id="cb64-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-7" aria-hidden="true" tabindex="-1"></a>L10 <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="fl">-.95</span>)<span class="sc">^</span>(P<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p1))<span class="sc">*</span>(.<span class="dv">95</span>)<span class="sc">^</span>(P<span class="sc">*</span>p1)</span>
-<span id="cb64-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-8" aria-hidden="true" tabindex="-1"></a>L11 <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>p1)<span class="sc">^</span>(P<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p1))<span class="sc">*</span>(p1)<span class="sc">^</span>(P<span class="sc">*</span>p1)</span>
-<span id="cb64-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-10"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-10" aria-hidden="true" tabindex="-1"></a>LR1 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(L10<span class="sc">/</span>L11)</span>
-<span id="cb64-11"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-12"><a href="tutorial-3-forecasting-methods-and-routines.html#cb64-12" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(LR1,<span class="at">df=</span><span class="dv">1</span>,<span class="at">lower.tail=</span>F)</span></code></pre></div>
-<pre><code>## [1] 0.01027851</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AR(2)</span></span>
-<span id="cb66-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(dt<span class="sc">$</span>it,<span class="at">na.rm=</span>T)</span>
-<span id="cb66-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-4" aria-hidden="true" tabindex="-1"></a>L20 <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="fl">-.95</span>)<span class="sc">^</span>(P<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p2))<span class="sc">*</span>(.<span class="dv">95</span>)<span class="sc">^</span>(P<span class="sc">*</span>p2)</span>
-<span id="cb66-5"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-5" aria-hidden="true" tabindex="-1"></a>L21 <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>p2)<span class="sc">^</span>(P<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p2))<span class="sc">*</span>(p2)<span class="sc">^</span>(P<span class="sc">*</span>p2)</span>
-<span id="cb66-6"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-7"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-7" aria-hidden="true" tabindex="-1"></a>LR2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(L20<span class="sc">/</span>L21)</span>
-<span id="cb66-8"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-9"><a href="tutorial-3-forecasting-methods-and-routines.html#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(LR2,<span class="at">df=</span><span class="dv">1</span>,<span class="at">lower.tail=</span>F)</span></code></pre></div>
-<pre><code>## [1] 0.1441849</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e<span class="sc">~</span>f,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##               Estimate Std. Error    t value     Pr(&gt;|t|)
+## (Intercept) -0.1437252  1.5861275 -0.0906139 0.9281928187
+## f            0.9995059  0.2822414  3.5413157 0.0009247749</code></pre>
+<p>We reject the null, which suggests that there is some information in the data that we do not use well enough.<label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> Because, as we know, the true data generating process is random walk, a better use of information would involve assigning all the weights to the most recent observation rather than spreading them evenly across all observations in the estimation window.</span></p>
+<p>No serial correlation in one-step-ahead forecast errors: <span class="math inline">\(Cov(e_{t+1|t},y_{t|t-1})=0\)</span>. We perform this test by regressing the forecast error on its lag, and checking whether the slope coefficient is statistically significantly different from zero.<label for="tufte-sn-13" class="margin-toggle sidenote-number">13</label><input type="checkbox" id="tufte-sn-13" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">13</span> Note: first we need to generate lagged forecast errors.</span></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb46-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e1=</span><span class="fu">shift</span>(e))]</span>
+<span id="cb46-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e<span class="sc">~</span>e1,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##              Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept) 0.7057751 0.40681156  1.734894 8.960477e-02
+## e1          0.8661231 0.07198491 12.032009 1.164311e-15</code></pre>
+<p>We reject the null, which again, suggests that the method that we have chosen for forecasting is far from ideal.</p>
+<!-- **(this is a direct/iterated stuff)** -->
+<!-- In this tutorial, we will generate a time series, we will obtain multi-step-ahead forecasts using direct and iterated methods from autoregressive models using a rolling window procedure, and we will assess the accuracy of the forecast. We will then turn to interval forecasts, and we will assess their coverage accuracy. To run the code, the `data.table`, `ggplot2`, `lmtest`, and `sandwich` packages need to be installed and loaded. -->
+<!-- Let's generate a time series that follow an AR(2) process as follows:  -->
+<!-- $$y_t = 0.01t+0.6y_{t-1}+0.2y_{t-2}+\varepsilon_t$$ -->
+<!-- where $e_{t} \sim N(0,1)$.  -->
+<!-- ```{r echo=TRUE} -->
+<!-- n <- 240 -->
+<!-- set.seed(9) -->
+<!-- e <- rnorm(n,0,1) -->
+<!-- y <- rep(NA,n) -->
+<!-- y[1] <- 0.01+e[1] -->
+<!-- y[2] <- 0.02+0.6*y[1]+e[2] -->
+<!-- for(i in 3:n){ -->
+<!--   y[i] <- 0.01*i+0.6*y[i-1]+0.2*y[i-2]+e[i] -->
+<!-- } -->
+<!-- ``` -->
+<!-- Generate a vector of arbitrary dates (e.g., the monthly series beginning from January 2000), store these along with $y$ in a **data.table**, call it 'dt', and plot the realized time series using the **ggplot** function. -->
+<!-- ```{r echo=TRUE} -->
+<!-- date <- seq(as.Date("2000-01-01"),by="month",along.with=y) -->
+<!-- dt <- data.table(date,y) -->
+<!-- ggplot(dt,aes(x=date,y=y))+ -->
+<!--   geom_line(size=1)+ -->
+<!--   labs(x="Year",y="Series")+ -->
+<!--   theme_classic() -->
+<!-- ``` -->
+<!-- Suppose we believe the series follow either the AR(1) or the AR(2) process, and that we want to compare iterated multi-step forecasts obtained from these models to direct multi-step forecasts. In what follows, we will generate twelve-step-ahead point forecasts from these two methods for the considered two models using the rolling window scheme, where the first rolling window ranges from period 1 to period 180. In obtaining the iterated multi-step forecasts, for each rolling window, we will generate a sequence of one-to-twelve-step-ahead forecasts, but only retain the twelve-step-ahead forecasts.  -->
+<!-- ```{r echo=TRUE} -->
+<!-- h <- 12 -->
+<!-- dt <- dt[,.(date,y,y1=shift(y,1),y2=shift(y,2),y12=shift(y,h),y13=shift(y,h+1))] -->
+<!-- dt <- dt[complete.cases(dt)] -->
+<!-- dt[,`:=`(a1i=as.numeric(NA),a1d=as.numeric(NA),a2i=as.numeric(NA),a2d=as.numeric(NA))] -->
+<!-- R <- 180 -->
+<!-- P <- nrow(dt)-R-h+1 -->
+<!-- for(i in 1:P){ -->
+<!--   ### iterated multi-step method -->
+<!--   a1i <- lm(y~y1,data=dt[i:(R+i-1)]) -->
+<!--   a2i <- lm(y~y1+y2,data=dt[i:(R+i-1)]) -->
+<!--   iter_dt <- data.table(hor=1:h,a1=as.numeric(NA),a2=as.numeric(NA)) -->
+<!--   ## AR(1) -->
+<!--   iter_dt$a1[1] <- a1i$coefficients[1]+a1i$coefficients[2]*dt[R+i-1]$y -->
+<!--   for(j in 2:h){ -->
+<!--     iter_dt$a1[j] <- a1i$coefficients[1]+a1i$coefficients[2]*iter_dt$a1[j-1] -->
+<!--   } -->
+<!--   ## AR(2) -->
+<!--   iter_dt$a2[1] <- a2i$coefficients[1]+a2i$coefficients[2]*dt[R+i-1]$y+a2i$coefficients[3]*dt[R+i-1]$y1 -->
+<!--   iter_dt$a2[2] <- a2i$coefficients[1]+a2i$coefficients[2]*iter_dt$a2[1]+a2i$coefficients[3]*dt[R+i-1]$y -->
+<!--   for(j in 3:h){ -->
+<!--     iter_dt$a2[j] <- a2i$coefficients[1]+a2i$coefficients[2]*iter_dt$a2[j-1]+a2i$coefficients[3]*iter_dt$a2[j-2] -->
+<!--   } -->
+<!--   dt$a1i[R+i+h-1] <- iter_dt$a1[h] -->
+<!--   dt$a2i[R+i+h-1] <- iter_dt$a2[h] -->
+<!--   ### direct multi-step method -->
+<!--   a1d <- lm(y~y12,data=dt[i:(R+i-1)]) -->
+<!--   a2d <- lm(y~y12+y13,data=dt[i:(R+i-1)]) -->
+<!--   dt$a1d[R+i+h-1] <- a1d$coefficients[1]+a1d$coefficients[2]*dt[R+i-1]$y -->
+<!--   dt$a2d[R+i+h-1] <- a2d$coefficients[1]+a2d$coefficients[2]*dt[R+i-1]$y+a2d$coefficients[3]*dt[R+i-1]$y1 -->
+<!-- } -->
+<!-- ``` -->
+<!-- We can now test whether the forecasts of the iterated method 'statistically significantly' outperform those of the direct method? -->
+<!-- ```{r echo=TRUE} -->
+<!-- dt$a1i_e <- dt$y-dt$a1i -->
+<!-- dt$a2i_e <- dt$y-dt$a2i -->
+<!-- dt$a1d_e <- dt$y-dt$a1d -->
+<!-- dt$a2d_e <- dt$y-dt$a2d -->
+<!-- dt$ld1 <- dt$a1d_e^2-dt$a1i_e^2 -->
+<!-- dt$ld2 <- dt$a2d_e^2-dt$a2i_e^2 -->
+<!-- reg_ld1 <- lm(ld1~1,data=dt) -->
+<!-- reg_ld2 <- lm(ld2~1,data=dt) -->
+<!-- coeftest(reg_ld1,vcov.=vcovHAC(reg_ld1)) -->
+<!-- coeftest(reg_ld2,vcov.=vcovHAC(reg_ld2)) -->
+<!-- ``` -->
+<!-- Obtain interval forecasts for horizon 12 using the direct method for an AR(1) model and a linear trend model; plot these interval forecasts along with the observed series. -->
+<!-- ```{r echo=TRUE} -->
+<!-- dt$trend <- c(1:nrow(dt)) -->
+<!-- dt[,`:=`(a1dl=as.numeric(NA),a1du=as.numeric(NA),trdl=as.numeric(NA),trdu=as.numeric(NA))] -->
+<!-- for(i in 1:P){ -->
+<!--   a1d <- lm(y~y12,data=dt[i:(R+i-1)]) -->
+<!--   trd <- lm(y~trend,data=dt[i:(R+i-1)]) -->
+<!--   a1d_pf <- a1d$coefficients[1]+a1d$coefficients[2]*dt[R+i-1]$y -->
+<!--   trd_pf <- trd$coefficients[1]+trd$coefficients[2]*dt[R+i-1+h]$trend -->
+<!--   a1d_sd <- summary(a1d)$sigma -->
+<!--   trd_sd <- summary(trd)$sigma -->
+<!--   dt$a1dl[R+i+h-1] <- a1d_pf-1.96*a1d_sd -->
+<!--   dt$a1du[R+i+h-1] <- a1d_pf+1.96*a1d_sd -->
+<!--   dt$trdl[R+i+h-1] <- trd_pf-1.96*trd_sd -->
+<!--   dt$trdu[R+i+h-1] <- trd_pf+1.96*trd_sd -->
+<!-- } -->
+<!-- ggplot(dt,aes(x=date,y=y))+ -->
+<!--   geom_line(size=1,color="black")+ -->
+<!--   geom_line(aes(y=a1dl),size=1,color="steelblue",linetype=5,na.rm=T)+ -->
+<!--   geom_line(aes(y=a1du),size=1,color="steelblue",linetype=5,na.rm=T)+ -->
+<!--   geom_line(aes(y=trdl),size=1,color="indianred",linetype=5,na.rm=T)+ -->
+<!--   geom_line(aes(y=trdu),size=1,color="indianred",linetype=5,na.rm=T)+ -->
+<!--   theme_classic() -->
+<!-- ``` -->
+<!-- Test the unconditional coverage of the interval forecasts from the considered two models. -->
+<!-- ```{r echo=TRUE} -->
+<!-- dt[,`:=`(i1=ifelse(y>=a1dl & y<=a1du,1,0),it=ifelse(y>=trdl & y<=trdu,1,0))] -->
+<!-- # AR(1) -->
+<!-- p1 <- mean(dt$i1,na.rm=T) -->
+<!-- L10 <- (1-.95)^(P*(1-p1))*(.95)^(P*p1) -->
+<!-- L11 <- (1-p1)^(P*(1-p1))*(p1)^(P*p1) -->
+<!-- LR1 <- -2*log(L10/L11) -->
+<!-- pchisq(LR1,df=1,lower.tail=F) -->
+<!-- # AR(2) -->
+<!-- p2 <- mean(dt$it,na.rm=T) -->
+<!-- L20 <- (1-.95)^(P*(1-p2))*(.95)^(P*p2) -->
+<!-- L21 <- (1-p2)^(P*(1-p2))*(p2)^(P*p2) -->
+<!-- LR2 <- -2*log(L20/L21) -->
+<!-- pchisq(LR2,df=1,lower.tail=F) -->
+<!-- ``` -->
 
 </div>
 <p style="text-align: center;">
@@ -439,7 +413,7 @@ where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>.</p>
 <a href="tutorial-4-trends-and-seasonality.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-12
+2022-08-14
  using 
 R version 4.1.2 (2021-11-01)
 </p>
