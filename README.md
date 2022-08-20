@@ -2,22 +2,26 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Introduction to Forecasting
 
-- [Lecture slides](https://davidubilava.com/forecasting_slides/01-Intro.html)
-- [Book chapter](https://davidubilava.com/forecasting/docs/introduction-to-forecasting.html)
+- [Lecture 1 slides](https://davidubilava.com/forecasting_slides/01-Intro.html)
+- [Book chapter 1](https://davidubilava.com/forecasting/docs/introduction-to-forecasting.html)
 - Additional material:
   - [The Birth of the Weather Forecast](https://www.bbc.com/news/magazine-32483678)
 
 ## Features of Time Series Data
 
-- [Lecture slides](https://davidubilava.com/forecasting_slides/02-TimeSeries.html)
-- [Book chapter](https://davidubilava.com/forecasting/docs/features-of-time-series-data.html)
+- [Lecture 2 slides](https://davidubilava.com/forecasting_slides/02-TimeSeries.html)
+- [Book chapter 2](https://davidubilava.com/forecasting/docs/features-of-time-series-data.html)
 
 ## Forecasting Methods and Routines
 
-- [Lecture slides](https://davidubilava.com/forecasting_slides/03-Routines.html)
-- [Book chapter](https://davidubilava.com/forecasting/docs/forecasting-methods-and-routines.html)
+- [Lecture 3 slides](https://davidubilava.com/forecasting_slides/03-Routines.html)
+- [Book chapter 3](https://davidubilava.com/forecasting/docs/forecasting-methods-and-routines.html)
 
 ## Trends and Seasonality
+
+- [Lecture 4 slides](https://davidubilava.com/forecasting_slides/04-TrendSeason.html)
+- [Book chapter 4](https://davidubilava.com/forecasting/docs/trends.html)
+- [Book chapter 5](https://davidubilava.com/forecasting/docs/seasonality.html)
 
 ## Autoregressive Models
 
