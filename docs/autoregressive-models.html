@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 5 Autoregressive Models | Forecasting With Time Series Models Using R" />
+<meta property="og:title" content="Chapter 6 Autoregressive Models | Forecasting With Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 5 Autoregressive Models | Forecasting With Time Series Models Using R" />
+<meta property="og:description" content="Chapter 6 Autoregressive Models | Forecasting With Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 5 Autoregressive Models | Forecasting With Time Series Models Using R">
+<meta name="description" content="Chapter 6 Autoregressive Models | Forecasting With Time Series Models Using R">
 
-<title>Chapter 5 Autoregressive Models | Forecasting With Time Series Models Using R</title>
+<title>Chapter 6 Autoregressive Models | Forecasting With Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -206,19 +206,20 @@ div.csl-indent {
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends-and-seasonality.html" id="toc-trends-and-seasonality"><span class="toc-section-number">4</span> Trends and Seasonality</a>
-<a id="active-page" href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">5</span> Autoregressive Models</a><ul class="toc-sections">
-<li class="toc"><a href="#modeling-1"> Modeling</a></li>
-<li class="toc"><a href="#forecasting-1"> Forecasting</a></li>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a id="active-page" href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a><ul class="toc-sections">
+<li class="toc"><a href="#modeling-2"> Modeling</a></li>
+<li class="toc"><a href="#forecasting-2"> Forecasting</a></li>
 </ul>
-<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -235,9 +236,9 @@ div.csl-indent {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="autoregressive-models" class="section level1" number="5">
+<div id="autoregressive-models" class="section level1" number="6">
 <h1>
-<span class="header-section-number">Chapter 5</span> Autoregressive Models</h1>
+<span class="header-section-number">Chapter 6</span> Autoregressive Models</h1>
 <p>Economic time series are often characterized by stochastic cycles. A cycle is a pattern of periodic fluctuations, not contained within a calendar year. A stochastic cycle is one generated by random variables. In general terms, the process is given by:
 <span class="math display">\[Y_t = f(Y_{t-1},Y_{t-2},\ldots;\mathbf{\theta})+\varepsilon_t.\;~~t=1,\ldots,T\]</span></p>
 <p>An autoregressive process (or, simply, an autoregression) is a regression in which the dependent variable and the regressors belong to the same stochastic process.</p>
@@ -251,13 +252,13 @@ div.csl-indent {
 <li>The values of <span class="math inline">\(\beta_1,\ldots,\beta_p\)</span> determine the shape of the autocorrelation function (ACF); in any case, the smaller (in absolute terms) is the persistence measure, the faster the ACF decays toward zero.</li>
 <li>The partial autocorrelation function (PACF) is characterized by “statistically significant” first <span class="math inline">\(p\)</span> spikes <span class="math inline">\(\pi_1 \neq 0,\ldots,\pi_p \neq 0\)</span>, and the remaining <span class="math inline">\(\pi_k = 0\)</span>, <span class="math inline">\(\forall k &gt; p\)</span>.</li>
 </ul>
-<div id="modeling-1" class="section level2" number="5.1">
+<div id="modeling-2" class="section level2" number="6.1">
 <h2>
-<span class="header-section-number">5.1</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-1')" onmouseout="reset_tooltip('modeling-1-tooltip')"><span class="tooltiptext" id="modeling-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.1</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-2')" onmouseout="reset_tooltip('modeling-2-tooltip')"><span class="tooltiptext" id="modeling-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<div id="ar1" class="section level3" number="5.1.1">
+<div id="ar1" class="section level3" number="6.1.1">
 <h3>
-<span class="header-section-number">5.1.1</span> AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('ar1')" onmouseout="reset_tooltip('ar1-tooltip')"><span class="tooltiptext" id="ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.1.1</span> AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('ar1')" onmouseout="reset_tooltip('ar1-tooltip')"><span class="tooltiptext" id="ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The first-order autoregression is given by: <span class="math display">\[y_t = \alpha + \beta_1 y_{t-1} + \varepsilon_t,\]</span> where <span class="math inline">\(\alpha\)</span> is a constant term; <span class="math inline">\(\beta_1\)</span> is the <em>persistence</em> parameter; and <span class="math inline">\(\varepsilon_t\)</span> is a white noise process.</p>
 <p>A necessary and sufficient condition for an <span class="math inline">\(AR(1)\)</span> process to be covariance stationary is that <span class="math inline">\(|\beta_1| &lt; 1\)</span>. We can see this by substituting recursively the lagged equations into the lagged dependent variables:
@@ -301,11 +302,11 @@ The end-result is a general linear process with geometrically declining coeffici
 <li>The partial autocorrelation function is characterized by only one spike <span class="math inline">\(\pi_1 \neq 0\)</span>, and the remaining <span class="math inline">\(\pi_k = 0\)</span>, <span class="math inline">\(\forall k &gt; 1\)</span>.</li>
 </ul>
 <p>To illustrate the foregoing, let’s generate a series of 100 observations that follow the process: <span class="math inline">\(y_t=0.8y_{t-1}+\varepsilon_t\)</span>, where <span class="math inline">\(y_0=0\)</span> and <span class="math inline">\(\varepsilon\sim N(0,1)\)</span>, and plot the ACF and PACF of this series.</p>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-10-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-14-1.png" width="624"></p>
 </div>
-<div id="ar2" class="section level3" number="5.1.2">
+<div id="ar2" class="section level3" number="6.1.2">
 <h3>
-<span class="header-section-number">5.1.2</span> AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('ar2')" onmouseout="reset_tooltip('ar2-tooltip')"><span class="tooltiptext" id="ar2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.1.2</span> AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('ar2')" onmouseout="reset_tooltip('ar2-tooltip')"><span class="tooltiptext" id="ar2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Now consider the second-order autoregression: <span class="math display">\[y_t = \alpha + \beta_1 y_{t-1} + \beta_2 y_{t-2} + \varepsilon_t\]</span></p>
 <p>where <span class="math inline">\(\alpha\)</span> is a constant term; <span class="math inline">\(\beta_1+\beta_2\)</span> is the persistence measure; and <span class="math inline">\(\varepsilon_t\)</span> is a white noise process.</p>
@@ -324,17 +325,17 @@ The end-result is a general linear process with geometrically declining coeffici
 <li>The partial autocorrelation function is characterized by only two spikes <span class="math inline">\(\pi_1 \neq 0\)</span> and <span class="math inline">\(\pi_2 \neq 0\)</span>, and the remaining <span class="math inline">\(\pi_k = 0\)</span>, <span class="math inline">\(\forall k &gt; 2\)</span>.</li>
 </ul>
 <p>Again, to illustrate, let’s generate a series of 100 observations that follow the process: <span class="math inline">\(y_t=1.1y_{t-1}-0.4y_{t-2}+\varepsilon_t\)</span>, where <span class="math inline">\(y_{-1}=y_0=0\)</span> and <span class="math inline">\(\varepsilon\sim N(0,1)\)</span>, and plot the ACF and PACF of this series.</p>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-11-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-15-1.png" width="624"></p>
 </div>
 </div>
-<div id="forecasting-1" class="section level2" number="5.2">
+<div id="forecasting-2" class="section level2" number="6.2">
 <h2>
-<span class="header-section-number">5.2</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-1')" onmouseout="reset_tooltip('forecasting-1-tooltip')"><span class="tooltiptext" id="forecasting-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.2</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-2')" onmouseout="reset_tooltip('forecasting-2-tooltip')"><span class="tooltiptext" id="forecasting-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Making forecasts for some future period, <span class="math inline">\(t+h\)</span>, from an AR(p) model that has been fit to the data up to and including period <span class="math inline">\(t+h-1\)</span> can be a straightforward exercise, so long as we have access to the relevant information set. For one-step-ahead forecasts, the information set is readily available. For multi-step-ahead forecasts, we need to ‘come up’ with the value of the variable that has not been realized yet. For example, when making a two-step-ahead forecast for period <span class="math inline">\(t+2\)</span>, we need data from period <span class="math inline">\(t+1\)</span>, which is not available at the time when the forecast is made. Instead, we need to use our forecast for period <span class="math inline">\(t+1\)</span>. The same applies to forecasts for any subsequent periods in the future. This approach is known as an <em>iterative</em> method of forecasting, wherein we make forecast for some period using the available data, then iterate forward by one period and use the most recent forecast to make the next period’s forecast, and so on and so forth.</p>
-<div id="one-step-ahead-forecast-from-ar1" class="section level3" number="5.2.1">
+<div id="one-step-ahead-forecast-from-ar1" class="section level3" number="6.2.1">
 <h3>
-<span class="header-section-number">5.2.1</span> One-step-ahead forecast from AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-ar1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-ar1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.2.1</span> One-step-ahead forecast from AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-ar1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-ar1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+1\)</span> is: <span class="math display">\[y_{t+1} = \alpha + \beta_1 y_{t} + \varepsilon_{t+1}\]</span></p>
 <p>The optimal one-step-ahead forecast is: <span class="math display">\[y_{t+1|t} = E(y_{t+1}|\Omega_t) = E(\alpha + \beta_1 y_{t} + \varepsilon_{t+1}) = \alpha + \beta_1 y_{t}\]</span></p>
@@ -342,9 +343,9 @@ The end-result is a general linear process with geometrically declining coeffici
 <p>The one-step-ahead forecast variance: <span class="math display">\[\sigma_{t+1|t}^2 = Var(y_{t+1}|\Omega_t) = E(e_{t+1|t}^2) = E(\varepsilon_{t+1}^2) = \sigma_{\varepsilon}^2\]</span></p>
 <p>The one-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+1|t} \pm z_{.025}\sigma_{t+1|t} = y_{t+1|t} \pm 1.96\sigma_{\varepsilon}\]</span></p>
 </div>
-<div id="two-step-ahead-forecast-from-ar1" class="section level3" number="5.2.2">
+<div id="two-step-ahead-forecast-from-ar1" class="section level3" number="6.2.2">
 <h3>
-<span class="header-section-number">5.2.2</span> Two-step-ahead forecast from AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-ar1')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-ar1-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.2.2</span> Two-step-ahead forecast from AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-ar1')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-ar1-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+2\)</span> is: <span class="math display">\[y_{t+2} = \alpha + \beta_1 y_{t+1} + \varepsilon_{t+2}\]</span></p>
 <p>The optimal two-step-ahead forecast is: <span class="math display">\[y_{t+2|t} = E(y_{t+2}|\Omega_t) = E(\alpha + \beta_1 y_{t+1} + \varepsilon_{t+2}) = \alpha(1+\beta_1) + \beta_1^2 y_t\]</span></p>
@@ -362,9 +363,9 @@ e_{t+2|t} &amp;= y_{t+2} - y_{t+2|t} \\
 \end{aligned}\]</span></p>
 <p>The two-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+2|t} \pm z_{.025}\sigma_{t+2|t} = y_{t+2|t} \pm 1.96\sigma_{\varepsilon}\sqrt{1+\beta_1^2}\]</span></p>
 </div>
-<div id="h-step-ahead-forecast-from-ar1" class="section level3" number="5.2.3">
+<div id="h-step-ahead-forecast-from-ar1" class="section level3" number="6.2.3">
 <h3>
-<span class="header-section-number">5.2.3</span> h-step-ahead forecast from AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('h-step-ahead-forecast-from-ar1')" onmouseout="reset_tooltip('h-step-ahead-forecast-from-ar1-tooltip')"><span class="tooltiptext" id="h-step-ahead-forecast-from-ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.2.3</span> h-step-ahead forecast from AR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('h-step-ahead-forecast-from-ar1')" onmouseout="reset_tooltip('h-step-ahead-forecast-from-ar1-tooltip')"><span class="tooltiptext" id="h-step-ahead-forecast-from-ar1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+h\)</span> is: <span class="math display">\[y_{t+h} = \alpha + \beta_1 y_{t+h-1} + \varepsilon_{t+h}\]</span></p>
 <p>The optimal h-step-ahead forecast: <span class="math display">\[y_{t+h|t} = E(y_{t+h}|\Omega_t) = E(\alpha + \beta_1 y_{t+h-1} + \varepsilon_{t+1}) = \alpha\textstyle\sum_{j=0}^{h-1}\beta_1^j + \beta_1^h y_t\]</span></p>
@@ -376,9 +377,9 @@ e_{t+2|t} &amp;= y_{t+2} - y_{t+2|t} \\
 <p>The forecast variance converges to: <span class="math display">\[\sigma_{t+h|t}^2 = \frac{\sigma_{\varepsilon}^2}{1-\beta_1^2}\]</span></p>
 <p>The (95%) interval forecast converges to: <span class="math display">\[y_{t+h|t} \pm z_{.025}\sigma_{t+h|t} = \frac{\alpha}{1-\beta_1} \pm 1.96\frac{\sigma_{\varepsilon}}{\sqrt{1-\beta_1^2}}\]</span></p>
 </div>
-<div id="one-step-ahead-forecast-from-ar2" class="section level3" number="5.2.4">
+<div id="one-step-ahead-forecast-from-ar2" class="section level3" number="6.2.4">
 <h3>
-<span class="header-section-number">5.2.4</span> One-step-ahead forecast from AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-ar2')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-ar2-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-ar2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.2.4</span> One-step-ahead forecast from AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-ar2')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-ar2-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-ar2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+1\)</span> is: <span class="math display">\[y_{t+1} = \alpha + \beta_1 y_{t} + \beta_2 y_{t-1} + \varepsilon_{t+1}\]</span></p>
 <p>The optimal one-step-ahead forecast:
@@ -394,9 +395,9 @@ e_{t+1|t} &amp;= y_{t+1} - y_{t+1|t} \\
 <p>The one-step-ahead forecast variance: <span class="math display">\[\sigma_{t+1|t}^2 = Var(y_{t+1}|\Omega_t) = E(e_{t+1|t}^2) = E(\varepsilon_{t+1}^2) = \sigma_{\varepsilon}^2\]</span></p>
 <p>The one-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+1|t} \pm z_{.025}\sigma_{t+1|t} = y_{t+1|t} \pm 1.96\sigma_{\varepsilon}\]</span></p>
 </div>
-<div id="two-step-ahead-forecast-from-ar2" class="section level3" number="5.2.5">
+<div id="two-step-ahead-forecast-from-ar2" class="section level3" number="6.2.5">
 <h3>
-<span class="header-section-number">5.2.5</span> Two-step-ahead forecast from AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-ar2')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-ar2-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-ar2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.2.5</span> Two-step-ahead forecast from AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-ar2')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-ar2-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-ar2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+2\)</span> is: <span class="math display">\[y_{t+2} = \alpha + \beta_1 y_{t+1} + \beta_2 y_{t} + \varepsilon_{t+2}\]</span></p>
 <p>The optimal two-step-ahead forecast:
@@ -413,9 +414,9 @@ e_{t+2|t} = y_{t+2} - y_{t+2|t} =&amp; \alpha + \beta_1 y_{t+1} + \beta_2 y_{t} 
 <span class="math display">\[\sigma_{t+2|t}^2 = Var(y_{t+2}|\Omega_t) = E(e_{t+2|t}^2) = E(\beta_1\varepsilon_{t+1} + \varepsilon_{t+2})^2 = \sigma_{\varepsilon}^2(1+\beta_1^2)\]</span></p>
 <p>The two-step-ahead (95%) interval forecast: <span class="math display">\[y_{t+2|t} \pm z_{.025}\sigma_{t+2|t} = y_{t+2|t} \pm 1.96\sigma_{\varepsilon}\sqrt{1+\beta_1^2}\]</span></p>
 </div>
-<div id="one-step-ahead-forecast-from-ar2-1" class="section level3" number="5.2.6">
+<div id="one-step-ahead-forecast-from-ar2-1" class="section level3" number="6.2.6">
 <h3>
-<span class="header-section-number">5.2.6</span> One-step-ahead forecast from AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-ar2-1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-ar2-1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-ar2-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">6.2.6</span> One-step-ahead forecast from AR(2)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-ar2-1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-ar2-1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-ar2-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realization of the random variable in period <span class="math inline">\(t+h\)</span> is: <span class="math display">\[y_{t+h} = \alpha + \beta_1 y_{t+h-1} + \beta_2 y_{t+h-2} + \varepsilon_{t+h}\]</span></p>
 <p>The optimal h-step-ahead forecast (iterated method):
@@ -448,11 +449,11 @@ y_{t+h|t} &amp;= \alpha + \beta_1 y_{t+h-1|t} + \beta_2 y_{t+h-2|t}
 </div>
 </div>
 <p style="text-align: center;">
-<a href="trends-and-seasonality.html"><button class="btn btn-default">Previous</button></a>
+<a href="seasonality.html"><button class="btn btn-default">Previous</button></a>
 <a href="vector-autoregressive-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>

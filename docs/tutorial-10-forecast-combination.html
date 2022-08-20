@@ -206,16 +206,17 @@ div.csl-indent {
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends-and-seasonality.html" id="toc-trends-and-seasonality"><span class="toc-section-number">4</span> Trends and Seasonality</a>
-<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">5</span> Autoregressive Models</a>
-<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -259,7 +260,7 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>.</p>
 <span id="cb143-6"><a href="tutorial-10-forecast-combination.html#cb143-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb143-7"><a href="tutorial-10-forecast-combination.html#cb143-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
 <span id="cb143-8"><a href="tutorial-10-forecast-combination.html#cb143-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-88-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-92-1.png" width="624"></p>
 <p>Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="tutorial-10-forecast-combination.html#cb144-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>),<span class="at">trend=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dt)))]</span>
 <span id="cb144-2"><a href="tutorial-10-forecast-combination.html#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -345,7 +346,7 @@ Hodell, David A, Jason H Curtis, and Mark Brenner. 1995. <span>“<span class="n
 <a href="tutorial-9-forecast-evaluation.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>

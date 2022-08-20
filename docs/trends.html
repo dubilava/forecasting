@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Chapter 4 Trends | Forecasting With Time Series Models Using R" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Chapter 4 Trends | Forecasting With Time Series Models Using R" />
+
+
+<meta name="author" content="David Ubilava" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="Chapter 4 Trends | Forecasting With Time Series Models Using R">
+
+<title>Chapter 4 Trends | Forecasting With Time Series Models Using R</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var element_label= $("label[for *= 'tufte-sn-']");
+    var count = $(element_label).length;
+    $(element_label).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('for','tufte-sn-'+ ++index);
+      $(this).text(index);
+    });
+  });
+  $(document).ready(function () {
+    var element_input= $("input[id *= 'tufte-sn-']");
+    var count = $(element_input).length;
+    $(element_input).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('id','tufte-sn-'+ ++index);
+    }); 
+  });
+  $(document).ready(function () {
+    var element_span= $("span[class *= 'sidenote-number']");
+    var count = $(element_span).length;
+    $(element_span).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).text(++index);
+    }); 
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Forecasting With Time Series Models Using R<p><p class="author">David Ubilava</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html" id="toc-foreword">Foreword</a>
+<a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
+<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
+<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
+<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
+<a id="active-page" href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a><ul class="toc-sections">
+<li class="toc"><a href="#spurious-relationships"> Spurious Relationships</a></li>
+<li class="toc"><a href="#modeling"> Modeling</a></li>
+<li class="toc"><a href="#forecasting"> Forecasting</a></li>
+</ul>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
+<a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
+<a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
+<a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
+<a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
+<a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
+<a href="tutorial-6-vector-autoregressive-models.html" id="toc-tutorial-6-vector-autoregressive-models">Tutorial 6: Vector Autoregressive Models</a>
+<a href="tutorial-7-dynamic-factor-models.html" id="toc-tutorial-7-dynamic-factor-models">Tutorial 7: Dynamic Factor Models</a>
+<a href="tutorial-8-threshold-autoregression.html" id="toc-tutorial-8-threshold-autoregression">Tutorial 8: Threshold Autoregression</a>
+<a href="tutorial-9-forecast-evaluation.html" id="toc-tutorial-9-forecast-evaluation">Tutorial 9: Forecast Evaluation</a>
+<a href="tutorial-10-forecast-combination.html" id="toc-tutorial-10-forecast-combination">Tutorial 10: Forecast Combination</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="trends" class="section level1" number="4">
+<h1>
+<span class="header-section-number">Chapter 4</span> Trends</h1>
+<p><span class="newthought">Trends are common</span> in economic time series (and not only). A trend is a unidirectional change of time series over an extended period of time. Over an extended period of time, the direction of the change may change. That is, series that used to be trending upward may start trending downward. Interest rates before and after 1980s featured such pattern, for example. Moreover, even if a series are, on average, increasing (or decreasing), the rate of change may alter over time. Agricultural yields of cereal crops, for example, have been increasing at a decreasing rate over the past several decades.</p>
+<p>Modeling and forecasting trending time series is a fairly straightforward task. But before we get to it, let’s examine the issues associated with ignoring the presence of trends when analyzing the time series data.</p>
+<div id="spurious-relationships" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Spurious Relationships<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('spurious-relationships')" onmouseout="reset_tooltip('spurious-relationships-tooltip')"><span class="tooltiptext" id="spurious-relationships-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Nothing about trending time series necessarily violates the classical linear regression model assumptions. The issue may arise, however, if an unobserved trending variable is simultaneously correlated with the dependent variable as well as one of the independent variables in a time series regression. In such case, we may find a (statistically significant) relationship between two or more unrelated economic variables simply because they are all trending. Such relationship is referred to as a <em>spurious relationship</em>.</p>
+<p>To illustrate, consider two trending variables: <span class="math display">\[y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),\]</span> and <span class="math display">\[x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),\]</span> where <span class="math inline">\(Cov(\nu_t,\upsilon_t) = 0\)</span>. For simplicity, we can assume <span class="math inline">\(\sigma_{\nu}^2=\sigma_{\upsilon}^2=1\)</span>. Suppose, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\delta\)</span> are some positive scalars, say, <span class="math inline">\(0.3\)</span> and <span class="math inline">\(0.5\)</span>, respectively. That is, <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are trending in the same direction. Below is an example of such time series:
+<img src="forecasting_files/figure-html/unnamed-chunk-6-1.png" width="624"></p>
+<p>If we were to estimate <span class="math display">\[y_t = \alpha+\beta x_t + \varepsilon_t,\]</span> we are likely to find the relationship between the two, in this case we will find <span class="math inline">\(\beta&gt;0\)</span>, even though, we know, these variables are not related. To illustrate this, we will generate 1000 samples of size 120 for <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, and in each case we will estimate the parameter <span class="math inline">\(\beta\)</span>. The following graph illustrates the empirical distribution of these parameter estimates:
+<img src="forecasting_files/figure-html/unnamed-chunk-7-1.png" width="624"></p>
+<p>Luckily, we can easily “fix” the issue, by incorporating a trend in the regression: <span class="math display">\[y_t = \alpha+\beta x_t + \eta t + \varepsilon_t.\]</span> Once the trend is accounted for, the previously illustrated “bias” disappears. Using a similar simulation exercise as before, the following graph illustrates the empirical distribution of these parameter estimates:
+<img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="624"></p>
+<p>In fact, this “fix” is equivalent to regressing a de-trended <span class="math inline">\(y\)</span> on a de-trended <span class="math inline">\(x\)</span>. To de-trend a variable, we first run a regression: <span class="math inline">\(y_t = \gamma_0 + \gamma_1 t + \nu_t\)</span>, and then obtain the fitted values for some fixed trend (typically zero), that is: <span class="math inline">\(\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t\)</span>, where <span class="math inline">\(\hat{\gamma}_0\)</span> and <span class="math inline">\(\hat{\nu}_t\)</span> are the parameter estimate and the residuals from the foregoing regression.</p>
+<p>The foregoing exercise did not specify, but the presented example was that for a <em>deterministic trend</em>. Another type is a <em>stochastic trend</em>. A random walk process, <span class="math inline">\(y_t=y_{t-1}+\zeta_t\)</span>, represents a stochastic trend.</p>
+<p>As it turns out, a spurious relationship can be detected between two stochastic trend processes. Suppose, in addition to the aforementioned random walk process, we have another random walk, <span class="math inline">\(x_t=x_{t-1}+\xi_t\)</span>. As before, to keep things simple, suppose <span class="math inline">\(\zeta\sim N(0,1)\)</span> and <span class="math inline">\(\xi\sim N(0,1)\)</span>, and <span class="math inline">\(Cov(\zeta_t,\xi_t)=0\)</span>. The two variables, obviously, are not related. And yet, if we regress one on another, we are likely to reject the null more frequently than we should. The following graph illustrates the empirical distribution of t statistics:
+<img src="forecasting_files/figure-html/unnamed-chunk-9-1.png" width="624"></p>
+<p>The previous ‘fix’, which involved adding a trend in the regression, doesn’t quite work here, as observed in the following histogram.
+<img src="forecasting_files/figure-html/unnamed-chunk-10-1.png" width="624"></p>
+<p>But there is a fix to the issue, and that involves first-differencing both series and regressing <span class="math inline">\(\Delta y_t\)</span> on <span class="math inline">\(\Delta x_t\)</span>, which resolves the issue:</p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-11-1.png" width="624"></p>
+</div>
+<div id="modeling" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling')" onmouseout="reset_tooltip('modeling-tooltip')"><span class="tooltiptext" id="modeling-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>As seen, accounting for trends in a time series can help us resolve some regression issues. But a trend in and of itself can be an inherent feature of a times series. To that end, we can, and indeed should, account for trends, when they are present, to forecast time series. In what follows, the main focus is deterministic trends. We will address stochastic trends in another chapter.</p>
+<p>The simplest (and perhaps most frequently applied) model to account for the trending time series is a <em>linear</em> trend model: <span class="math display">\[y_t = \alpha + \beta t\]</span></p>
+<p>Other likely candidate trend specifications are <em>polynomial</em> (e.g. quadratic, cubic, etc.), <em>exponential</em>, and <em>shifting</em> (or <em>switching</em>) trend models, respectively given by:
+<span class="math display">\[\begin{aligned}
+    y_t &amp;= \alpha + \beta_1 t + \beta_2 t^2 + \ldots + \beta_p t^p \\
+    y_t &amp;= e^{\alpha + \beta t}\;~~\mbox{or}\;~~\ln{y_t} = \alpha + \beta t \\
+    y_t &amp;= \alpha + \beta_1 t + \beta_2 (t-\tau)I(t&gt;\tau),\;~~\tau\in\mathsf{T}
+    \end{aligned}\]</span></p>
+<p>In what follows, we will model and forecast linearly trending time series. Any polynomial trend model is an extension of a linear trend model, and shares the general characteristics of the latter. An exponential trend model, from the standpoint of modeling and forecasting, is largely equivalent to a linear trend model fitted to the natural logarithm of a series. For a time series <span class="math inline">\(\{y_t: t=1,\ldots,T\}\)</span>, the natural logarithm is: <span class="math inline">\(w_t = \ln{y_t}\)</span>. Some of the benefits of such a transformation are:</p>
+<ul>
+<li>easier to interpretation and comparison across different series (e.g., GDP growth across different countries);</li>
+<li>homogenized (across time) variability of a time series;</li>
+<li>possibly improved forecasting accuracy.</li>
+</ul>
+<p>We will cover the shifting/switching trend models in another chapter.</p>
+<p>Trends are (relatively) easy to model and forecast. Caution is needed, however, with (higher order) polynomial trends, as they may fit well in-sample, but cause major problems out-of-sample.</p>
+<div id="trends-in-mortgage-rates" class="section level3" number="4.2.1">
+<h3>
+<span class="header-section-number">4.2.1</span> Trends in mortgage rates<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('trends-in-mortgage-rates')" onmouseout="reset_tooltip('trends-in-mortgage-rates-tooltip')"><span class="tooltiptext" id="trends-in-mortgage-rates-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Consider monthly series of the U.S. mortgage rates (sourced from the online data portal of the Federal Reserve Bank of St. Louis) spanning the January 1991 – December 2020 period.</p>
+<div class="figure">
+<span style="display:block;" id="fig:intrates"></span>
+<p class="caption marginnote shownote">
+Figure 4.1: 30-Year Fixed Rate Mortgage Average in the U.S.
+</p>
+<img src="forecasting_files/figure-html/intrates-1.png" alt="30-Year Fixed Rate Mortgage Average in the U.S." width="624">
+</div>
+<p>The series feature apparent downward trend, which we can approximate by a linear trend model. We estimate the model parameters by regressing interest rates, which we denote by <span class="math inline">\(y\)</span> on time index, which we denote by <span class="math inline">\(t\)</span>. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha} + \hat{\beta} t\)</span>, which we overlay onto the time series:</p>
+<div class="figure">
+<span style="display:block;" id="fig:lintrend"></span>
+<p class="caption marginnote shownote">
+Figure 4.2: Fitted linear trend
+</p>
+<img src="forecasting_files/figure-html/lintrend-1.png" alt="Fitted linear trend" width="624">
+</div>
+<p>It appears that the linear trend well approximates the general long-term pattern of the time series. One potential issue becomes immediately apparent, however. If we were to present a multi-decade prediction, at some point, forecasts will enter the negative range, which makes no economic sense.</p>
+<p>To avoid the issue, we may favor an exponential trend model instead. We estimate the model parameters by regressing interest rates, which we denote by <span class="math inline">\(y\)</span> on time index, which we denote by <span class="math inline">\(t\)</span>. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha} + \hat{\beta} t\)</span>, which we overlay onto the time series:</p>
+<div class="figure">
+<span style="display:block;" id="fig:exptrend"></span>
+<p class="caption marginnote shownote">
+Figure 4.3: Fitted exponential trend
+</p>
+<img src="forecasting_files/figure-html/exptrend-1.png" alt="Fitted exponential trend" width="624">
+</div>
+<p>As it turns out, the exponential trend also well approximates the general long-term pattern of the time series. And, moreover, there is not risl for forecasts to ever take on a negative value, thus remaining economically sensible. Whether linear or exponential trend model yields a more accurate short-term forecasts, is a matter of forecast accuracy testing.</p>
+</div>
+</div>
+<div id="forecasting" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting')" onmouseout="reset_tooltip('forecasting-tooltip')"><span class="tooltiptext" id="forecasting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The predictors of the deterministic trend models are pre-determined, which means, after fitting the model, we can readily obtain point and interval forecasts for any horizon <span class="math inline">\(h\)</span>.</p>
+<p>If a linear trend model is assumed, then a realization of the stochastic process at forecast horizon <span class="math inline">\(h\)</span> is: <span class="math display">\[y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h},\]</span> where <span class="math inline">\(\varepsilon_{t+h}\sim iid~\text{N}(0,\sigma^2_{\varepsilon})\)</span> is the error term.</p>
+<p>Point forecast of <span class="math inline">\(y_{t+h}\)</span> is given by: <span class="math display">\[\hat{y}_{t+h|t} = E(y_{t+h}|\Omega_t;\hat{\theta}) = \hat{\alpha} + \hat{\beta} (t+h)\]</span></p>
+<p>Let’s ignore parameter uncertainty at the moment, so that <span class="math inline">\(\hat{y}_{t+h|t}=y_{t+h|t}\)</span>. The forecast error, then, is: <span class="math display">\[e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}\]</span></p>
+<p>The forecast variance, then, is: <span class="math display">\[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2_{\varepsilon},\;~~\forall\;h\]</span></p>
+<p>From this, we can obtain interval forecast at any horizon, which is: <span class="math display">\[y_{t+h|t} \pm 1.96 \hat{\sigma}_{\varepsilon}.\]</span></p>
+<p>To illustrate the foregoing, let’s revisit the U.S. mortgage rates data, and obtain point and interval forecasts for periods from January 2011 onward based on parameter estimates using data up to and including December 2010.</p>
+<div class="figure">
+<span style="display:block;" id="fig:fortrend"></span>
+<p class="caption marginnote shownote">
+Figure 4.4: Linear trend forecast
+</p>
+<img src="forecasting_files/figure-html/fortrend-1.png" alt="Linear trend forecast" width="624">
+</div>
+<p>Several characteristics of the deterministic trend forecasts:</p>
+<ul>
+<li>they tend to understate uncertainty (at long horizons as the forecast interval does not widen with the horizon);</li>
+<li>short-term trend forecasts can perform poorly; long-term trend forecasts typically perform poorly;</li>
+<li>sometimes it may be beneficial, from the standpoint of achieving better accuracy, to forecast growth rates, and then reconstruct level forecasts.</li>
+</ul>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="forecasting-methods-and-routines.html"><button class="btn btn-default">Previous</button></a>
+<a href="seasonality.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2022-08-20
+ using 
+R version 4.1.2 (2021-11-01)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

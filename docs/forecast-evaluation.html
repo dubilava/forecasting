@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 9 Forecast Evaluation | Forecasting With Time Series Models Using R" />
+<meta property="og:title" content="Chapter 10 Forecast Evaluation | Forecasting With Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 9 Forecast Evaluation | Forecasting With Time Series Models Using R" />
+<meta property="og:description" content="Chapter 10 Forecast Evaluation | Forecasting With Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 9 Forecast Evaluation | Forecasting With Time Series Models Using R">
+<meta name="description" content="Chapter 10 Forecast Evaluation | Forecasting With Time Series Models Using R">
 
-<title>Chapter 9 Forecast Evaluation | Forecasting With Time Series Models Using R</title>
+<title>Chapter 10 Forecast Evaluation | Forecasting With Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -206,19 +206,20 @@ div.csl-indent {
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends-and-seasonality.html" id="toc-trends-and-seasonality"><span class="toc-section-number">4</span> Trends and Seasonality</a>
-<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">5</span> Autoregressive Models</a>
-<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
-<a id="active-page" href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> Forecast Evaluation</a><ul class="toc-sections">
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a id="active-page" href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a><ul class="toc-sections">
 <li class="toc"><a href="#the-need-for-the-forecast-evaluation"> The Need for the Forecast Evaluation</a></li>
 <li class="toc"><a href="#relative-forecast-accuracy-tests"> Relative Forecast Accuracy Tests</a></li>
 </ul>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -235,12 +236,12 @@ div.csl-indent {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="forecast-evaluation" class="section level1" number="9">
+<div id="forecast-evaluation" class="section level1" number="10">
 <h1>
-<span class="header-section-number">Chapter 9</span> Forecast Evaluation</h1>
-<div id="the-need-for-the-forecast-evaluation" class="section level2" number="9.1">
+<span class="header-section-number">Chapter 10</span> Forecast Evaluation</h1>
+<div id="the-need-for-the-forecast-evaluation" class="section level2" number="10.1">
 <h2>
-<span class="header-section-number">9.1</span> The Need for the Forecast Evaluation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-need-for-the-forecast-evaluation')" onmouseout="reset_tooltip('the-need-for-the-forecast-evaluation-tooltip')"><span class="tooltiptext" id="the-need-for-the-forecast-evaluation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.1</span> The Need for the Forecast Evaluation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-need-for-the-forecast-evaluation')" onmouseout="reset_tooltip('the-need-for-the-forecast-evaluation-tooltip')"><span class="tooltiptext" id="the-need-for-the-forecast-evaluation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>We typically have several candidate econometric models or methods to forecast an economic variable of interest. Among these, we tend to select the most adequate using in-sample goodness of fit measures (e.g., AIC or SIC).</p>
 <p>A more sensible approach, at least from the standpoint of a forecaster, would be to assess goodness of fit in an out-of-sample setting. Recall that models that offer the superior in-sample fit don’t necessarily produce the most accurate out-of-sample forecasts. That is, while a better in-sample fit can be achieved by incorporating additional parameters in the model, such more complex models extrapolate the estimated parameter uncertainty into the forecasts, thus sabotaging their accuracy.</p>
@@ -253,23 +254,23 @@ div.csl-indent {
 </ul>
 <p>But the loss function is a function of a random variable, and in practice we deal with sample information, so sampling variation needs to be taken into the account. Statistical methods of evaluation are, therefore, desirable (at the very least).</p>
 </div>
-<div id="relative-forecast-accuracy-tests" class="section level2" number="9.2">
+<div id="relative-forecast-accuracy-tests" class="section level2" number="10.2">
 <h2>
-<span class="header-section-number">9.2</span> Relative Forecast Accuracy Tests<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('relative-forecast-accuracy-tests')" onmouseout="reset_tooltip('relative-forecast-accuracy-tests-tooltip')"><span class="tooltiptext" id="relative-forecast-accuracy-tests-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.2</span> Relative Forecast Accuracy Tests<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('relative-forecast-accuracy-tests')" onmouseout="reset_tooltip('relative-forecast-accuracy-tests-tooltip')"><span class="tooltiptext" id="relative-forecast-accuracy-tests-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Here we will cover two tests for the hypothesis that two forecasts are equivalent, in the sense that the associated loss differential is not statistically significantly different from zero.</p>
 <p>Consider a time series of length <span class="math inline">\(T\)</span>. Suppose <span class="math inline">\(h\)</span>-step-ahead forecasts for periods <span class="math inline">\(R+h\)</span> through <span class="math inline">\(T\)</span> have been generated from two competing models <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>: <span class="math inline">\(y_{t+h|t,i}\)</span> and <span class="math inline">\(y_{t+h|t,j}\)</span>, with corresponding forecast errors: <span class="math inline">\(e_{t+h,i}\)</span> and <span class="math inline">\(e_{t+h,j}\)</span>. The null hypothesis of equal predictive ability can be given in terms of the unconditional expectation of the loss differential: <span class="math display">\[H_0: E\left[d(e_{t+h,ij})\right] = 0,\]</span> where <span class="math inline">\(d(e_{t+h,ij}) = L(e_{t+h,i})-L(e_{t+h,j})\)</span>.</p>
-<div id="the-morgan-granger-newbold-test" class="section level3" number="9.2.1">
+<div id="the-morgan-granger-newbold-test" class="section level3" number="10.2.1">
 <h3>
-<span class="header-section-number">9.2.1</span> The Morgan-Granger-Newbold Test<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-morgan-granger-newbold-test')" onmouseout="reset_tooltip('the-morgan-granger-newbold-test-tooltip')"><span class="tooltiptext" id="the-morgan-granger-newbold-test-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.2.1</span> The Morgan-Granger-Newbold Test<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-morgan-granger-newbold-test')" onmouseout="reset_tooltip('the-morgan-granger-newbold-test-tooltip')"><span class="tooltiptext" id="the-morgan-granger-newbold-test-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The Morgan-Granger-Newbold (MGN) test is based on auxiliary variables: <span class="math inline">\(u_{1,t+h} = e_{t+h,i}-e_{t+h,j}\)</span> and <span class="math inline">\(u_{2,t+h} = e_{t+h,i}+e_{t+h,j}\)</span>. It follows that: <span class="math display">\[E(u_{1,t+h},u_{2,t+h}) = MSFE(i,t+h)-MSFE(j,t+h).\]</span> Thus, the hypothesis of interest is equivalent to testing whether the two auxiliary variables are correlated.</p>
 <p>The MGN test statistic is: <span class="math display">\[\frac{r}{\sqrt{(P-1)^{-1}(1-r^2)}}\sim t_{P-1},\]</span> where <span class="math inline">\(t_{P-1}\)</span> is a Student t distribution with <span class="math inline">\(P-1\)</span> degrees of freedom, <span class="math inline">\(P\)</span> is the number of out-of-sample forecasts, and <span class="math display">\[r=\frac{\sum_{t=R}^{T-h}{u_{1,t+h}u_{2,t+h}}}{\sqrt{\sum_{t=R}^{T-h}{u_{1,t+h}^2}\sum_{t=R}^{T-h}{u_{2,t+h}^2}}}\]</span></p>
 <p>The MGN test relies on the assumption that forecast errors (of the forecasts to be compared) are unbiased, normally distributed, and uncorrelated (with each other). These are rather strict assumptions that are, often, violated in empirical applications.</p>
 </div>
-<div id="the-diebold-mariano-test" class="section level3" number="9.2.2">
+<div id="the-diebold-mariano-test" class="section level3" number="10.2.2">
 <h3>
-<span class="header-section-number">9.2.2</span> The Diebold-Mariano Test<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-diebold-mariano-test')" onmouseout="reset_tooltip('the-diebold-mariano-test-tooltip')"><span class="tooltiptext" id="the-diebold-mariano-test-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.2.2</span> The Diebold-Mariano Test<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-diebold-mariano-test')" onmouseout="reset_tooltip('the-diebold-mariano-test-tooltip')"><span class="tooltiptext" id="the-diebold-mariano-test-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The Diebold-Mariano (DM) test relaxes the aforementioned requirements on the forecast errors. The DM test statistic is: <span class="math display">\[\frac{\bar{d}_h}{\sqrt{\sigma_d^2/P}} \sim N(0,1),\]</span> where <span class="math inline">\(\bar{d}_h=P^{-1}\sum_{t=R}^{T-h} d(e_{t+h,ij})\)</span>, and where <span class="math inline">\(P=T-R-h+1\)</span> is the total number of forecasts generated using a rolling or recursive widnow scheme, for example.</p>
 <p>A modified version of the DM statistic, due to Harvey, Leybourne, and Newbold (1998), addresses the finite sample properties of the test, so that: <span class="math display">\[\sqrt{\frac{P+1-2h+P^{-1}h(h-1)}{P}}DM\sim t_{P-1},\]</span> where <span class="math inline">\(t_{P-1}\)</span> is a Student t distribution with <span class="math inline">\(P-1\)</span> degrees of freedom.</p>
@@ -283,7 +284,7 @@ div.csl-indent {
 <a href="forecast-combination.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>

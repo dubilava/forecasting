@@ -206,16 +206,17 @@ div.csl-indent {
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends-and-seasonality.html" id="toc-trends-and-seasonality"><span class="toc-section-number">4</span> Trends and Seasonality</a>
-<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">5</span> Autoregressive Models</a>
-<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -271,7 +272,7 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 <span id="cb80-5"><a href="tutorial-6-vector-autoregressive-models.html#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"darkgray"</span>,<span class="st">"steelblue"</span>))<span class="sc">+</span></span>
 <span id="cb80-6"><a href="tutorial-6-vector-autoregressive-models.html#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
 <span id="cb80-7"><a href="tutorial-6-vector-autoregressive-models.html#cb80-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-67-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-71-1.png" width="624"></p>
 <p>Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="tutorial-6-vector-autoregressive-models.html#cb81-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y_l1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y_l2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">x_l1=</span><span class="fu">shift</span>(x,<span class="dv">1</span>),<span class="at">x_l2=</span><span class="fu">shift</span>(x,<span class="dv">2</span>))]</span>
 <span id="cb81-2"><a href="tutorial-6-vector-autoregressive-models.html#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -491,7 +492,7 @@ x_{2,t} &amp;= -0.2 + 0.9x_{1,t-1} + \varepsilon_{2,t}
 <a href="tutorial-7-dynamic-factor-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>

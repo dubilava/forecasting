@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 6 Vector Autoregressive Models | Forecasting With Time Series Models Using R" />
+<meta property="og:title" content="Chapter 7 Vector Autoregressive Models | Forecasting With Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 6 Vector Autoregressive Models | Forecasting With Time Series Models Using R" />
+<meta property="og:description" content="Chapter 7 Vector Autoregressive Models | Forecasting With Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 6 Vector Autoregressive Models | Forecasting With Time Series Models Using R">
+<meta name="description" content="Chapter 7 Vector Autoregressive Models | Forecasting With Time Series Models Using R">
 
-<title>Chapter 6 Vector Autoregressive Models | Forecasting With Time Series Models Using R</title>
+<title>Chapter 7 Vector Autoregressive Models | Forecasting With Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -206,19 +206,20 @@ div.csl-indent {
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends-and-seasonality.html" id="toc-trends-and-seasonality"><span class="toc-section-number">4</span> Trends and Seasonality</a>
-<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">5</span> Autoregressive Models</a>
-<a id="active-page" href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">6</span> Vector Autoregressive Models</a><ul class="toc-sections">
-<li class="toc"><a href="#modeling-2"> Modeling</a></li>
-<li class="toc"><a href="#forecasting-2"> Forecasting</a></li>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a>
+<a id="active-page" href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a><ul class="toc-sections">
+<li class="toc"><a href="#modeling-3"> Modeling</a></li>
+<li class="toc"><a href="#forecasting-3"> Forecasting</a></li>
 </ul>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -235,14 +236,14 @@ div.csl-indent {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="vector-autoregressive-models" class="section level1" number="6">
+<div id="vector-autoregressive-models" class="section level1" number="7">
 <h1>
-<span class="header-section-number">Chapter 6</span> Vector Autoregressive Models</h1>
+<span class="header-section-number">Chapter 7</span> Vector Autoregressive Models</h1>
 <p>Many economic variables are interrelated. For example, changes to household income impact their consumption levels; changes to interest rates impact investments in the economy. Often (albeit not always) the relationship between the variables goes in both directions. For example, higher wages (and, therefore, income) result in higher prices (inflation), which in turn puts an upward pressure on wages.</p>
 <p>The foregoing implies that a shock to a variable may propagate a dynamic response not only of that variable, but also of related variables. The dynamic linkages between two (or more) economic variables can be modeled as a <em>system of equations</em>, represented by a vector autoregressive (VAR) process.</p>
-<div id="modeling-2" class="section level2" number="6.1">
+<div id="modeling-3" class="section level2" number="7.1">
 <h2>
-<span class="header-section-number">6.1</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-2')" onmouseout="reset_tooltip('modeling-2-tooltip')"><span class="tooltiptext" id="modeling-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">7.1</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-3')" onmouseout="reset_tooltip('modeling-3-tooltip')"><span class="tooltiptext" id="modeling-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>To begin, consider a bivariate (two-dimensional) VAR of order one, VAR(1).</p>
 <p>Let <span class="math inline">\(\{X_{1,t}\}\)</span> and <span class="math inline">\(\{X_{2,t}\}\)</span> be the stationary stochastic processes. A bivariate VAR(1), is then given by:
@@ -276,9 +277,9 @@ x_{2,t} &amp;= \alpha_2 + \pi_{21}x_{1,t-1} + \pi_{22}x_{2,t-1} + \varepsilon_{2
 \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(\left|\Sigma_{\varepsilon}\right|\)</span> is the determinant of the residual covariance matrix; <span class="math inline">\(n\)</span> is the number of equations, and <span class="math inline">\(T\)</span> is the effective sample size.</p>
 <p>We can estimate each equation of the VAR individually using OLS.</p>
-<div id="in-sample-granger-causality" class="section level3" number="6.1.1">
+<div id="in-sample-granger-causality" class="section level3" number="7.1.1">
 <h3>
-<span class="header-section-number">6.1.1</span> In-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('in-sample-granger-causality')" onmouseout="reset_tooltip('in-sample-granger-causality-tooltip')"><span class="tooltiptext" id="in-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">7.1.1</span> In-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('in-sample-granger-causality')" onmouseout="reset_tooltip('in-sample-granger-causality-tooltip')"><span class="tooltiptext" id="in-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>A test of joint significance of parameters associated with all the lags of a variable entering the equation of another variable is known as the ‘Granger causality’ test. The use of the term ‘causality’ in this context has been criticized. That one variable can help explain the movement of another variable does not necessarily mean that the former causes the latter. To that end the use of the term is misleading, indeed. Rather, it simply means that the former helps predict the latter, and that is, in effect, the meaning of causality in Granger sense.</p>
 <p>To illustrate the testing framework, consider a bivariate VAR(p):
@@ -294,14 +295,14 @@ x_{2,t} &amp;= \alpha_1 + \pi_{211} x_{1,t-1} + \cdots + \pi_{21p} x_{1,t-p} \\
 <p>So long as the variables of the system are covariance-stationarity, we can apply a F test for the hypotheses testing. If <span class="math inline">\(p=1\)</span>, a t test is equivalently applicable for hypotheses testing.</p>
 </div>
 </div>
-<div id="forecasting-2" class="section level2" number="6.2">
+<div id="forecasting-3" class="section level2" number="7.2">
 <h2>
-<span class="header-section-number">6.2</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-2')" onmouseout="reset_tooltip('forecasting-2-tooltip')"><span class="tooltiptext" id="forecasting-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">7.2</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-3')" onmouseout="reset_tooltip('forecasting-3-tooltip')"><span class="tooltiptext" id="forecasting-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Generating forecasts for each of the variable comprising the VAR(p) model can be a straightforward exercise, so long as we have access to the relevant information set. As it was the case with autoregressive models, we make one-step-ahead forecasts based on the readily available data; and we make multi-step-ahead forecasts iteratively, using the forecast in periods for which the data are not present.</p>
-<div id="one-step-ahead-forecast-from-bivariate-var1" class="section level3" number="6.2.1">
+<div id="one-step-ahead-forecast-from-bivariate-var1" class="section level3" number="7.2.1">
 <h3>
-<span class="header-section-number">6.2.1</span> One-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">7.2.1</span> One-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realizations of the variables in period <span class="math inline">\(t+1\)</span> are:
 <span class="math display">\[\begin{aligned}
@@ -329,9 +330,9 @@ x_{1,t+1|t} \pm z_{.025}\sigma_{1,t+1|t} = x_{1,t+1|t} \pm 1.96\sigma_{\varepsil
 x_{2,t+1|t} \pm z_{.025}\sigma_{2,t+1|t} = x_{2,t+1|t} \pm 1.96\sigma_{\varepsilon_2}
 \end{aligned}\]</span></p>
 </div>
-<div id="two-step-ahead-forecast-from-bivariate-var1" class="section level3" number="6.2.2">
+<div id="two-step-ahead-forecast-from-bivariate-var1" class="section level3" number="7.2.2">
 <h3>
-<span class="header-section-number">6.2.2</span> Two-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">7.2.2</span> Two-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The realizations of the variables in period <span class="math inline">\(t+2\)</span> are:
 <span class="math display">\[\begin{aligned}
@@ -361,9 +362,9 @@ x_{1,t+2|t} \pm z_{.025}\sigma_{1,t+2|t} \\
 x_{2,t+2|t} \pm z_{.025}\sigma_{2,t+2|t}
 \end{aligned}\]</span></p>
 </div>
-<div id="out-of-sample-granger-causality" class="section level3" number="6.2.3">
+<div id="out-of-sample-granger-causality" class="section level3" number="7.2.3">
 <h3>
-<span class="header-section-number">6.2.3</span> Out-of-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('out-of-sample-granger-causality')" onmouseout="reset_tooltip('out-of-sample-granger-causality-tooltip')"><span class="tooltiptext" id="out-of-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">7.2.3</span> Out-of-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('out-of-sample-granger-causality')" onmouseout="reset_tooltip('out-of-sample-granger-causality-tooltip')"><span class="tooltiptext" id="out-of-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The previously discussed (in sample) test of causality in Granger sense is frequently performed in practice. But as noted above, the term ‘causality’ may be misleading somewhat. Indeed, the ‘true spirit’ of such test is to assess the ability of a variable to help predict another variable in an out-of-sample setting.</p>
 <p>Consider the restricted and unrestricted information sets, where the former only contains information on variable <span class="math inline">\(X_1\)</span>, while the latter contains the same information as well as information on variable <span class="math inline">\(X_2\)</span>:
@@ -398,7 +399,7 @@ where <span class="math inline">\(R\)</span> is the size of the (first) estimati
 <a href="dynamic-factor-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>

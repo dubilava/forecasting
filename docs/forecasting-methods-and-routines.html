@@ -213,16 +213,17 @@ div.csl-indent {
 <li class="toc"><a href="#pseudo-forecasting-routine"> Pseudo-Forecasting Routine</a></li>
 <li class="toc"><a href="#forecast-assessment"> Forecast Assessment</a></li>
 </ul>
-<a href="trends-and-seasonality.html" id="toc-trends-and-seasonality"><span class="toc-section-number">4</span> Trends and Seasonality</a>
-<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">5</span> Autoregressive Models</a>
-<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -246,7 +247,7 @@ div.csl-indent {
 <h2>
 <span class="header-section-number">3.1</span> Point Forecast and Forecast Error<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('point-forecast-and-forecast-error')" onmouseout="reset_tooltip('point-forecast-and-forecast-error-tooltip')"><span class="tooltiptext" id="point-forecast-and-forecast-error-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>A forecast is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster’s choice of the loss function.</p>
+<p><span class="newthought">A forecast</span> is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster’s choice of the loss function.</p>
 <p>Let <span class="math inline">\(\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> be a point forecast<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> We use ‘hat’ to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript <span class="math inline">\(t+h|t\)</span> indicates that the forecast is made using information set in period <span class="math inline">\(t\)</span>.</span> for period <span class="math inline">\(t+h\)</span> made in period <span class="math inline">\(t\)</span>, that is, using using the available information at the time, <span class="math inline">\(\Omega_t\)</span>. This is our ‘best guess’ about the actual realization of the random variable in period <span class="math inline">\(t+h\)</span>, <span class="math inline">\(y_{t+h}\)</span>. The difference between the realization and the forecast of the random variable is the forecast error. That is, <span class="math display">\[e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}\]</span></p>
 <p>The more accurate is the forecast the smaller is the forecast error. And while on average the forecast error is zero (assuming the forecast is unbiased), the forecast error variance is non-zero, implying uncertainty surrounding point forecast.</p>
 </div>
@@ -360,10 +361,10 @@ where <span class="math inline">\(R\)</span> is the estimation window size, <spa
 </div>
 <p style="text-align: center;">
 <a href="features-of-time-series-data.html"><button class="btn btn-default">Previous</button></a>
-<a href="trends-and-seasonality.html"><button class="btn btn-default">Next</button></a>
+<a href="trends.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>

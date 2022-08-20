@@ -1,0 +1,9 @@
+GDP - U.S. Bureau of Economic Analysis, Gross Domestic Product [NA000334Q], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/NA000334Q, August 17, 2022.
+
+HeatingOilNo2NYH - U.S. Energy Information Administration, No. 2 Heating Oil Prices: New York Harbor [WHOILNYH], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/WHOILNYH, August 17, 2022.
+
+InterestRates - Freddie Mac, 30-Year Fixed Rate Mortgage Average in the United States [MORTGAGE30US], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/MORTGAGE30US, August 17, 2022
+
+Claims - U.S. Employment and Training Administration, Initial Claims [ICNSA], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/ICNSA, August 18, 2022.
+
+Miles - U.S. Bureau of Transportation Statistics, Vehicle Miles Traveled [VMT], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/VMT, August 18, 2022.

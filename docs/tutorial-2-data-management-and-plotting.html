@@ -260,7 +260,7 @@ div.csl-indent {
 <p>So, we have generated<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.</span> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tutorial-2-data-management-and-plotting.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb32-2"><a href="tutorial-2-data-management-and-plotting.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-34-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-37-1.png" width="624"></p>
 <p>We can augment this plot in a number of different ways. Here we change the point color, add the fitted regression line to the plot, add labels to the figure, and change the background theme:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tutorial-2-data-management-and-plotting.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb33-2"><a href="tutorial-2-data-management-and-plotting.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"coral"</span>)<span class="sc">+</span></span>
@@ -270,13 +270,13 @@ div.csl-indent {
 <span id="cb33-6"><a href="tutorial-2-data-management-and-plotting.html#cb33-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Outcome Variable"</span>, </span>
 <span id="cb33-7"><a href="tutorial-2-data-management-and-plotting.html#cb33-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Caption: in case if needed."</span>)<span class="sc">+</span></span>
 <span id="cb33-8"><a href="tutorial-2-data-management-and-plotting.html#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-35-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-38-1.png" width="624"></p>
 <p>As another example, let’s generate a histogram (of <code>y</code> from the same data):</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tutorial-2-data-management-and-plotting.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>y))<span class="sc">+</span></span>
 <span id="cb34-2"><a href="tutorial-2-data-management-and-plotting.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">"white"</span>,<span class="at">fill=</span><span class="st">"coral"</span>,<span class="at">binwidth=</span>.<span class="dv">5</span>)<span class="sc">+</span></span>
 <span id="cb34-3"><a href="tutorial-2-data-management-and-plotting.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"A basic histogram"</span>)<span class="sc">+</span></span>
 <span id="cb34-4"><a href="tutorial-2-data-management-and-plotting.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-36-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-39-1.png" width="624"></p>
 <p>It is customary to illustrate a time series via a line plot. So, we add a date column to our dataset, and then plot <code>y</code> in the chronological order:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tutorial-2-data-management-and-plotting.html#cb35-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="fu">as.Date</span>(<span class="st">"2000-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
 <span id="cb35-2"><a href="tutorial-2-data-management-and-plotting.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -286,7 +286,7 @@ div.csl-indent {
 <span id="cb35-6"><a href="tutorial-2-data-management-and-plotting.html#cb35-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Year"</span>, </span>
 <span id="cb35-7"><a href="tutorial-2-data-management-and-plotting.html#cb35-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Outcome Variable"</span>)<span class="sc">+</span></span>
 <span id="cb35-8"><a href="tutorial-2-data-management-and-plotting.html#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-37-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-40-1.png" width="624"></p>
 <!-- Let's generate a sequence of 200 iid random variables with mean zero and variance 4, call it e. -->
 <!-- ```{r echo=TRUE} -->
 <!-- set.seed(1) -->
@@ -347,7 +347,7 @@ div.csl-indent {
 <a href="tutorial-3-forecasting-methods-and-routines.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-15
  using 
 R version 4.1.2 (2021-11-01)
 </p>

@@ -206,16 +206,17 @@ div.csl-indent {
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends-and-seasonality.html" id="toc-trends-and-seasonality"><span class="toc-section-number">4</span> Trends and Seasonality</a>
-<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">5</span> Autoregressive Models</a>
-<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">6</span> Vector Autoregressive Models</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">7</span> Dynamic Factor Models</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">8</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> Forecast Combination</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregressive-models.html" id="toc-autoregressive-models"><span class="toc-section-number">6</span> Autoregressive Models</a>
+<a href="vector-autoregressive-models.html" id="toc-vector-autoregressive-models"><span class="toc-section-number">7</span> Vector Autoregressive Models</a>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-plotting.html" id="toc-tutorial-2-data-management-and-plotting">Tutorial 2: Data Management and Plotting</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
 <a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
 <a id="active-page" href="tutorial-5-autoregressive-models.html" id="toc-tutorial-5-autoregressive-models">Tutorial 5: Autoregressive Models</a>
@@ -257,7 +258,7 @@ div.csl-indent {
 <span id="cb65-2"><a href="tutorial-5-autoregressive-models.html#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb65-3"><a href="tutorial-5-autoregressive-models.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Trending Series"</span>)<span class="sc">+</span></span>
 <span id="cb65-4"><a href="tutorial-5-autoregressive-models.html#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-58-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-62-1.png" width="624"></p>
 <p>Generate and plot the autocorrelation function and the partial autocorrelation function for lags 1 through 18.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="tutorial-5-autoregressive-models.html#cb66-1" aria-hidden="true" tabindex="-1"></a>acf_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">acf</span>(dt<span class="sc">$</span>y,<span class="at">lag.max=</span><span class="dv">18</span>,<span class="at">plot=</span>F)<span class="sc">$</span>acf[<span class="sc">-</span><span class="dv">1</span>])</span>
 <span id="cb66-2"><a href="tutorial-5-autoregressive-models.html#cb66-2" aria-hidden="true" tabindex="-1"></a>pacf_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">pacf</span>(dt<span class="sc">$</span>y,<span class="at">lag.max=</span><span class="dv">18</span>,<span class="at">plot=</span>F)<span class="sc">$</span>acf)</span>
@@ -273,7 +274,7 @@ div.csl-indent {
 <span id="cb66-12"><a href="tutorial-5-autoregressive-models.html#cb66-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Lag"</span>,<span class="at">y=</span><span class="st">"ACF"</span>)<span class="sc">+</span></span>
 <span id="cb66-13"><a href="tutorial-5-autoregressive-models.html#cb66-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
 <span id="cb66-14"><a href="tutorial-5-autoregressive-models.html#cb66-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-59-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-63-1.png" width="624"></p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="tutorial-5-autoregressive-models.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(acf_dt,<span class="fu">aes</span>(<span class="at">x=</span>lags,<span class="at">y=</span>pacf)) <span class="sc">+</span></span>
 <span id="cb67-2"><a href="tutorial-5-autoregressive-models.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>,<span class="at">color=</span><span class="st">"darkgray"</span>,<span class="at">linetype=</span><span class="dv">3</span>,<span class="at">size=</span>.<span class="dv">5</span>) <span class="sc">+</span></span>
 <span id="cb67-3"><a href="tutorial-5-autoregressive-models.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span>sd_rho,<span class="fl">1.96</span><span class="sc">*</span>sd_rho),<span class="at">color=</span><span class="st">"goldenrod"</span>,<span class="at">linetype=</span><span class="dv">2</span>,<span class="at">size=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
@@ -281,7 +282,7 @@ div.csl-indent {
 <span id="cb67-5"><a href="tutorial-5-autoregressive-models.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Lag"</span>,<span class="at">y=</span><span class="st">"PACF"</span>)<span class="sc">+</span></span>
 <span id="cb67-6"><a href="tutorial-5-autoregressive-models.html#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
 <span id="cb67-7"><a href="tutorial-5-autoregressive-models.html#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-59-2.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-63-2.png" width="624"></p>
 <p>Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), AR(3), and AR(4) models, using all observations in the series, to decide on the optimal lag length.</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="tutorial-5-autoregressive-models.html#cb68-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y_l1=</span><span class="fu">shift</span>(y),<span class="at">y_l2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y_l3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>),<span class="at">y_l4=</span><span class="fu">shift</span>(y,<span class="dv">4</span>))]</span>
 <span id="cb68-2"><a href="tutorial-5-autoregressive-models.html#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -353,7 +354,7 @@ div.csl-indent {
 <span id="cb77-14"><a href="tutorial-5-autoregressive-models.html#cb77-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>y),<span class="at">color=</span><span class="st">"darkgray"</span>,<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb77-15"><a href="tutorial-5-autoregressive-models.html#cb77-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>ar2_multi),<span class="at">color=</span><span class="st">"steelblue"</span>,<span class="at">na.rm=</span>T,<span class="at">size=</span><span class="dv">1</span>,<span class="at">linetype=</span><span class="dv">5</span>)<span class="sc">+</span></span>
 <span id="cb77-16"><a href="tutorial-5-autoregressive-models.html#cb77-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-63-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-67-1.png" width="624"></p>
 
 </div>
 <p style="text-align: center;">
@@ -361,7 +362,7 @@ div.csl-indent {
 <a href="tutorial-6-vector-autoregressive-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-14
+2022-08-20
  using 
 R version 4.1.2 (2021-11-01)
 </p>
