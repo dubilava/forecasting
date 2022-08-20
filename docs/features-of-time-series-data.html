@@ -205,6 +205,7 @@ div.csl-indent {
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
 <a id="active-page" href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a><ul class="toc-sections">
+<li class="toc"><a href="#stochastic-process-and-time-series"> Stochastic Process and Time Series</a></li>
 <li class="toc"><a href="#stationarity"> Stationarity</a></li>
 <li class="toc"><a href="#serial-dependence"> Serial Dependence</a></li>
 <li class="toc"><a href="#transformations"> Transformations</a></li>
@@ -240,12 +241,18 @@ div.csl-indent {
 <div id="features-of-time-series-data" class="section level1" number="2">
 <h1>
 <span class="header-section-number">Chapter 2</span> Features of Time Series Data</h1>
+<p><img src="art/timeseries.png"></p>
+<div id="stochastic-process-and-time-series" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Stochastic Process and Time Series<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stochastic-process-and-time-series')" onmouseout="reset_tooltip('stochastic-process-and-time-series-tooltip')"><span class="tooltiptext" id="stochastic-process-and-time-series-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
 <p><span class="newthought">A time series</span> is an observed sequence of realizations of chronologically stored random variables. The sequence of random variables indexed by time, <span class="math inline">\(\{\ldots,Y_{-1},Y_0,Y_1,\ldots,Y_T,Y_{T+1}\ldots\}\)</span>, is referred to as the <em>stochastic process</em>. Thus, a time series is a realization of a stochastic process.</p>
 <p>We can think of a time series as a finite sample from an underlying doubly–infinite sequence: <span class="math inline">\(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},y_{T+2},\ldots\}\)</span>. This is to say that the history extends beyond the starting and ending time periods of the sample at hand.</p>
 <p>But we don’t observe, or choose not to observe, those time periods. Instead, we observe and work with the sample of time series <span class="math inline">\(\{y_1,y_2,\ldots,y_T\}\)</span>, which we can also denote as <span class="math inline">\(\{y_t\}_{t=1}^{T}\)</span> or simply <span class="math inline">\(\{y_t\}\)</span>. Similarly, we denote the stochastic process over the observed time periods as <span class="math inline">\(\{Y_t\}_{t=1}^{T}\)</span> or <span class="math inline">\(\{Y_t\}\)</span>.</p>
-<div id="stationarity" class="section level2" number="2.1">
+</div>
+<div id="stationarity" class="section level2" number="2.2">
 <h2>
-<span class="header-section-number">2.1</span> Stationarity<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stationarity')" onmouseout="reset_tooltip('stationarity-tooltip')"><span class="tooltiptext" id="stationarity-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">2.2</span> Stationarity<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stationarity')" onmouseout="reset_tooltip('stationarity-tooltip')"><span class="tooltiptext" id="stationarity-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as <em>stationary</em> time series. Stationarity is an important feature, and the assumption on which time series econometrics heavily relies.</p>
 <p>Consider a simplest kind of a time series comprised of realizations from independent and identically distributed (iid) normal random variable with zero mean and constant variance: <span class="math inline">\(Y_t \sim iid~\text{N}\left(0,\sigma^2\right)\)</span>. The following graph plots the realized time series from this process:</p>
@@ -266,9 +273,9 @@ Figure 2.1: Realization of a white noise process
 <p>Why should we care about stationarity? The gist of the matter is that in each time period we only observe one realization of the respective random variable. We don’t have the sample of observations for that period—just a single observation is all we have. Of course, over time, we have many such observations—one for each period. The question then is, could we use this sample of time series and conclude something about the moments of the stochastic process? Stationarity in conjunction with <em>ergodicity</em> enables us to do just this.</p>
 <p>Ergodicity implies independence of two random variables that are far apart from each other in the stochastic process. That is, if <span class="math inline">\(\{Y_t\}\)</span> is stationary and ergodic with <span class="math inline">\(E(Y_t)=\mu\)</span>, then <span class="math inline">\(Cov(Y_t,Y_{t-k}) = 0\)</span> for some large integer <span class="math inline">\(k\)</span>. More importantly, when the process is stationary and ergodic, the mean of the sample of time series converges to the mean of the stochastc process as the sample size increases.</p>
 </div>
-<div id="serial-dependence" class="section level2" number="2.2">
+<div id="serial-dependence" class="section level2" number="2.3">
 <h2>
-<span class="header-section-number">2.2</span> Serial Dependence<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('serial-dependence')" onmouseout="reset_tooltip('serial-dependence-tooltip')"><span class="tooltiptext" id="serial-dependence-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">2.3</span> Serial Dependence<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('serial-dependence')" onmouseout="reset_tooltip('serial-dependence-tooltip')"><span class="tooltiptext" id="serial-dependence-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>It is more of the norm rather than the exception for a time series to be correlated over time. Indeed, because of the sequential nature of the stochastic process, we commonly observe dependence among the temporally adjacent random variables. That is, we expect <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k}\)</span> to be correlated for a reasonably small integer <span class="math inline">\(k\)</span>. Such correlation, referred to as the <em>autocorrelation</em>, or more specifically, the <span class="math inline">\(k^{th}\)</span> order autocorrelation is given by: <span class="math display">\[\rho_k=Cor(Y_{t},Y_{t-k}) = \frac{Cov(Y_{t},Y_{t-k})}{\sqrt{Var(Y_{t})}\sqrt{Var(Y_{t-k})}},\;~~k=1,2,\ldots\]</span></p>
 <p>Under the assumption of stationarity, <span class="math inline">\(Var(Y_{t})=Var(Y_{t-k})\)</span>, so the autocorrelation can be simplified to: <span class="math inline">\(\rho_k= \frac{Cov(Y_{t},Y_{t-k})}{Var(Y_{t})}.\)</span></p>
@@ -291,9 +298,9 @@ Figure 2.3: Partial Autocorrelation
 </div>
 <p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.</span> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
 </div>
-<div id="transformations" class="section level2" number="2.3">
+<div id="transformations" class="section level2" number="2.4">
 <h2>
-<span class="header-section-number">2.3</span> Transformations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('transformations')" onmouseout="reset_tooltip('transformations-tooltip')"><span class="tooltiptext" id="transformations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">2.4</span> Transformations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('transformations')" onmouseout="reset_tooltip('transformations-tooltip')"><span class="tooltiptext" id="transformations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>It is common to transform time series by taking logarithms (if applicable), by first-differencing the series, or by first-differencing the logarithms of the series. Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issues of the series (e.g., nonstationarity).</p>
 <p>Consider the Dow Jones Industrial Average (commonly referred to as the Dow Jones Index), for example. In levels, the series are clearly nonstationary. This is because the series are trending upward (on average), and also because the series become more volatile over time.</p>

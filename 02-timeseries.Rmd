@@ -1,4 +1,5 @@
 # Features of Time Series Data
+![](art/timeseries.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
@@ -6,6 +7,8 @@ library(data.table)
 library(cowplot)
 library(Quandl)
 ```
+
+## Stochastic Process and Time Series
 
 `r newthought('A time series')` is an observed sequence of realizations of chronologically stored random variables. The sequence of random variables indexed by time, $\{\ldots,Y_{-1},Y_0,Y_1,\ldots,Y_T,Y_{T+1}\ldots\}$, is referred to as the *stochastic process*. Thus, a time series is a realization of a stochastic process. 
 

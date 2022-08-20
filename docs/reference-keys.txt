@@ -12,8 +12,10 @@ fig:miles
 fig:fitmiles
 fig:claims
 fig:fitclaims
+fig:formiles
 introduction-to-forecasting
 features-of-time-series-data
+stochastic-process-and-time-series
 stationarity
 serial-dependence
 transformations
@@ -28,11 +30,15 @@ unbiasedness
 efficiency
 no-autocorrelation
 trends
+trends-in-the-data
 spurious-relationships
+deterministic-trends
+stochastic-trends
 modeling
 trends-in-mortgage-rates
 forecasting
 seasonality
+seasonal-fluctuations-in-the-data
 modeling-1
 seasonal-dummy-variables
 seasonal-harmonic-variables

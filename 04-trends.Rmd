@@ -1,9 +1,12 @@
 # Trends
+![](art/trends.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
 library(data.table)
 ```
+
+## Trends in the Data
 
 `r newthought('Trends are common')` in economic time series (and not only). A trend is a unidirectional change of time series over an extended period of time. Over an extended period of time, the direction of the change may change. That is, series that used to be trending upward may start trending downward.  Interest rates before and after 1980s featured such pattern, for example. Moreover, even if a series are, on average, increasing (or decreasing), the rate of change may alter over time. Agricultural yields of cereal crops, for example, have been increasing at a decreasing rate over the past several decades. 
 
@@ -13,7 +16,9 @@ Modeling and forecasting trending time series is a fairly straightforward task. 
 
 Nothing about trending time series necessarily violates the classical linear regression model assumptions. The issue may arise, however, if an unobserved trending variable is simultaneously correlated with the dependent variable as well as one of the independent variables in a time series regression. In such case, we may find a (statistically significant) relationship between two or more unrelated economic variables simply because they are all trending. Such relationship is referred to as a *spurious relationship*.
 
-To illustrate, consider two trending variables: $$y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),$$ and $$x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),$$ where $Cov(\nu_t,\upsilon_t) = 0$. For simplicity, we can assume $\sigma_{\nu}^2=\sigma_{\upsilon}^2=1$. Suppose, $\gamma$ and $\delta$ are some positive scalars, say, $0.3$ and $0.5$, respectively. That is, $y$ and $x$ are trending in the same direction. Below is an example of such time series:
+### Deterministic Trends
+
+To begin, we will illustrate the issue using two random variables, each containing a deterministic trend. To keep things simple, we will consider linear trends, but the "findings" of this exercise can be generalized to any form of a deterministic trend (some of the key forms we discuss below). So, consider two trending variables: $$y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),$$ and $$x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),$$ where $Cov(\nu_t,\upsilon_t) = 0$. For simplicity, we can assume $\sigma_{\nu}^2=\sigma_{\upsilon}^2=1$. Suppose, $\gamma$ and $\delta$ are some positive scalars, say, $0.3$ and $0.5$, respectively. That is, $y$ and $x$ are trending in the same direction. Below is an example of such time series:
 ```{r echo=FALSE, message=FALSE, cache=TRUE}
 r <- 1000
 n <- 120
@@ -78,7 +83,9 @@ ggplot(amat,aes(x=b)) +
 
 In fact, this "fix" is equivalent to regressing a de-trended $y$ on a de-trended $x$. To de-trend a variable, we first run a regression: $y_t = \gamma_0 + \gamma_1 t + \nu_t$, and then obtain the fitted values for some fixed trend (typically zero), that is: $\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t$, where $\hat{\gamma}_0$ and $\hat{\nu}_t$ are the parameter estimate and the residuals from the foregoing regression.
 
-The foregoing exercise did not specify, but the presented example was that for a *deterministic trend*. Another type is a *stochastic trend*. A random walk process, $y_t=y_{t-1}+\zeta_t$, represents a stochastic trend. 
+### Stochastic Trends
+
+A time series may also follow a *stochastic trend*. A random walk process, $y_t=y_{t-1}+\zeta_t$, represents a stochastic trend. 
 
 As it turns out, a spurious relationship can be detected between two stochastic trend processes. Suppose, in addition to the aforementioned random walk process, we have another random walk, $x_t=x_{t-1}+\xi_t$. As before, to keep things simple, suppose $\zeta\sim N(0,1)$ and $\xi\sim N(0,1)$, and $Cov(\zeta_t,\xi_t)=0$. The two variables, obviously, are not related. And yet, if we regress one on another, we are likely to reject the null more frequently than we should. The following graph illustrates the empirical distribution of t statistics:
 ```{r echo=FALSE, message=FALSE, cache=TRUE}
@@ -237,17 +244,19 @@ interest_rates[,`:=`(t=1:nrow(interest_rates))]
 est <- lm(y~t,data=interest_rates[date<=as.Date("2010-12-31")])
 interest_rates[,`:=`(f=est$coefficients[1]+est$coefficients[2]*t)]
 
+interest_rates[date<=as.Date("2010-12-31")]$f <- NA
+
 interest_rates[,`:=`(l=f-1.96*summary(est)$sigma,u=f+1.96*summary(est)$sigma)]
 
-forecast_rates <- interest_rates[,.(date,y,f,l,u)]
-forecast_rates <- melt(forecast_rates,id.vars = "date")
-forecast_rates[date<=as.Date("2010-12-31")]$value <- NA
+# forecast_rates <- interest_rates[,.(date,y,f,l,u)]
+# forecast_rates <- melt(forecast_rates,id.vars = "date")
+# forecast_rates[date<=as.Date("2010-12-31")]$value <- NA
 
 ggplot(interest_rates,aes(x=date,y=y))+
+  geom_ribbon(aes(ymin=l,ymax=u),fill="coral",alpha=.2)+
   geom_line(color="powderblue",size=.8)+
-  geom_line(data=forecast_rates,aes(y=value,color=variable,linetype=variable),size=.8,na.rm=T)+
-  scale_color_manual(values=c("gray70","coral","gray30","gray30"),guide="none")+
-  scale_linetype_manual(values=c(1,5,2,2),guide="none")+
+  geom_line(data=interest_rates[date>as.Date("2010-12-31")],color="gray",size=.8)+
+  geom_line(aes(y=f),color="coral",size=.8,linetype=5,na.rm=T)+
   labs(x="Year",y="Interest Rate (%)",caption="retrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/MORTGAGE30US")+
   theme_classic()+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))

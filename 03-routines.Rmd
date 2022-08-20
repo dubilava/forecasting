@@ -1,4 +1,5 @@
 # Forecasting Methods and Routines
+![](art/forecast.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(data.table)

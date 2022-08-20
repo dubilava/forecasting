@@ -208,6 +208,7 @@ div.csl-indent {
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
 <a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
 <a id="active-page" href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a><ul class="toc-sections">
+<li class="toc"><a href="#seasonal-fluctuations-in-the-data"> Seasonal Fluctuations in the Data</a></li>
 <li class="toc"><a href="#modeling-1"> Modeling</a></li>
 <li class="toc"><a href="#forecasting-1"> Forecasting</a></li>
 </ul>
@@ -239,20 +240,26 @@ div.csl-indent {
 <div id="seasonality" class="section level1" number="5">
 <h1>
 <span class="header-section-number">Chapter 5</span> Seasonality</h1>
-<p><span class="newthought">Seasonality characterizes</span> some economic time series. Prices of agricultural commodities, for example, tend to have a seasonal pattern, owing to relative abundance of the commodity after harvest, and their gradual depletion as the year progresses. Energy sales also tend to have seasonal pattern, due to relatively high demand for energy during the winter (need for heating) and summer (need for cooling) months. Seasonality is a self-repeating pattern within a calendar year that arises from the links of economic outcomes to the calendar.</p>
-<p>Modeling and forecasting seasonal time series, as it was the case with trending time series, is usually a straightforward exercise.</p>
-<div id="modeling-1" class="section level2" number="5.1">
+<p><img src="art/seasonality.png"></p>
+<div id="seasonal-fluctuations-in-the-data" class="section level2" number="5.1">
 <h2>
-<span class="header-section-number">5.1</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-1')" onmouseout="reset_tooltip('modeling-1-tooltip')"><span class="tooltiptext" id="modeling-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">5.1</span> Seasonal Fluctuations in the Data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('seasonal-fluctuations-in-the-data')" onmouseout="reset_tooltip('seasonal-fluctuations-in-the-data-tooltip')"><span class="tooltiptext" id="seasonal-fluctuations-in-the-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>We typically model seasonality as a monthly or quarterly pattern, but it can also be modeled as a higher frequency pattern (e.g. weekly).</p>
-<p>One way to deal with the seasonality in data is to “remove” it prior to the use of the series (i.e., work with a seasonally adjusted time series). Indeed, some economic time series are only/also available in a seasonally-adjusted form.</p>
-<p>Otherwise, and perhaps more interestingly, we can directly model seasonality in a regression setting by incorporating in it the seasonal component.</p>
-<div id="seasonal-dummy-variables" class="section level3" number="5.1.1">
+<p><span class="newthought">Seasonality characterizes</span> some economic time series. Prices of agricultural commodities, for example, tend to have a seasonal pattern, owing to relative abundance of the commodity after harvest, and their gradual depletion as the year progresses. Energy sales also tend to have seasonal pattern, due to relatively high demand for energy during the winter (the need for heating) and summer (the need for cooling) months. Seasonality is a self-repeating pattern within a calendar year that arises from the links of economic outcomes to the calendar.</p>
+<p>Modeling and forecasting seasonal time series, as it was the case with trending time series, is usually a straightforward exercise.</p>
+</div>
+<div id="modeling-1" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-1')" onmouseout="reset_tooltip('modeling-1-tooltip')"><span class="tooltiptext" id="modeling-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>We typically model seasonality as a monthly or quarterly pattern, but it can also be modeled as a higher frequency pattern (e.g. weekly or daily).</p>
+<p>One way to account for seasonality in the data is to “remove” it prior to the use of the series (i.e., work with a seasonally adjusted time series). Indeed, some economic time series are only/also available in a seasonally-adjusted form.</p>
+<p>Otherwise, and perhaps more interestingly, we can incorporate the seasonal component into a regression setting.</p>
+<div id="seasonal-dummy-variables" class="section level3" number="5.2.1">
 <h3>
-<span class="header-section-number">5.1.1</span> Seasonal dummy variables<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('seasonal-dummy-variables')" onmouseout="reset_tooltip('seasonal-dummy-variables-tooltip')"><span class="tooltiptext" id="seasonal-dummy-variables-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">5.2.1</span> Seasonal dummy variables<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('seasonal-dummy-variables')" onmouseout="reset_tooltip('seasonal-dummy-variables-tooltip')"><span class="tooltiptext" id="seasonal-dummy-variables-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>A seasonal model is given by: <span class="math display">\[y_t = \sum_{i=1}^{s}\gamma_i d_{it} + \varepsilon_t,\]</span>
+<p>A seasonal model, typically, is given by: <span class="math display">\[y_t = \sum_{i=1}^{s}\gamma_i d_{it} + \varepsilon_t,\]</span>
 where <span class="math inline">\(s\)</span> denotes the frequency of the data, and <span class="math inline">\(d_{it}\)</span> takes the value of one repeatedly after every <span class="math inline">\(s\)</span> periods, and is zero in all other periods, so that <span class="math inline">\(\sum_{i} d_{it} = 1\)</span>, <span class="math inline">\(\forall t\)</span>. Each <span class="math inline">\(\gamma_i\)</span> is, in effect, an intercept of a given season.</p>
 <p>Alternatively the seasonal model can be rewritten as: <span class="math display">\[y_t = \alpha + \sum_{i=1}^{s-1}\delta_i d_{it} + \varepsilon_t,\]</span> in which case <span class="math inline">\(\alpha\)</span> is an intercept of an omitted season, and <span class="math inline">\(\delta_i\)</span> represents a deviation from it during the <span class="math inline">\(i^{th}\)</span> season. This is a more typical form of a seasonal model.</p>
 <p>Both variants of a seasonal model result in an identical fit and forecasts. Indeed, the two models are equivalent. Assuming the dummy variable associated with a season <span class="math inline">\(s\)</span>, <span class="math inline">\(d_{s}\)</span>, was dropped, <span class="math inline">\(\alpha=\gamma_s\)</span>, and <span class="math inline">\(\alpha+\delta_i=\gamma_i\;~\forall~i\ne s\)</span>.</p>
@@ -274,13 +281,13 @@ Figure 5.2: Fitted monthly dummy variables
 </div>
 <p>As observed, the fitted series mimic the seasonal pattern of the U.S. vehicle miles traveled exceedingly well.</p>
 </div>
-<div id="seasonal-harmonic-variables" class="section level3" number="5.1.2">
+<div id="seasonal-harmonic-variables" class="section level3" number="5.2.2">
 <h3>
-<span class="header-section-number">5.1.2</span> Seasonal harmonic variables<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('seasonal-harmonic-variables')" onmouseout="reset_tooltip('seasonal-harmonic-variables-tooltip')"><span class="tooltiptext" id="seasonal-harmonic-variables-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">5.2.2</span> Seasonal harmonic variables<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('seasonal-harmonic-variables')" onmouseout="reset_tooltip('seasonal-harmonic-variables-tooltip')"><span class="tooltiptext" id="seasonal-harmonic-variables-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>When dealing with weekly or daily data, the dummy variable approach of modeling seasonality may not be practical, nor efficient in most instances, as that will require estimating another 51 or 364 parameters. A way to model seasonality without giving up too many degrees of freedom is by using the so-called seasonal harmonic variables, which are a set of Fourier terms.</p>
-<p>The Fourier terms can be applied to model seasonality at any frequency, indeed. Suppose, for example, we are working with monthly time series. A model with Fourier terms will have the following form: <span class="math display">\[y_t = \alpha+\sum_{k=1}^{K}\left[\beta_{1k}\sin\left(\frac{2\pi kt}{12}\right)+\beta_{2k}\cos\left(\frac{2\pi kt}{12}\right)\right]+\varepsilon_t,\]</span> where the value of <span class="math inline">\(K\)</span> can be determined using an information criterion (e.g., AIC or SIC).</p>
-<p>Consider a weekly series of initial claims filed by an unemployed individual after a separation from an employer in the United States (sourced from the online data portal of the Federal Reserve Bank of St. Louis) spanning the January 1993 – December 2008 period.</p>
+<p>When dealing with weekly or daily data, the dummy variable approach of modeling seasonality may not be practical, nor efficient in most instances, as that will require estimating another 51 or 364 parameters. A way to model seasonality without giving up too many degrees of freedom is by using the so-called seasonal harmonic variables, which are terms from a Fourier series.</p>
+<p>Fourier terms can be applied to model seasonality at any frequency. Suppose, for example, we are working with monthly time series. A model with Fourier terms will have the following form: <span class="math display">\[y_t = \alpha+\sum_{k=1}^{K}\left[\beta_{1k}\sin\left(\frac{2\pi kt}{12}\right)+\beta_{2k}\cos\left(\frac{2\pi kt}{12}\right)\right]+\varepsilon_t,\]</span> where the value of <span class="math inline">\(K\)</span> can be determined using an information criterion (e.g., AIC or SIC).</p>
+<p>Consider a weekly series of initial unemployment claims filed by individuals after a separation from an employer in the United States (sourced from the online data portal of the Federal Reserve Bank of St. Louis) spanning the January 1993 – December 2008 period.</p>
 <div class="figure">
 <span style="display:block;" id="fig:claims"></span>
 <p class="caption marginnote shownote">
@@ -288,7 +295,7 @@ Figure 5.3: Initial unemployment claims in the U.S.
 </p>
 <img src="forecasting_files/figure-html/claims-1.png" alt="Initial unemployment claims in the U.S." width="624">
 </div>
-<p>An apparent seasonal pattern is present in the series. We will approximate the seasonality using Fourier series. Specifically, we estimate the model parameters by regressing claims, which we denote by <span class="math inline">\(y\)</span>, on sine and cosine terms of up to order two, from a Fourier series. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha}+\sum_{k=1}^{2}\left[\hat{\beta}_{1k}\sin\left(\frac{2\pi kt}{52.143}\right)+\hat{\beta}_{2k}\cos\left(\frac{2\pi kt}{52.143}\right)\right]\)</span>, which we overlay onto the time series:</p>
+<p>An apparent seasonal pattern is present in the series. It seems sensible to approximate the seasonality using Fourier series. Specifically, we can regress initial claims, which we denote by <span class="math inline">\(y\)</span>, on sine and cosine terms of up to order two, from a Fourier series. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha}+\sum_{k=1}^{2}\left[\hat{\beta}_{1k}\sin\left(\frac{2\pi kt}{52.143}\right)+\hat{\beta}_{2k}\cos\left(\frac{2\pi kt}{52.143}\right)\right]\)</span>, which we overlay onto the time series:</p>
 <div class="figure">
 <span style="display:block;" id="fig:fitclaims"></span>
 <p class="caption marginnote shownote">
@@ -296,18 +303,27 @@ Figure 5.4: Fitted Fourier terms up to order two
 </p>
 <img src="forecasting_files/figure-html/fitclaims-1.png" alt="Fitted Fourier terms up to order two" width="624">
 </div>
-<p>The fitted series mimic the general seasonal pattern reasonably well. There are some major departures at times, however. Especially so in the first week of the year, for example.</p>
+<p>The fitted series mimic the general seasonal pattern reasonably well. There are some major departures at times, however. Especially so in the first week of the year, for example. While we could add higher order terms from a Fourier series to try and better approximate the seasonal pattern, perhaps a more efficient approach would be to simply add a dummy variable for the first week of the year, which should account for the beginning-of-calendar-year spike in the series.</p>
 </div>
 </div>
-<div id="forecasting-1" class="section level2" number="5.2">
+<div id="forecasting-1" class="section level2" number="5.3">
 <h2>
-<span class="header-section-number">5.2</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-1')" onmouseout="reset_tooltip('forecasting-1-tooltip')"><span class="tooltiptext" id="forecasting-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">5.3</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-1')" onmouseout="reset_tooltip('forecasting-1-tooltip')"><span class="tooltiptext" id="forecasting-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>When using the dummy variable approach to model the seasonality, for example, a future realization of a random variable is: <span class="math display">\[y_{t+h} = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h} + \varepsilon_{t+h}.\]</span></p>
-<p>The optimal forecast of <span class="math inline">\(y_{t+h}\)</span> is: <span class="math display">\[y_{t+h|t} = E(y_{t+h}|\Omega_t) = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h}\]</span></p>
-<p>The forecast error is: <span class="math display">\[e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}\]</span></p>
-<p>The forecast variance is: <span class="math display">\[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2,\;~~\forall\;h\]</span></p>
-<p>The interval forecast is: <span class="math display">\[y_{t+h|t} \pm 1.96 \hat{\sigma}.\]</span></p>
+<p>As it was the case with trend models, the predictors of the seasonal models are pre-determined. This means, after fitting the model, we can readily obtain point and interval forecasts for any horizon <span class="math inline">\(h\)</span>.</p>
+<p>To illustrate, consider the seasonal dummy variable model. A future realization of the random variable is: <span class="math display">\[y_{t+h} = \alpha + \sum_{i=1}^{s-1}\delta_i d_{i,t+h} + \varepsilon_{t+h}.\]</span></p>
+<p>Point forecast of <span class="math inline">\(y_{t+h}\)</span> is: <span class="math display">\[\hat{y}_{t+h|t} = E(y_{t+h}|\Omega_t;\hat{\theta}) = \hat{\alpha} + \sum_{i=1}^{s-1}\hat{\delta}_i d_{i,t+h}\]</span></p>
+<p>As before, we will assume that parameter estimates are equal to the true parameters of the model, so that the forecast error is: <span class="math display">\[e_{t+h|t} = y_{t+h} - y_{t+h|t} = \varepsilon_{t+h}\]</span></p>
+<p>The forecast variance is: <span class="math display">\[\sigma_{t+h|t}^2 = E(e_{t+h|t}^2) =  E(\varepsilon_{t+h}^2) = \hat{\sigma}^2_{\varepsilon},\;~~\forall\;h\]</span></p>
+<p>The interval forecast is: <span class="math display">\[y_{t+h|t} \pm 1.96 \hat{\sigma}_{\varepsilon}.\]</span></p>
+<p>To illustrate the foregoing, let’s revisit the U.S. vehicle miles traveled data, and obtain point and interval forecasts for periods from January 2011 onward based on parameter estimates using data up to and including December 2010.</p>
+<div class="figure">
+<span style="display:block;" id="fig:formiles"></span>
+<p class="caption marginnote shownote">
+Figure 5.5: Seasonal forecast
+</p>
+<img src="forecasting_files/figure-html/formiles-1.png" alt="Seasonal forecast" width="624">
+</div>
 
 </div>
 </div>
