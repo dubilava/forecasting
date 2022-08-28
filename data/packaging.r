@@ -32,16 +32,17 @@ miles <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$VMT))
 
 save(miles,file="miles.RData")
 
-library(ggplot2)
-library(data.table)
-library(fastDummies)
+# library(ggplot2)
+# library(data.table)
+# library(fastDummies)
+# 
+# miles$month <- month(miles$date)
+# miles_dum <- dummy_cols(miles$month,remove_selected_columns=T)
+# colnames(miles_dum) <- paste0("d",c(1:12))
+# 
+# miles <- cbind(miles,miles_dum)
 
-miles$month <- month(miles$date)
-miles_dum <- dummy_cols(miles$month,remove_selected_columns=T)
-colnames(miles_dum) <- paste0("d",c(1:12))
-
-miles <- cbind(miles,miles_dum)
-
+# Initial claims ----
 claims_dt <- fread("Claims.csv")
 
 ggplot(claims_dt,aes(x=DATE,y=ICNSA))+
@@ -56,18 +57,33 @@ claims <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$ICNSA))
 
 save(claims,file="claims.RData")
 
-period <- 52.1429
+# period <- 52.1429
+# 
+# claims[,`:=`(t=c(1:nrow(claims)))]
+# 
+# claims[,`:=`(sin1=sin(2*pi*1*t/period),cos1=cos(2*pi*1*t/period),sin2=sin(2*pi*2*t/period),cos2=cos(2*pi*2*t/period))]
+# 
+# est <- lm(y~sin1+cos1+sin2+cos2,data=claims)
+# 
+# claims$haty <- fitted(est)
+# 
+# ggplot(claims,aes(x=date,y=y))+
+#   geom_line()+
+#   geom_line(aes(y=haty),color="coral")
 
-claims[,`:=`(t=c(1:nrow(claims)))]
 
-claims[,`:=`(sin1=sin(2*pi*1*t/period),cos1=cos(2*pi*1*t/period),sin2=sin(2*pi*2*t/period),cos2=cos(2*pi*2*t/period))]
+# Exchange rates ----
+rates_dt <- fread("ExchangeRates.csv")
 
-est <- lm(y~sin1+cos1+sin2+cos2,data=claims)
+ggplot(rates_dt,aes(x=DATE,y=EXUSEU))+
+  geom_line()
 
-claims$haty <- fitted(est)
+sub_dt <- rates_dt[DATE>=as.Date("2004-01-01") & DATE<=as.Date("2014-12-31")]
 
-ggplot(claims,aes(x=date,y=y))+
-  geom_line()+
-  geom_line(aes(y=haty),color="coral")
+ggplot(sub_dt,aes(x=DATE,y=EXUSEU))+
+  geom_line()
 
+exchange_rates <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$EXUSEU))
+
+save(exchange_rates,file="exchange_rates.RData")
 
