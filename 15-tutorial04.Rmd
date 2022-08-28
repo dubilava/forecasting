@@ -5,111 +5,95 @@ library(ggplot2)
 library(data.table)
 ```
 
-In this tutorial, we will generate trending series, we will apply an information criterion to select the most suitable trend model, and we will obtain and compare one-step-ahead forecasts using a rolling window procedure.
+In this tutorial, we will generate trending series that, moreover, also exhibit some seasonal pattern. We will apply an information criterion to select the most suitable model, and we will obtain and evaluate one-step-ahead forecasts using a rolling window procedure. To run the code, the `data.table`, `ggplot2` and `fastDummies` packages need to be installed and loaded.
 
-Let's generate a time series that follows a quadratic trend: $y_{t} = 10+0.01t+0.002t^2+e_{t}$, where $e_{t} \sim N(0,16)$, for $t=1,\ldots,180$.
+Let's generate a quarterly time series that follows: $y_{t} = 0.05t+0.0002t^2+0.7d_{1,t}+e_{t}$, where $d_{1,t}=1$ if $t$ is in quarter $1$, and $d_{1,t}=0$ otherwise; $e_{t} \sim iid~\text{N}(0,1)$, for $t=1,\ldots,80$.
 
 ```{r echo=TRUE}
-n <- 180
+n <- 80
+s <- 4
 
-set.seed(7)
-e <- rnorm(n,0,4)
+set.seed(1)
+e <- rnorm(n,0,1)
 
 trend <- c(1:n)
+dum <- rep(c(1,0,0,0),n/s)
 
-y <- 10+0.01*trend+0.002*trend^2+e
+y <- 0.05*trend-0.0002*trend^2+.7*dum+e
 ```
 
-Store $y$ and $trend$ in a **data.table**, call it 'dt'. Add some arbitrary dates to the data (e.g., suppose we deal with the monthly series beginning from January 2006).
+Store $y$ and $trend$ in a **data.table**, call it 'dt'. Add some arbitrary dates to the data (e.g., suppose we deal with a series beginning from quarter 1 of 2001).
 
 ```{r echo=TRUE}
 dt <- data.table(y,trend)
 
-dt$date <- seq(as.Date("2006-01-01"),by="month",along.with=y)
+dt$date <- seq(as.Date("2001-01-01"),by="quarter",along.with=y)
 ```
 
-Plot the realized time series using **ggplot** function.
+Plot the realized time series using the **ggplot** function.
 
 ```{r echo=TRUE}
 ggplot(dt,aes(x=date,y=y))+
   geom_line(size=1)+
-  labs(x="Year",y="Trending Series")+
+  labs(x="Year",y="Simulated Series")+
   theme_classic()
 ```
 
-Calculate Akaike Information Criteria for linear, quadratic, cubic, and exponential trend models, using all observations in the series.
+Add quarterly dummy variables to the data, and calculate Akaike Information Criteria (AIC) for linear and quadratic trend models with and without quarterly seasonal dummy variables (so, four models in total). Observe that the linear trend model with the seasonal component offers the best in-sample fit, based on AIC.
 
 ```{r echo=TRUE}
-AIC_vec <- matrix(ncol=4,nrow=1)
-for(i in 1:4){
-  if(i < 4){
-    reg <- lm(y~poly(trend,degree=i,raw=T),data=dt)
-    AIC_vec[i] <- log(crossprod(reg$residuals))+2*length(reg$coefficients)/n
-  }else{
-    reg <- lm(log(y)~trend,data=dt)
-    yhat <- reg$fitted.values
-    sig <- sd(reg$residuals)
-    ystar <- exp(yhat+sig^2/2)
-    res <- dt$y-ystar
-    AIC_vec[i] <- log(crossprod(res))+2*length(reg$coefficients)/n
-  }
-}
+dt$q <- quarter(dt$date)
 
-AIC_vec
+dt <- dummy_cols(dt,select_columns="q")
+
+reg1 <- lm(y~trend,data=dt)
+reg2 <- lm(y~trend+I(trend^2),data=dt)
+reg3 <- lm(y~trend+q_1+q_2+q_3,data=dt)
+reg4 <- lm(y~trend+I(trend^2)+q_1+q_2+q_3,data=dt)
+
+aic1 <- log(crossprod(reg1$residuals))+2*length(reg1$coefficients)/n
+aic2 <- log(crossprod(reg2$residuals))+2*length(reg2$coefficients)/n
+aic3 <- log(crossprod(reg3$residuals))+2*length(reg3$coefficients)/n
+aic4 <- log(crossprod(reg4$residuals))+2*length(reg4$coefficients)/n
 ```
 
-Generate a sequence of one-step-ahead forecasts from linear, quadratic, cubic, and exponential trend models, using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.
+Generate a sequence of one-step-ahead forecasts from the linear trend model with seasonal dummy variables, using the rolling window scheme, where the first rolling window ranges from period 1 to period 60 (i.e., 75% of the data).
 
 ```{r echo=TRUE}
-dt$t1 <- NA
-dt$t2 <- NA
-dt$t3 <- NA
-dt$te <- NA
+dt$f <- NA
 
-R <- 120
+R <- 60
 P <- n-R
 for(i in 1:P){
-  reg1 <- lm(y~trend,data=dt[i:(R-1+i)])
-  dt$t1[R+i] <- reg1$coef[1]+reg1$coef[2]*(R+i)
-  
-  reg2 <- lm(y~poly(trend,degree=2,raw=T),data=dt[i:(R-1+i)])
-  dt$t2[R+i] <- reg2$coef[1]+reg2$coef[2]*(R+i)+reg2$coef[3]*((R+i)^2)
-  
-  reg3 <- lm(y~poly(trend,degree=3,raw=T),data=dt[i:(R-1+i)])
-  dt$t3[R+i] <- reg3$coef[1]+reg3$coef[2]*(R+i)+reg3$coef[3]*((R+i)^2)+reg3$coef[4]*((R+i)^3)
-  
-  rege <- lm(log(y)~trend,data=dt[i:(R-1+i)])
-  sig <- sd(rege$residuals)
-  dt$te[R+i] <- exp(rege$coef[1]+rege$coef[2]*(R+i)+sig^2/2)
+  reg3 <- lm(y~trend+q_1+q_2+q_3,data=dt[i:(R-1+i)])
+  dt$f[R+i] <- reg3$coef[1]+reg3$coef[2]*dt$trend[R+i]+reg3$coef[3]*dt$q_1[R+i]+reg3$coef[4]*dt$q_2[R+i]+reg3$coef[5]*dt$q_3[R+i]
 }
 ```
 
-Plot the original series overlay by the one-step-ahead forecasts from the four considered trend models. Note, for convenience we will first 'melt' the data.table in to the 'long' format.
+Plot the original series and the one-step-ahead forecasts on the same graph. Note, for convenience we will first 'melt' the data into the 'long table' format, then plot the data.
 
 ```{r echo=TRUE}
-dt_long <- melt(dt[,.(date,y,linear=t1,quadratic=t2,cubic=t3,exponential=te)],id.vars="date")
+dl <- melt(dt[,.(date,y,f)],id.vars="date")
 
-ggplot(dt_long,aes(x=date,y=value,color=variable))+
+ggplot(dl,aes(x=date,y=value,color=variable,linetype=variable))+
   geom_line(size=1,na.rm=T)+
-  scale_color_manual(values=c("darkgray","black","goldenrod","steelblue","indianred"))+
-  labs(x="Year",y="Trending Series and Forecasts")+
+  scale_color_manual(values=c("darkgray","coral"))+
+  scale_linetype_manual(values=c(1,5))+
+  labs(x="Year",y="Trending Seasonal Series and Forecasts")+
   theme_classic()+
   theme(legend.title=element_blank(),legend.position=c(.15,.85))
 ```
   
-Calculate the RMSFE measures for each of the two forecasting methods.
+Test the hypotheses of forecast unbiasedness, efficiency, and no serial correlation of forecast errors.
 
 ```{r echo=TRUE}
-dt[,`:=`(e_t1=y-t1,e_t2=y-t2,e_t3=y-t3,e_te=y-te)]
+dt[,`:=`(f.e=y-f)]
 
-rmsfe_t1 <- sqrt(mean(dt$e_t1^2,na.rm=T))
-rmsfe_t2 <- sqrt(mean(dt$e_t2^2,na.rm=T))
-rmsfe_t3 <- sqrt(mean(dt$e_t3^2,na.rm=T))
-rmsfe_te <- sqrt(mean(dt$e_te^2,na.rm=T))
+summary(lm(e~1,data=dt))$coefficients
 
-rmsfe_t1
-rmsfe_t2
-rmsfe_t3
-rmsfe_te
+summary(lm(e~f,data=dt))$coefficients
+
+dt[,`:=`(e1=shift(e))]
+summary(lm(e~e1,data=dt))$coefficients
 ```
 
