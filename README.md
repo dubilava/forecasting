@@ -23,7 +23,10 @@ This website compiles teaching material for the subject of economic forecasting.
 - [Book chapter 4](https://davidubilava.com/forecasting/docs/trends.html)
 - [Book chapter 5](https://davidubilava.com/forecasting/docs/seasonality.html)
 
-## Autoregressive Models
+## Autoregression
+
+- [Lecture 5 slides](https://davidubilava.com/forecasting_slides/06-Autoregression.html)
+- [Book chapter 6](https://davidubilava.com/forecasting/docs/autoregression.html)
 
 ## Vector Autoregressive Models
 
