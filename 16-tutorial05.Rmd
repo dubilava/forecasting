@@ -1,13 +1,11 @@
-# Tutorial 5: Autoregressive Models {-}
+# Tutorial 5: Autoregression {-}
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
 library(data.table)
 ```
 
-(this is a AR stuff, will need to move back)
-
-In this tutorial, we will generate autocorrelated series, we will apply an information criterion to select a suitable autoregressive model, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will generate one set of multi-step forecasts to illustrate the convergence to unconditional mean of the series.
+In this tutorial, we will generate autocorrelated series, we will apply an information criterion to select a suitable autoregressive model, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will generate one set of multi-step forecasts to illustrate the convergence to unconditional mean of the series. To run the code, the `data.table` and `ggplot2` packages need to be installed and loaded.
 
 Let's generate a time series that follows an AR(2) process: $y_{t} = 1.2y_{t-1}-0.3y_{t-2}+e_{t}$, where $e_{t} \sim N(0,1)$, for $t=1,\ldots,180$.
 
@@ -25,20 +23,16 @@ for(i in 3:n){
 }
 ```
 
-Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 2006), and store these along with $y$ in a **data.table**, call it 'dt'.
+Generate a vector of arbitrary dates (e.g., suppose we deal with a monthly series beginning from January 2006), and store these dates along with $y$ in a **data.table**, call it 'dt'. Then plot $y$ against $date$ using a **ggplot** function.
 
 ```{r echo=TRUE}
 date <- seq(as.Date("2006-01-01"),by="month",along.with=y)
 
 dt <- data.table(date,y)
-```
 
-Plot the realized time series using **ggplot** function.
-
-```{r echo=TRUE}
 ggplot(dt,aes(x=date,y=y))+
   geom_line(size=1)+
-  labs(x="Year",y="Trending Series")+
+  labs(x="Year",y="Autocorrelated series")+
   theme_classic()
 ```
 
@@ -53,97 +47,101 @@ sd_rho <- sqrt(1/n)
 acf_dt <- data.table(lags=1:18,acf=acf_vec,pacf=pacf_vec)
 
 ggplot(acf_dt,aes(x=lags,y=acf)) +
-  geom_hline(yintercept=0,color="darkgray",linetype=3,size=.5) +
-  geom_hline(yintercept=c(-1.96*sd_rho,1.96*sd_rho),color="goldenrod",linetype=2,size=.6) +
-  geom_segment(aes(xend=lags,yend=0),color="steelblue",size=.8)+
-  labs(x="Lag",y="ACF")+
+  geom_hline(yintercept=0,color="darkgray",linetype=3,size=.6) +
+  geom_hline(yintercept=c(-1.96*sd_rho,1.96*sd_rho),color="coral",linetype=2,size=.8) +
+  geom_segment(aes(xend=lags,yend=0),color="powderblue",size=1)+
+  labs(x="k",y=expression(rho[k]))+
   coord_cartesian(ylim=c(-1,1))+
   theme_classic()
 
 ggplot(acf_dt,aes(x=lags,y=pacf)) +
-  geom_hline(yintercept=0,color="darkgray",linetype=3,size=.5) +
-  geom_hline(yintercept=c(-1.96*sd_rho,1.96*sd_rho),color="goldenrod",linetype=2,size=.6) +
-  geom_segment(aes(xend=lags,yend=0),color="steelblue",size=.8)+
-  labs(x="Lag",y="PACF")+
+  geom_hline(yintercept=0,color="darkgray",linetype=3,size=.6) +
+  geom_hline(yintercept=c(-1.96*sd_rho,1.96*sd_rho),color="coral",linetype=2,size=.8) +
+  geom_segment(aes(xend=lags,yend=0),color="powderblue",size=1)+
+  labs(x="k",y=expression(pi[k]))+
   coord_cartesian(ylim=c(-1,1))+
   theme_classic()
 ```
 
-Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), AR(3), and AR(4) models, using all observations in the series, to decide on the optimal lag length.
+Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), and AR(3) models, using all observations in the series,^[Note that after generating lagged dependent variables we discard first three rows of the data to ensure that information criteria apply the same $T$ across the models.] to decide on the optimal lag length.
 
 ```{r echo=TRUE}
-dt[,`:=`(y_l1=shift(y),y_l2=shift(y,2),y_l3=shift(y,3),y_l4=shift(y,4))]
+dt[,`:=`(y1=shift(y),y2=shift(y,2),y3=shift(y,3))]
 
-# get rid of the rows with NAs
 dt <- dt[complete.cases(dt)]
 
-IC_dt <- data.table(lag=c(1:4),AIC=NA,SIC=NA)
+ic_dt <- data.table(k=c(1:3),AIC=NA,SIC=NA)
 
-for(i in 1:nrow(IC_dt)){
+for(i in 1:nrow(ic_dt)){
   
-  fmla <- as.formula(paste("y",paste0("y_l",c(1:i),collapse="+"),sep="~"))
-  reg.ar <- lm(fmla,data=dt)
+  fmla <- as.formula(paste("y",paste0("y",c(1:i),collapse="+"),sep="~"))
+  reg <- lm(fmla,data=dt)
   
-  IC_dt$AIC[i] <- log(crossprod(reg.ar$residuals))+2*(i+1)/nrow(dt)
-  IC_dt$SIC[i] <- log(crossprod(reg.ar$residuals))+log(nrow(dt))*(i+1)/nrow(dt)
+  ic_dt$AIC[i] <- log(sum(reg$residuals^2))+2*(i+1)/nrow(dt)
+  ic_dt$SIC[i] <- log(sum(reg$residuals^2))+log(nrow(dt))*(i+1)/nrow(dt)
 
 }
 
-IC_dt
+ic_dt
 ```
 
-Generate a sequence of one-step-ahead forecasts from random walk, as well as AR(1), AR(2), and AR(3), using the rolling window scheme, where the first rolling window ranges from period 1 to period 120.
+Generate a sequence of one-step-ahead forecasts from random walk, as well as AR(1), AR(2), and AR(3), using the rolling window scheme, where the first rolling window ranges from the beginning of the sample to December 2015 so that the first forecast is made for January 2016.
 
 ```{r echo=TRUE}
-R <- 120
+R <- which(dt$date==as.Date("2015-12-01"))
 P <- nrow(dt)-R
 
 dt$rw <- NA
-dt$ar1 <- NA
-dt$ar2 <- NA
+dt$a1 <- NA
+dt$a2 <- NA
+dt$a3 <- NA
 
 for(i in 1:P){
-  dt$rw[R+i] <- dt$y[R-1+i]
+  dt$rw[R+i] <- dt$y[R+i-1]
   
-  ar1 <- lm(y~y_l1,data=dt[i:(R-1+i)])
-  ar2 <- lm(y~y_l1+y_l2,data=dt[i:(R-1+i)])
+  reg1 <- lm(y~y1,data=dt[i:(R+i-1)])
+  reg2 <- lm(y~y1+y2,data=dt[i:(R+i-1)])
+  reg3 <- lm(y~y1+y2+y3,data=dt[i:(R+i-1)])
   
-  dt$ar1[R+i] <- ar1$coefficients[1]+ar1$coefficients[2]*dt$y[R-1+i]
-  dt$ar2[R+i] <- ar2$coefficients[1]+ar2$coefficients[2]*dt$y[R-1+i]+ar2$coefficients[3]*dt$y[R-2+i]
+  dt$a1[R+i] <- reg1$coefficients[1]+reg1$coefficients[2]*dt$y[R+i-1]
+  dt$a2[R+i] <- reg2$coefficients[1]+reg2$coefficients[2]*dt$y[R+i-1]+reg2$coefficients[3]*dt$y[R+i-2]
+  dt$a3[R+i] <- reg3$coefficients[1]+reg3$coefficients[2]*dt$y[R+i-1]+reg3$coefficients[3]*dt$y[R+i-2]+reg3$coefficients[4]*dt$y[R+i-3]
 }
 ```
   
 Calculate the RMSFE measures for all considered models.
 
 ```{r echo=TRUE}
-dt[,`:=`(rw_e=y-rw,ar1_e=y-ar1,ar2_e=y-ar2)]
+dt[,`:=`(e_rw=y-rw,e_a1=y-a1,e_a2=y-a2,e_a3=y-a3)]
 
-rmsfe_rw <- sqrt(mean(dt$rw_e^2,na.rm=T))
-rmsfe_ar1 <- sqrt(mean(dt$ar1_e^2,na.rm=T))
-rmsfe_ar2 <- sqrt(mean(dt$ar2_e^2,na.rm=T))
+rmsfe_rw <- sqrt(mean(dt$e_rw^2,na.rm=T))
+rmsfe_a1 <- sqrt(mean(dt$e_a1^2,na.rm=T))
+rmsfe_a2 <- sqrt(mean(dt$e_a2^2,na.rm=T))
+rmsfe_a3 <- sqrt(mean(dt$e_a3^2,na.rm=T))
 
 rmsfe_rw
-rmsfe_ar1
-rmsfe_ar2
+rmsfe_a1
+rmsfe_a2
+rmsfe_a3
 ```
 
-Using the first rolling window as the information set, generate the multi-step-ahead forecast for the hold-out period.
+Using the first rolling window as the information set, generate a single set of the multi-step-ahead point forecast for the remaining out-of-sample periods using the AR(2) model.
 
 ```{r echo=TRUE}
-dt[,`:=`(ar2_multi=y)]
+dt[,`:=`(a2_multi=y)]
 
-ar2 <- lm(y~y_l1+y_l2,data=dt[1:R])
+reg2m <- lm(y~y1+y2,data=dt[1:R])
 
 for(i in 1:P){
 
-  dt$ar2_multi[R+i] <- ar2$coefficients[1]+ar2$coefficients[2]*dt$ar2_multi[R-1+i]+ar2$coefficients[3]*dt$ar2_multi[R-2+i]
+  dt$a2_multi[R+i] <- reg2m$coefficients[1]+reg2m$coefficients[2]*dt$a2_multi[R-1+i]+reg2m$coefficients[3]*dt$a2_multi[R-2+i]
   
 }
 
-dt[1:R]$ar2_multi <- NA
+dt[1:R]$a2_multi <- NA
 
 ggplot(dt,aes(x=date))+
   geom_line(aes(y=y),color="darkgray",size=1)+
-  geom_line(aes(y=ar2_multi),color="steelblue",na.rm=T,size=1,linetype=5)+
+  geom_line(aes(y=a2_multi),color="coral",na.rm=T,size=1,linetype=5)+
   theme_classic()
 ```

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Chapter 7 Vector Autoregression | Forecasting With Time Series Models Using R" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Chapter 7 Vector Autoregression | Forecasting With Time Series Models Using R" />
+
+
+<meta name="author" content="David Ubilava" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="Chapter 7 Vector Autoregression | Forecasting With Time Series Models Using R">
+
+<title>Chapter 7 Vector Autoregression | Forecasting With Time Series Models Using R</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var element_label= $("label[for *= 'tufte-sn-']");
+    var count = $(element_label).length;
+    $(element_label).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('for','tufte-sn-'+ ++index);
+      $(this).text(index);
+    });
+  });
+  $(document).ready(function () {
+    var element_input= $("input[id *= 'tufte-sn-']");
+    var count = $(element_input).length;
+    $(element_input).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('id','tufte-sn-'+ ++index);
+    }); 
+  });
+  $(document).ready(function () {
+    var element_span= $("span[class *= 'sidenote-number']");
+    var count = $(element_span).length;
+    $(element_span).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).text(++index);
+    }); 
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Forecasting With Time Series Models Using R<p><p class="author">David Ubilava</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html" id="toc-foreword">Foreword</a>
+<a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
+<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
+<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
+<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
+<a id="active-page" href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> Vector Autoregression</a><ul class="toc-sections">
+<li class="toc"><a href="#modeling-3"> Modeling</a></li>
+<li class="toc"><a href="#forecasting-3"> Forecasting</a></li>
+</ul>
+<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
+<a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
+<a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
+<a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
+<a href="tutorial-4-trends-and-seasonality.html" id="toc-tutorial-4-trends-and-seasonality">Tutorial 4: Trends and Seasonality</a>
+<a href="tutorial-5-autoregression.html" id="toc-tutorial-5-autoregression">Tutorial 5: Autoregression</a>
+<a href="tutorial-6-vector-autoregressive-models.html" id="toc-tutorial-6-vector-autoregressive-models">Tutorial 6: Vector Autoregressive Models</a>
+<a href="tutorial-7-dynamic-factor-models.html" id="toc-tutorial-7-dynamic-factor-models">Tutorial 7: Dynamic Factor Models</a>
+<a href="tutorial-8-threshold-autoregression.html" id="toc-tutorial-8-threshold-autoregression">Tutorial 8: Threshold Autoregression</a>
+<a href="tutorial-9-forecast-evaluation.html" id="toc-tutorial-9-forecast-evaluation">Tutorial 9: Forecast Evaluation</a>
+<a href="tutorial-10-forecast-combination.html" id="toc-tutorial-10-forecast-combination">Tutorial 10: Forecast Combination</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="vector-autoregression" class="section level1" number="7">
+<h1>
+<span class="header-section-number">Chapter 7</span> Vector Autoregression</h1>
+<p><img src="art/multivariate.png"></p>
+<p>Many economic variables are interrelated. For example, changes to household income impact their consumption levels; changes to interest rates impact investments in the economy. Often (albeit not always) the relationship between the variables goes in both directions. For example, higher wages (and, therefore, income) result in higher prices (inflation), which in turn puts an upward pressure on wages.</p>
+<p>The foregoing implies that a shock to a variable may propagate a dynamic response not only of that variable, but also of related variables. The dynamic linkages between two (or more) economic variables can be modeled as a <em>system of equations</em>, represented by a vector autoregressive (VAR) process.</p>
+<div id="modeling-3" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-3')" onmouseout="reset_tooltip('modeling-3-tooltip')"><span class="tooltiptext" id="modeling-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>To begin, consider a bivariate (two-dimensional) VAR of order one, VAR(1).</p>
+<p>Let <span class="math inline">\(\{X_{1,t}\}\)</span> and <span class="math inline">\(\{X_{2,t}\}\)</span> be the stationary stochastic processes. A bivariate VAR(1), is then given by:
+<span class="math display">\[\begin{aligned}
+x_{1,t} &amp;= \alpha_1 + \pi_{11}x_{1,t-1} + \pi_{12}x_{2,t-1} + \varepsilon_{1,t} \\
+x_{2,t} &amp;= \alpha_2 + \pi_{21}x_{1,t-1} + \pi_{22}x_{2,t-1} + \varepsilon_{2,t}
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\varepsilon_{1,t} \sim iid(0,\sigma_1^2)\)</span> and <span class="math inline">\(\varepsilon_{2,t} \sim iid(0,\sigma_2^2)\)</span>, and the two can be correlated, i.e., <span class="math inline">\(Cov(\varepsilon_{1,t},\varepsilon_{2,t}) \neq 0\)</span>.</p>
+<p>To generalize, consider a multivariate (<span class="math inline">\(n\)</span>-dimensional) VAR of order <span class="math inline">\(p\)</span>, VAR(p), presented in matrix notation: <span class="math display">\[\mathbf{x}_t = \mathbf{\alpha} + \Pi_1 \mathbf{x}_{t-1} + \ldots + \Pi_p \mathbf{x}_{t-p} + \mathbf{\varepsilon}_t,\]</span> where <span class="math inline">\(\mathbf{x}_t = (x_{1,t},\ldots,x_{n,t})'\)</span> is a vector of <span class="math inline">\(n\)</span> (potentially) related variables; <span class="math inline">\(\mathbf{\varepsilon}_t = (\varepsilon_{1,t},\ldots,\varepsilon_{n,t})'\)</span> is a vector of error terms, such that <span class="math inline">\(E(\mathbf{\varepsilon}_t) = \mathbf{0}\)</span>, <span class="math inline">\(E(\mathbf{\varepsilon}_t^{}\mathbf{\varepsilon}_t^{\prime}) = \Sigma\)</span>, and <span class="math inline">\(E(\mathbf{\varepsilon}_{t}^{}\mathbf{\varepsilon}_{s \neq t}^{\prime}) = 0\)</span>. <span class="math inline">\(\Pi_1,\ldots,\Pi_p\)</span> are <span class="math inline">\(n\)</span>-dimensional parameter matrices:
+<span class="math display">\[\Pi_j =
+        \left[
+        \begin{array}{cccc}
+        \pi_{11j} &amp; \pi_{12j} &amp; \cdots &amp;  \pi_{1nj} \\
+        \pi_{21j} &amp; \pi_{22j} &amp; \cdots &amp;  \pi_{2nj} \\  
+        \vdots &amp; \vdots &amp; \ddots &amp;  \vdots \\  
+        \pi_{n1j} &amp; \pi_{n2j} &amp; \cdots &amp;  \pi_{nnj} \\  
+        \end{array}
+        \right],\;~~j=1,\ldots,p\]</span></p>
+<p>When two or more variables are modeled in this way, the implies assumption is that these variables are endogenous to each other; that is, each of the variables affects and is affected by other variables.</p>
+<p>There are three forms of vector autoregressions: structural, recursive, and reduced-form. The structural VAR uses economic theory to impose the ‘structure’ on correlations of the error terms in the system, thus, facilitate their ‘causal’ interpretation. The recursive VAR also introduces a structure of some sort, which primarily involves ordering the equations in the system in a specific way so that the error terms in each equation are uncorrelated with those in the preceding equations. To the extent that the ‘identifying assumptions’ are satisfied, some contemporaneous values (of other variables) appear in the equation of a given variable. The reduced-form VAR makes no claims of causality, instead it only includes lagged values of all the variables in each equation of the system. To the extent that the variables entering the system are, indeed, correlated among each other, the error terms of the reduced-form VAR (typically) are contemporaneously correlated. Here, unless otherwise specified, VAR refers to the reduced-form VAR.</p>
+<p>Some of the features of the VAR are that:</p>
+<ul>
+<li>only lagged values of the dependent variables are considered as the right-hand-side variables (although, trend and seasonal variables might also be included in higher-frequency data analysis);</li>
+<li>each equation has the same set of right-hand-side variables (however, it is possible to impose a different lag structure across the equations, especially when <span class="math inline">\(p\)</span> is relatively large, to preserve the degrees of freedom, particularly when the sample size is relatively small and when there are several variables in the system).</li>
+<li>The autregressive order of the VAR, <span class="math inline">\(p\)</span>, is determined by the maximum lag of a variable across all equations.</li>
+</ul>
+<p>The order of a VAR, <span class="math inline">\(p\)</span>, can be determined using system-wide information criteria:</p>
+<p><span class="math display">\[\begin{aligned}
+&amp; AIC = \ln\left|\Sigma_{\varepsilon}\right| + \frac{2}{T}(pn^2+n) \\
+&amp; SIC = \ln\left|\Sigma_{\varepsilon}\right| + \frac{\ln{T}}{T}(pn^2+n)
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\left|\Sigma_{\varepsilon}\right|\)</span> is the determinant of the residual covariance matrix; <span class="math inline">\(n\)</span> is the number of equations, and <span class="math inline">\(T\)</span> is the effective sample size.</p>
+<p>We can estimate each equation of the VAR individually using OLS.</p>
+<div id="in-sample-granger-causality" class="section level3" number="7.1.1">
+<h3>
+<span class="header-section-number">7.1.1</span> In-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('in-sample-granger-causality')" onmouseout="reset_tooltip('in-sample-granger-causality-tooltip')"><span class="tooltiptext" id="in-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>A test of joint significance of parameters associated with all the lags of a variable entering the equation of another variable is known as the ‘Granger causality’ test. The use of the term ‘causality’ in this context has been criticized. That one variable can help explain the movement of another variable does not necessarily mean that the former causes the latter. To that end the use of the term is misleading, indeed. Rather, it simply means that the former helps predict the latter, and that is, in effect, the meaning of causality in Granger sense.</p>
+<p>To illustrate the testing framework, consider a bivariate VAR(p):
+<span class="math display">\[\begin{aligned}
+x_{1,t} &amp;= \alpha_1 + \pi_{111} x_{1,t-1} + \cdots + \pi_{11p} x_{1,t-p} \\
+&amp;+ \pi_{121} x_{2,t-1} + \cdots + \pi_{12p} x_{2,t-p} +\varepsilon_{1,t}  \\
+x_{2,t} &amp;= \alpha_1 + \pi_{211} x_{1,t-1} + \cdots + \pi_{21p} x_{1,t-p} \\
+&amp;+ \pi_{221} x_{2,t-1} + \cdots + \pi_{22p} x_{2,t-p} +\varepsilon_{2,t}
+\end{aligned}\]</span></p>
+<p>It is said that:
+- <span class="math inline">\(\{X_2\}\)</span> does not Granger cause <span class="math inline">\(\{X_1\}\)</span> if <span class="math inline">\(\pi_{121}=\cdots=\pi_{12p}=0\)</span>
+- <span class="math inline">\(\{X_1\}\)</span> does not Granger cause <span class="math inline">\(\{X_2\}\)</span> if <span class="math inline">\(\pi_{211}=\cdots=\pi_{21p}=0\)</span></p>
+<p>So long as the variables of the system are covariance-stationarity, we can apply a F test for the hypotheses testing. If <span class="math inline">\(p=1\)</span>, a t test is equivalently applicable for hypotheses testing.</p>
+</div>
+</div>
+<div id="forecasting-3" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-3')" onmouseout="reset_tooltip('forecasting-3-tooltip')"><span class="tooltiptext" id="forecasting-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Generating forecasts for each of the variable comprising the VAR(p) model can be a straightforward exercise, so long as we have access to the relevant information set. As it was the case with autoregressive models, we make one-step-ahead forecasts based on the readily available data; and we make multi-step-ahead forecasts iteratively, using the forecast in periods for which the data are not present.</p>
+<div id="one-step-ahead-forecast-from-bivariate-var1" class="section level3" number="7.2.1">
+<h3>
+<span class="header-section-number">7.2.1</span> One-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>The realizations of the variables in period <span class="math inline">\(t+1\)</span> are:
+<span class="math display">\[\begin{aligned}
+x_{1,t+1} &amp;= \alpha_1 + \pi_{11} x_{1,t} + \pi_{12} x_{2,t} + \varepsilon_{1,t+1} \\
+x_{2,t+1} &amp;= \alpha_2 + \pi_{21} x_{1,t} + \pi_{22} x_{2,t} + \varepsilon_{2,t+1}
+\end{aligned}\]</span></p>
+<p>The optimal one-step-ahead forecasts are:
+<span class="math display">\[\begin{aligned}
+x_{1,t+1|t} &amp;= E(x_{1,t+1}|\Omega_t) = \alpha_1 + \pi_{11} x_{1,t} + \pi_{12} x_{2,t} \\
+x_{2,t+1|t} &amp;= E(x_{2,t+1}|\Omega_t) = \alpha_2 + \pi_{21} x_{1,t} + \pi_{22} x_{2,t}
+\end{aligned}\]</span></p>
+<p>The one-step-ahead forecast errors are:
+<span class="math display">\[\begin{aligned}
+e_{1,t+1|t} &amp;= x_{1,t+1} - x_{1,t+1|t} = \varepsilon_{1,t+1} \\
+e_{2,t+1|t} &amp;= x_{2,t+1} - x_{2,t+1|t} = \varepsilon_{2,t+1}
+\end{aligned}\]</span></p>
+<p>The one-step-ahead forecast variances are:
+<span class="math display">\[\begin{aligned}
+\sigma_{1,t+1|t}^2 &amp;= E(x_{1,t+1} - x_{1,t+1|t}|\Omega_t)^2 = E(\varepsilon_{1,t+1}^2) = \sigma_{1}^2 \\
+\sigma_{2,t+1|t}^2 &amp;= E(x_{2,t+1} - x_{2,t+1|t}|\Omega_t)^2 = E(\varepsilon_{2,t+1}^2) = \sigma_{2}^2
+\end{aligned}\]</span></p>
+<p>The one-step-ahead (95%) interval forecasts are:
+<span class="math display">\[\begin{aligned}
+x_{1,t+1|t} \pm z_{.025}\sigma_{1,t+1|t} = x_{1,t+1|t} \pm 1.96\sigma_{\varepsilon_1} \\
+x_{2,t+1|t} \pm z_{.025}\sigma_{2,t+1|t} = x_{2,t+1|t} \pm 1.96\sigma_{\varepsilon_2}
+\end{aligned}\]</span></p>
+</div>
+<div id="two-step-ahead-forecast-from-bivariate-var1" class="section level3" number="7.2.2">
+<h3>
+<span class="header-section-number">7.2.2</span> Two-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>The realizations of the variables in period <span class="math inline">\(t+2\)</span> are:
+<span class="math display">\[\begin{aligned}
+x_{1,t+2} &amp;= \alpha_1 + \pi_{11} x_{1,t+1} + \pi_{12} x_{2,t+1} + \varepsilon_{1,t+2} \\
+x_{2,t+2} &amp;= \alpha_2 + \pi_{21} x_{1,t+1} + \pi_{22} x_{2,t+1} + \varepsilon_{2,t+2}
+\end{aligned}\]</span></p>
+<p>The optimal two-step-ahead forecasts are:
+<span class="math display">\[\begin{aligned}
+x_{1,t+2|t} &amp;= E(x_{1,t+2}|\Omega_t) = \alpha_1 + \pi_{11} x_{1,t+1|t} + \pi_{12} x_{2,t+1|t} \\
+x_{2,t+2|t} &amp;= E(x_{2,t+2}|\Omega_t) = \alpha_2 + \pi_{21} x_{1,t+1|t} + \pi_{22} x_{2,t+1|t}
+\end{aligned}\]</span></p>
+<p>The two-step-ahead forecast errors are:
+<span class="math display">\[\begin{aligned}
+e_{1,t+2|t} &amp;= x_{1,t+2} - x_{1,t+2|t} = \pi_{11} e_{1,t+1|t} + \pi_{12} e_{2,t+1|t} + \varepsilon_{1,t+2} \\
+e_{2,t+2|t} &amp;= x_{2,t+2} - x_{2,t+2|t} = \pi_{21} e_{1,t+1|t} + \pi_{22} e_{2,t+1|t} + \varepsilon_{2,t+2}
+\end{aligned}\]</span></p>
+<p>The two-step-ahead forecast variances are:
+<span class="math display">\[\begin{aligned}
+\sigma_{1,t+2|t}^2 &amp;= E(x_{1,t+2} - x_{1,t+2|t}|\Omega_t)^2 \\
+&amp;= \sigma_{1}^2(1+\pi_{11}^2) + \sigma_{2}^2\pi_{12}^2 + 2\pi_{11}\pi_{12} Cov(\varepsilon_{1},\varepsilon_{2})\\
+\sigma_{2,t+2|t}^2 &amp;= E(x_{2,t+2} - x_{2,t+2|t}|\Omega_t)^2 \\
+&amp;= \sigma_{2}^2(1+\pi_{22}^2) + \sigma_{1}^2\pi_{21}^2 + 2\pi_{21}\pi_{22} Cov(\varepsilon_{1},\varepsilon_{2})
+\end{aligned}\]</span></p>
+<p>The two-step-ahead (95%) interval forecasts are:
+<span class="math display">\[\begin{aligned}
+x_{1,t+2|t} \pm z_{.025}\sigma_{1,t+2|t} \\
+x_{2,t+2|t} \pm z_{.025}\sigma_{2,t+2|t}
+\end{aligned}\]</span></p>
+</div>
+<div id="out-of-sample-granger-causality" class="section level3" number="7.2.3">
+<h3>
+<span class="header-section-number">7.2.3</span> Out-of-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('out-of-sample-granger-causality')" onmouseout="reset_tooltip('out-of-sample-granger-causality-tooltip')"><span class="tooltiptext" id="out-of-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>The previously discussed (in sample) test of causality in Granger sense is frequently performed in practice. But as noted above, the term ‘causality’ may be misleading somewhat. Indeed, the ‘true spirit’ of such test is to assess the ability of a variable to help predict another variable in an out-of-sample setting.</p>
+<p>Consider the restricted and unrestricted information sets, where the former only contains information on variable <span class="math inline">\(X_1\)</span>, while the latter contains the same information as well as information on variable <span class="math inline">\(X_2\)</span>:
+<span class="math display">\[\begin{aligned}
+&amp;\Omega_{t,r} \equiv \Omega_{t}(X_1) = \{x_{1,t},x_{1,t-1},\ldots\} \\
+&amp;\Omega_{t,u} \equiv \Omega_{t}(X_1,X_2) = \{x_{1,t},x_{1,t-1},\ldots,x_{2,t},x_{2,t-1},\ldots\}
+\end{aligned}\]</span></p>
+<p>Following Granger’s definition of causality: <span class="math inline">\(\{X_2\}\)</span> is said to cause <span class="math inline">\(\{X_1\}\)</span> if <span class="math inline">\(\sigma_{x_1}^2\left(\Omega_{t,u}\right) &lt; \sigma_{x_1}^2\left(\Omega_{t,r}\right)\)</span>, meaning that we can better predict <span class="math inline">\(X_1\)</span> using all available information on <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, rather than that on <span class="math inline">\(X_1\)</span> only.</p>
+<p>Let the forecasts based on each of the information sets be:
+<span class="math display">\[\begin{aligned}
+    &amp;x_{1,t+h|t,r} = E\left(x_{1,t+h}|\Omega_{t,r}\right) \\
+    &amp;x_{1,t+h|t,u} = E\left(x_{1,t+h}|\Omega_{t,u}\right)
+\end{aligned}\]</span></p>
+<p>For these forecasts, the corresponding forecast errors are:
+<span class="math display">\[\begin{aligned}
+    &amp; e_{1,t+h|t,r} = x_{1,t+h} - x_{1,t+h|t,r}\\
+    &amp; e_{1,t+h|t,u} = x_{1,t+h} - x_{1,t+h|t,u}
+\end{aligned}\]</span></p>
+<p>The out-of-sample forecast errors are then evaluated by comparing the loss functions based on these forecasts errors. For example, assuming quadratic loss, and <span class="math inline">\(P\)</span> out-of-sample forecasts:
+<span class="math display">\[\begin{aligned}
+RMSFE_{r} &amp;= \sqrt{\frac{1}{P}\sum_{s=1}^{P}\left(e_{1,R+s|R-1+s,r}\right)^2} \\
+RMSFE_{u} &amp;= \sqrt{\frac{1}{P}\sum_{s=1}^{P}\left(e_{1,R+s|R-1+s,u}\right)^2}
+\end{aligned}\]</span>
+where <span class="math inline">\(R\)</span> is the size of the (first) estimation window.</p>
+<p><span class="math inline">\(\{X_2\}\)</span> is said to cause <em>in Granger sense</em> <span class="math inline">\(\{X_1\}\)</span> if <span class="math inline">\(RMSFE_{u} &lt; RMSFE_{r}\)</span>.</p>
+
+</div>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="autoregression.html"><button class="btn btn-default">Previous</button></a>
+<a href="dynamic-factor-models.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2022-08-31
+ using 
+R version 4.1.2 (2021-11-01)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

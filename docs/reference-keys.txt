@@ -55,7 +55,7 @@ unit-roots-and-non-stationarity
 forecasting-2
 iterative-method-of-multistep-forecasting
 direct-method-of-multistep-forecasting
-vector-autoregressive-models
+vector-autoregression
 modeling-3
 in-sample-granger-causality
 forecasting-3

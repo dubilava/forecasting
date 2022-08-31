@@ -1,4 +1,5 @@
-# Vector Autoregressive Models
+# Vector Autoregression
+![](art/multivariate.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
