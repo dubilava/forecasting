@@ -209,8 +209,8 @@ div.csl-indent {
 <a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
 <a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
 <a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> Vector Autoregression</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> Moving Average</a>
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> Vector Autoregression</a>
 <a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
 <a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
 <a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
@@ -258,7 +258,7 @@ div.csl-indent {
 ## 118:  2.4197029 0.20636847
 ## 119:  1.8521905 0.89256870
 ## 120:  2.3040499 1.28020209</code></pre>
-<p>So, we have generated<label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.</span> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
+<p>So, we have generated<label for="tufte-sn-13" class="margin-toggle sidenote-number">13</label><input type="checkbox" id="tufte-sn-13" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">13</span> Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.</span> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tutorial-2-data-management-and-visualisation.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb32-2"><a href="tutorial-2-data-management-and-visualisation.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-37-1.png" width="624"></p>
@@ -348,7 +348,7 @@ div.csl-indent {
 <a href="tutorial-3-forecasting-methods-and-routines.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-31
+2022-09-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>

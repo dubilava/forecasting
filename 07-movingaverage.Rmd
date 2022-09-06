@@ -1,9 +1,7 @@
-# Dynamic Factor Models
+# Moving Average
+![](art/movingaverage.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
 library(data.table)
 ```
-
-
-

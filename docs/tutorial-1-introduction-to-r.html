@@ -209,8 +209,8 @@ div.csl-indent {
 <a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
 <a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
 <a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> Vector Autoregression</a>
-<a href="dynamic-factor-models.html" id="toc-dynamic-factor-models"><span class="toc-section-number">8</span> Dynamic Factor Models</a>
+<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> Moving Average</a>
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> Vector Autoregression</a>
 <a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
 <a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
 <a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
@@ -235,9 +235,9 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="tutorial-1-introduction-to-r" class="section level1 unnumbered">
 <h1>Tutorial 1: Introduction to R</h1>
-<p>R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources, as well as your own trial–and–error (which has been my own time-tested routine for mastering R). To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.</p>
+<p>R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,<label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> such as <a href="https://r4ds.had.co.nz/">R for Data Science</a></span>, as well as by applying a trial–and–error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.</p>
 <p>We will work in RStudio—the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will ‘find’ and connect with the former seamlessly). R is available from <a href="https://cran.r-project.org/" target="_blank">CRAN</a>, and RStudio is available from <a href="https://www.rstudio.com/" target="_blank">RStudio</a>.</p>
-<p>There are a number of ways in which we can work with data in R. To develop an intuition, let’s start off with matrices.</p>
+<p>There are a number of ways in which we can work with data in R. Here, we will primarily rely on <code>data.table</code>, which is one of the ways of coding in R, the other prominent dialect being <code>tidyverse</code>. But to develop an intuition, let’s start off with base R, specifically–matrices.</p>
 <p>Consider a sequence of observations:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tutorial-1-introduction-to-r.html#cb1-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
 <span id="cb1-2"><a href="tutorial-1-introduction-to-r.html#cb1-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
@@ -355,7 +355,7 @@ div.csl-indent {
 <a href="tutorial-2-data-management-and-visualisation.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-08-31
+2022-09-07
  using 
 R version 4.1.2 (2021-11-01)
 </p>

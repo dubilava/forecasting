@@ -9,3 +9,5 @@ Claims - U.S. Employment and Training Administration, Initial Claims [ICNSA], re
 Miles - U.S. Bureau of Transportation Statistics, Vehicle Miles Traveled [VMT], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/VMT, August 18, 2022.
 
 ExchangeRates - Board of Governors of the Federal Reserve System (US), U.S. Dollars to Euro Spot Exchange Rate [EXUSEU], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/EXUSEU, August 25, 2022
+
+Stress - Federal Reserve Bank of St. Louis, St. Louis Fed Financial Stress Index [STLFSI3], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/STLFSI3, September 2, 2022.

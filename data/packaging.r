@@ -87,3 +87,39 @@ exchange_rates <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$EXUSE
 
 save(exchange_rates,file="exchange_rates.RData")
 
+
+
+# Bitcoin ----
+bitcoin_dt <- fread("Bitcoin.csv")
+bitcoin_dt[,`:=`(Date=as.Date(Date,format="%m/%d/%Y"))]
+
+ggplot(bitcoin_dt,aes(x=Date,y=Value))+
+  geom_line()
+
+sub_dt <- bitcoin_dt[Date>=as.Date("2020-01-01") & Date<=as.Date("2021-12-31")]
+
+ggplot(sub_dt,aes(x=Date,y=Value))+
+  geom_line()
+
+bitcoin <- data.table(date=as.Date(sub_dt$Date),y=as.numeric(sub_dt$Value))
+
+bitcoin <- bitcoin[order(date)]
+
+save(bitcoin,file="bitcoin.RData")
+
+
+# Financial stress ----
+stress_dt <- fread("Stress.csv")
+
+ggplot(stress_dt,aes(x=DATE,y=STLFSI3))+
+  geom_line()
+
+sub_dt <- stress_dt[DATE>=as.Date("2010-01-01") & DATE<=as.Date("2019-12-31")]
+
+ggplot(sub_dt,aes(x=DATE,y=STLFSI3))+
+  geom_line()
+
+stress <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$STLFSI3))
+
+save(stress,file="stress.RData")
+

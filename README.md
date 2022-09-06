@@ -25,14 +25,16 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Autoregression
 
-- [Lecture 5 slides](https://davidubilava.com/forecasting_slides/06-Autoregression.html)
+- [Lecture 5 slides](https://davidubilava.com/forecasting_slides/05-Autoregression.html)
 - [Book chapter 6](https://davidubilava.com/forecasting/docs/autoregression.html)
 
-## Vector Autoregressive Models
+## Moving Average
 
-## Dynamic Factor Models
+- [Lecture 6 slides](https://davidubilava.com/forecasting_slides/06-MovingAverage.html)
 
-## Threshold Autoregressive Models
+## Vector Autoregression
+
+## Threshold Autoregression
 
 ## Forecast Evaluation
 
