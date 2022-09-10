@@ -211,6 +211,7 @@ div.csl-indent {
 <a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
 <a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> Moving Average</a>
 <a id="active-page" href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> Vector Autoregression</a><ul class="toc-sections">
+<li class="toc"><a href="#dynamic-feedbacks-among-economic-variables"> Dynamic Feedbacks Among Economic Variables</a></li>
 <li class="toc"><a href="#modeling-3"> Modeling</a></li>
 <li class="toc"><a href="#forecasting-3"> Forecasting</a></li>
 </ul>
@@ -240,31 +241,37 @@ div.csl-indent {
 <h1>
 <span class="header-section-number">Chapter 8</span> Vector Autoregression</h1>
 <p><img src="art/multivariate.png"></p>
-<p>Many economic variables are interrelated. For example, changes to household income impact their consumption levels; changes to interest rates impact investments in the economy. Often (albeit not always) the relationship between the variables goes in both directions. For example, higher wages (and, therefore, income) result in higher prices (inflation), which in turn puts an upward pressure on wages.</p>
-<p>The foregoing implies that a shock to a variable may propagate a dynamic response not only of that variable, but also of related variables. The dynamic linkages between two (or more) economic variables can be modeled as a <em>system of equations</em>, represented by a vector autoregressive (VAR) process.</p>
-<div id="modeling-3" class="section level2" number="8.1">
+<div id="dynamic-feedbacks-among-economic-variables" class="section level2" number="8.1">
 <h2>
-<span class="header-section-number">8.1</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-3')" onmouseout="reset_tooltip('modeling-3-tooltip')"><span class="tooltiptext" id="modeling-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.1</span> Dynamic Feedbacks Among Economic Variables<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('dynamic-feedbacks-among-economic-variables')" onmouseout="reset_tooltip('dynamic-feedbacks-among-economic-variables-tooltip')"><span class="tooltiptext" id="dynamic-feedbacks-among-economic-variables-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>To begin, consider a bivariate (two-dimensional) VAR of order one, VAR(1).</p>
+<p><span class="newthought">Economic variables</span> are interrelated. For example, changes to household income impact their consumption levels; changes to interest rates impact investments in the economy. Often (albeit not always) the relationship between the variables goes in both directions. For example, growth in income results in higher prices (inflation), which in turn puts an upward pressure on wages.<label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> The sequence of events in Australia, following the Covid-19 pandemic, is a notable case in point. Fearing economic crisis, the Australian government issued a suite of stimulus packages. A resulting increase in demand became one of the contributing factors to the subsequent price inflation. At that point, the Reserve Bank of Australia was left with no option but to hike interest rates to slow down the economy and, thus, release the inflationary pressure.</span></p>
+<p>The foregoing implies that a shock to a variable may propagate a dynamic response not only of that variable, but also of related variables. The dynamic linkages between two (or more) economic variables can be modeled as a <em>system of equations</em>, represented by a vector autoregression (VAR).</p>
+<p>There are three general forms of vector autoregressions: <em>structural</em>, <em>recursive</em>, and <em>reduced-form</em>. The structural VAR uses economic theory to impose the ‘structure’ on correlations of the error terms in the system. The recursive VAR also introduces a structure of some sort, which primarily involves ordering the equations in the system in a specific way so that the error terms in each equation are uncorrelated with those in the preceding equations. To the extent that the ‘identifying assumptions’ are satisfied, some contemporaneous values (of other variables) appear in the equation of a given variable.</p>
+<p>The reduced-form VAR makes no claims of causality, at least not in the sense that this term is usually understood. The equations include only the lagged values of all the variables in the system. To the extent that these variables are, indeed, correlated with each other, the error terms of the reduced-form VAR (typically) are contemporaneously correlated. In what follows, VAR will refer to the reduced-form VAR, unless otherwise stated.</p>
+</div>
+<div id="modeling-3" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-3')" onmouseout="reset_tooltip('modeling-3-tooltip')"><span class="tooltiptext" id="modeling-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The simplest form of the VAR is a bivariate (two-dimensional) VAR of order one, VAR(1).</p>
 <p>Let <span class="math inline">\(\{X_{1,t}\}\)</span> and <span class="math inline">\(\{X_{2,t}\}\)</span> be the stationary stochastic processes. A bivariate VAR(1), is then given by:
 <span class="math display">\[\begin{aligned}
-x_{1,t} &amp;= \alpha_1 + \pi_{11}x_{1,t-1} + \pi_{12}x_{2,t-1} + \varepsilon_{1,t} \\
-x_{2,t} &amp;= \alpha_2 + \pi_{21}x_{1,t-1} + \pi_{22}x_{2,t-1} + \varepsilon_{2,t}
+x_{1t} &amp;= \alpha_1 + \pi_{11}x_{1t-1} + \pi_{12}x_{2t-1} + \varepsilon_{1t} \\
+x_{2t} &amp;= \alpha_2 + \pi_{21}x_{1t-1} + \pi_{22}x_{2t-1} + \varepsilon_{2t}
 \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(\varepsilon_{1,t} \sim iid(0,\sigma_1^2)\)</span> and <span class="math inline">\(\varepsilon_{2,t} \sim iid(0,\sigma_2^2)\)</span>, and the two can be correlated, i.e., <span class="math inline">\(Cov(\varepsilon_{1,t},\varepsilon_{2,t}) \neq 0\)</span>.</p>
-<p>To generalize, consider a multivariate (<span class="math inline">\(n\)</span>-dimensional) VAR of order <span class="math inline">\(p\)</span>, VAR(p), presented in matrix notation: <span class="math display">\[\mathbf{x}_t = \mathbf{\alpha} + \Pi_1 \mathbf{x}_{t-1} + \ldots + \Pi_p \mathbf{x}_{t-p} + \mathbf{\varepsilon}_t,\]</span> where <span class="math inline">\(\mathbf{x}_t = (x_{1,t},\ldots,x_{n,t})'\)</span> is a vector of <span class="math inline">\(n\)</span> (potentially) related variables; <span class="math inline">\(\mathbf{\varepsilon}_t = (\varepsilon_{1,t},\ldots,\varepsilon_{n,t})'\)</span> is a vector of error terms, such that <span class="math inline">\(E(\mathbf{\varepsilon}_t) = \mathbf{0}\)</span>, <span class="math inline">\(E(\mathbf{\varepsilon}_t^{}\mathbf{\varepsilon}_t^{\prime}) = \Sigma\)</span>, and <span class="math inline">\(E(\mathbf{\varepsilon}_{t}^{}\mathbf{\varepsilon}_{s \neq t}^{\prime}) = 0\)</span>. <span class="math inline">\(\Pi_1,\ldots,\Pi_p\)</span> are <span class="math inline">\(n\)</span>-dimensional parameter matrices:
-<span class="math display">\[\Pi_j =
+<p>To generalize, consider a multivariate (<span class="math inline">\(n\)</span>-dimensional) VAR of order <span class="math inline">\(p\)</span>, VAR(p), presented in matrix notation: <span class="math display">\[\mathbf{x}_t = \mathbf{\alpha} + \Pi^{(1)} \mathbf{x}_{t-1} + \ldots + \Pi^{(p)} \mathbf{x}_{t-p} + \mathbf{\varepsilon}_t,\]</span> where <span class="math inline">\(\mathbf{x}_t = (x_{1t},\ldots,x_{nt})'\)</span> is a vector of <span class="math inline">\(n\)</span> (potentially) related variables; <span class="math inline">\(\mathbf{\varepsilon}_t = (\varepsilon_{1t},\ldots,\varepsilon_{nt})'\)</span> is a vector of error terms, such that <span class="math inline">\(E(\mathbf{\varepsilon}_t) = \mathbf{0}\)</span>, <span class="math inline">\(E(\mathbf{\varepsilon}_t^{}\mathbf{\varepsilon}_t^{\prime}) = \Sigma_{\mathbf{\varepsilon}}\)</span>, and <span class="math inline">\(E(\mathbf{\varepsilon}_{t}^{}\mathbf{\varepsilon}_{s \neq t}^{\prime}) = 0\)</span>. <span class="math inline">\(\Pi^{(1)},\ldots,\Pi^{(p)}\)</span> are <span class="math inline">\(n\)</span>-dimensional parameter matrices:
+<span class="math display">\[\Pi^{(j)} =
         \left[
         \begin{array}{cccc}
-        \pi_{11j} &amp; \pi_{12j} &amp; \cdots &amp;  \pi_{1nj} \\
-        \pi_{21j} &amp; \pi_{22j} &amp; \cdots &amp;  \pi_{2nj} \\  
+        \pi_{11}^{(j)} &amp; \pi_{12}^{(j)} &amp; \cdots &amp;  \pi_{1n}^{(j)} \\
+        \pi_{21}^{(j)} &amp; \pi_{22}^{(j)} &amp; \cdots &amp;  \pi_{2n}^{(j)} \\  
         \vdots &amp; \vdots &amp; \ddots &amp;  \vdots \\  
-        \pi_{n1j} &amp; \pi_{n2j} &amp; \cdots &amp;  \pi_{nnj} \\  
+        \pi_{n1}^{(j)} &amp; \pi_{n2}^{(j)} &amp; \cdots &amp;  \pi_{nn}^{(j)}  
         \end{array}
         \right],\;~~j=1,\ldots,p\]</span></p>
 <p>When two or more variables are modeled in this way, the implies assumption is that these variables are endogenous to each other; that is, each of the variables affects and is affected by other variables.</p>
-<p>There are three forms of vector autoregressions: structural, recursive, and reduced-form. The structural VAR uses economic theory to impose the ‘structure’ on correlations of the error terms in the system, thus, facilitate their ‘causal’ interpretation. The recursive VAR also introduces a structure of some sort, which primarily involves ordering the equations in the system in a specific way so that the error terms in each equation are uncorrelated with those in the preceding equations. To the extent that the ‘identifying assumptions’ are satisfied, some contemporaneous values (of other variables) appear in the equation of a given variable. The reduced-form VAR makes no claims of causality, instead it only includes lagged values of all the variables in each equation of the system. To the extent that the variables entering the system are, indeed, correlated among each other, the error terms of the reduced-form VAR (typically) are contemporaneously correlated. Here, unless otherwise specified, VAR refers to the reduced-form VAR.</p>
 <p>Some of the features of the VAR are that:</p>
 <ul>
 <li>only lagged values of the dependent variables are considered as the right-hand-side variables (although, trend and seasonal variables might also be included in higher-frequency data analysis);</li>
@@ -278,119 +285,82 @@ x_{2,t} &amp;= \alpha_2 + \pi_{21}x_{1,t-1} + \pi_{22}x_{2,t-1} + \varepsilon_{2
 \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(\left|\Sigma_{\varepsilon}\right|\)</span> is the determinant of the residual covariance matrix; <span class="math inline">\(n\)</span> is the number of equations, and <span class="math inline">\(T\)</span> is the effective sample size.</p>
 <p>We can estimate each equation of the VAR individually using OLS.</p>
-<div id="in-sample-granger-causality" class="section level3" number="8.1.1">
+<div id="in-sample-granger-causality" class="section level3" number="8.2.1">
 <h3>
-<span class="header-section-number">8.1.1</span> In-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('in-sample-granger-causality')" onmouseout="reset_tooltip('in-sample-granger-causality-tooltip')"><span class="tooltiptext" id="in-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.2.1</span> In-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('in-sample-granger-causality')" onmouseout="reset_tooltip('in-sample-granger-causality-tooltip')"><span class="tooltiptext" id="in-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>A test of joint significance of parameters associated with all the lags of a variable entering the equation of another variable is known as the ‘Granger causality’ test. The use of the term ‘causality’ in this context has been criticized. That one variable can help explain the movement of another variable does not necessarily mean that the former causes the latter. To that end the use of the term is misleading, indeed. Rather, it simply means that the former helps predict the latter, and that is, in effect, the meaning of causality in Granger sense.</p>
+<p>A test of joint significance of parameters associated with all the lags of a variable entering the equation of another variable is known as the ‘Granger causality’ test. The use of the term ‘causality’ in this context has been criticized. That one variable can help explain the movement of another variable does not necessarily mean that the former causes the latter. To that end the use of the term can be seen as misleading, indeed. Rather, causality in Granger sense simply means that the former helps predict the latter.</p>
 <p>To illustrate the testing framework, consider a bivariate VAR(p):
 <span class="math display">\[\begin{aligned}
-x_{1,t} &amp;= \alpha_1 + \pi_{111} x_{1,t-1} + \cdots + \pi_{11p} x_{1,t-p} \\
-&amp;+ \pi_{121} x_{2,t-1} + \cdots + \pi_{12p} x_{2,t-p} +\varepsilon_{1,t}  \\
-x_{2,t} &amp;= \alpha_1 + \pi_{211} x_{1,t-1} + \cdots + \pi_{21p} x_{1,t-p} \\
-&amp;+ \pi_{221} x_{2,t-1} + \cdots + \pi_{22p} x_{2,t-p} +\varepsilon_{2,t}
+x_{1t} &amp;= \alpha_1 + \pi_{11}^{(1)} x_{1t-1} + \cdots + \pi_{11}^{(p)} x_{1t-p} \\
+&amp;+ \pi_{12}^{(1)} x_{2t-1} + \cdots + \pi_{12}^{(p)} x_{2,t-p} +\varepsilon_{1t}  \\
+x_{2t} &amp;= \alpha_1 + \pi_{21}^{(1)} x_{1t-1} + \cdots + \pi_{21}^{(p)} x_{1t-p} \\
+&amp;+ \pi_{22}^{(1)} x_{2t-1} + \cdots + \pi_{22}^{(p)} x_{2t-p} +\varepsilon_{2t}
 \end{aligned}\]</span></p>
-<p>It is said that:
-- <span class="math inline">\(\{X_2\}\)</span> does not Granger cause <span class="math inline">\(\{X_1\}\)</span> if <span class="math inline">\(\pi_{121}=\cdots=\pi_{12p}=0\)</span>
-- <span class="math inline">\(\{X_1\}\)</span> does not Granger cause <span class="math inline">\(\{X_2\}\)</span> if <span class="math inline">\(\pi_{211}=\cdots=\pi_{21p}=0\)</span></p>
-<p>So long as the variables of the system are covariance-stationarity, we can apply a F test for the hypotheses testing. If <span class="math inline">\(p=1\)</span>, a t test is equivalently applicable for hypotheses testing.</p>
+<p>We say that:</p>
+<ul>
+<li>
+<span class="math inline">\(\{X_2\}\)</span> does not Granger cause <span class="math inline">\(\{X_1\}\)</span> if <span class="math inline">\(\pi_{121}=\cdots=\pi_{12p}=0\)</span>
+</li>
+<li>
+<span class="math inline">\(\{X_1\}\)</span> does not Granger cause <span class="math inline">\(\{X_2\}\)</span> if <span class="math inline">\(\pi_{211}=\cdots=\pi_{21p}=0\)</span>
+</li>
+</ul>
+<p>So long as the variables of the system are covariance-stationarity, we can test the hypothesis using a F test. If <span class="math inline">\(p=1\)</span>, we can also equivalently test the hypothesis using a t test.</p>
 </div>
 </div>
-<div id="forecasting-3" class="section level2" number="8.2">
+<div id="forecasting-3" class="section level2" number="8.3">
 <h2>
-<span class="header-section-number">8.2</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-3')" onmouseout="reset_tooltip('forecasting-3-tooltip')"><span class="tooltiptext" id="forecasting-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-3')" onmouseout="reset_tooltip('forecasting-3-tooltip')"><span class="tooltiptext" id="forecasting-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>Generating forecasts for each of the variable comprising the VAR(p) model can be a straightforward exercise, so long as we have access to the relevant information set. As it was the case with autoregressive models, we make one-step-ahead forecasts based on the readily available data; and we make multi-step-ahead forecasts iteratively, using the forecast in periods for which the data are not present.</p>
-<div id="one-step-ahead-forecast-from-bivariate-var1" class="section level3" number="8.2.1">
+<p>Generating forecasts for each of the variable comprising the VAR(p) model can be a straightforward exercise, so long as we have access to the relevant information set. As was the case with autoregressive models, we make one-step-ahead forecasts based on the readily available data; and we make multi-step-ahead forecasts iteratively, using the forecast in periods for which the data are not present.</p>
+<div id="one-step-ahead-forecasts" class="section level3" number="8.3.1">
 <h3>
-<span class="header-section-number">8.2.1</span> One-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('one-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3.1</span> One-step-ahead forecasts<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('one-step-ahead-forecasts')" onmouseout="reset_tooltip('one-step-ahead-forecasts-tooltip')"><span class="tooltiptext" id="one-step-ahead-forecasts-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>The realizations of the variables in period <span class="math inline">\(t+1\)</span> are:
-<span class="math display">\[\begin{aligned}
-x_{1,t+1} &amp;= \alpha_1 + \pi_{11} x_{1,t} + \pi_{12} x_{2,t} + \varepsilon_{1,t+1} \\
-x_{2,t+1} &amp;= \alpha_2 + \pi_{21} x_{1,t} + \pi_{22} x_{2,t} + \varepsilon_{2,t+1}
-\end{aligned}\]</span></p>
-<p>The optimal one-step-ahead forecasts are:
-<span class="math display">\[\begin{aligned}
-x_{1,t+1|t} &amp;= E(x_{1,t+1}|\Omega_t) = \alpha_1 + \pi_{11} x_{1,t} + \pi_{12} x_{2,t} \\
-x_{2,t+1|t} &amp;= E(x_{2,t+1}|\Omega_t) = \alpha_2 + \pi_{21} x_{1,t} + \pi_{22} x_{2,t}
-\end{aligned}\]</span></p>
-<p>The one-step-ahead forecast errors are:
-<span class="math display">\[\begin{aligned}
-e_{1,t+1|t} &amp;= x_{1,t+1} - x_{1,t+1|t} = \varepsilon_{1,t+1} \\
-e_{2,t+1|t} &amp;= x_{2,t+1} - x_{2,t+1|t} = \varepsilon_{2,t+1}
-\end{aligned}\]</span></p>
-<p>The one-step-ahead forecast variances are:
-<span class="math display">\[\begin{aligned}
-\sigma_{1,t+1|t}^2 &amp;= E(x_{1,t+1} - x_{1,t+1|t}|\Omega_t)^2 = E(\varepsilon_{1,t+1}^2) = \sigma_{1}^2 \\
-\sigma_{2,t+1|t}^2 &amp;= E(x_{2,t+1} - x_{2,t+1|t}|\Omega_t)^2 = E(\varepsilon_{2,t+1}^2) = \sigma_{2}^2
-\end{aligned}\]</span></p>
-<p>The one-step-ahead (95%) interval forecasts are:
-<span class="math display">\[\begin{aligned}
-x_{1,t+1|t} \pm z_{.025}\sigma_{1,t+1|t} = x_{1,t+1|t} \pm 1.96\sigma_{\varepsilon_1} \\
-x_{2,t+1|t} \pm z_{.025}\sigma_{2,t+1|t} = x_{2,t+1|t} \pm 1.96\sigma_{\varepsilon_2}
-\end{aligned}\]</span></p>
+<p>In a VAR(p), the realization of a dependent variable <span class="math inline">\(i\)</span> in period <span class="math inline">\(t+1\)</span> is:
+<span class="math display">\[x_{it+1} = \alpha_i + \sum_{j=1}^{p}\sum_{k=1}^{n}\pi_{ik}^{(j)} x_{kt+1-j} + \varepsilon_{t+1},\;~~i=1,\ldots,n.\]</span></p>
+<p>Point forecast, ignoring parameter uncertainty, is:
+<span class="math display">\[x_{it+1|t} = \alpha_i + \sum_{j=1}^{p}\sum_{k=1}^{n}\pi_{ik}^{(j)} x_{kt+1-j},\;~~i=1,\ldots,n.\]</span></p>
+<p>Forecast error is: <span class="math display">\[e_{it+1} = x_{it+1}-x_{it+1|t}=\varepsilon_{it+1},\;~~i=1,\ldots,n.\]</span></p>
+<p>Forecast variance is: <span class="math display">\[\sigma_{it+1}^2 = E(\varepsilon_{it+1}^2) = \sigma_{i}^2,\;~~i=1,\ldots,n,\]</span> where <span class="math inline">\(\sigma_{i}^2\)</span> is the i<span class="math inline">\(^{th}\)</span> element of the main diagonal of the error variance-covariance matrix of the VAR(p).</p>
+<p>The (95%) interval forecast is:
+<span class="math display">\[x_{it+1|t}\pm1.96\sigma_{i}^2,\;~~i=1,\ldots,n.\]</span></p>
 </div>
-<div id="two-step-ahead-forecast-from-bivariate-var1" class="section level3" number="8.2.2">
+<div id="multi-step-ahead-forecasts" class="section level3" number="8.3.2">
 <h3>
-<span class="header-section-number">8.2.2</span> Two-step-ahead forecast from bivariate VAR(1)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('two-step-ahead-forecast-from-bivariate-var1')" onmouseout="reset_tooltip('two-step-ahead-forecast-from-bivariate-var1-tooltip')"><span class="tooltiptext" id="two-step-ahead-forecast-from-bivariate-var1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3.2</span> Multi-step-ahead forecasts<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('multi-step-ahead-forecasts')" onmouseout="reset_tooltip('multi-step-ahead-forecasts-tooltip')"><span class="tooltiptext" id="multi-step-ahead-forecasts-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>The realizations of the variables in period <span class="math inline">\(t+2\)</span> are:
-<span class="math display">\[\begin{aligned}
-x_{1,t+2} &amp;= \alpha_1 + \pi_{11} x_{1,t+1} + \pi_{12} x_{2,t+1} + \varepsilon_{1,t+2} \\
-x_{2,t+2} &amp;= \alpha_2 + \pi_{21} x_{1,t+1} + \pi_{22} x_{2,t+1} + \varepsilon_{2,t+2}
-\end{aligned}\]</span></p>
-<p>The optimal two-step-ahead forecasts are:
-<span class="math display">\[\begin{aligned}
-x_{1,t+2|t} &amp;= E(x_{1,t+2}|\Omega_t) = \alpha_1 + \pi_{11} x_{1,t+1|t} + \pi_{12} x_{2,t+1|t} \\
-x_{2,t+2|t} &amp;= E(x_{2,t+2}|\Omega_t) = \alpha_2 + \pi_{21} x_{1,t+1|t} + \pi_{22} x_{2,t+1|t}
-\end{aligned}\]</span></p>
-<p>The two-step-ahead forecast errors are:
-<span class="math display">\[\begin{aligned}
-e_{1,t+2|t} &amp;= x_{1,t+2} - x_{1,t+2|t} = \pi_{11} e_{1,t+1|t} + \pi_{12} e_{2,t+1|t} + \varepsilon_{1,t+2} \\
-e_{2,t+2|t} &amp;= x_{2,t+2} - x_{2,t+2|t} = \pi_{21} e_{1,t+1|t} + \pi_{22} e_{2,t+1|t} + \varepsilon_{2,t+2}
-\end{aligned}\]</span></p>
-<p>The two-step-ahead forecast variances are:
-<span class="math display">\[\begin{aligned}
-\sigma_{1,t+2|t}^2 &amp;= E(x_{1,t+2} - x_{1,t+2|t}|\Omega_t)^2 \\
-&amp;= \sigma_{1}^2(1+\pi_{11}^2) + \sigma_{2}^2\pi_{12}^2 + 2\pi_{11}\pi_{12} Cov(\varepsilon_{1},\varepsilon_{2})\\
-\sigma_{2,t+2|t}^2 &amp;= E(x_{2,t+2} - x_{2,t+2|t}|\Omega_t)^2 \\
-&amp;= \sigma_{2}^2(1+\pi_{22}^2) + \sigma_{1}^2\pi_{21}^2 + 2\pi_{21}\pi_{22} Cov(\varepsilon_{1},\varepsilon_{2})
-\end{aligned}\]</span></p>
-<p>The two-step-ahead (95%) interval forecasts are:
-<span class="math display">\[\begin{aligned}
-x_{1,t+2|t} \pm z_{.025}\sigma_{1,t+2|t} \\
-x_{2,t+2|t} \pm z_{.025}\sigma_{2,t+2|t}
-\end{aligned}\]</span></p>
+<p>The realization of a dependent variables <span class="math inline">\(i\)</span> in period <span class="math inline">\(t+h\)</span> is:
+<span class="math display">\[x_{it+h} = \alpha_i + \sum_{j=1}^{p}\sum_{k=1}^{n}\pi_{ik}^{(j)} x_{kt+h-j} + \varepsilon_{t+h},\;~~i=1,\ldots,n.\]</span></p>
+<p>Point forecast is:
+<span class="math display">\[\mathbf{x}_{t+h|t} = \alpha_i + \sum_{j=1}^{p}\sum_{k=1}^{n}\pi_{ik}^{(j)} x_{kt+h-j|t},\;~~i=1,\ldots,n.\]</span> where the iterative method is applied to generate forecasts, and where <span class="math inline">\(x_{kt+h-j|t}=x_{t+h-j}\)</span> if <span class="math inline">\(j\ge h\)</span>.</p>
+<p>Forecast error is:
+<span class="math display">\[e_{it+h} = x_{it+h}-x_{t+h|t}=\sum_{j=1}^{p}\sum_{k=1}^{n}\pi_{ik}^{(j)} e_{kt+h-j} + \varepsilon_{t+h},\;~~i=1,\ldots,n.\]</span> Note that the forecast error reduces to <span class="math inline">\(\varepsilon_{t+h}\)</span>, when <span class="math inline">\(h=1\)</span>, which is what we saw above. More intriguingly, observe that the multi-step-ahead forecast error of a given variable is the function of preceding forecast errors of all variables in the system, each multiplied by some parameter of the model.</p>
+<p>Forecast variance, <span class="math inline">\(\sigma_{it+h}^2\)</span>, is the function of error variances and covariances, and the model parameters.</p>
+<p>The (95%) interval forecast is:
+<span class="math display">\[x_{it+h|t}\pm1.96\sigma_{it+h},\;~~i=1,\ldots,n.\]</span></p>
 </div>
-<div id="out-of-sample-granger-causality" class="section level3" number="8.2.3">
+<div id="out-of-sample-granger-causality" class="section level3" number="8.3.3">
 <h3>
-<span class="header-section-number">8.2.3</span> Out-of-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('out-of-sample-granger-causality')" onmouseout="reset_tooltip('out-of-sample-granger-causality-tooltip')"><span class="tooltiptext" id="out-of-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3.3</span> Out-of-Sample Granger Causality<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('out-of-sample-granger-causality')" onmouseout="reset_tooltip('out-of-sample-granger-causality-tooltip')"><span class="tooltiptext" id="out-of-sample-granger-causality-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The previously discussed (in sample) test of causality in Granger sense is frequently performed in practice. But as noted above, the term ‘causality’ may be misleading somewhat. Indeed, the ‘true spirit’ of such test is to assess the ability of a variable to help predict another variable in an out-of-sample setting.</p>
-<p>Consider the restricted and unrestricted information sets, where the former only contains information on variable <span class="math inline">\(X_1\)</span>, while the latter contains the same information as well as information on variable <span class="math inline">\(X_2\)</span>:
-<span class="math display">\[\begin{aligned}
-&amp;\Omega_{t,r} \equiv \Omega_{t}(X_1) = \{x_{1,t},x_{1,t-1},\ldots\} \\
-&amp;\Omega_{t,u} \equiv \Omega_{t}(X_1,X_2) = \{x_{1,t},x_{1,t-1},\ldots,x_{2,t},x_{2,t-1},\ldots\}
-\end{aligned}\]</span></p>
-<p>Following Granger’s definition of causality: <span class="math inline">\(\{X_2\}\)</span> is said to cause <span class="math inline">\(\{X_1\}\)</span> if <span class="math inline">\(\sigma_{x_1}^2\left(\Omega_{t,u}\right) &lt; \sigma_{x_1}^2\left(\Omega_{t,r}\right)\)</span>, meaning that we can better predict <span class="math inline">\(X_1\)</span> using all available information on <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, rather than that on <span class="math inline">\(X_1\)</span> only.</p>
-<p>Let the forecasts based on each of the information sets be:
-<span class="math display">\[\begin{aligned}
-    &amp;x_{1,t+h|t,r} = E\left(x_{1,t+h}|\Omega_{t,r}\right) \\
-    &amp;x_{1,t+h|t,u} = E\left(x_{1,t+h}|\Omega_{t,u}\right)
-\end{aligned}\]</span></p>
+<p>Consider a set of variables, <span class="math inline">\(\{X_1\},\ldots,\{X_n\}\)</span>. Suppose there are two information sets, the unrestricted information set, <span class="math inline">\(\Omega_{t}^{(u)}\)</span>, and the restricted information set, <span class="math inline">\(\Omega_{t}^{(r)}\)</span>. The former consists of the current and lagged values of all the variables in the set. The latter consists of the current and lagged values of all but one variables in the set. Suppose the omitted variable is <span class="math inline">\(\{X_1\}\)</span>.
+Then, following Granger’s definition of causality: <span class="math inline">\(\{X_1\}\)</span> is said to cause <span class="math inline">\(\{X_{i\ne 1}\}\)</span> if <span class="math inline">\(\sigma_{i}^2\left(\Omega_{t}^{(u)}\right) &lt; \sigma_{i}^2\left(\Omega_{t}^{(r)}\right)\)</span>, meaning that we can better predict <span class="math inline">\(X_i\)</span> using the available information on <span class="math inline">\(\{X_1\}\)</span> through <span class="math inline">\(\{X_n\]\)</span>, rather than that on <span class="math inline">\(\{X_2\}\)</span> through <span class="math inline">\(\{X_n\}\)</span> only.</p>
+<p>In practice, the test involves generating two sets of (one-step-ahead) out-of-sample forecasts from the unrestricted and restricted equations of the vector autoregression. The former is simply the forecast as presented above, that is: <span class="math display">\[x_{it+1|t}^{(u)} = \alpha_i + \sum_{j=1}^{p}\sum_{k=1}^{n}\pi_{ik}^{(j)} x_{kt+1-j},\;~~i=2,\ldots,n.\]</span> The latter is the forecast that doesn’t rely on information from the omitted variable (in our example, the first variable in the unrestricted system of equations): <span class="math display">\[x_{it+1|t}^{(r)} = \tilde{\alpha}_i + \sum_{j=1}^{p}\sum_{k=2}^{n}\tilde{\pi}_{ik}^{(j)} x_{kt+1-j},\;~~i=2,\ldots,n.\]</span></p>
 <p>For these forecasts, the corresponding forecast errors are:
 <span class="math display">\[\begin{aligned}
-    &amp; e_{1,t+h|t,r} = x_{1,t+h} - x_{1,t+h|t,r}\\
-    &amp; e_{1,t+h|t,u} = x_{1,t+h} - x_{1,t+h|t,u}
+    &amp; e_{it+1}^{(u)} = x_{1t+1} - x_{1t+1|t}^{(u)}\\
+    &amp; e_{it+1}^{(r)} = x_{1t+1} - x_{1t+1|t}^{(r)}
 \end{aligned}\]</span></p>
 <p>The out-of-sample forecast errors are then evaluated by comparing the loss functions based on these forecasts errors. For example, assuming quadratic loss, and <span class="math inline">\(P\)</span> out-of-sample forecasts:
 <span class="math display">\[\begin{aligned}
-RMSFE_{r} &amp;= \sqrt{\frac{1}{P}\sum_{s=1}^{P}\left(e_{1,R+s|R-1+s,r}\right)^2} \\
-RMSFE_{u} &amp;= \sqrt{\frac{1}{P}\sum_{s=1}^{P}\left(e_{1,R+s|R-1+s,u}\right)^2}
+RMSFE^{(u)} &amp;= \sqrt{\frac{1}{P}\sum_{s=1}^{P}\left(e_{iR+s|R-1+s}^{(u)}\right)^2} \\
+RMSFE^{(r)} &amp;= \sqrt{\frac{1}{P}\sum_{s=1}^{P}\left(e_{iR+s|R-1+s}^{(r)}\right)^2}
 \end{aligned}\]</span>
 where <span class="math inline">\(R\)</span> is the size of the (first) estimation window.</p>
-<p><span class="math inline">\(\{X_2\}\)</span> is said to cause <em>in Granger sense</em> <span class="math inline">\(\{X_1\}\)</span> if <span class="math inline">\(RMSFE_{u} &lt; RMSFE_{r}\)</span>.</p>
+<p><span class="math inline">\(\{X_1\}\)</span> is said to cause <em>in Granger sense</em> <span class="math inline">\(\{X_{i\ne 1}\}\)</span> if <span class="math inline">\(RMSFE^{(u)} &lt; RMSFE^{(r)}\)</span>.</p>
 
 </div>
 </div>
@@ -400,7 +370,7 @@ where <span class="math inline">\(R\)</span> is the size of the (first) estimati
 <a href="threshold-autoregressive-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-07
+2022-09-10
  using 
 R version 4.1.2 (2021-11-01)
 </p>

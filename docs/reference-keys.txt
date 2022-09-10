@@ -57,11 +57,12 @@ iterative-method-of-multistep-forecasting
 direct-method-of-multistep-forecasting
 moving-average
 vector-autoregression
+dynamic-feedbacks-among-economic-variables
 modeling-3
 in-sample-granger-causality
 forecasting-3
-one-step-ahead-forecast-from-bivariate-var1
-two-step-ahead-forecast-from-bivariate-var1
+one-step-ahead-forecasts
+multi-step-ahead-forecasts
 out-of-sample-granger-causality
 threshold-autoregressive-models
 nonlinear-models

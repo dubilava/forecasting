@@ -282,7 +282,7 @@ div.csl-indent {
 <span id="cb63-6"><a href="tutorial-5-autoregression.html#cb63-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
 <span id="cb63-7"><a href="tutorial-5-autoregression.html#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-61-2.png" width="624"></p>
-<p>Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), and AR(3) models, using all observations in the series,<label for="tufte-sn-18" class="margin-toggle sidenote-number">18</label><input type="checkbox" id="tufte-sn-18" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">18</span> Note that after generating lagged dependent variables we discard first three rows of the data to ensure that information criteria apply the same <span class="math inline">\(T\)</span> across the models.</span> to decide on the optimal lag length.</p>
+<p>Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), and AR(3) models, using all observations in the series,<label for="tufte-sn-19" class="margin-toggle sidenote-number">19</label><input type="checkbox" id="tufte-sn-19" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">19</span> Note that after generating lagged dependent variables we discard first three rows of the data to ensure that information criteria apply the same <span class="math inline">\(T\)</span> across the models.</span> to decide on the optimal lag length.</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="tutorial-5-autoregression.html#cb64-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>))]</span>
 <span id="cb64-2"><a href="tutorial-5-autoregression.html#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-3"><a href="tutorial-5-autoregression.html#cb64-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[<span class="fu">complete.cases</span>(dt)]</span>
@@ -365,7 +365,7 @@ div.csl-indent {
 <a href="tutorial-6-vector-autoregressive-models.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-07
+2022-09-10
  using 
 R version 4.1.2 (2021-11-01)
 </p>
