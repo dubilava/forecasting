@@ -1,2 +1,6 @@
-# Tutorial 7: Dynamic Factor Models {-}
+# Tutorial 7: Moving Average {-}
 
+```{r echo=FALSE, include=FALSE, message=FALSE}
+library(data.table)
+library(forecast)
+```

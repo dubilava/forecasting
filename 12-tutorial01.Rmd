@@ -1,5 +1,10 @@
 # Forecasting Using R {-}
 
+R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,^[such as [R for Data Science](https://r4ds.had.co.nz/)], as well as by applying a trial--and--error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. 
+
+We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former seamlessly). R is available from [CRAN](https://cran.r-project.org/){target="_blank"}, and RStudio is available from [RStudio](https://www.rstudio.com/){target="_blank"}. 
+
+
 # Tutorial 1: Introduction to R {-}
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
@@ -7,9 +12,7 @@ library(ggplot2)
 library(data.table)
 ```
 
-R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,^[such as [R for Data Science](https://r4ds.had.co.nz/)], as well as by applying a trial--and--error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. 
-
-We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former seamlessly). R is available from [CRAN](https://cran.r-project.org/){target="_blank"}, and RStudio is available from [RStudio](https://www.rstudio.com/){target="_blank"}. 
+## Basic Coding
 
 There are a number of ways in which we can work with data in R. Here, we will primarily rely on `data.table`, which is one of the ways of coding in R, the other prominent dialect being `tidyverse`. But to develop an intuition, let's start off with base R, specifically--matrices. 
 
@@ -75,6 +78,8 @@ We can invert a(n invertible) matrix using the `solve()` function:
 Di <- solve(D)
 Di
 ```
+
+## Advanced Coding
 
 By now, we have covered enough ground to obtain the least squares estimator. For that, we will generate vectors of dependent and independent variables, and then estimate the vector of parameters. Specifically, we will generate a sequence of 200 binary variables, which will serve as our independent variable `x`, and then we will construct the dependent variable `y` using the following formula: $y=2+0.5x+e$, where `e` is a sequence of 200 standard normal random variables.
 ```{r echo=TRUE}
