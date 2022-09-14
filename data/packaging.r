@@ -123,3 +123,39 @@ stress <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$STLFSI3))
 
 save(stress,file="stress.RData")
 
+
+# Federal Funds Rate ----
+funds_dt <- fread("FedFundsRate.csv")
+
+ggplot(funds_dt,aes(x=DATE,y=FEDFUNDS))+
+  geom_line()
+
+sub_dt <- funds_dt[DATE>=as.Date("1971-01-01") & DATE<=as.Date("2000-12-31")]
+
+ggplot(sub_dt,aes(x=DATE,y=FEDFUNDS))+
+  geom_line()
+
+funds <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$FEDFUNDS))
+
+save(funds,file="funds.RData")
+
+
+# Inflation ----
+cpi_dt <- fread("CPI.csv")
+
+ggplot(cpi_dt,aes(x=DATE,y=CPIAUCNS))+
+  geom_line()
+
+sub_dt <- cpi_dt[DATE>=as.Date("1970-01-01") & DATE<=as.Date("2000-12-31")]
+
+sub_dt[,`:=`(CPI01=shift(CPIAUCNS,1),CPI12=shift(CPIAUCNS,12))]
+sub_dt[,`:=`(INF01=100*log(CPIAUCNS/CPI01),INF12=100*log(CPIAUCNS/CPI12))]
+
+ggplot(sub_dt,aes(x=DATE,y=INF12))+
+  geom_line(na.rm=T)
+
+sub_dt <- sub_dt[complete.cases(sub_dt)]
+
+inflation <- data.table(date=as.Date(sub_dt$DATE),y=as.numeric(sub_dt$INF12))
+
+save(inflation,file="inflation.RData")
