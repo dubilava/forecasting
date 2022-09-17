@@ -1,4 +1,4 @@
-# Threshold Autoregression
+# &ndash; Threshold Autoregression
 ![](art/nonlinear.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}

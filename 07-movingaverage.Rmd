@@ -1,4 +1,4 @@
-# Moving Average
+# &ndash; Moving Average
 ![](art/movingaverage.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}

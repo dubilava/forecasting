@@ -1,4 +1,4 @@
-# Seasonality
+# &ndash; Seasonality
 ![](art/seasonality.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
