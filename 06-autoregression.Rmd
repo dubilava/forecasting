@@ -1,4 +1,4 @@
-# &ndash; Autoregression
+# Autoregression
 ![](art/autoregression.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}

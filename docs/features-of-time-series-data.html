@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 2 – Features of Time Series Data | Forecasting With Time Series Models Using R" />
+<meta property="og:title" content="Chapter 2 Features of Time Series Data | Forecasting With Time Series Models Using R" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 2 – Features of Time Series Data | Forecasting With Time Series Models Using R" />
+<meta property="og:description" content="Chapter 2 Features of Time Series Data | Forecasting With Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 2 – Features of Time Series Data | Forecasting With Time Series Models Using R">
+<meta name="description" content="Chapter 2 Features of Time Series Data | Forecasting With Time Series Models Using R">
 
-<title>Chapter 2 – Features of Time Series Data | Forecasting With Time Series Models Using R</title>
+<title>Chapter 2 Features of Time Series Data | Forecasting With Time Series Models Using R</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -203,22 +203,22 @@ div.csl-indent {
 <div class="dropdown-content">
 <a href="index.html" id="toc-foreword">Foreword</a>
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
-<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
-<a id="active-page" href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a><ul class="toc-sections">
+<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
+<a id="active-page" href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a><ul class="toc-sections">
 <li class="toc"><a href="#stochastic-process-and-time-series"> Stochastic Process and Time Series</a></li>
 <li class="toc"><a href="#stationarity"> Stationarity</a></li>
 <li class="toc"><a href="#serial-dependence"> Serial Dependence</a></li>
 <li class="toc"><a href="#transformations"> Transformations</a></li>
 </ul>
-<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> – Forecasting Methods and Routines</a>
-<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
-<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
-<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
-<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> – Moving Average</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> – Vector Autoregression</a>
-<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">9</span> – Threshold Autoregression</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> – Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> – Forecast Combination</a>
+<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
+<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
+<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> Moving Average</a>
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> Vector Autoregression</a>
+<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">9</span> Threshold Autoregression</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
@@ -241,7 +241,7 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="features-of-time-series-data" class="section level1" number="2">
 <h1>
-<span class="header-section-number">Chapter 2</span> – Features of Time Series Data</h1>
+<span class="header-section-number">Chapter 2</span> Features of Time Series Data</h1>
 <p><img src="art/timeseries.png"></p>
 <div id="stochastic-process-and-time-series" class="section level2" number="2.1">
 <h2>

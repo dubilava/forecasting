@@ -1,4 +1,4 @@
-# &ndash; Forecast Combination
+# Forecast Combination
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)

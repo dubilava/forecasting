@@ -1,6 +1,6 @@
 # Forecasting With Time Series Models {-}
 
-# &ndash; Introduction to Forecasting
+# Introduction to Forecasting
 ![](art/astrologer.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}

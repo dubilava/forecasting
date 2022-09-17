@@ -1,4 +1,4 @@
-# &ndash; Features of Time Series Data
+# Features of Time Series Data
 ![](art/timeseries.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}

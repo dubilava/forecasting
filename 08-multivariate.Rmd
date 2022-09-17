@@ -1,4 +1,4 @@
-# &ndash; Vector Autoregression
+# Vector Autoregression
 ![](art/multivariate.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
