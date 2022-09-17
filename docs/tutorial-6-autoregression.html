@@ -203,17 +203,17 @@ div.csl-indent {
 <div class="dropdown-content">
 <a href="index.html" id="toc-foreword">Foreword</a>
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
-<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
-<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
-<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
-<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
-<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
-<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> Moving Average</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> Vector Autoregression</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
+<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
+<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
+<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> – Forecasting Methods and Routines</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
+<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
+<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> – Moving Average</a>
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> – Vector Autoregression</a>
+<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">9</span> – Threshold Autoregression</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> – Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> – Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
@@ -283,7 +283,7 @@ div.csl-indent {
 <span id="cb63-6"><a href="tutorial-6-autoregression.html#cb63-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
 <span id="cb63-7"><a href="tutorial-6-autoregression.html#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-62-2.png" width="624"></p>
-<p>Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), and AR(3) models, using all observations in the series,<label for="tufte-sn-19" class="margin-toggle sidenote-number">19</label><input type="checkbox" id="tufte-sn-19" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">19</span> Note that after generating lagged dependent variables we discard first three rows of the data to ensure that information criteria apply the same <span class="math inline">\(T\)</span> across the models.</span> to decide on the optimal lag length.</p>
+<p>Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), and AR(3) models, using all observations in the series,<label for="tufte-sn-21" class="margin-toggle sidenote-number">21</label><input type="checkbox" id="tufte-sn-21" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">21</span> Note that after generating lagged dependent variables we discard first three rows of the data to ensure that information criteria apply the same <span class="math inline">\(T\)</span> across the models.</span> to decide on the optimal lag length.</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="tutorial-6-autoregression.html#cb64-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>))]</span>
 <span id="cb64-2"><a href="tutorial-6-autoregression.html#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-3"><a href="tutorial-6-autoregression.html#cb64-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[<span class="fu">complete.cases</span>(dt)]</span>
@@ -366,7 +366,7 @@ div.csl-indent {
 <a href="tutorial-7-moving-average.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-14
+2022-09-18
  using 
 R version 4.1.2 (2021-11-01)
 </p>

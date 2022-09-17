@@ -1,4 +1,4 @@
-# Forecast Evaluation
+# &ndash; Forecast Evaluation
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)

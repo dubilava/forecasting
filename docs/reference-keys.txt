@@ -64,8 +64,8 @@ forecasting-3
 one-step-ahead-forecasts
 multi-step-ahead-forecasts
 out-of-sample-granger-causality
-threshold-autoregressive-models
-nonlinear-models
+threshold-autoregression
+regime-dependent-nonlinearity
 modeling-4
 forecasting-4
 skeleton-extrapolation

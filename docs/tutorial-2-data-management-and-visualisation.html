@@ -203,17 +203,17 @@ div.csl-indent {
 <div class="dropdown-content">
 <a href="index.html" id="toc-foreword">Foreword</a>
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
-<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
-<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
-<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
-<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
-<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
-<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> Moving Average</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> Vector Autoregression</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
+<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
+<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
+<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> – Forecasting Methods and Routines</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
+<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
+<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> – Moving Average</a>
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> – Vector Autoregression</a>
+<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">9</span> – Threshold Autoregression</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> – Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> – Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a id="active-page" href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
@@ -259,7 +259,7 @@ div.csl-indent {
 ## 118:  2.4197029 0.20636847
 ## 119:  1.8521905 0.89256870
 ## 120:  2.3040499 1.28020209</code></pre>
-<p>So, we have generated<label for="tufte-sn-14" class="margin-toggle sidenote-number">14</label><input type="checkbox" id="tufte-sn-14" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">14</span> Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.</span> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
+<p>So, we have generated<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.</span> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tutorial-2-data-management-and-visualisation.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb32-2"><a href="tutorial-2-data-management-and-visualisation.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-37-1.png" width="624"></p>
@@ -349,7 +349,7 @@ div.csl-indent {
 <a href="tutorial-3-forecasting-methods-and-routines.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-14
+2022-09-18
  using 
 R version 4.1.2 (2021-11-01)
 </p>

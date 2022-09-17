@@ -203,17 +203,17 @@ div.csl-indent {
 <div class="dropdown-content">
 <a href="index.html" id="toc-foreword">Foreword</a>
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
-<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> Introduction to Forecasting</a>
-<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> Features of Time Series Data</a>
-<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> Forecasting Methods and Routines</a>
-<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> Trends</a>
-<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> Seasonality</a>
-<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> Autoregression</a>
-<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> Moving Average</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> Vector Autoregression</a>
-<a href="threshold-autoregressive-models.html" id="toc-threshold-autoregressive-models"><span class="toc-section-number">9</span> Threshold Autoregressive Models</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> Forecast Combination</a>
+<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
+<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
+<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> – Forecasting Methods and Routines</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
+<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
+<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> – Moving Average</a>
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> – Vector Autoregression</a>
+<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">9</span> – Threshold Autoregression</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> – Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> – Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
@@ -237,7 +237,7 @@ div.csl-indent {
 <div id="tutorial-3-forecasting-methods-and-routines" class="section level1 unnumbered">
 <h1>Tutorial 3: Forecasting Methods and Routines</h1>
 <p>In this tutorial, we will introduce ‘for loop’, and illustrate its use by generating time series as well as by generating one-step-ahead forecasts. We will also perform forecast error diagnostics. To run the code, the <code>data.table</code> and <code>ggplot2</code> packages need to be installed and loaded.</p>
-<p>Let’s generate a random walk process, such that <span class="math inline">\(y_{t} = y_{t-1}+e_{t}\)</span>, where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>, and where <span class="math inline">\(y_{0}=0\)</span>, for <span class="math inline">\(t=1,\ldots,120\)</span>.<label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> The following code is deliberately done inefficiently to illustrate the use of the ‘for loop’. For reference, a much more efficient code, after setting the seed, would have been
+<p>Let’s generate a random walk process, such that <span class="math inline">\(y_{t} = y_{t-1}+e_{t}\)</span>, where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>, and where <span class="math inline">\(y_{0}=0\)</span>, for <span class="math inline">\(t=1,\ldots,120\)</span>.<label for="tufte-sn-17" class="margin-toggle sidenote-number">17</label><input type="checkbox" id="tufte-sn-17" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">17</span> The following code is deliberately done inefficiently to illustrate the use of the ‘for loop’. For reference, a much more efficient code, after setting the seed, would have been
 <code>y &lt;- cumsum(rnorm(n))</code></span></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
 <span id="cb36-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -261,7 +261,7 @@ div.csl-indent {
 <span id="cb38-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Random Walk"</span>)<span class="sc">+</span></span>
 <span id="cb38-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-44-1.png" width="624"></p>
-<p>Generate a sequence of one-step-ahead forecasts from January 2017 onward by simply averaging the observed time series up to the period when the forecast is made.<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> This is equivalent to the <em>expanding window</em> scheme for generating forecasts.</span></p>
+<p>Generate a sequence of one-step-ahead forecasts from January 2017 onward by simply averaging the observed time series up to the period when the forecast is made.<label for="tufte-sn-18" class="margin-toggle sidenote-number">18</label><input type="checkbox" id="tufte-sn-18" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">18</span> This is equivalent to the <em>expanding window</em> scheme for generating forecasts.</span></p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>f <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb39-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb39-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">which</span>(dt<span class="sc">$</span>date<span class="sc">==</span><span class="fu">as.Date</span>(<span class="st">"2017-01-01"</span>))<span class="sc">-</span><span class="dv">1</span></span>
@@ -288,8 +288,8 @@ We test this hypothesis by regressing the forecast error on the constant, and ch
 <pre><code>##               Estimate Std. Error    t value     Pr(&gt;|t|)
 ## (Intercept) -0.1437252  1.5861275 -0.0906139 0.9281928187
 ## f            0.9995059  0.2822414  3.5413157 0.0009247749</code></pre>
-<p>We reject the null, which suggests that there is some information in the data that we do not use well enough.<label for="tufte-sn-17" class="margin-toggle sidenote-number">17</label><input type="checkbox" id="tufte-sn-17" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">17</span> Because, as we know, the true data generating process is random walk, a better use of information would involve assigning all the weights to the most recent observation rather than spreading them evenly across all observations in the estimation window.</span></p>
-<p>No serial correlation in one-step-ahead forecast errors: <span class="math inline">\(Cov(e_{t+1|t},y_{t|t-1})=0\)</span>. We perform this test by regressing the forecast error on its lag, and checking whether the slope coefficient is statistically significantly different from zero.<label for="tufte-sn-18" class="margin-toggle sidenote-number">18</label><input type="checkbox" id="tufte-sn-18" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">18</span> Note: first we need to generate lagged forecast errors.</span></p>
+<p>We reject the null, which suggests that there is some information in the data that we do not use well enough.<label for="tufte-sn-19" class="margin-toggle sidenote-number">19</label><input type="checkbox" id="tufte-sn-19" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">19</span> Because, as we know, the true data generating process is random walk, a better use of information would involve assigning all the weights to the most recent observation rather than spreading them evenly across all observations in the estimation window.</span></p>
+<p>No serial correlation in one-step-ahead forecast errors: <span class="math inline">\(Cov(e_{t+1|t},y_{t|t-1})=0\)</span>. We perform this test by regressing the forecast error on its lag, and checking whether the slope coefficient is statistically significantly different from zero.<label for="tufte-sn-20" class="margin-toggle sidenote-number">20</label><input type="checkbox" id="tufte-sn-20" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">20</span> Note: first we need to generate lagged forecast errors.</span></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb46-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e1=</span><span class="fu">shift</span>(e))]</span>
 <span id="cb46-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e<span class="sc">~</span>e1,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
@@ -415,7 +415,7 @@ We test this hypothesis by regressing the forecast error on the constant, and ch
 <a href="tutorial-4-trends.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-14
+2022-09-18
  using 
 R version 4.1.2 (2021-11-01)
 </p>

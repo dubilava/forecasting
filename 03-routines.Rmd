@@ -1,4 +1,4 @@
-# Forecasting Methods and Routines
+# &ndash; Forecasting Methods and Routines
 ![](art/forecast.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
