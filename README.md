@@ -34,7 +34,13 @@ This website compiles teaching material for the subject of economic forecasting.
 
 ## Vector Autoregression
 
+- [Lecture 7 slides](https://davidubilava.com/forecasting_slides/07-Multivariate.html)
+- [Book chapter 8](https://davidubilava.com/forecasting/docs/vector-autoregression.html)
+
 ## Threshold Autoregression
+
+- [Lecture 8 slides](https://davidubilava.com/forecasting_slides/08-Nonlinear.html)
+- [Book chapter 9](https://davidubilava.com/forecasting/docs/threshold-autoregression.html)
 
 ## Forecast Evaluation
 
