@@ -5,6 +5,7 @@
 library(data.table)
 library(ggplot2)
 library(cowplot)
+library(ggbrace)
 ```
 
 
@@ -83,65 +84,72 @@ Because forecasting is often performed in a time series context, the estimation 
 
 There are different forecasting schemes for updating the information set in the pseudo-forecasting routine. These are: *recursive*, *rolling*, and *fixed*.
 
-- The recursive forecasting environment uses a sequence of expanding windows to update model estimates and the information set.
-- The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.
-- The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.
+The recursive forecasting environment uses a sequence of expanding windows to update model estimates and the information set.
 
-The following graph illustrates the distinctive features of these three routines: 
-```{r, routines, echo=FALSE, message=FALSE, fig.height=6.5}
+```{r, recursive, echo=FALSE, message=FALSE, fig.height=5.0}
 n <- 20
-set.seed(1)
+set.seed(2)
 y <- rnorm(n,0,.5)
 for(i in 2:n){
-  y[i] <- .01*i+.9*y[i-1]+y[i]
+  y[i] <- .1+.5*y[i-1]+y[i]
 }
 y_dt <- data.table(x=1:n,y)
-R <- 10
-h <- 5
-P <- n-R-h+1
-i <- round(mean(c(1,P)))
-  
-  mu_e <- mean(y_dt[1:(R-1+i)]$y)
-  mu_r <- mean(y_dt[i:(R-1+i)]$y)
-  mu_f <- mean(y_dt[1:(R-1+1)]$y)
-  
-  y_dt[,`:=`(recursive=as.numeric(NA),rolling=as.numeric(NA),fixed=as.numeric(NA))]
-  
-  y_dt[(R+i):(R+i+h-1)]$recursive <- mu_e
-  y_dt[(R+i):(R+i+h-1)]$rolling <- mu_r
-  y_dt[(R+i):(R+i+h-1)]$fixed <- mu_f
-  
-  y_lg <- melt(y_dt[,.(x,y,recursive,rolling,fixed)],id.vars="x")
-  
-  gg1 <- ggplot(melt(y_dt[,.(x,y,recursive)],id.vars="x"),aes(x=x,y=value,color=variable,linetype=variable))+
-    annotate("rect",xmin=1,xmax=R-1+i,ymin=-Inf,ymax=Inf,fill="coral",color=NA,alpha=.2)+
-    geom_line(size=.8,na.rm=T)+
-    scale_color_manual(values=c("gray50","coral"))+
-    scale_linetype_manual(values=c(1,5))+
-    labs(title="recursive",x="t",y=expression(y[t]))+
-    theme_classic()+
-    theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title = element_text(size=12),axis.text = element_text(size=10))
-  
-  gg2 <- ggplot(melt(y_dt[,.(x,y,rolling)],id.vars="x"),aes(x=x,y=value,color=variable,linetype=variable))+
-    annotate("rect",xmin=i,xmax=R-1+i,ymin=-Inf,ymax=Inf,fill="coral",color=NA,alpha=.2)+
-    geom_line(size=.8,na.rm=T)+
-    scale_color_manual(values=c("gray50","coral"))+
-    scale_linetype_manual(values=c(1,5))+
-    labs(title="rolling",x="t",y=expression(y[t]))+
-    theme_classic()+
-    theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title = element_text(size=12),axis.text = element_text(size=10))
-  
-  gg3 <- ggplot(melt(y_dt[,.(x,y,fixed)],id.vars="x"),aes(x=x,y=value,color=variable,linetype=variable))+
-    annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="coral",color=NA,alpha=.2)+
-    geom_line(size=.8,na.rm=T)+
-    scale_color_manual(values=c("gray50","coral"))+
-    scale_linetype_manual(values=c(1,5))+
-    labs(title="fixed",x="t",y=expression(y[t]))+
-    theme_classic()+
-    theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title = element_text(size=12),axis.text = element_text(size=10))
-  
-  plot_grid(gg1,gg2,gg3,align="hv",ncol=1)
+R <- 13
+P <- n-R
 
+y_dt[,`:=`(recursive=as.numeric(NA),rolling=as.numeric(NA),fixed=as.numeric(NA))]
+for(i in 1:P){
+  y_dt[(R+i)]$recursive <- mean(y_dt[1:(R-1+i)]$y)
+  y_dt[(R+i)]$rolling <- mean(y_dt[i:(R-1+i)]$y)
+  y_dt[(R+i)]$fixed <- mean(y_dt[1:(R)]$y)
+}
+
+ggplot(y_dt,aes(x=x,y=y))+
+  annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="powderblue",color=NA,alpha=.5)+
+  geom_vline(xintercept = c(1,R+1),size=.6,linetype=2)+
+  geom_line(size=.8,na.rm=T,color="steelblue")+
+  geom_point(data=y_dt[x==R+1],aes(x=x,y=recursive),size=3,color="coral")+
+  geom_point(data=y_dt[x==R+2],aes(x=x,y=recursive),size=3,color="coral")+
+  labs(title="",x="t",y=expression(y[t]))+
+  theme_classic()+
+  geom_brace(aes(x=c(1,R),c(-1.0,-1.1),label="w1"),inherit.data=F,rotate=180,bending=.2,labelsize=6)+
+  geom_brace(aes(x=c(1,R+1),c(-1.3,-1.4),label="w2"),inherit.data=F,rotate=180,bending=.2,labelsize=6)+
+  coord_cartesian(y=range(y_dt$y),clip="off")+
+  theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title=element_text(size=16),axis.text = element_text(size=14),plot.margin = unit(c(0,0,3,1), units="cm"))
+```
+
+The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.
+
+```{r, rolling, echo=FALSE, message=FALSE, fig.height=5.0}
+ggplot(y_dt,aes(x=x,y=y))+
+  annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="powderblue",color=NA,alpha=.5)+
+  geom_vline(xintercept = c(2,R+1),size=.6,linetype=2)+
+  geom_line(size=.8,na.rm=T,color="steelblue")+
+  geom_point(data=y_dt[x==R+1],aes(x=x,y=rolling),size=3,color="coral")+
+  geom_point(data=y_dt[x==R+2],aes(x=x,y=rolling),size=3,color="coral")+
+  labs(title="",x="t",y=expression(y[t]))+
+  theme_classic()+
+  geom_brace(aes(x=c(1,R),c(-1.0,-1.1),label="w1"),inherit.data=F,rotate=180,bending=.2,labelsize=6)+
+  geom_brace(aes(x=c(2,R+1),c(-1.3,-1.4),label="w2"),inherit.data=F,rotate=180,bending=.2,labelsize=6)+
+  coord_cartesian(y=range(y_dt$y),clip="off")+
+  theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title=element_text(size=16),axis.text = element_text(size=14),plot.margin = unit(c(0,0,3,1), units="cm"))
+```
+
+The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.
+
+```{r, fixed, echo=FALSE, message=FALSE, fig.height=5.0}
+ggplot(y_dt,aes(x=x,y=y))+
+  annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="powderblue",color=NA,alpha=.5)+
+  geom_vline(xintercept = c(1,R),size=.6,linetype=2)+
+  geom_line(size=.8,na.rm=T,color="steelblue")+
+  geom_point(data=y_dt[x==R+1],aes(x=x,y=fixed),size=3,color="coral")+
+  geom_point(data=y_dt[x==R+2],aes(x=x,y=fixed),size=3,color="coral")+
+  labs(title="",x="t",y=expression(y[t]))+
+  theme_classic()+
+  geom_brace(aes(x=c(1,R),c(-1.0,-1.1),label="w1"),inherit.data=F,rotate=180,bending=.2,labelsize=6)+
+  geom_brace(aes(x=c(1,R),c(-1.3,-1.4),label="w2"),inherit.data=F,rotate=180,bending=.2,labelsize=6)+
+  coord_cartesian(y=range(y_dt$y),clip="off")+
+  theme(legend.position="none",legend.title=element_blank(),legend.text=element_text(size=12),axis.title=element_text(size=16),axis.text = element_text(size=14),plot.margin = unit(c(0,0,3,1), units="cm"))
 ```
 
 The forecasts are made in period 13 for periods 14 and onward. The first estimation window of the pseudo-forecasting routine covers periods one--through--ten. In this illustration, shaded segments illustrate the range of the data used for estimation of model parameters. 

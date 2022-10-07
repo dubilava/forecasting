@@ -24,7 +24,7 @@ If all random variables, from where the time series are drawn, have the same dis
 Consider a simplest kind of a time series comprised of realizations from independent and identically distributed (iid) normal random variable with zero mean and constant variance: $Y_t \sim iid~\text{N}\left(0,\sigma^2\right)$. The following graph plots the realized time series from this process:
 
 ```{r white-noise, fig.cap="Realization of a white noise process", echo=FALSE, message=FALSE}
-n <- 120
+n <- 132
 
 set.seed(n)
 y <- rnorm(n)
@@ -32,10 +32,10 @@ y <- rnorm(n)
 dt <- data.table(t=c(1:n),y=y)
 
 ggplot(dt,aes(x=t,y=y))+
-  geom_line(col="coral",size=.8)+
+  geom_line(col="steelblue",size=.8)+
   labs(y=expression(paste(y[t],sep="")))+
   theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
+  theme(axis.title = element_text(size=16),axis.text = element_text(size=14))
 ```
 
 Such time series is a realization of what is referred to as a *white noise* process.^[Technically, this is a *Gaussian* white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an *Independent* white noise process. Without the indepence assumption we would have simply a white noise process.] That is, $\{Y_t\}$, is a white noise process if: 
@@ -76,14 +76,14 @@ maxlag <- 12
 dt <- data.table(k=c(1:maxlag),rho=c(acf(y,plot=F)[1:maxlag]$acf))
 
 ggplot(dt,aes(x=k,y=rho))+
-  geom_segment(aes(xend=k,yend=0))+
-  geom_hline(yintercept=0,size=1)+
+  geom_segment(aes(xend=k,yend=0),size=1.2,col="steelblue")+
+  geom_hline(yintercept=0,size=.6,linetype=3)+
   geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="coral")+
   scale_x_continuous(breaks=c(1:maxlag),labels=c(1:maxlag))+
   labs(x="k",y=expression(hat(rho)))+
   coord_cartesian(ylim=c(-1,1))+
   theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
+  theme(axis.title = element_text(size=16),axis.text = element_text(size=14))
 ```
 
 For each lag, $k$, the vertical line extending from zero represents an estimate of the autocorrelation coefficient at that lag. The dashed lines denote the 95\% confidence interval, given by $\pm 1.96/\sqrt{T}$, where $T$ is the size of the time series sample.
@@ -94,14 +94,14 @@ Another relevant measure of the time series dependence is *partial* autocorrelat
 dt <- data.table(k=c(1:maxlag),rho=c(pacf(y,plot=F)[1:maxlag]$acf))
 
 ggplot(dt,aes(x=k,y=rho))+
-  geom_segment(aes(xend=k,yend=0))+
-  geom_hline(yintercept=0,size=1)+
+  geom_segment(aes(xend=k,yend=0),size=1.2,col="steelblue")+
+  geom_hline(yintercept=0,size=.6,linetype=3)+
   geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="coral")+
   scale_x_continuous(breaks=c(1:maxlag),labels=c(1:maxlag))+
   labs(x="k",y=expression(hat(pi)))+
   coord_cartesian(ylim=c(-1,1))+
   theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
+  theme(axis.title = element_text(size=16),axis.text = element_text(size=14))
 ```
 
 Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as $k$ increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.^[There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.] If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.
@@ -118,10 +118,10 @@ Consider the Dow Jones Industrial Average (commonly referred to as the Dow Jones
 dt <- data.table(Quandl("BCB/UDJIAD1",collapse = "monthly",start_date="1980-01-01"))
 
 ggplot(dt,aes(x=Date,y=Value))+
-  geom_line(color="coral",size=.8)+
+  geom_line(color="steelblue",size=.8)+
   labs(x="Year",y="Dow Jones Industrial Average")+
   theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
+  theme(axis.title = element_text(size=16),axis.text = element_text(size=14))
 ```
 
 Could first-differencing resolve the issue of nonstationarity? Turns out, not exactly. The first-differenced Dow Jones Index, while no longer trending, reveals increasing volatility over time. 
@@ -131,7 +131,7 @@ dt[,`:=`(lValue=shift(Value,1))]
 dt[,`:=`(dValue=Value-lValue)]
 
 ggplot(dt,aes(x=Date,y=dValue))+
-  geom_line(color="coral",size=.8)+
+  geom_line(color="steelblue",size=.8)+
   labs(x="Year",y="Change in Dow Jones Industrial Average")+
   theme_classic()+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
@@ -145,10 +145,10 @@ dt[,`:=`(llnValue=shift(lnValue,1))]
 dt[,`:=`(dlnValue=lnValue-llnValue)]
 
 ggplot(dt,aes(x=Date,y=dlnValue))+
-  geom_line(color="coral",size=.8)+
+  geom_line(color="steelblue",size=.8)+
   labs(x="Year",y="Growth in Dow Jones Industrial Average")+
   theme_classic()+
-  theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
+  theme(axis.title = element_text(size=16),axis.text = element_text(size=14))
 ```
 
 

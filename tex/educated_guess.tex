@@ -1,0 +1,144 @@
+\documentclass{tufte-book}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+\usepackage{xspace}
+\usepackage{units}
+\usepackage{makeidx}
+\makeindex
+
+%%%% Kevin Godny's code for title page and contents from https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ
+\makeatletter
+\renewcommand{\maketitlepage}{%
+	\begingroup%
+	\setlength{\parindent}{0pt}
+	
+	{\fontsize{24}{24}\setlength{\parindent}{60pt}\selectfont\textsf{\textsc{\@author}}\par}
+	
+	\vspace{1.5in}
+	
+	{\fontsize{24}{36}\selectfont\textsf{\textsc{\@title}}\par}
+	
+	\vfill
+	
+	{\fontsize{16}{16}\setlength{\parindent}{60pt}\selectfont\textsf{\textsc{\@date}}\par}
+	
+	\thispagestyle{empty}
+	\endgroup
+}
+\makeatother
+
+% Inserts a blank page
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+
+\newsavebox{\titleimage}
+\savebox{\titleimage}{\includegraphics[width=1.5\textwidth]{cover}}
+
+\title[Educated Guess]{
+	\usebox{\titleimage}
+	\vspace{-0.9in}
+	
+	\setlength{\parindent}{60pt}%
+	\LARGE\bfseries
+	An Intuitive Guide to Forecasting \\
+	With Time Series Models Using R}
+\author{David Ubilava}
+\date{October 2022}
+
+\begin{document}
+
+	
+	\frontmatter
+	
+	\maketitle
+	
+	% r.5 contents
+	\tableofcontents
+	
+	\listoffigures
+	
+	\listoftables
+	
+%	% r.7 dedication
+%	\cleardoublepage
+%	~\vfill
+%	\begin{doublespace}
+%		\noindent\fontsize{18}{22}\selectfont\itshape
+%		\nohyphenation
+%		Dedicated to those who appreciate \LaTeX{} 
+%		and the work of \mbox{Edward R.~Tufte} 
+%		and \mbox{Donald E.~Knuth}.
+%	\end{doublespace}
+%	\vfill
+%	\vfill
+	
+	% Start the main matter (normal chapters)
+	\mainmatter
+	
+	\chapter{Introduction}
+	\label{c1}
+	
+	\newthought{Roots of forecasting} extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make guesses of their own, or have used the services of others. 
+	
+	For many centuries, because the weather was the single most important factor that impacted the livelihood of people and, indeed, the fate of civilizations,\sidenote{A sequence of droughts toward the end of the ninth century is considered one of the key reasons for the collapse of the Classic Mayan Civilization \cite{hodell1995}} much of forecasting revolved around weather forecasting. Early attempts at weather forecasting were rather simplistic. The Babylonians, for example, based their weather forecasts on the appearance of clouds. Over time, an advancement in the studies of physics and related fields and the invention of tools such as barometer and thermometer contributed to the development of the study of meteorology, the way we know it. The birth of the modern weather forecast, however, is attributed to the invention of the telegraph, which made it possible for the weather forecast to arrive sooner than the weather itself. 
+	
+	Much like a better understanding of the laws of physics facilitated the inception of meteorological research, the development of the study of econometrics allowed for the introduction of the more rigorous techniques to forecast economic phenomena. And as with the telegraph back in the 19th century, the development of the modern computer in the 20th century has facilitated the use of econometric methods for economic forecasting. Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the massive increase in computing power allowed the storage and distribution of granular data that has further aided the advancement of the methods and practices of forecasting. 
+	
+	All methods -- primitive or complex, spurious or scientifically substantiated -- have one thing in common: they all rely (or, at least, pretend to rely) upon *information*. Information is key in forecasting. It comes in many forms, and is condensed into *data*. When organized and stored in a certain way -- chronologically and at regular intervals -- we end up with the *time series* data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy. 
+	
+	Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.\sidenote{Donald Ramsfeld once famously said: `As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns---the ones we don't know we don't know.'} As a result, there is no such thing as a precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some methods can yield more accurate forecasts, on average, than others. And in search of such methods, the study of time series econometrics has evolved. 
+	
+	\chapter{Stochastic Process and Time Series}
+	\label{c2}
+	
+	
+	\newthought{The pages} of a book are usually divided into three major
+	sections: the front matter (also called preliminary matter or prelim), the
+	main matter (the core text of the book), and the back matter (or end
+	matter).
+
+	
+	\chapter{Forecasting Methods and Routines}
+	\label{c3}
+	
+	
+	\chapter{Trends}
+	\label{c4}
+	
+	
+	\chapter{Seasonality}
+	\label{c5}
+	
+	
+	\chapter{Autoregression}
+	\label{c6}
+	
+	
+	\chapter{Vector Autoregression}
+	\label{c7}
+	
+	
+	\chapter{Threshold Autoregression}
+	\label{c8}
+	
+	
+	\chapter{Testing Forecast Accuracy}
+	\label{c9}
+	
+	
+	\chapter{Forecast Combination}
+	\label{c10}
+	
+	
+	
+	
+	\backmatter
+	
+	\bibliography{book}
+	\bibliographystyle{plainnat}
+	
+	
+	\printindex
+
+\end{document}
