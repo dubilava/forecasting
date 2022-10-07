@@ -5,10 +5,10 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 9 – Threshold Autoregression | Forecasting With Time Series Models Using R" />
+<meta property="og:title" content="Chapter 8 – Threshold Autoregression | Educated Guess" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Chapter 9 – Threshold Autoregression | Forecasting With Time Series Models Using R" />
+<meta property="og:description" content="Forecasting With Time Series Models Using R" />
 
 
 <meta name="author" content="David Ubilava" />
@@ -21,9 +21,9 @@ MathJax.Hub.Config({
 </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Chapter 9 – Threshold Autoregression | Forecasting With Time Series Models Using R">
+<meta name="description" content="Forecasting With Time Series Models Using R">
 
-<title>Chapter 9 – Threshold Autoregression | Forecasting With Time Series Models Using R</title>
+<title>Chapter 8 – Threshold Autoregression | Educated Guess</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -197,11 +197,11 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Forecasting With Time Series Models Using R<p><p class="author">David Ubilava</p>
+<li class="msmb"><p class="title">Educated Guess<p><p class="author">David Ubilava</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html" id="toc-foreword">Foreword</a>
+<a href="index.html" id="toc-educated-guess-an-intuitive-guide-to-forecasting-with-time-series-models-using-r">Educated Guess: An Intuitive Guide to Forecasting With Time Series Models Using R</a>
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
@@ -209,15 +209,14 @@ div.csl-indent {
 <a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
 <a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
 <a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
-<a href="moving-average.html" id="toc-moving-average"><span class="toc-section-number">7</span> – Moving Average</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">8</span> – Vector Autoregression</a>
-<a id="active-page" href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">9</span> – Threshold Autoregression</a><ul class="toc-sections">
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> – Vector Autoregression</a>
+<a id="active-page" href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">8</span> – Threshold Autoregression</a><ul class="toc-sections">
 <li class="toc"><a href="#regime-dependent-nonlinearity"> Regime-Dependent Nonlinearity</a></li>
 <li class="toc"><a href="#modeling-4"> Modeling</a></li>
 <li class="toc"><a href="#forecasting-4"> Forecasting</a></li>
 </ul>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">10</span> – Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">11</span> – Forecast Combination</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> – Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> – Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
@@ -238,21 +237,21 @@ div.csl-indent {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="threshold-autoregression" class="section level1" number="9">
+<div id="threshold-autoregression" class="section level1" number="8">
 <h1>
-<span class="header-section-number">Chapter 9</span> – Threshold Autoregression</h1>
+<span class="header-section-number">Chapter 8</span> – Threshold Autoregression</h1>
 <p><img src="art/nonlinear.png"></p>
-<div id="regime-dependent-nonlinearity" class="section level2" number="9.1">
+<div id="regime-dependent-nonlinearity" class="section level2" number="8.1">
 <h2>
-<span class="header-section-number">9.1</span> Regime-Dependent Nonlinearity<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('regime-dependent-nonlinearity')" onmouseout="reset_tooltip('regime-dependent-nonlinearity-tooltip')"><span class="tooltiptext" id="regime-dependent-nonlinearity-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.1</span> Regime-Dependent Nonlinearity<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('regime-dependent-nonlinearity')" onmouseout="reset_tooltip('regime-dependent-nonlinearity-tooltip')"><span class="tooltiptext" id="regime-dependent-nonlinearity-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p><span class="newthought">Linear models often</span> serve as crude approximations of true models. It is very well possible that a nonlinear model offers a better fit to the data. Nonlinear models come in many flavours. Here we will consider a specific type of nonlinear models that belongs to the family of <em>regime-dependent</em> models.</p>
+<p><span class="newthought">A linear model is a crude approximation</span> of a true model. It may very well be possible that a nonlinear model offers a better fit to the data. Nonlinear models come in many flavours. Here we will consider a specific type of nonlinear models that belongs to the family of <em>regime-dependent</em> models.</p>
 <p>A regime-dependent model can be seen as a combination of linear specifications that are linked to each other in some (nonlinear) way. To that end, such nonlinear models are also referred to as the piece-wise linear models—i.e., each piece, or segment, of the model is linear, but when taken together we have a nonlinear model at hand.</p>
 <p>Here, we will consider two representative regime-dependent models: a time-varying threshold autoregression (TVAR) and a self-exciting threshold autoregression (SETAR). In both instances, we will assume that the switch between the regimes happens based on some threshold variable, and that it happens instantaneously.<label for="tufte-sn-13" class="margin-toggle sidenote-number">13</label><input type="checkbox" id="tufte-sn-13" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">13</span> There are other members of the family of regime-dependent models, e.g., a smooth transition autregression (STAR), which relax this assumption of an instantaneous switch between the regimes.</span></p>
 </div>
-<div id="modeling-4" class="section level2" number="9.2">
+<div id="modeling-4" class="section level2" number="8.2">
 <h2>
-<span class="header-section-number">9.2</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-4')" onmouseout="reset_tooltip('modeling-4-tooltip')"><span class="tooltiptext" id="modeling-4-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.2</span> Modeling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('modeling-4')" onmouseout="reset_tooltip('modeling-4-tooltip')"><span class="tooltiptext" id="modeling-4-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Consider an AR(p) process with a deterministic trend: <span class="math display">\[y_t = \alpha_0 + \alpha_1 t + \sum_{i=1}^{p}\beta_i y_{t-i} + \varepsilon_t,\]</span> where <span class="math inline">\(\alpha_0 + \alpha_1 t\)</span> is the time-specific deterministic component.</p>
 <p>This specification assumes a linear trend, but that doesn’t need to be the case. We can have quadratic or cubic trends, for example, or we can have no trend component at all.</p>
@@ -264,9 +263,9 @@ div.csl-indent {
 <p>When estimating TAR-type models, we usually have no <em>a priori</em> knowledge on the number of regimes, the autoregressive order in each regime, the regime-switching (or threshold) variable, and the value(s) of the threshold parameter(s).</p>
 <p>Joint estimation of model parameters requires some nonlinear optimization routine. Alternatively, we can approximate such optimization using a grid-search procedure. The procedure relies on the fact that once the threshold parameter is known, the model reduces to a linear model, and the least squares estimator can be applied then. That is, for example, <span class="math display">\[\hat{\tau} = \arg\min_{\tau}\hat{\sigma}^2(\tau),\]</span> where <span class="math display">\[\hat{\sigma}^2(\tau) = \frac{1}{T-k}\sum_{t=1}^{T}\hat{\varepsilon}_t^2(\tau)\]</span> for all candidate values of <span class="math inline">\(\tau\)</span>. The candidate values of <span class="math inline">\(\tau\)</span> typically belong to a range between the lower and upper quantiles of the transition variable, which is simply the trend in the case of the time-varying TAR, and the lagged dependent variable in the case of the self-exciting TAR.</p>
 </div>
-<div id="forecasting-4" class="section level2" number="9.3">
+<div id="forecasting-4" class="section level2" number="8.3">
 <h2>
-<span class="header-section-number">9.3</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-4')" onmouseout="reset_tooltip('forecasting-4-tooltip')"><span class="tooltiptext" id="forecasting-4-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3</span> Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-4')" onmouseout="reset_tooltip('forecasting-4-tooltip')"><span class="tooltiptext" id="forecasting-4-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>In the case of time-varying shifting trend (mean) models, the most recent trend component is used to obtain forecasts. To that end, the forecasting routine is similar to that of linear trend models.</p>
 <p>In the case of regime-switching models (e.g., TAR), obtaining one-step-ahead forecasts is a straightforward exercise:
@@ -280,27 +279,27 @@ y_{t+1|t} &amp;= \alpha_0+\beta_{01}y_{t}+\beta_{02}y_{t-1}+\ldots \\
 <li>The analytical method can be unbearably tedious.</li>
 <li>A numerical method is usually applicable and, moreover, it addresses the caveats of the previous two options.</li>
 </ul>
-<div id="skeleton-extrapolation" class="section level3" number="9.3.1">
+<div id="skeleton-extrapolation" class="section level3" number="8.3.1">
 <h3>
-<span class="header-section-number">9.3.1</span> Skeleton Extrapolation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('skeleton-extrapolation')" onmouseout="reset_tooltip('skeleton-extrapolation-tooltip')"><span class="tooltiptext" id="skeleton-extrapolation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3.1</span> Skeleton Extrapolation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('skeleton-extrapolation')" onmouseout="reset_tooltip('skeleton-extrapolation-tooltip')"><span class="tooltiptext" id="skeleton-extrapolation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>One-step-ahead forecast: <span class="math display">\[y_{t+1|t} = E(y_{t+1}|\Omega_{t}) = g(y_{t},y_{t-1},\ldots,y_{t+1-p};\theta)\]</span></p>
 <p>Two-step-ahead forecast: <span class="math display">\[y_{t+2|t} = E(y_{t+2}|\Omega_{t}) = g(y_{t+1|t},y_{t},\ldots,y_{t+2-p};\theta)\]</span></p>
 <p>h-step-ahead forecast: <span class="math display">\[y_{t+h|t} = E(y_{t+h}|\Omega_{t}) = g(y_{t+h-1|t},y_{t+h-2|t},\ldots,y_{t+h-p|t};\theta)\]</span></p>
 <p>This is fine for linear models; but not okay for nonlinear models.</p>
 </div>
-<div id="analytical-method" class="section level3" number="9.3.2">
+<div id="analytical-method" class="section level3" number="8.3.2">
 <h3>
-<span class="header-section-number">9.3.2</span> Analytical Method<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('analytical-method')" onmouseout="reset_tooltip('analytical-method-tooltip')"><span class="tooltiptext" id="analytical-method-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3.2</span> Analytical Method<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('analytical-method')" onmouseout="reset_tooltip('analytical-method-tooltip')"><span class="tooltiptext" id="analytical-method-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>One-step-ahead forecast is the same as before (no uncertainty about the observed data).</p>
 <p>Two-step-ahead forecast is: <span class="math display">\[\tilde{y}_{t+2|t} = \int_{-\infty}^{\infty}g(y_{t+1|t}+\varepsilon_{t+1},y_{t},\ldots,y_{t+2-p};\theta)f(\varepsilon_{t+1})d\varepsilon_{t+1}\]</span></p>
 <p>Unless the model is linear, <span class="math inline">\(\tilde{y}_{t+2|t} \ne y_{t+2|t}\)</span>.</p>
 <p>Longer horizon forecasts require multiple integrals.</p>
 </div>
-<div id="numerical-method-bootstrap-resampling" class="section level3" number="9.3.3">
+<div id="numerical-method-bootstrap-resampling" class="section level3" number="8.3.3">
 <h3>
-<span class="header-section-number">9.3.3</span> Numerical Method: Bootstrap Resampling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('numerical-method-bootstrap-resampling')" onmouseout="reset_tooltip('numerical-method-bootstrap-resampling-tooltip')"><span class="tooltiptext" id="numerical-method-bootstrap-resampling-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">8.3.3</span> Numerical Method: Bootstrap Resampling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('numerical-method-bootstrap-resampling')" onmouseout="reset_tooltip('numerical-method-bootstrap-resampling-tooltip')"><span class="tooltiptext" id="numerical-method-bootstrap-resampling-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Bootstrap resampling helps approximate the optimal forecast from nonlinear models and circumvents the complexity of integration.</p>
 <p>Algorithm:</p>
@@ -335,9 +334,9 @@ y_{t+2|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t+1|t}^b + \ldots + \beta_{1p} y_{t
 <a href="forecast-evaluation.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-18
+2022-10-05
  using 
-R version 4.1.2 (2021-11-01)
+R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>

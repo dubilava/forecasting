@@ -55,7 +55,6 @@ unit-roots-and-non-stationarity
 forecasting-2
 iterative-method-of-multistep-forecasting
 direct-method-of-multistep-forecasting
-moving-average
 vector-autoregression
 dynamic-feedbacks-among-economic-variables
 modeling-3
