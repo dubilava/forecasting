@@ -259,7 +259,7 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>.</p>
 <span id="cb141-6"><a href="tutorial-10-forecast-combination.html#cb141-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb141-7"><a href="tutorial-10-forecast-combination.html#cb141-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
 <span id="cb141-8"><a href="tutorial-10-forecast-combination.html#cb141-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-91-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-90-1.png" width="624"></p>
 <p>Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="tutorial-10-forecast-combination.html#cb142-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>),<span class="at">trend=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dt)))]</span>
 <span id="cb142-2"><a href="tutorial-10-forecast-combination.html#cb142-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -345,9 +345,9 @@ Hodell, David A, Jason H Curtis, and Mark Brenner. 1995. <span>“<span class="n
 <a href="tutorial-10-forecast-evaluation.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-05
+2022-10-08
  using 
-R version 4.1.0 (2021-05-18)
+R version 4.1.2 (2021-11-01)
 </p>
 </div>
 </div>

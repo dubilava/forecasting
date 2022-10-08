@@ -237,22 +237,22 @@ div.csl-indent {
 <h1>Tutorial 9: Threshold Autoregression</h1>
 <p>In this tutorial, we will generate regime-dependent series, we will apply a grid-search method to obtain the threshold parameter, we will obtain and compare one-step-ahead forecasts from competing models using a rolling window procedure, and we will apply bootstrap resampling method to generate multi-step-ahead forecasts from a threshold regression. To run the code, the <code>data.table</code> and <code>ggplot2</code> packages need to be installed and loaded.</p>
 <p>Let’s generate a time series that follow a TAR(2) process of the following form:
-<!-- $$y_t = \left\{\begin{array} -->
-<!-- {ll} -->
-<!-- y_{t-1} + \varepsilon_t & \text{if}~~y_{t-1}\ge0 \\ -->
-<!-- 1.2y_{t-1}-0.3y_{t-2} + \varepsilon_t & \text{if}~~y_{t-1} < 0 -->
-<!-- \end{array}\right. -->
-<!-- $$ -->
+<span class="math display">\[y_t = \left\{\begin{array}
+{ll}
+0.9y_{t-1} + \varepsilon_t &amp; \text{if}~~y_{t-1}\ge0 \\
+1.2y_{t-1}-0.5y_{t-2} + \varepsilon_t &amp; \text{if}~~y_{t-1} &lt; 0
+\end{array}\right.
+\]</span>
 where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This suggests that the time series follow the unit root process if the lagged dependent variable is non-negative, otherwise the time series is a mean-reverting AR(2) process.</p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="tutorial-9-threshold-autoregression.html#cb108-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">360</span></span>
 <span id="cb108-2"><a href="tutorial-9-threshold-autoregression.html#cb108-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-3"><a href="tutorial-9-threshold-autoregression.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb108-3"><a href="tutorial-9-threshold-autoregression.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
 <span id="cb108-4"><a href="tutorial-9-threshold-autoregression.html#cb108-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
 <span id="cb108-5"><a href="tutorial-9-threshold-autoregression.html#cb108-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb108-6"><a href="tutorial-9-threshold-autoregression.html#cb108-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,n)</span>
 <span id="cb108-7"><a href="tutorial-9-threshold-autoregression.html#cb108-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> e[<span class="dv">1</span>]</span>
 <span id="cb108-8"><a href="tutorial-9-threshold-autoregression.html#cb108-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(y[<span class="dv">1</span>]<span class="sc">&gt;=</span><span class="dv">0</span>){</span>
-<span id="cb108-9"><a href="tutorial-9-threshold-autoregression.html#cb108-9" aria-hidden="true" tabindex="-1"></a>  y[<span class="dv">2</span>] <span class="ot">&lt;-</span>  <span class="fl">1.0</span><span class="sc">*</span>y[<span class="dv">1</span>]<span class="sc">+</span>e[<span class="dv">2</span>]</span>
+<span id="cb108-9"><a href="tutorial-9-threshold-autoregression.html#cb108-9" aria-hidden="true" tabindex="-1"></a>  y[<span class="dv">2</span>] <span class="ot">&lt;-</span>  <span class="fl">0.9</span><span class="sc">*</span>y[<span class="dv">1</span>]<span class="sc">+</span>e[<span class="dv">2</span>]</span>
 <span id="cb108-10"><a href="tutorial-9-threshold-autoregression.html#cb108-10" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
 <span id="cb108-11"><a href="tutorial-9-threshold-autoregression.html#cb108-11" aria-hidden="true" tabindex="-1"></a>  y[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fl">1.2</span><span class="sc">*</span>y[<span class="dv">1</span>]<span class="sc">+</span>e[<span class="dv">2</span>]</span>
 <span id="cb108-12"><a href="tutorial-9-threshold-autoregression.html#cb108-12" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -261,89 +261,94 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb108-15"><a href="tutorial-9-threshold-autoregression.html#cb108-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(y[i<span class="dv">-1</span>]<span class="sc">&gt;=</span><span class="dv">0</span>){</span>
 <span id="cb108-16"><a href="tutorial-9-threshold-autoregression.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    y[i] <span class="ot">&lt;-</span>  <span class="fl">1.0</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span>e[i]</span>
 <span id="cb108-17"><a href="tutorial-9-threshold-autoregression.html#cb108-17" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
-<span id="cb108-18"><a href="tutorial-9-threshold-autoregression.html#cb108-18" aria-hidden="true" tabindex="-1"></a>    y[i] <span class="ot">&lt;-</span> <span class="fl">1.2</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">-</span><span class="fl">0.3</span><span class="sc">*</span>y[i<span class="dv">-2</span>]<span class="sc">+</span>e[i]</span>
+<span id="cb108-18"><a href="tutorial-9-threshold-autoregression.html#cb108-18" aria-hidden="true" tabindex="-1"></a>    y[i] <span class="ot">&lt;-</span> <span class="fl">1.2</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>y[i<span class="dv">-2</span>]<span class="sc">+</span>e[i]</span>
 <span id="cb108-19"><a href="tutorial-9-threshold-autoregression.html#cb108-19" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb108-20"><a href="tutorial-9-threshold-autoregression.html#cb108-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 1991), and store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt’.</p>
+<p>Generate a vector of some arbitrary dates (e.g., suppose we deal with the monthly series beginning from January 1991), and store these along with <span class="math inline">\(y\)</span> in a <strong>data.table</strong>, call it ‘dt’. Then plot the realized time series using <strong>ggplot</strong> function.</p>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="tutorial-9-threshold-autoregression.html#cb109-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"1991-01-01"</span>),<span class="at">by=</span><span class="st">"month"</span>,<span class="at">along.with=</span>y)</span>
 <span id="cb109-2"><a href="tutorial-9-threshold-autoregression.html#cb109-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb109-3"><a href="tutorial-9-threshold-autoregression.html#cb109-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y)</span></code></pre></div>
-<p>Plot the realized time series using <strong>ggplot</strong> function.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="tutorial-9-threshold-autoregression.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
-<span id="cb110-2"><a href="tutorial-9-threshold-autoregression.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb110-3"><a href="tutorial-9-threshold-autoregression.html#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
-<span id="cb110-4"><a href="tutorial-9-threshold-autoregression.html#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-78-1.png" width="624"></p>
-<p>Decide on the optimal lag length based on AIC.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="tutorial-9-threshold-autoregression.html#cb111-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y_l1=</span><span class="fu">shift</span>(y),<span class="at">y_l2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y_l3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>),<span class="at">y_l4=</span><span class="fu">shift</span>(y,<span class="dv">4</span>))]</span>
-<span id="cb111-2"><a href="tutorial-9-threshold-autoregression.html#cb111-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[<span class="fu">complete.cases</span>(dt)]</span>
-<span id="cb111-3"><a href="tutorial-9-threshold-autoregression.html#cb111-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-4"><a href="tutorial-9-threshold-autoregression.html#cb111-4" aria-hidden="true" tabindex="-1"></a>IC_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">lag=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),<span class="at">AIC=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">SIC=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>))</span>
-<span id="cb111-5"><a href="tutorial-9-threshold-autoregression.html#cb111-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-6"><a href="tutorial-9-threshold-autoregression.html#cb111-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(IC_dt)){</span>
-<span id="cb111-7"><a href="tutorial-9-threshold-autoregression.html#cb111-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb111-8"><a href="tutorial-9-threshold-autoregression.html#cb111-8" aria-hidden="true" tabindex="-1"></a>  fmla <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">"y"</span>,<span class="fu">paste0</span>(<span class="st">"y_l"</span>,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>i),<span class="at">collapse=</span><span class="st">"+"</span>),<span class="at">sep=</span><span class="st">"~"</span>))</span>
-<span id="cb111-9"><a href="tutorial-9-threshold-autoregression.html#cb111-9" aria-hidden="true" tabindex="-1"></a>  reg.ar <span class="ot">&lt;-</span> <span class="fu">lm</span>(fmla,<span class="at">data=</span>dt)</span>
-<span id="cb111-10"><a href="tutorial-9-threshold-autoregression.html#cb111-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb111-11"><a href="tutorial-9-threshold-autoregression.html#cb111-11" aria-hidden="true" tabindex="-1"></a>  IC_dt<span class="sc">$</span>AIC[i] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">crossprod</span>(reg.ar<span class="sc">$</span>residuals))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(i<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
-<span id="cb111-12"><a href="tutorial-9-threshold-autoregression.html#cb111-12" aria-hidden="true" tabindex="-1"></a>  IC_dt<span class="sc">$</span>SIC[i] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">crossprod</span>(reg.ar<span class="sc">$</span>residuals))<span class="sc">+</span><span class="fu">log</span>(<span class="fu">nrow</span>(dt))<span class="sc">*</span>(i<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
-<span id="cb111-13"><a href="tutorial-9-threshold-autoregression.html#cb111-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-14"><a href="tutorial-9-threshold-autoregression.html#cb111-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb111-15"><a href="tutorial-9-threshold-autoregression.html#cb111-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-16"><a href="tutorial-9-threshold-autoregression.html#cb111-16" aria-hidden="true" tabindex="-1"></a>IC_dt</span></code></pre></div>
-<pre><code>##    lag      AIC      SIC
-## 1:   1 5.822589 5.844358
-## 2:   2 5.821342 5.853996
-## 3:   3 5.826916 5.870454
-## 4:   4 5.832294 5.886717</code></pre>
-<p>We now need to get an estimate of the threshold parameter (i.e., the value at which the switch between the regimes happens). For that, we perform a grid-search routine. We will consider a range of candidate thresholds that are within 10th and 90th percentile of the lagged dependent variable. For each candidate threshold, we will run an OLS and calculate the residual sums of squares. A threshold that yields the lowest residual sum of squares will be the estimate.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="tutorial-9-threshold-autoregression.html#cb113-1" aria-hidden="true" tabindex="-1"></a>qy <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">quantile</span>(dt<span class="sc">$</span>y,<span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">9</span>)),<span class="dv">1</span>)</span>
-<span id="cb113-2"><a href="tutorial-9-threshold-autoregression.html#cb113-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-3"><a href="tutorial-9-threshold-autoregression.html#cb113-3" aria-hidden="true" tabindex="-1"></a>tr <span class="ot">&lt;-</span> <span class="fu">seq</span>(qy[<span class="dv">1</span>],qy[<span class="dv">2</span>],<span class="at">by=</span>.<span class="dv">1</span>)</span>
-<span id="cb113-4"><a href="tutorial-9-threshold-autoregression.html#cb113-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-5"><a href="tutorial-9-threshold-autoregression.html#cb113-5" aria-hidden="true" tabindex="-1"></a>grid_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(tr,<span class="at">ssr=</span><span class="cn">NA</span>)</span>
-<span id="cb113-6"><a href="tutorial-9-threshold-autoregression.html#cb113-6" aria-hidden="true" tabindex="-1"></a>grid_dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">ssr=</span><span class="fu">as.numeric</span>(ssr))]</span>
-<span id="cb113-7"><a href="tutorial-9-threshold-autoregression.html#cb113-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-8"><a href="tutorial-9-threshold-autoregression.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> tr){</span>
-<span id="cb113-9"><a href="tutorial-9-threshold-autoregression.html#cb113-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb113-10"><a href="tutorial-9-threshold-autoregression.html#cb113-10" aria-hidden="true" tabindex="-1"></a>  dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">d=</span><span class="fu">ifelse</span>(y_l1<span class="sc">&gt;=</span>i,<span class="dv">1</span>,<span class="dv">0</span>))]</span>
-<span id="cb113-11"><a href="tutorial-9-threshold-autoregression.html#cb113-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb113-12"><a href="tutorial-9-threshold-autoregression.html#cb113-12" aria-hidden="true" tabindex="-1"></a>  tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt)</span>
-<span id="cb113-13"><a href="tutorial-9-threshold-autoregression.html#cb113-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb113-14"><a href="tutorial-9-threshold-autoregression.html#cb113-14" aria-hidden="true" tabindex="-1"></a>  grid_dt[tr<span class="sc">==</span>i]<span class="sc">$</span>ssr <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(tar<span class="sc">$</span>residuals)</span>
-<span id="cb113-15"><a href="tutorial-9-threshold-autoregression.html#cb113-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb113-16"><a href="tutorial-9-threshold-autoregression.html#cb113-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb113-17"><a href="tutorial-9-threshold-autoregression.html#cb113-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-18"><a href="tutorial-9-threshold-autoregression.html#cb113-18" aria-hidden="true" tabindex="-1"></a>tr_hat <span class="ot">&lt;-</span> grid_dt[ssr<span class="sc">==</span><span class="fu">min</span>(ssr)]<span class="sc">$</span>tr</span>
-<span id="cb113-19"><a href="tutorial-9-threshold-autoregression.html#cb113-19" aria-hidden="true" tabindex="-1"></a>tr_hat</span></code></pre></div>
-<pre><code>## [1] -1</code></pre>
+<span id="cb109-3"><a href="tutorial-9-threshold-autoregression.html#cb109-3" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(date,y)</span>
+<span id="cb109-4"><a href="tutorial-9-threshold-autoregression.html#cb109-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-5"><a href="tutorial-9-threshold-autoregression.html#cb109-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>y))<span class="sc">+</span></span>
+<span id="cb109-6"><a href="tutorial-9-threshold-autoregression.html#cb109-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb109-7"><a href="tutorial-9-threshold-autoregression.html#cb109-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
+<span id="cb109-8"><a href="tutorial-9-threshold-autoregression.html#cb109-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-77-1.png" width="624"></p>
+<p>Obtain the AIC and SIC for AR(p), <span class="math inline">\(p=1,\ldots,4\)</span>; decide on the optimal lag length based on AIC.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="tutorial-9-threshold-autoregression.html#cb110-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>),<span class="at">y4=</span><span class="fu">shift</span>(y,<span class="dv">4</span>))]</span>
+<span id="cb110-2"><a href="tutorial-9-threshold-autoregression.html#cb110-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[<span class="fu">complete.cases</span>(dt)]</span>
+<span id="cb110-3"><a href="tutorial-9-threshold-autoregression.html#cb110-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-4"><a href="tutorial-9-threshold-autoregression.html#cb110-4" aria-hidden="true" tabindex="-1"></a>ic_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">k=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),<span class="at">AIC=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>),<span class="at">SIC=</span><span class="fu">as.numeric</span>(<span class="cn">NA</span>))</span>
+<span id="cb110-5"><a href="tutorial-9-threshold-autoregression.html#cb110-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-6"><a href="tutorial-9-threshold-autoregression.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(ic_dt)){</span>
+<span id="cb110-7"><a href="tutorial-9-threshold-autoregression.html#cb110-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb110-8"><a href="tutorial-9-threshold-autoregression.html#cb110-8" aria-hidden="true" tabindex="-1"></a>  fmla <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">"y"</span>,<span class="fu">paste0</span>(<span class="st">"y"</span>,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>i),<span class="at">collapse=</span><span class="st">"+"</span>),<span class="at">sep=</span><span class="st">"~"</span>))</span>
+<span id="cb110-9"><a href="tutorial-9-threshold-autoregression.html#cb110-9" aria-hidden="true" tabindex="-1"></a>  reg_ar <span class="ot">&lt;-</span> <span class="fu">lm</span>(fmla,<span class="at">data=</span>dt)</span>
+<span id="cb110-10"><a href="tutorial-9-threshold-autoregression.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb110-11"><a href="tutorial-9-threshold-autoregression.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  ic_dt<span class="sc">$</span>AIC[i] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">crossprod</span>(reg_ar<span class="sc">$</span>residuals))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>(i<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
+<span id="cb110-12"><a href="tutorial-9-threshold-autoregression.html#cb110-12" aria-hidden="true" tabindex="-1"></a>  ic_dt<span class="sc">$</span>SIC[i] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">crossprod</span>(reg_ar<span class="sc">$</span>residuals))<span class="sc">+</span><span class="fu">log</span>(<span class="fu">nrow</span>(dt))<span class="sc">*</span>(i<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">nrow</span>(dt)</span>
+<span id="cb110-13"><a href="tutorial-9-threshold-autoregression.html#cb110-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-14"><a href="tutorial-9-threshold-autoregression.html#cb110-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb110-15"><a href="tutorial-9-threshold-autoregression.html#cb110-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-16"><a href="tutorial-9-threshold-autoregression.html#cb110-16" aria-hidden="true" tabindex="-1"></a>ic_dt</span></code></pre></div>
+<pre><code>##    k      AIC      SIC
+## 1: 1 5.992067 6.013837
+## 2: 2 5.996330 6.028984
+## 3: 3 5.992511 6.036050
+## 4: 4 5.994031 6.048454</code></pre>
+<p>We now need to guess the threshold parameter (i.e., the value at which the switch between the regimes happens). For that, we perform a grid-search routine. We will consider a range of candidate thresholds that are within 10th and 90th percentiles of the lagged dependent variable. For each candidate threshold, we will run an OLS and calculate the residual sums of squares. A threshold parameter that yields the smallest residual sum of squares will be the estimate. Plot the residual sums of squares against the candidate threshold parameters to illustrate the optimal threshold selection routine.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="tutorial-9-threshold-autoregression.html#cb112-1" aria-hidden="true" tabindex="-1"></a>qy <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">quantile</span>(dt<span class="sc">$</span>y,<span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">9</span>)),<span class="dv">1</span>)</span>
+<span id="cb112-2"><a href="tutorial-9-threshold-autoregression.html#cb112-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-3"><a href="tutorial-9-threshold-autoregression.html#cb112-3" aria-hidden="true" tabindex="-1"></a>tr <span class="ot">&lt;-</span> <span class="fu">seq</span>(qy[<span class="dv">1</span>],qy[<span class="dv">2</span>],<span class="at">by=</span>.<span class="dv">1</span>)</span>
+<span id="cb112-4"><a href="tutorial-9-threshold-autoregression.html#cb112-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-5"><a href="tutorial-9-threshold-autoregression.html#cb112-5" aria-hidden="true" tabindex="-1"></a>grid_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(tr,<span class="at">ssr=</span><span class="cn">NA</span>)</span>
+<span id="cb112-6"><a href="tutorial-9-threshold-autoregression.html#cb112-6" aria-hidden="true" tabindex="-1"></a>grid_dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">ssr=</span><span class="fu">as.numeric</span>(ssr))]</span>
+<span id="cb112-7"><a href="tutorial-9-threshold-autoregression.html#cb112-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-8"><a href="tutorial-9-threshold-autoregression.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> tr){</span>
+<span id="cb112-9"><a href="tutorial-9-threshold-autoregression.html#cb112-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb112-10"><a href="tutorial-9-threshold-autoregression.html#cb112-10" aria-hidden="true" tabindex="-1"></a>  dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">d=</span><span class="fu">ifelse</span>(y1<span class="sc">&gt;=</span>i,<span class="dv">1</span>,<span class="dv">0</span>))]</span>
+<span id="cb112-11"><a href="tutorial-9-threshold-autoregression.html#cb112-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb112-12"><a href="tutorial-9-threshold-autoregression.html#cb112-12" aria-hidden="true" tabindex="-1"></a>  tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt)</span>
+<span id="cb112-13"><a href="tutorial-9-threshold-autoregression.html#cb112-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb112-14"><a href="tutorial-9-threshold-autoregression.html#cb112-14" aria-hidden="true" tabindex="-1"></a>  grid_dt[tr<span class="sc">==</span>i]<span class="sc">$</span>ssr <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(tar<span class="sc">$</span>residuals)</span>
+<span id="cb112-15"><a href="tutorial-9-threshold-autoregression.html#cb112-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb112-16"><a href="tutorial-9-threshold-autoregression.html#cb112-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb112-17"><a href="tutorial-9-threshold-autoregression.html#cb112-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-18"><a href="tutorial-9-threshold-autoregression.html#cb112-18" aria-hidden="true" tabindex="-1"></a>tr_hat <span class="ot">&lt;-</span> grid_dt[ssr<span class="sc">==</span><span class="fu">min</span>(ssr)]<span class="sc">$</span>tr</span>
+<span id="cb112-19"><a href="tutorial-9-threshold-autoregression.html#cb112-19" aria-hidden="true" tabindex="-1"></a>tr_hat</span></code></pre></div>
+<pre><code>## [1] -0.3</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="tutorial-9-threshold-autoregression.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(grid_dt,<span class="fu">aes</span>(<span class="at">x=</span>tr,<span class="at">y=</span>ssr))<span class="sc">+</span></span>
+<span id="cb114-2"><a href="tutorial-9-threshold-autoregression.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb114-3"><a href="tutorial-9-threshold-autoregression.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>tr_hat,<span class="at">color=</span><span class="st">"coral"</span>,<span class="at">linetype=</span><span class="dv">5</span>)<span class="sc">+</span></span>
+<span id="cb114-4"><a href="tutorial-9-threshold-autoregression.html#cb114-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Threshold"</span>,<span class="at">y=</span><span class="st">"RSS"</span>)<span class="sc">+</span></span>
+<span id="cb114-5"><a href="tutorial-9-threshold-autoregression.html#cb114-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-79-1.png" width="624"></p>
 <p>Estimate the threshold autoregression and compare the parameter estimates with the true parameters of the model.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="tutorial-9-threshold-autoregression.html#cb115-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">d=</span><span class="fu">ifelse</span>(y_l1<span class="sc">&gt;=</span>tr_hat,<span class="dv">1</span>,<span class="dv">0</span>))]</span>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="tutorial-9-threshold-autoregression.html#cb115-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">d=</span><span class="fu">ifelse</span>(y1<span class="sc">&gt;=</span>tr_hat,<span class="dv">1</span>,<span class="dv">0</span>))]</span>
 <span id="cb115-2"><a href="tutorial-9-threshold-autoregression.html#cb115-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-3"><a href="tutorial-9-threshold-autoregression.html#cb115-3" aria-hidden="true" tabindex="-1"></a>tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt)</span>
+<span id="cb115-3"><a href="tutorial-9-threshold-autoregression.html#cb115-3" aria-hidden="true" tabindex="-1"></a>tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt)</span>
 <span id="cb115-4"><a href="tutorial-9-threshold-autoregression.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tar)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = y ~ (y_l1 + y_l2):I(d) + (y_l1 + y_l2):I(1 - d), 
-##     data = dt)
+## lm(formula = y ~ (y1 + y2):I(d) + (y1 + y2):I(1 - d), data = dt)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.97704 -0.60528 -0.02506  0.61754  2.66733 
+## -3.07960 -0.69777  0.01202  0.67922  2.48583 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   -0.01380    0.07519  -0.183 0.854535    
-## y_l1:I(d)      0.97060    0.06283  15.449  &lt; 2e-16 ***
-## y_l2:I(d)      0.00998    0.06160   0.162 0.871403    
-## y_l1:I(1 - d)  1.24182    0.10229  12.140  &lt; 2e-16 ***
-## y_l2:I(1 - d) -0.34188    0.10158  -3.366 0.000848 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.008883   0.092489   0.096    0.924    
+## y1:I(d)      0.872220   0.065123  13.393  &lt; 2e-16 ***
+## y2:I(d)      0.097586   0.061161   1.596    0.111    
+## y1:I(1 - d)  1.149007   0.101738  11.294  &lt; 2e-16 ***
+## y2:I(1 - d) -0.447393   0.099086  -4.515 8.65e-06 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.9586 on 351 degrees of freedom
-## Multiple R-squared:  0.916,  Adjusted R-squared:  0.9151 
-## F-statistic: 957.5 on 4 and 351 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 1.021 on 351 degrees of freedom
+## Multiple R-squared:  0.8746, Adjusted R-squared:  0.8732 
+## F-statistic:   612 on 4 and 351 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Generate a sequence of one-step-ahead forecasts from TAR(2) using the rolling window scheme, where the first rolling window ranges from period 1 to period 240. For comparison, also generate the one-step-ahead forecasts from the AR(2) and the random walk models. Calculate the RMSFE measures for the three models.</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="tutorial-9-threshold-autoregression.html#cb117-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">240</span></span>
 <span id="cb117-2"><a href="tutorial-9-threshold-autoregression.html#cb117-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R</span>
@@ -352,9 +357,9 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb117-5"><a href="tutorial-9-threshold-autoregression.html#cb117-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb117-6"><a href="tutorial-9-threshold-autoregression.html#cb117-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
 <span id="cb117-7"><a href="tutorial-9-threshold-autoregression.html#cb117-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb117-8"><a href="tutorial-9-threshold-autoregression.html#cb117-8" aria-hidden="true" tabindex="-1"></a>  ar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y_l1<span class="sc">+</span>y_l2,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb117-8"><a href="tutorial-9-threshold-autoregression.html#cb117-8" aria-hidden="true" tabindex="-1"></a>  ar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
 <span id="cb117-9"><a href="tutorial-9-threshold-autoregression.html#cb117-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb117-10"><a href="tutorial-9-threshold-autoregression.html#cb117-10" aria-hidden="true" tabindex="-1"></a>  tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
+<span id="cb117-10"><a href="tutorial-9-threshold-autoregression.html#cb117-10" aria-hidden="true" tabindex="-1"></a>  tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="dv">-1</span><span class="sc">+</span>i)])</span>
 <span id="cb117-11"><a href="tutorial-9-threshold-autoregression.html#cb117-11" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb117-12"><a href="tutorial-9-threshold-autoregression.html#cb117-12" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>rw[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> dt<span class="sc">$</span>y[R<span class="dv">-1</span><span class="sc">+</span>i]</span>
 <span id="cb117-13"><a href="tutorial-9-threshold-autoregression.html#cb117-13" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -375,15 +380,15 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb117-28"><a href="tutorial-9-threshold-autoregression.html#cb117-28" aria-hidden="true" tabindex="-1"></a>rmsfe_tar <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>tar_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
 <span id="cb117-29"><a href="tutorial-9-threshold-autoregression.html#cb117-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb117-30"><a href="tutorial-9-threshold-autoregression.html#cb117-30" aria-hidden="true" tabindex="-1"></a>rmsfe_rw</span></code></pre></div>
-<pre><code>## [1] 0.9258102</code></pre>
+<pre><code>## [1] 1.010309</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="tutorial-9-threshold-autoregression.html#cb119-1" aria-hidden="true" tabindex="-1"></a>rmsfe_ar</span></code></pre></div>
-<pre><code>## [1] 0.9811523</code></pre>
+<pre><code>## [1] 1.000136</code></pre>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="tutorial-9-threshold-autoregression.html#cb121-1" aria-hidden="true" tabindex="-1"></a>rmsfe_tar</span></code></pre></div>
-<pre><code>## [1] 0.9996084</code></pre>
+<pre><code>## [1] 1.018451</code></pre>
 <p>Obtain the multi-step-ahead forecasts from period 241 onward using the so-called ‘skeleton extrapolation’ method (which yields biased forecasts) and the bootstrap resampling method (a numerical method that yields valid multi-step-ahead forecasts from nonlinear models). Plot the two forecasts along with the time series.</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="tutorial-9-threshold-autoregression.html#cb123-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">tar_skeleton=</span>y)]</span>
 <span id="cb123-2"><a href="tutorial-9-threshold-autoregression.html#cb123-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb123-3"><a href="tutorial-9-threshold-autoregression.html#cb123-3" aria-hidden="true" tabindex="-1"></a>tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y_l1<span class="sc">+</span>y_l2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt[<span class="dv">1</span><span class="sc">:</span>R])</span>
+<span id="cb123-3"><a href="tutorial-9-threshold-autoregression.html#cb123-3" aria-hidden="true" tabindex="-1"></a>tar <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(d)<span class="sc">+</span>(y1<span class="sc">+</span>y2)<span class="sc">:</span><span class="fu">I</span>(<span class="dv">1</span><span class="sc">-</span>d),<span class="at">data=</span>dt[<span class="dv">1</span><span class="sc">:</span>R])</span>
 <span id="cb123-4"><a href="tutorial-9-threshold-autoregression.html#cb123-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb123-5"><a href="tutorial-9-threshold-autoregression.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>P){</span>
 <span id="cb123-6"><a href="tutorial-9-threshold-autoregression.html#cb123-6" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -424,12 +429,12 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb123-41"><a href="tutorial-9-threshold-autoregression.html#cb123-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb123-42"><a href="tutorial-9-threshold-autoregression.html#cb123-42" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sub_lg,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>value,<span class="at">color=</span>variable,<span class="at">linetype=</span>variable))<span class="sc">+</span></span>
 <span id="cb123-43"><a href="tutorial-9-threshold-autoregression.html#cb123-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>,<span class="at">na.rm=</span>T)<span class="sc">+</span></span>
-<span id="cb123-44"><a href="tutorial-9-threshold-autoregression.html#cb123-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"darkgray"</span>,<span class="st">"indianred"</span>,<span class="st">"steelblue"</span>))<span class="sc">+</span></span>
+<span id="cb123-44"><a href="tutorial-9-threshold-autoregression.html#cb123-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"darkgray"</span>,<span class="st">"coral"</span>,<span class="st">"steelblue"</span>))<span class="sc">+</span></span>
 <span id="cb123-45"><a href="tutorial-9-threshold-autoregression.html#cb123-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>))<span class="sc">+</span></span>
 <span id="cb123-46"><a href="tutorial-9-threshold-autoregression.html#cb123-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
 <span id="cb123-47"><a href="tutorial-9-threshold-autoregression.html#cb123-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
 <span id="cb123-48"><a href="tutorial-9-threshold-autoregression.html#cb123-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"top"</span>,<span class="at">legend.title=</span><span class="fu">element_blank</span>())</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-83-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-82-1.png" width="624"></p>
 
 </div>
 <p style="text-align: center;">
@@ -437,9 +442,9 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <a href="tutorial-10-forecast-evaluation.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-05
+2022-10-08
  using 
-R version 4.1.0 (2021-05-18)
+R version 4.1.2 (2021-11-01)
 </p>
 </div>
 </div>
