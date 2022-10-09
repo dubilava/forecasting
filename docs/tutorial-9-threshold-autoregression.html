@@ -243,7 +243,7 @@ div.csl-indent {
 1.2y_{t-1}-0.5y_{t-2} + \varepsilon_t &amp; \text{if}~~y_{t-1} &lt; 0
 \end{array}\right.
 \]</span>
-where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This suggests that the time series follow the unit root process if the lagged dependent variable is non-negative, otherwise the time series is a mean-reverting AR(2) process.</p>
+where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This suggests that the dynamics of the time series change depending on the sign of the lagged dependent variable.</p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="tutorial-9-threshold-autoregression.html#cb108-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">360</span></span>
 <span id="cb108-2"><a href="tutorial-9-threshold-autoregression.html#cb108-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb108-3"><a href="tutorial-9-threshold-autoregression.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
@@ -259,7 +259,7 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb108-13"><a href="tutorial-9-threshold-autoregression.html#cb108-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb108-14"><a href="tutorial-9-threshold-autoregression.html#cb108-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>n){</span>
 <span id="cb108-15"><a href="tutorial-9-threshold-autoregression.html#cb108-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(y[i<span class="dv">-1</span>]<span class="sc">&gt;=</span><span class="dv">0</span>){</span>
-<span id="cb108-16"><a href="tutorial-9-threshold-autoregression.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    y[i] <span class="ot">&lt;-</span>  <span class="fl">1.0</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span>e[i]</span>
+<span id="cb108-16"><a href="tutorial-9-threshold-autoregression.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    y[i] <span class="ot">&lt;-</span>  <span class="fl">0.9</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span>e[i]</span>
 <span id="cb108-17"><a href="tutorial-9-threshold-autoregression.html#cb108-17" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
 <span id="cb108-18"><a href="tutorial-9-threshold-autoregression.html#cb108-18" aria-hidden="true" tabindex="-1"></a>    y[i] <span class="ot">&lt;-</span> <span class="fl">1.2</span><span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>y[i<span class="dv">-2</span>]<span class="sc">+</span>e[i]</span>
 <span id="cb108-19"><a href="tutorial-9-threshold-autoregression.html#cb108-19" aria-hidden="true" tabindex="-1"></a>  }</span>
@@ -292,10 +292,10 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb110-15"><a href="tutorial-9-threshold-autoregression.html#cb110-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb110-16"><a href="tutorial-9-threshold-autoregression.html#cb110-16" aria-hidden="true" tabindex="-1"></a>ic_dt</span></code></pre></div>
 <pre><code>##    k      AIC      SIC
-## 1: 1 5.992067 6.013837
-## 2: 2 5.996330 6.028984
-## 3: 3 5.992511 6.036050
-## 4: 4 5.994031 6.048454</code></pre>
+## 1: 1 6.030794 6.052564
+## 2: 2 5.987318 6.019972
+## 3: 3 5.989787 6.033326
+## 4: 4 5.994844 6.049268</code></pre>
 <p>We now need to guess the threshold parameter (i.e., the value at which the switch between the regimes happens). For that, we perform a grid-search routine. We will consider a range of candidate thresholds that are within 10th and 90th percentiles of the lagged dependent variable. For each candidate threshold, we will run an OLS and calculate the residual sums of squares. A threshold parameter that yields the smallest residual sum of squares will be the estimate. Plot the residual sums of squares against the candidate threshold parameters to illustrate the optimal threshold selection routine.</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="tutorial-9-threshold-autoregression.html#cb112-1" aria-hidden="true" tabindex="-1"></a>qy <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">quantile</span>(dt<span class="sc">$</span>y,<span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">9</span>)),<span class="dv">1</span>)</span>
 <span id="cb112-2"><a href="tutorial-9-threshold-autoregression.html#cb112-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -316,7 +316,7 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb112-17"><a href="tutorial-9-threshold-autoregression.html#cb112-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb112-18"><a href="tutorial-9-threshold-autoregression.html#cb112-18" aria-hidden="true" tabindex="-1"></a>tr_hat <span class="ot">&lt;-</span> grid_dt[ssr<span class="sc">==</span><span class="fu">min</span>(ssr)]<span class="sc">$</span>tr</span>
 <span id="cb112-19"><a href="tutorial-9-threshold-autoregression.html#cb112-19" aria-hidden="true" tabindex="-1"></a>tr_hat</span></code></pre></div>
-<pre><code>## [1] -0.3</code></pre>
+<pre><code>## [1] -0.1</code></pre>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="tutorial-9-threshold-autoregression.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(grid_dt,<span class="fu">aes</span>(<span class="at">x=</span>tr,<span class="at">y=</span>ssr))<span class="sc">+</span></span>
 <span id="cb114-2"><a href="tutorial-9-threshold-autoregression.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb114-3"><a href="tutorial-9-threshold-autoregression.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>tr_hat,<span class="at">color=</span><span class="st">"coral"</span>,<span class="at">linetype=</span><span class="dv">5</span>)<span class="sc">+</span></span>
@@ -334,21 +334,21 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -3.07960 -0.69777  0.01202  0.67922  2.48583 
+## -3.07702 -0.69964  0.01969  0.65595  2.47130 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.008883   0.092489   0.096    0.924    
-## y1:I(d)      0.872220   0.065123  13.393  &lt; 2e-16 ***
-## y2:I(d)      0.097586   0.061161   1.596    0.111    
-## y1:I(1 - d)  1.149007   0.101738  11.294  &lt; 2e-16 ***
-## y2:I(1 - d) -0.447393   0.099086  -4.515 8.65e-06 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.01150    0.08554   0.134    0.893    
+## y1:I(d)      0.70886    0.08895   7.969 2.26e-14 ***
+## y2:I(d)      0.06424    0.07576   0.848    0.397    
+## y1:I(1 - d)  1.15232    0.07632  15.099  &lt; 2e-16 ***
+## y2:I(1 - d) -0.45200    0.06818  -6.630 1.27e-10 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.021 on 351 degrees of freedom
-## Multiple R-squared:  0.8746, Adjusted R-squared:  0.8732 
-## F-statistic:   612 on 4 and 351 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 1.02 on 351 degrees of freedom
+## Multiple R-squared:  0.6447, Adjusted R-squared:  0.6407 
+## F-statistic: 159.3 on 4 and 351 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Generate a sequence of one-step-ahead forecasts from TAR(2) using the rolling window scheme, where the first rolling window ranges from period 1 to period 240. For comparison, also generate the one-step-ahead forecasts from the AR(2) and the random walk models. Calculate the RMSFE measures for the three models.</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="tutorial-9-threshold-autoregression.html#cb117-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">240</span></span>
 <span id="cb117-2"><a href="tutorial-9-threshold-autoregression.html#cb117-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt)<span class="sc">-</span>R</span>
@@ -380,11 +380,11 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <span id="cb117-28"><a href="tutorial-9-threshold-autoregression.html#cb117-28" aria-hidden="true" tabindex="-1"></a>rmsfe_tar <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(dt<span class="sc">$</span>tar_e<span class="sc">^</span><span class="dv">2</span>,<span class="at">na.rm=</span>T))</span>
 <span id="cb117-29"><a href="tutorial-9-threshold-autoregression.html#cb117-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb117-30"><a href="tutorial-9-threshold-autoregression.html#cb117-30" aria-hidden="true" tabindex="-1"></a>rmsfe_rw</span></code></pre></div>
-<pre><code>## [1] 1.010309</code></pre>
+<pre><code>## [1] 1.091629</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="tutorial-9-threshold-autoregression.html#cb119-1" aria-hidden="true" tabindex="-1"></a>rmsfe_ar</span></code></pre></div>
-<pre><code>## [1] 1.000136</code></pre>
+<pre><code>## [1] 1.046419</code></pre>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="tutorial-9-threshold-autoregression.html#cb121-1" aria-hidden="true" tabindex="-1"></a>rmsfe_tar</span></code></pre></div>
-<pre><code>## [1] 1.018451</code></pre>
+<pre><code>## [1] 1.024177</code></pre>
 <p>Obtain the multi-step-ahead forecasts from period 241 onward using the so-called ‘skeleton extrapolation’ method (which yields biased forecasts) and the bootstrap resampling method (a numerical method that yields valid multi-step-ahead forecasts from nonlinear models). Plot the two forecasts along with the time series.</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="tutorial-9-threshold-autoregression.html#cb123-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">tar_skeleton=</span>y)]</span>
 <span id="cb123-2"><a href="tutorial-9-threshold-autoregression.html#cb123-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -442,7 +442,7 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>. This sugges
 <a href="tutorial-10-forecast-evaluation.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-08
+2022-10-10
  using 
 R version 4.1.2 (2021-11-01)
 </p>

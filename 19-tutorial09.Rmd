@@ -15,7 +15,7 @@ $$y_t = \left\{\begin{array}
 1.2y_{t-1}-0.5y_{t-2} + \varepsilon_t & \text{if}~~y_{t-1} < 0
 \end{array}\right.
 $$
-where $e_{t} \sim N(0,\sigma^2)$. This suggests that the time series follow the unit root process if the lagged dependent variable is non-negative, otherwise the time series is a mean-reverting AR(2) process.
+where $e_{t} \sim N(0,\sigma^2)$. This suggests that the dynamics of the time series change depending on the sign of the lagged dependent variable.
 
 ```{r echo=TRUE, cache=FALSE}
 n <- 360
@@ -33,7 +33,7 @@ if(y[1]>=0){
 
 for(i in 3:n){
   if(y[i-1]>=0){
-    y[i] <-  1.0*y[i-1]+e[i]
+    y[i] <-  0.9*y[i-1]+e[i]
   }else{
     y[i] <- 1.2*y[i-1]-0.5*y[i-2]+e[i]
   }
