@@ -25,7 +25,7 @@ library(msmbstyle)
 ```
 
 
-# Educated Guess: An Intuitive Guide to Forecasting With Time Series Models Using R {-}
+# An Intuitive Guide to Forecasting With Time Series Models Using R {-}
 
 ![](cover.png)
 
