@@ -260,7 +260,7 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>.</p>
 <span id="cb141-7"><a href="tutorial-10-forecast-combination.html#cb141-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
 <span id="cb141-8"><a href="tutorial-10-forecast-combination.html#cb141-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-90-1.png" width="624"></p>
-<p>Suppose the candidate models are AR(1), AR(2), and a linear trend model, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.</p>
+<p>Suppose the candidate models are AR(1), AR(2), and AR(1) with linear trend, and that we want to compare forecasts obtained from these models to those from a random walk process. Generate a sequence of one-step-ahead forecasts using the rolling window scheme, where the first rolling window ranges from period 1 to period 180.</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="tutorial-10-forecast-combination.html#cb142-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y,<span class="dv">1</span>),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>),<span class="at">trend=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dt)))]</span>
 <span id="cb142-2"><a href="tutorial-10-forecast-combination.html#cb142-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb142-3"><a href="tutorial-10-forecast-combination.html#cb142-3" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">180</span></span>
@@ -274,28 +274,23 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>.</p>
 <span id="cb142-11"><a href="tutorial-10-forecast-combination.html#cb142-11" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb142-12"><a href="tutorial-10-forecast-combination.html#cb142-12" aria-hidden="true" tabindex="-1"></a>  a1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
 <span id="cb142-13"><a href="tutorial-10-forecast-combination.html#cb142-13" aria-hidden="true" tabindex="-1"></a>  a2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
-<span id="cb142-14"><a href="tutorial-10-forecast-combination.html#cb142-14" aria-hidden="true" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>y2<span class="sc">+</span>trend,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
+<span id="cb142-14"><a href="tutorial-10-forecast-combination.html#cb142-14" aria-hidden="true" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>y1<span class="sc">+</span>trend,<span class="at">data=</span>dt[i<span class="sc">:</span>(R<span class="sc">+</span>i<span class="dv">-1</span>)])</span>
 <span id="cb142-15"><a href="tutorial-10-forecast-combination.html#cb142-15" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb142-16"><a href="tutorial-10-forecast-combination.html#cb142-16" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a1[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> a1<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">"y1"</span>)]))</span>
 <span id="cb142-17"><a href="tutorial-10-forecast-combination.html#cb142-17" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>a2[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> a2<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">"y1"</span>,<span class="st">"y2"</span>)]))</span>
-<span id="cb142-18"><a href="tutorial-10-forecast-combination.html#cb142-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>tr[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> tr<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">"y1"</span>,<span class="st">"y2"</span>,<span class="st">"trend"</span>)]))</span>
+<span id="cb142-18"><a href="tutorial-10-forecast-combination.html#cb142-18" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>tr[R<span class="sc">+</span>i] <span class="ot">&lt;-</span> tr<span class="sc">$</span>coefficients<span class="sc">%*%</span><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>,dt[R<span class="sc">+</span>i,<span class="fu">c</span>(<span class="st">"y1"</span>,<span class="st">"trend"</span>)]))</span>
 <span id="cb142-19"><a href="tutorial-10-forecast-combination.html#cb142-19" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb142-20"><a href="tutorial-10-forecast-combination.html#cb142-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Does either of the considered models ‘sttaistically significantly’ outperform the random walk?</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="tutorial-10-forecast-combination.html#cb143-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>rw_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>rw</span>
-<span id="cb143-2"><a href="tutorial-10-forecast-combination.html#cb143-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a1_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a1</span>
-<span id="cb143-3"><a href="tutorial-10-forecast-combination.html#cb143-3" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>a2_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>a2</span>
-<span id="cb143-4"><a href="tutorial-10-forecast-combination.html#cb143-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>tr_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>tr</span>
-<span id="cb143-5"><a href="tutorial-10-forecast-combination.html#cb143-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-6"><a href="tutorial-10-forecast-combination.html#cb143-6" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a1_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb143-7"><a href="tutorial-10-forecast-combination.html#cb143-7" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ld2 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>a2_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb143-8"><a href="tutorial-10-forecast-combination.html#cb143-8" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ldt <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>tr_e<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb143-9"><a href="tutorial-10-forecast-combination.html#cb143-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-10"><a href="tutorial-10-forecast-combination.html#cb143-10" aria-hidden="true" tabindex="-1"></a>reg.ld1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld1<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb143-11"><a href="tutorial-10-forecast-combination.html#cb143-11" aria-hidden="true" tabindex="-1"></a>reg.ld2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld2<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb143-12"><a href="tutorial-10-forecast-combination.html#cb143-12" aria-hidden="true" tabindex="-1"></a>reg.ldt <span class="ot">&lt;-</span> <span class="fu">lm</span>(ldt<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
-<span id="cb143-13"><a href="tutorial-10-forecast-combination.html#cb143-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-14"><a href="tutorial-10-forecast-combination.html#cb143-14" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ld1,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ld1))</span></code></pre></div>
+<p>Does either of the considered models ‘statistically significantly’ outperform the random walk?</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="tutorial-10-forecast-combination.html#cb143-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e_rw=</span>y<span class="sc">-</span>rw,<span class="at">e_a1=</span>y<span class="sc">-</span>a1,<span class="at">e_a2=</span>y<span class="sc">-</span>a2,<span class="at">e_tr=</span>y<span class="sc">-</span>tr)]</span>
+<span id="cb143-2"><a href="tutorial-10-forecast-combination.html#cb143-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-3"><a href="tutorial-10-forecast-combination.html#cb143-3" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">ld1=</span>e_rw<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>e_a1<span class="sc">^</span><span class="dv">2</span>,<span class="at">ld2=</span>e_rw<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>e_a2<span class="sc">^</span><span class="dv">2</span>,<span class="at">ldt=</span>e_rw<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>e_tr<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb143-4"><a href="tutorial-10-forecast-combination.html#cb143-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-5"><a href="tutorial-10-forecast-combination.html#cb143-5" aria-hidden="true" tabindex="-1"></a>reg_ld1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld1<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
+<span id="cb143-6"><a href="tutorial-10-forecast-combination.html#cb143-6" aria-hidden="true" tabindex="-1"></a>reg_ld2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ld2<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
+<span id="cb143-7"><a href="tutorial-10-forecast-combination.html#cb143-7" aria-hidden="true" tabindex="-1"></a>reg_ldt <span class="ot">&lt;-</span> <span class="fu">lm</span>(ldt<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
+<span id="cb143-8"><a href="tutorial-10-forecast-combination.html#cb143-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-9"><a href="tutorial-10-forecast-combination.html#cb143-9" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg_ld1,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg_ld1))</span></code></pre></div>
 <pre><code>## 
 ## t test of coefficients:
 ## 
@@ -303,7 +298,7 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>.</p>
 ## (Intercept) 0.081204   0.048040  1.6903  0.09624 .
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="tutorial-10-forecast-combination.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ld2,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ld2))</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="tutorial-10-forecast-combination.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg_ld2,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg_ld2))</span></code></pre></div>
 <pre><code>## 
 ## t test of coefficients:
 ## 
@@ -311,27 +306,27 @@ where <span class="math inline">\(e_{t} \sim N(0,\sigma^2)\)</span>.</p>
 ## (Intercept)  0.32634    0.14912  2.1883  0.03262 *
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="tutorial-10-forecast-combination.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ldt,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ldt))</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="tutorial-10-forecast-combination.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg_ldt,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg_ldt))</span></code></pre></div>
 <pre><code>## 
 ## t test of coefficients:
 ## 
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  0.24461    0.14943  1.6369    0.107</code></pre>
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -0.067403   0.102632 -0.6567   0.5139</code></pre>
 <p>All of the models do, on average, generate more accurate forecasts than random walk. The AR(2) generates statistically significantly more accurate forecasts, based on Diebold-Mariano test applied on quadratic loss function.</p>
-<p>Might each model contain some useful information for improving forecast accuracy? Let’s combine the forecasts from the AR(1) and the linear trend model using equal weights scheme and assess the combined forecast.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="tutorial-10-forecast-combination.html#cb149-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>t1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>a1<span class="sc">*</span>.<span class="dv">5</span><span class="sc">+</span>dt<span class="sc">$</span>tr<span class="sc">*</span>.<span class="dv">5</span></span>
-<span id="cb149-2"><a href="tutorial-10-forecast-combination.html#cb149-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>t1_e <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>t1</span>
+<p>Might each model contain some useful information for improving forecast accuracy? Let’s combine the forecasts from the AR(2) and the AR(1) with linear trend using equal weights scheme and assess the combined forecast.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="tutorial-10-forecast-combination.html#cb149-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>co <span class="ot">&lt;-</span> dt<span class="sc">$</span>a2<span class="sc">*</span>.<span class="dv">5</span><span class="sc">+</span>dt<span class="sc">$</span>tr<span class="sc">*</span>.<span class="dv">5</span></span>
+<span id="cb149-2"><a href="tutorial-10-forecast-combination.html#cb149-2" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>e_co <span class="ot">&lt;-</span> dt<span class="sc">$</span>y<span class="sc">-</span>dt<span class="sc">$</span>co</span>
 <span id="cb149-3"><a href="tutorial-10-forecast-combination.html#cb149-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-4"><a href="tutorial-10-forecast-combination.html#cb149-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ldt1 <span class="ot">&lt;-</span> dt<span class="sc">$</span>rw_e<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>t1_e<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb149-4"><a href="tutorial-10-forecast-combination.html#cb149-4" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>ldc <span class="ot">&lt;-</span> dt<span class="sc">$</span>e_rw<span class="sc">^</span><span class="dv">2</span><span class="sc">-</span>dt<span class="sc">$</span>e_co<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb149-5"><a href="tutorial-10-forecast-combination.html#cb149-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-6"><a href="tutorial-10-forecast-combination.html#cb149-6" aria-hidden="true" tabindex="-1"></a>reg.ldt1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ldt1<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
+<span id="cb149-6"><a href="tutorial-10-forecast-combination.html#cb149-6" aria-hidden="true" tabindex="-1"></a>reg_ldc <span class="ot">&lt;-</span> <span class="fu">lm</span>(ldc<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>dt)</span>
 <span id="cb149-7"><a href="tutorial-10-forecast-combination.html#cb149-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-8"><a href="tutorial-10-forecast-combination.html#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg.ldt1,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg.ldt1))</span></code></pre></div>
+<span id="cb149-8"><a href="tutorial-10-forecast-combination.html#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(reg_ldc,<span class="at">vcov.=</span><span class="fu">vcovHAC</span>(reg_ldc))</span></code></pre></div>
 <pre><code>## 
 ## t test of coefficients:
 ## 
 ##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept) 0.232926   0.098544  2.3637  0.02141 *
+## (Intercept)  0.21714    0.11154  1.9467  0.05634 .
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
@@ -345,9 +340,9 @@ Hodell, David A, Jason H Curtis, and Mark Brenner. 1995. <span>“<span class="n
 <a href="tutorial-10-forecast-evaluation.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-12
+2022-10-22
  using 
-R version 4.1.2 (2021-11-01)
+R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>
