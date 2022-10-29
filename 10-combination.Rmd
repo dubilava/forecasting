@@ -6,7 +6,7 @@ library(ggplot2)
 library(data.table)
 ```
 
-## Combining Forecast for Better Accuracy
+## Benefits of Forecast Combination
 
 `r newthought('Every model yields forecasts')` that are inaccurate in their own way. Taken together, two or more models can each contribute to an accurate forecast, on average. As the joke goes: a mathematician, a physicist, and a statistician went hunting. They stumbled upon a deer. The mathematician took a shot first but missed the target to the left by a metre. The physicist gave a shot next and missed the mark to the right by a metre. Having observed this, the statistician exclaimed: “We got it!”
 
@@ -45,112 +45,8 @@ In practice $\sigma_a$, $\sigma_b$, and $sigma_{ab}$ are unknown. So, we estimat
 
 The optimal weight has a straightforward interpretation in a regression setting. Consider the combined forecast equation as: $$y_{t+1} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t} + \varepsilon_{t+1},$$ where $\varepsilon_{t+1}\equiv e_{c,t+1}$. We can re-arrange the equation so that: $$e_{a,t+1} = w (y_{b,t+1|t}-y_{a,t+1|t}) + \varepsilon_{t+1},$$ where $w$ is obtained by estimating a linear regression with an intercept restricted to zero.
 
-```{r echo=FALSE, message=FALSE, cache=FALSE}
-load("../../Books/forecasting/data/inflation.RData")
-load("../../Books/forecasting/data/funds.RData")
-
-dt <- merge(funds,inflation,by="date")
-colnames(dt) <- c("date","funds","inflation")
-
-dt[,`:=`(y=inflation)]
-dt[,`:=`(y1=shift(y,1),y2=shift(y,2),y3=shift(y,3),y4=shift(y,4))]
-
-ic_dt <- data.table(p=1:4,AIC=NA,SIC=NA)
-
-ar1 <- lm(y~y1,data=dt)
-ar2 <- lm(y~y1+y2,data=dt)
-ar3 <- lm(y~y1+y2+y3,data=dt)
-ar4 <- lm(y~y1+y2+y3+y4,data=dt)
-
-ic_dt$AIC[1] <- log(crossprod(ar1$resid))+2*length(ar1$coef)/length(ar1$resid)
-ic_dt$AIC[2] <- log(crossprod(ar2$resid))+2*length(ar2$coef)/length(ar2$resid)
-ic_dt$AIC[3] <- log(crossprod(ar3$resid))+2*length(ar3$coef)/length(ar3$resid)
-ic_dt$AIC[4] <- log(crossprod(ar4$resid))+2*length(ar4$coef)/length(ar4$resid)
-
-ic_dt$SIC[1] <- log(crossprod(ar1$resid))+log(length(ar1$resid))*length(ar1$coef)/length(ar1$resid)
-ic_dt$SIC[2] <- log(crossprod(ar2$resid))+log(length(ar2$resid))*length(ar2$coef)/length(ar2$resid)
-ic_dt$SIC[3] <- log(crossprod(ar3$resid))+log(length(ar3$resid))*length(ar3$coef)/length(ar3$resid)
-ic_dt$SIC[4] <- log(crossprod(ar4$resid))+log(length(ar4$resid))*length(ar4$coef)/length(ar4$resid)
-
-dt[,`:=`(y12=shift(y,12),y13=shift(y,13),y14=shift(y,14))]
-
-R <- which(dt$date=="1990-12-01")
-h <- 12
-P <- nrow(dt)-R-h+1
-
-dt[,`:=`(itr=NA,dir=NA)]
-
-for(i in 1:P){
-  
-  ar_itr <- lm(y~y1+y2+y3,data=dt[i:(R-1+i)])
-  ar_dir <- lm(y~y12+y13+y14,data=dt[i:(R-1+i)])
-  
-  dt[,`:=`(temp=y)]
-  
-  for(j in 1:h){
-    dt$temp[R-1+i+j] <- ar_itr$coefficients["(Intercept)"]+ar_itr$coefficients["y1"]*dt$temp[R-1+i+j-1]+ar_itr$coefficients["y2"]*dt$temp[R-1+i+j-2]+ar_itr$coefficients["y3"]*dt$temp[R-1+i+j-3]
-  }
-  
-  dt$itr[R+h-1+i] <- dt$temp[R-1+i+j]
-    
-  dt$dir[R+h-1+i] <- ar_dir$coefficients["(Intercept)"]+ar_dir$coefficients["y12"]*dt$y[R+h-1+i-1]+ar_dir$coefficients["y13"]*dt$y[R+h-1+i-2]+ar_dir$coefficients["y14"]*dt$y[R+h-1+i-3]
-  
-}
-
-dt$temp <- NULL
-
-long_dt <- melt(dt[,.(date,y,itr,dir)],id.vars="date")
-
-long_dt$variable <- factor(long_dt$variable,levels=unique(long_dt$variable),labels=c("observed series","iterated forecast","direct forecast"))
-
-ggplot(long_dt[date>="1992-01-01"],aes(x=date,y=value,color=variable,linetype=variable))+
-  geom_line(size=.8,na.rm=T)+
-  scale_color_manual(values=c("darkgray","coral","steelblue"))+
-  scale_linetype_manual(values=c(1,5,2))+
-  labs(x="Year",y="Year-Over-Year Inflation (%)",caption="retrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/CPIAUCNS")+
-  theme_classic()+
-  theme(axis.title = element_text(size=18),axis.text = element_text(size=14),legend.position="top",legend.title=element_blank(),legend.text=element_text(size=18))
-
-dt[,`:=`(e_itr=y-itr,e_dir=y-dir)]
-
-reg_w <- lm(e_itr~I(dir-itr)-1,data=dt)
-
-dt[,`:=`(cmb=(1-reg_w$coef)*itr+reg_w$coef*dir)]
-
-long_dt <- melt(dt[,.(date,y,itr,dir,cmb)],id.vars="date")
-
-long_dt$variable <- factor(long_dt$variable,levels=unique(long_dt$variable),labels=c("observed series","iterated forecast","direct forecast","combined forecast"))
-
-ggplot(long_dt[date>="1992-01-01"],aes(x=date,y=value,color=variable,linetype=variable))+
-  geom_line(size=.8,na.rm=T)+
-  scale_color_manual(values=c("darkgray","coral","steelblue","black"))+
-  scale_linetype_manual(values=c(1,5,2,1))+
-  labs(x="Year",y="Year-Over-Year Inflation (%)",caption="retrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/CPIAUCNS")+
-  theme_classic()+
-  theme(axis.title = element_text(size=18),axis.text = element_text(size=14),legend.position="top",legend.title=element_blank(),legend.text=element_text(size=18))
-
-```
-
 Alternatively, we can estimate an unconstrained variant of the combined forecast equation: $$y_{t+1} = \alpha+\beta_a y_{a,t+1|t} + \beta_b y_{b,t+1|t} + \varepsilon_{t+1},$$ which relaxes the assumption that the forecasts are unbiased, as well as that the weights need to add up to one. Indeed, this unconstrained variant for forecast combination allows for the possibility of negative weights.
 
-```{r echo=FALSE, message=FALSE, cache=FALSE}
-reg_w <- lm(y~itr+dir,data=dt)
-
-dt[,`:=`(cmb=reg_w$coef["(Intercept)"]+reg_w$coef["itr"]*itr+reg_w$coef["dir"]*dir)]
-
-long_dt <- melt(dt[,.(date,y,itr,dir,cmb)],id.vars="date")
-
-long_dt$variable <- factor(long_dt$variable,levels=unique(long_dt$variable),labels=c("observed series","iterated forecast","direct forecast","combined forecast"))
-
-ggplot(long_dt[date>="1992-01-01"],aes(x=date,y=value,color=variable,linetype=variable))+
-  geom_line(size=.8,na.rm=T)+
-  scale_color_manual(values=c("darkgray","coral","steelblue","black"))+
-  scale_linetype_manual(values=c(1,5,2,1))+
-  labs(x="Year",y="Year-Over-Year Inflation (%)",caption="retrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/CPIAUCNS")+
-  theme_classic()+
-  theme(axis.title = element_text(size=18),axis.text = element_text(size=14),legend.position="top",legend.title=element_blank(),legend.text=element_text(size=18))
-
-```
 
 ## Forecast Encompassing
 

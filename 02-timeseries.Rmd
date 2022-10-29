@@ -4,7 +4,6 @@
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
 library(data.table)
-library(cowplot)
 library(Quandl)
 ```
 
@@ -23,7 +22,7 @@ If all random variables, from where the time series are drawn, have the same dis
 
 Consider a simplest kind of a time series comprised of realizations from independent and identically distributed (iid) normal random variable with zero mean and constant variance: $Y_t \sim iid~\text{N}\left(0,\sigma^2\right)$. The following graph plots the realized time series from this process:
 
-```{r white-noise, fig.cap="Realization of a white noise process", echo=FALSE, message=FALSE}
+```{r white-noise, fig.cap="White noise process", echo=FALSE, message=FALSE}
 n <- 132
 
 set.seed(n)
@@ -32,7 +31,7 @@ y <- rnorm(n)
 dt <- data.table(t=c(1:n),y=y)
 
 ggplot(dt,aes(x=t,y=y))+
-  geom_line(col="steelblue",size=.8)+
+  geom_line(col="darkgray",size=1)+
   labs(y=expression(paste(y[t],sep="")))+
   theme_classic()+
   theme(axis.title = element_text(size=16),axis.text = element_text(size=14))
@@ -76,7 +75,7 @@ maxlag <- 12
 dt <- data.table(k=c(1:maxlag),rho=c(acf(y,plot=F)[1:maxlag]$acf))
 
 ggplot(dt,aes(x=k,y=rho))+
-  geom_segment(aes(xend=k,yend=0),size=1.2,col="steelblue")+
+  geom_segment(aes(xend=k,yend=0),size=1.2,col="darkgray")+
   geom_hline(yintercept=0,size=.6,linetype=3)+
   geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="coral")+
   scale_x_continuous(breaks=c(1:maxlag),labels=c(1:maxlag))+
@@ -94,7 +93,7 @@ Another relevant measure of the time series dependence is *partial* autocorrelat
 dt <- data.table(k=c(1:maxlag),rho=c(pacf(y,plot=F)[1:maxlag]$acf))
 
 ggplot(dt,aes(x=k,y=rho))+
-  geom_segment(aes(xend=k,yend=0),size=1.2,col="steelblue")+
+  geom_segment(aes(xend=k,yend=0),size=1.2,col="darkgray")+
   geom_hline(yintercept=0,size=.6,linetype=3)+
   geom_hline(yintercept=c(-1.96/sqrt(n),1.96/sqrt(n)),size=.8,linetype=5,col="coral")+
   scale_x_continuous(breaks=c(1:maxlag),labels=c(1:maxlag))+
@@ -107,18 +106,17 @@ ggplot(dt,aes(x=k,y=rho))+
 Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as $k$ increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.^[There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.] If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.
 
 
-
 ## Transformations
 
 It is common to transform time series by taking logarithms (if applicable), by first-differencing the series, or by first-differencing the logarithms of the series. Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issues of the series (e.g., nonstationarity). 
 
 Consider the Dow Jones Industrial Average (commonly referred to as the Dow Jones Index), for example. In levels, the series are clearly nonstationary. This is because the series are trending upward (on average), and also because the series become more volatile over time.
 
-```{r dji, fig.cap="Dow Jones Industrial Average: Levels", echo=FALSE, message=FALSE}
+```{r dji, fig.cap="Dow Jones Industrial Average", echo=FALSE, message=FALSE}
 dt <- data.table(Quandl("BCB/UDJIAD1",collapse = "monthly",start_date="1980-01-01"))
 
 ggplot(dt,aes(x=Date,y=Value))+
-  geom_line(color="steelblue",size=.8)+
+  geom_line(color="darkgray",size=1)+
   labs(x="Year",y="Dow Jones Industrial Average")+
   theme_classic()+
   theme(axis.title = element_text(size=16),axis.text = element_text(size=14))
@@ -131,13 +129,13 @@ dt[,`:=`(lValue=shift(Value,1))]
 dt[,`:=`(dValue=Value-lValue)]
 
 ggplot(dt,aes(x=Date,y=dValue))+
-  geom_line(color="steelblue",size=.8)+
+  geom_line(color="darkgray",size=1)+
   labs(x="Year",y="Change in Dow Jones Industrial Average")+
   theme_classic()+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
 ```
 
-Turns out the issue can be more or less resolved if we first-difference the log-transformed series. When we log-transform the series, the difference in observations from two different period is no longer measured in absolute terms, rather it is measured in relative terms. Then, by first-differencing the log-transformed series we, in effect, obtain a measure of a growth rate of the original series. The growth rate of the Dow Jones Index appears to be stationary.
+As it turns out, we can largely resolve the issue if we first-difference the log-transformed series. When we log-transform the series, the difference in observations from two different period is no longer measured in absolute terms, rather it is measured in relative terms. Then, by first-differencing the log-transformed series we, in effect, obtain a measure of a growth rate of the original series. The growth rate of the Dow Jones Index appears to be stationary.
 
 ```{r dlndji, fig.cap="Dow Jones Industrial Average: Log-Differences", echo=FALSE, message=FALSE}
 dt[,`:=`(lnValue=log(Value))]
@@ -145,7 +143,7 @@ dt[,`:=`(llnValue=shift(lnValue,1))]
 dt[,`:=`(dlnValue=lnValue-llnValue)]
 
 ggplot(dt,aes(x=Date,y=dlnValue))+
-  geom_line(color="steelblue",size=.8)+
+  geom_line(color="darkgray",size=1)+
   labs(x="Year",y="Growth in Dow Jones Industrial Average")+
   theme_classic()+
   theme(axis.title = element_text(size=16),axis.text = element_text(size=14))

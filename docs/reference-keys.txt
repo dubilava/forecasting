@@ -76,8 +76,5 @@ relative-forecast-accuracy-tests
 the-morgan-granger-newbold-test
 the-diebold-mariano-test
 forecast-combination
-combining-forecast-for-better-accuracy
-optimal-weights-for-forecast-combination
-forecast-encompassing
 basic-coding
 advanced-coding

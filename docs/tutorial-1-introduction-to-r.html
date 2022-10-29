@@ -134,7 +134,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -147,7 +147,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -239,9 +239,9 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="tutorial-1-introduction-to-r" class="section level1 unnumbered">
 <h1>Tutorial 1: Introduction to R</h1>
-<div id="basic-coding" class="section level2" number="10.4">
+<div id="basic-coding" class="section level2" number="10.1">
 <h2>
-<span class="header-section-number">10.4</span> Basic Coding<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('basic-coding')" onmouseout="reset_tooltip('basic-coding-tooltip')"><span class="tooltiptext" id="basic-coding-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.1</span> Basic Coding<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('basic-coding')" onmouseout="reset_tooltip('basic-coding-tooltip')"><span class="tooltiptext" id="basic-coding-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>There are a number of ways in which we can work with data in R. Here, we will primarily rely on <code>data.table</code>, which is one of the ways of coding in R, the other prominent dialect being <code>tidyverse</code>. But to develop an intuition, let’s start off with base R, specifically–matrices.</p>
 <p>Consider a sequence of observations:</p>
@@ -312,9 +312,9 @@ div.csl-indent {
 ## c2  0.6666667  0 -0.1666667
 ## c3 -1.3333333  1  0.3333333</code></pre>
 </div>
-<div id="advanced-coding" class="section level2" number="10.5">
+<div id="advanced-coding" class="section level2" number="10.2">
 <h2>
-<span class="header-section-number">10.5</span> Advanced Coding<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('advanced-coding')" onmouseout="reset_tooltip('advanced-coding-tooltip')"><span class="tooltiptext" id="advanced-coding-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.2</span> Advanced Coding<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('advanced-coding')" onmouseout="reset_tooltip('advanced-coding-tooltip')"><span class="tooltiptext" id="advanced-coding-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>By now, we have covered enough ground to obtain the least squares estimator. For that, we will generate vectors of dependent and independent variables, and then estimate the vector of parameters. Specifically, we will generate a sequence of 200 binary variables, which will serve as our independent variable <code>x</code>, and then we will construct the dependent variable <code>y</code> using the following formula: <span class="math inline">\(y=2+0.5x+e\)</span>, where <code>e</code> is a sequence of 200 standard normal random variables.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tutorial-1-introduction-to-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
@@ -367,9 +367,9 @@ div.csl-indent {
 <a href="tutorial-2-data-management-and-visualisation.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-29
+2022-10-22
  using 
-R version 4.1.2 (2021-11-01)
+R version 4.2.1 (2022-06-23 ucrt)
 </p>
 </div>
 </div>

@@ -17,7 +17,7 @@ fontsize: 12pt
 
 
 ```{r, include=FALSE, eval=TRUE}
-knitr::opts_chunk$set(eval = TRUE, echo = FALSE, cache = TRUE, message = FALSE, warning = FALSE, fig.width=6.5, fig.height=4.5)
+knitr::opts_chunk$set(eval = TRUE, echo = FALSE, cache = TRUE, message = FALSE, warning = FALSE, fig.width=6.25, fig.height=4.5)
 library(ggplot2)
 library(data.table)
 library(tufte)
