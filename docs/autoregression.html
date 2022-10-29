@@ -224,7 +224,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -313,7 +312,7 @@ The end-result is a general linear process with geometrically declining coeffici
 <p class="caption marginnote shownote">
 Figure 6.1: USD/EUR exchange rates
 </p>
-<img src="forecasting_files/figure-html/exchange-1.png" alt="USD/EUR exchange rates" width="624">
+<img src="forecasting_files/figure-html/exchange-1.png" alt="USD/EUR exchange rates" width="600">
 </div>
 <p>First, let’s observe the autocorrelation and partial autocorrelation functions of the series.</p>
 <div class="figure">
@@ -321,14 +320,14 @@ Figure 6.1: USD/EUR exchange rates
 <p class="caption marginnote shownote">
 Figure 6.2: Autocorrelation function
 </p>
-<img src="forecasting_files/figure-html/acfexchange-1.png" alt="Autocorrelation function" width="624">
+<img src="forecasting_files/figure-html/acfexchange-1.png" alt="Autocorrelation function" width="600">
 </div>
 <div class="figure">
 <span style="display:block;" id="fig:pacfexchange"></span>
 <p class="caption marginnote shownote">
 Figure 6.3: Partial autocorrelation function
 </p>
-<img src="forecasting_files/figure-html/pacfexchange-1.png" alt="Partial autocorrelation function" width="624">
+<img src="forecasting_files/figure-html/pacfexchange-1.png" alt="Partial autocorrelation function" width="600">
 </div>
 <p>That autocorrelations decrease gradually and eventually become statistically indistinguishable from zero is suggestive of a stationary process. That partial autocorrelations of the first two lags are statistically significantly different from zero is suggestive of the second-order autoregression.<label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> More formally, the order of autoregression can be determined using an information criterion such as AIC or SIC.</span></p>
 <p>Let’s check formally, using augmented Dickey-Fuller test, whether the series are non-stationary. For that, estimate <span class="math inline">\(\Delta y_t=\alpha+\phi y_{t-1}+\delta_1\Delta y_{t-1}+\varepsilon_t\)</span>, and obtain test statistics associated with <span class="math inline">\(\hat{\phi}\)</span>. The test statistic turns out to be -2.757 which lies between the critical values of -2.88 for 5% statistical significance and -2.57 for 10% statistical significance.</p>
@@ -356,7 +355,7 @@ These variance and covariances of forecast errors from preceding horizons are so
 <p class="caption marginnote shownote">
 Figure 6.4: Second-order autoregression
 </p>
-<img src="forecasting_files/figure-html/forexchange-1.png" alt="Second-order autoregression" width="624">
+<img src="forecasting_files/figure-html/forexchange-1.png" alt="Second-order autoregression" width="600">
 </div>
 </div>
 <div id="direct-method-of-multistep-forecasting" class="section level3" number="6.3.2">
@@ -383,7 +382,7 @@ Figure 6.4: Second-order autoregression
 <a href="vector-autoregression.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

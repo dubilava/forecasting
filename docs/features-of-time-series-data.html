@@ -225,7 +225,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -260,9 +259,9 @@ div.csl-indent {
 <div class="figure">
 <span style="display:block;" id="fig:white-noise"></span>
 <p class="caption marginnote shownote">
-Figure 2.1: Realization of a white noise process
+Figure 2.1: White noise process
 </p>
-<img src="forecasting_files/figure-html/white-noise-1.png" alt="Realization of a white noise process" width="624">
+<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise process" width="600">
 </div>
 <p>Such time series is a realization of what is referred to as a <em>white noise</em> process.<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an <em>Independent</em> white noise process. Without the indepence assumption we would have simply a white noise process.</span> That is, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if:
 <span class="math display">\[\begin{align*}
@@ -286,7 +285,7 @@ Figure 2.1: Realization of a white noise process
 <p class="caption marginnote shownote">
 Figure 2.2: Autocorrelation
 </p>
-<img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="624">
+<img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="600">
 </div>
 <p>For each lag, <span class="math inline">\(k\)</span>, the vertical line extending from zero represents an estimate of the autocorrelation coefficient at that lag. The dashed lines denote the 95% confidence interval, given by <span class="math inline">\(\pm 1.96/\sqrt{T}\)</span>, where <span class="math inline">\(T\)</span> is the size of the time series sample.</p>
 <p>Another relevant measure of the time series dependence is <em>partial</em> autocorrelation, which is correlation between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k}\)</span> net of any correlations between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k+j}\)</span>, for all <span class="math inline">\(j=1,\ldots,k-1\)</span>. Similar to autocorrelations, partial autocorrelations, here denoted by <span class="math inline">\(\pi\)</span>, can also be illustrated using autocorrelograms:</p>
@@ -295,7 +294,7 @@ Figure 2.2: Autocorrelation
 <p class="caption marginnote shownote">
 Figure 2.3: Partial Autocorrelation
 </p>
-<img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="624">
+<img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="600">
 </div>
 <p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.</span> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
 </div>
@@ -308,9 +307,9 @@ Figure 2.3: Partial Autocorrelation
 <div class="figure">
 <span style="display:block;" id="fig:dji"></span>
 <p class="caption marginnote shownote">
-Figure 2.4: Dow Jones Industrial Average: Levels
+Figure 2.4: Dow Jones Industrial Average
 </p>
-<img src="forecasting_files/figure-html/dji-1.png" alt="Dow Jones Industrial Average: Levels" width="624">
+<img src="forecasting_files/figure-html/dji-1.png" alt="Dow Jones Industrial Average" width="600">
 </div>
 <p>Could first-differencing resolve the issue of nonstationarity? Turns out, not exactly. The first-differenced Dow Jones Index, while no longer trending, reveals increasing volatility over time.</p>
 <div class="figure">
@@ -318,15 +317,15 @@ Figure 2.4: Dow Jones Industrial Average: Levels
 <p class="caption marginnote shownote">
 Figure 2.5: Dow Jones Industrial Average: Differences
 </p>
-<img src="forecasting_files/figure-html/ddji-1.png" alt="Dow Jones Industrial Average: Differences" width="624">
+<img src="forecasting_files/figure-html/ddji-1.png" alt="Dow Jones Industrial Average: Differences" width="600">
 </div>
-<p>Turns out the issue can be more or less resolved if we first-difference the log-transformed series. When we log-transform the series, the difference in observations from two different period is no longer measured in absolute terms, rather it is measured in relative terms. Then, by first-differencing the log-transformed series we, in effect, obtain a measure of a growth rate of the original series. The growth rate of the Dow Jones Index appears to be stationary.</p>
+<p>As it turns out, we can largely resolve the issue if we first-difference the log-transformed series. When we log-transform the series, the difference in observations from two different period is no longer measured in absolute terms, rather it is measured in relative terms. Then, by first-differencing the log-transformed series we, in effect, obtain a measure of a growth rate of the original series. The growth rate of the Dow Jones Index appears to be stationary.</p>
 <div class="figure">
 <span style="display:block;" id="fig:dlndji"></span>
 <p class="caption marginnote shownote">
 Figure 2.6: Dow Jones Industrial Average: Log-Differences
 </p>
-<img src="forecasting_files/figure-html/dlndji-1.png" alt="Dow Jones Industrial Average: Log-Differences" width="624">
+<img src="forecasting_files/figure-html/dlndji-1.png" alt="Dow Jones Industrial Average: Log-Differences" width="600">
 </div>
 
 </div>
@@ -336,7 +335,7 @@ Figure 2.6: Dow Jones Industrial Average: Log-Differences
 <a href="forecasting-methods-and-routines.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

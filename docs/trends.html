@@ -225,7 +225,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -260,11 +259,11 @@ div.csl-indent {
 <span class="header-section-number">4.2.1</span> Deterministic Trends<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('deterministic-trends')" onmouseout="reset_tooltip('deterministic-trends-tooltip')"><span class="tooltiptext" id="deterministic-trends-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>To begin, we will illustrate the issue using two random variables, each containing a deterministic trend. To keep things simple, we will consider linear trends, but the “findings” of this exercise can be generalized to any form of a deterministic trend (some of the key forms we discuss below). So, consider two trending variables: <span class="math display">\[y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),\]</span> and <span class="math display">\[x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),\]</span> where <span class="math inline">\(Cov(\nu_t,\upsilon_t) = 0\)</span>. For simplicity, we can assume <span class="math inline">\(\sigma_{\nu}^2=\sigma_{\upsilon}^2=1\)</span>. Suppose, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\delta\)</span> are some positive scalars, say, <span class="math inline">\(0.3\)</span> and <span class="math inline">\(0.5\)</span>, respectively. That is, <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are trending in the same direction. Below is an example of such time series:
-<img src="forecasting_files/figure-html/unnamed-chunk-6-1.png" width="624"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-6-1.png" width="600"></p>
 <p>If we were to estimate <span class="math display">\[y_t = \alpha+\beta x_t + \varepsilon_t,\]</span> we are likely to find the relationship between the two, in this case we will find <span class="math inline">\(\beta&gt;0\)</span>, even though, we know, these variables are not related. To illustrate this, we will generate 1000 samples of size 120 for <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, and in each case we will estimate the parameter <span class="math inline">\(\beta\)</span>. The following graph illustrates the empirical distribution of these parameter estimates:
-<img src="forecasting_files/figure-html/unnamed-chunk-7-1.png" width="624"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-7-1.png" width="600"></p>
 <p>Luckily, we can easily “fix” the issue, by incorporating a trend in the regression: <span class="math display">\[y_t = \alpha+\beta x_t + \eta t + \varepsilon_t.\]</span> Once the trend is accounted for, the previously illustrated “bias” disappears. Using a similar simulation exercise as before, the following graph illustrates the empirical distribution of these parameter estimates:
-<img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="624"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="600"></p>
 <p>In fact, this “fix” is equivalent to regressing a de-trended <span class="math inline">\(y\)</span> on a de-trended <span class="math inline">\(x\)</span>. To de-trend a variable, we first run a regression: <span class="math inline">\(y_t = \gamma_0 + \gamma_1 t + \nu_t\)</span>, and then obtain the fitted values for some fixed trend (typically zero), that is: <span class="math inline">\(\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t\)</span>, where <span class="math inline">\(\hat{\gamma}_0\)</span> and <span class="math inline">\(\hat{\nu}_t\)</span> are the parameter estimate and the residuals from the foregoing regression.</p>
 </div>
 <div id="stochastic-trends" class="section level3" number="4.2.2">
@@ -273,11 +272,11 @@ div.csl-indent {
 </h3>
 <p>A time series may also follow a <em>stochastic trend</em>. A random walk process, <span class="math inline">\(y_t=y_{t-1}+\zeta_t\)</span>, represents a stochastic trend.</p>
 <p>As it turns out, a spurious relationship can be detected between two stochastic trend processes. Suppose, in addition to the aforementioned random walk process, we have another random walk, <span class="math inline">\(x_t=x_{t-1}+\xi_t\)</span>. As before, to keep things simple, suppose <span class="math inline">\(\zeta\sim N(0,1)\)</span> and <span class="math inline">\(\xi\sim N(0,1)\)</span>, and <span class="math inline">\(Cov(\zeta_t,\xi_t)=0\)</span>. The two variables, obviously, are not related. And yet, if we regress one on another, we are likely to reject the null more frequently than we should. The following graph illustrates the empirical distribution of t statistics:
-<img src="forecasting_files/figure-html/unnamed-chunk-9-1.png" width="624"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-9-1.png" width="600"></p>
 <p>The previous ‘fix’, which involved adding a trend in the regression, doesn’t quite work here, as observed in the following histogram.
-<img src="forecasting_files/figure-html/unnamed-chunk-10-1.png" width="624"></p>
+<img src="forecasting_files/figure-html/unnamed-chunk-10-1.png" width="600"></p>
 <p>But there is a fix to the issue, and that involves first-differencing both series and regressing <span class="math inline">\(\Delta y_t\)</span> on <span class="math inline">\(\Delta x_t\)</span>, which resolves the issue:</p>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-11-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-11-1.png" width="600"></p>
 </div>
 </div>
 <div id="modeling" class="section level2" number="4.3">
@@ -310,7 +309,7 @@ div.csl-indent {
 <p class="caption marginnote shownote">
 Figure 4.1: 30-Year Fixed Rate Mortgage Average in the U.S.
 </p>
-<img src="forecasting_files/figure-html/intrates-1.png" alt="30-Year Fixed Rate Mortgage Average in the U.S." width="624">
+<img src="forecasting_files/figure-html/intrates-1.png" alt="30-Year Fixed Rate Mortgage Average in the U.S." width="600">
 </div>
 <p>The series feature apparent downward trend, which we can approximate by a linear trend model. We estimate the model parameters by regressing interest rates, which we denote by <span class="math inline">\(y\)</span> on time index, which we denote by <span class="math inline">\(t\)</span>. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha} + \hat{\beta} t\)</span>, which we overlay onto the time series:</p>
 <div class="figure">
@@ -318,7 +317,7 @@ Figure 4.1: 30-Year Fixed Rate Mortgage Average in the U.S.
 <p class="caption marginnote shownote">
 Figure 4.2: Fitted linear trend
 </p>
-<img src="forecasting_files/figure-html/lintrend-1.png" alt="Fitted linear trend" width="624">
+<img src="forecasting_files/figure-html/lintrend-1.png" alt="Fitted linear trend" width="600">
 </div>
 <p>It appears that the linear trend well approximates the general long-term pattern of the time series. One potential issue becomes immediately apparent, however. If we were to present a multi-decade prediction, at some point, forecasts will enter the negative range, which makes no economic sense.</p>
 <p>To avoid the issue, we may favor an exponential trend model instead. We estimate the model parameters by regressing interest rates, which we denote by <span class="math inline">\(y\)</span> on time index, which we denote by <span class="math inline">\(t\)</span>. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha} + \hat{\beta} t\)</span>, which we overlay onto the time series:</p>
@@ -327,7 +326,7 @@ Figure 4.2: Fitted linear trend
 <p class="caption marginnote shownote">
 Figure 4.3: Fitted exponential trend
 </p>
-<img src="forecasting_files/figure-html/exptrend-1.png" alt="Fitted exponential trend" width="624">
+<img src="forecasting_files/figure-html/exptrend-1.png" alt="Fitted exponential trend" width="600">
 </div>
 <p>As it turns out, the exponential trend also well approximates the general long-term pattern of the time series. And, moreover, there is not risl for forecasts to ever take on a negative value, thus remaining economically sensible. Whether linear or exponential trend model yields a more accurate short-term forecasts, is a matter of forecast accuracy testing.</p>
 </div>
@@ -348,7 +347,7 @@ Figure 4.3: Fitted exponential trend
 <p class="caption marginnote shownote">
 Figure 4.4: Linear trend forecast
 </p>
-<img src="forecasting_files/figure-html/fortrend-1.png" alt="Linear trend forecast" width="624">
+<img src="forecasting_files/figure-html/fortrend-1.png" alt="Linear trend forecast" width="600">
 </div>
 <p>Several characteristics of the deterministic trend forecasts:</p>
 <ul>
@@ -363,7 +362,7 @@ Figure 4.4: Linear trend forecast
 <a href="seasonality.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

@@ -18,6 +18,7 @@ fig:acfexchange
 fig:pacfexchange
 fig:forexchange
 introduction-to-forecasting
+a-brief-history-of-the-study-of-forecasting
 features-of-time-series-data
 stochastic-process-and-time-series
 stationarity
@@ -76,5 +77,8 @@ relative-forecast-accuracy-tests
 the-morgan-granger-newbold-test
 the-diebold-mariano-test
 forecast-combination
+benefits-of-forecast-combination
+optimal-weights-for-forecast-combination
+forecast-encompassing
 basic-coding
 advanced-coding

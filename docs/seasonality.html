@@ -224,7 +224,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -270,7 +269,7 @@ where <span class="math inline">\(s\)</span> denotes the frequency of the data, 
 <p class="caption marginnote shownote">
 Figure 5.1: Vehicle miles traveled in the U.S.
 </p>
-<img src="forecasting_files/figure-html/miles-1.png" alt="Vehicle miles traveled in the U.S." width="624">
+<img src="forecasting_files/figure-html/miles-1.png" alt="Vehicle miles traveled in the U.S." width="600">
 </div>
 <p>Seasonality is apparent in the series. We can approximate the seasonality using monthly dummy variables. Specifically, we can estimate the model parameters by regressing vehicle miles traveled, which we denote by <span class="math inline">\(y\)</span>, on intercept and 11 monthly dummy variables, omitting the dummy variable associated with the month of December. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha}+\sum_{i=1}^{11}\hat{\delta}_{i}d_{it}\)</span>, which we overlay onto the time series:</p>
 <div class="figure">
@@ -278,7 +277,7 @@ Figure 5.1: Vehicle miles traveled in the U.S.
 <p class="caption marginnote shownote">
 Figure 5.2: Fitted monthly dummy variables
 </p>
-<img src="forecasting_files/figure-html/fitmiles-1.png" alt="Fitted monthly dummy variables" width="624">
+<img src="forecasting_files/figure-html/fitmiles-1.png" alt="Fitted monthly dummy variables" width="600">
 </div>
 <p>As observed, the fitted series mimic the seasonal pattern of the U.S. vehicle miles traveled exceedingly well.</p>
 </div>
@@ -294,7 +293,7 @@ Figure 5.2: Fitted monthly dummy variables
 <p class="caption marginnote shownote">
 Figure 5.3: Initial unemployment claims in the U.S.
 </p>
-<img src="forecasting_files/figure-html/claims-1.png" alt="Initial unemployment claims in the U.S." width="624">
+<img src="forecasting_files/figure-html/claims-1.png" alt="Initial unemployment claims in the U.S." width="600">
 </div>
 <p>An apparent seasonal pattern is present in the series. It seems sensible to approximate the seasonality using Fourier series. Specifically, we can regress initial claims, which we denote by <span class="math inline">\(y\)</span>, on sine and cosine terms of up to order two, from a Fourier series. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha}+\sum_{k=1}^{2}\left[\hat{\beta}_{1k}\sin\left(\frac{2\pi kt}{52.143}\right)+\hat{\beta}_{2k}\cos\left(\frac{2\pi kt}{52.143}\right)\right]\)</span>, which we overlay onto the time series:</p>
 <div class="figure">
@@ -302,7 +301,7 @@ Figure 5.3: Initial unemployment claims in the U.S.
 <p class="caption marginnote shownote">
 Figure 5.4: Fitted Fourier terms up to order two
 </p>
-<img src="forecasting_files/figure-html/fitclaims-1.png" alt="Fitted Fourier terms up to order two" width="624">
+<img src="forecasting_files/figure-html/fitclaims-1.png" alt="Fitted Fourier terms up to order two" width="600">
 </div>
 <p>The fitted series mimic the general seasonal pattern reasonably well. There are some major departures at times, however. Especially so in the first week of the year, for example. While we could add higher order terms from a Fourier series to try and better approximate the seasonal pattern, perhaps a more efficient approach would be to simply add a dummy variable for the first week of the year, which should account for the beginning-of-calendar-year spike in the series.</p>
 </div>
@@ -323,7 +322,7 @@ Figure 5.4: Fitted Fourier terms up to order two
 <p class="caption marginnote shownote">
 Figure 5.5: Seasonal forecast
 </p>
-<img src="forecasting_files/figure-html/formiles-1.png" alt="Seasonal forecast" width="624">
+<img src="forecasting_files/figure-html/formiles-1.png" alt="Seasonal forecast" width="600">
 </div>
 
 </div>
@@ -333,7 +332,7 @@ Figure 5.5: Seasonal forecast
 <a href="autoregression.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

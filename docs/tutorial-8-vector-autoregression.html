@@ -220,7 +220,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a id="active-page" href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -272,7 +271,7 @@ x_{2t} &amp;= -0.2 + 0.9x_{1t-1} + \varepsilon_{2t}
 <span id="cb78-5"><a href="tutorial-8-vector-autoregression.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"powderblue"</span>,<span class="st">"coral"</span>))<span class="sc">+</span></span>
 <span id="cb78-6"><a href="tutorial-8-vector-autoregression.html#cb78-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Series"</span>)<span class="sc">+</span></span>
 <span id="cb78-7"><a href="tutorial-8-vector-autoregression.html#cb78-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-70-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-69-1.png" width="600"></p>
 <p>Estimate VAR(1) and VAR(2) by running regressions on each equation separately. Collect residuals and obtain system-wide AIC for each of the two models.</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="tutorial-8-vector-autoregression.html#cb79-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">x11=</span><span class="fu">shift</span>(x1,<span class="dv">1</span>),<span class="at">x12=</span><span class="fu">shift</span>(x1,<span class="dv">2</span>),<span class="at">x21=</span><span class="fu">shift</span>(x2,<span class="dv">1</span>),<span class="at">x22=</span><span class="fu">shift</span>(x2,<span class="dv">2</span>))]</span>
 <span id="cb79-2"><a href="tutorial-8-vector-autoregression.html#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -484,11 +483,11 @@ x_{2t} &amp;= -0.2 + 0.9x_{1t-1} + \varepsilon_{2t}
 
 </div>
 <p style="text-align: center;">
-<a href="tutorial-7-moving-average.html"><button class="btn btn-default">Previous</button></a>
+<a href="tutorial-6-autoregression.html"><button class="btn btn-default">Previous</button></a>
 <a href="tutorial-9-threshold-autoregression.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

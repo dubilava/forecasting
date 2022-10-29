@@ -227,7 +227,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -310,11 +309,11 @@ div.csl-indent {
 <p>Because forecasting is often performed in a time series context, the estimation set typically predates the hold-out set. In non-dynamic settings such chronological ordering may not be necessary, however.</p>
 <p>There are different forecasting schemes for updating the information set in the pseudo-forecasting routine. These are: <em>recursive</em>, <em>rolling</em>, and <em>fixed</em>.</p>
 <p>The recursive forecasting environment uses a sequence of expanding windows to update model estimates and the information set.</p>
-<p><img src="forecasting_files/figure-html/recursive-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/recursive-1.png" width="600"></p>
 <p>The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.</p>
-<p><img src="forecasting_files/figure-html/rolling-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/rolling-1.png" width="600"></p>
 <p>The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.</p>
-<p><img src="forecasting_files/figure-html/fixed-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/fixed-1.png" width="600"></p>
 <p>The forecasts are made in period 13 for periods 14 and onward. The first estimation window of the pseudo-forecasting routine covers periods one–through–ten. In this illustration, shaded segments illustrate the range of the data used for estimation of model parameters.</p>
 </div>
 <div id="forecast-assessment" class="section level2" number="3.6">
@@ -365,7 +364,7 @@ where <span class="math inline">\(R\)</span> is the estimation window size, <spa
 <a href="trends.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

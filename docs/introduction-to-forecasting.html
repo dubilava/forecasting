@@ -203,7 +203,9 @@ div.csl-indent {
 <div class="dropdown-content">
 <a href="index.html" id="toc-an-intuitive-guide-to-forecasting-with-time-series-models-using-r">An Intuitive Guide to Forecasting With Time Series Models Using R</a>
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
-<a id="active-page" href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
+<a id="active-page" href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a><ul class="toc-sections">
+<li class="toc"><a href="#a-brief-history-of-the-study-of-forecasting"> A Brief History of the Study of Forecasting</a></li>
+</ul>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
 <a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> – Forecasting Methods and Routines</a>
 <a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
@@ -220,7 +222,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -238,20 +239,25 @@ div.csl-indent {
 <h1>
 <span class="header-section-number">Chapter 1</span> – Introduction to Forecasting</h1>
 <p><img src="art/astrologer.png"></p>
+<div id="a-brief-history-of-the-study-of-forecasting" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> A Brief History of the Study of Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('a-brief-history-of-the-study-of-forecasting')" onmouseout="reset_tooltip('a-brief-history-of-the-study-of-forecasting-tooltip')"><span class="tooltiptext" id="a-brief-history-of-the-study-of-forecasting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
 <p><span class="newthought">Roots of forecasting</span> extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used the services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date.</p>
 <p>For many centuries, because the weather was the single most important factor that impacted the livelihood of people and, indeed, the fate of civilizations,<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> A sequence of droughts toward the end of the ninth century is considered one of the key reasons for the collapse of the Classic Mayan Civilization <span class="citation">(<a href="#ref-hodell1995" role="doc-biblioref">Hodell, Curtis, and Brenner 1995</a>)</span>.</span> much of forecasting revolved around weather forecasting. Early attempts at weather forecasting were rather simplistic. The Babylonians, for example, based their weather forecasts on the appearance of clouds. Over time, an advancement in the studies of physics and related fields, on the one hand, and the invention of measuring instruments such as barometer and thermometer, on the other hand, contributed to the development of the study of meteorology, the way we know it. The birth of the modern weather forecast, however, is attributed to the invention of the telegraph, which made it possible for the weather forecast to arrive sooner than the weather itself.</p>
-<p>Much like a better understanding of the laws of physics facilitated the inception of meteorological research, the development of the study of econometrics allowed for the introduction of the more rigorous forecasting methods. And as with the telegraph back in the 19th century, the development of the modern computer in the 20th century has facilitated the use of econometric methods for economic forecasting. Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the massive increase in computing power allowed the storage and distribution of granular data that has further aided the advancement of the methods and practices of forecasting.</p>
-<p>All methods – primitive or complex, spurious or scientifically substantiated – have one thing in common: they all rely (or, at least, pretend to rely) upon <em>information</em>. Information is key in forecasting. It comes in many forms, and is condensed into <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with the <em>time series</em> data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy.</p>
+<p>Much like a better understanding of the laws of physics facilitated the inception of meteorological research, the development of the study of econometrics allowed for the introduction of the more rigorous forecasting methods. And as with the telegraph back in the 19th century, the development of the modern computer in the 20th century facilitated the effective use of econometric methods for economic forecasting. Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the massive increase in computing power allowed the storage and distribution of granular data that has further aided the advancement of the methods and practices of forecasting.</p>
+<p>All methods—primitive or complex, spurious or scientifically substantiated—have one thing in common: they all rely (or, at least, pretend to rely) upon <em>information</em>. Information is key in forecasting. It comes in many forms, and is condensed into <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with the <em>time series</em> data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy.</p>
 <p>Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’
 — Donald Ramsfeld</span> As a result, there is no such thing as a precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some methods can yield more accurate forecasts, on average, than others. And in search of such methods, the study of time series econometrics has evolved.</p>
 
+</div>
 </div>
 <p style="text-align: center;">
 <a href="forecasting-with-time-series-models.html"><button class="btn btn-default">Previous</button></a>
 <a href="features-of-time-series-data.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

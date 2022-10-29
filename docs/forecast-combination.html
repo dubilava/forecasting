@@ -212,7 +212,11 @@ div.csl-indent {
 <a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> – Vector Autoregression</a>
 <a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">8</span> – Threshold Autoregression</a>
 <a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> – Forecast Evaluation</a>
-<a id="active-page" href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> – Forecast Combination</a>
+<a id="active-page" href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> – Forecast Combination</a><ul class="toc-sections">
+<li class="toc"><a href="#benefits-of-forecast-combination"> Benefits of Forecast Combination</a></li>
+<li class="toc"><a href="#optimal-weights-for-forecast-combination"> Optimal Weights for Forecast Combination</a></li>
+<li class="toc"><a href="#forecast-encompassing"> Forecast Encompassing</a></li>
+</ul>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
@@ -220,7 +224,6 @@ div.csl-indent {
 <a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -238,15 +241,51 @@ div.csl-indent {
 <h1>
 <span class="header-section-number">Chapter 10</span> – Forecast Combination</h1>
 <p><img src="art/combination.png"></p>
-<p><span class="newthought">Each model yields inaccurate forecasts</span> in each own way. Taken together, several models can contribute to an accurate forecast, on average. As the joke goes: A mathematician, a physicist, and a statistician went hunting. They stumbled upon a deer. The mathematician fired first but missed the target to the left by a few inches. The physicist gave a shot next and missed the mark to the right by a few inches. Having observed this, the statistician exclaimed “We got him!”</p>
+<div id="benefits-of-forecast-combination" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Benefits of Forecast Combination<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('benefits-of-forecast-combination')" onmouseout="reset_tooltip('benefits-of-forecast-combination-tooltip')"><span class="tooltiptext" id="benefits-of-forecast-combination-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p><span class="newthought">Every model yields forecasts</span> that are inaccurate in their own way. Taken together, two or more models can each contribute to an accurate forecast, on average. As the joke goes: a mathematician, a physicist, and a statistician went hunting. They stumbled upon a deer. The mathematician took a shot first but missed the target to the left by a metre. The physicist gave a shot next and missed the mark to the right by a metre. Having observed this, the statistician exclaimed: “We got it!”</p>
+<p>The joke works because the first two scientists missed the target by the same distance and in an opposite direction. Had the mathematician, instead, missed the target by a few metres, or had the physicist, like the mathematician, missed the target to the right, the statistician would have been less excited about the expected outcome.</p>
+<p>In accord with this analogy, the strategy of combining forecast to achieve a superior accuracy will best work if the models generate different enough forecasts with relatively similar expected loss functions.</p>
+<p>Intuitively, a combined forecast aggregates more information or more ways of processing the information.</p>
+<p>Practically, a method of forecast combination is akin to managing portfolio risk.</p>
+</div>
+<div id="optimal-weights-for-forecast-combination" class="section level2" number="10.2">
+<h2>
+<span class="header-section-number">10.2</span> Optimal Weights for Forecast Combination<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('optimal-weights-for-forecast-combination')" onmouseout="reset_tooltip('optimal-weights-for-forecast-combination-tooltip')"><span class="tooltiptext" id="optimal-weights-for-forecast-combination-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Forecast combination implies mixing the forecasts from different models with some proportions. In other words, a combined forecast is a weighted sum of the individual forecasts. The weights need to be selected in a way that maximizes the combined forecast accuracy, i.e., minimizes the combined forecast loss.</p>
+<p>Consider two forecasting methods (or models), <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, each respectively yielding one-step-ahead forecasts <span class="math inline">\(y_{a,t+1|t}\)</span> and <span class="math inline">\(y_{b,t+1|t}\)</span>, and the associated forecast errors <span class="math inline">\(e_{a,t+1} = y_{t+1}-y_{a,t+1|t}\)</span> and <span class="math inline">\(e_{b,t+1} = y_{t+1}-y_{b,t+1|t}\)</span>.</p>
+<p>A combined forecast, <span class="math inline">\(y_{c,t+1|t}\)</span>, is the weighted sum of these two forecasts: <span class="math display">\[y_{c,t+1|t} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t},\]</span> where the usual assumption about the weights apply, i.e., <span class="math inline">\(0 \leq w \leq 1\)</span>.<label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> More broadly, if we have <span class="math inline">\(n\)</span> forecasts that we intend to combine, the associated weights, <span class="math inline">\(w_i:i=1,\ldots,n\)</span>, will each be bounded by zero and one, and together they will add up to one.</span></p>
+<p>A combined forecast error is the weighted sum of the individual forecast errors: <span class="math display">\[e_{c,t+1} = (1-w)e_{a,t+1} + w e_{b,t+1}\]</span></p>
+<p>The combined forecast error is, on average, zero (assuming that the individual forecasts are all unbiased): <span class="math display">\[E\left(e_{c,t+1}\right) = E\left[(1-w)e_{a,t+1} + w e_{b,t+1}\right] = 0\]</span></p>
+<p>The variance of a combined forecast error is: <span class="math display">\[Var\left(e_{c,t+1}\right) = (1-w)^2 \sigma_a^2 + w^2  \sigma_b^2 + 2w(1-w)\sigma_{ab},\]</span> where <span class="math inline">\(\sigma_a\)</span> and <span class="math inline">\(\sigma_b\)</span> are the standard deviations of the forecast errors from models <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, and <span class="math inline">\(\sigma_{ab}=\rho_{ab}\sigma_a\sigma_b\)</span> is the covariance of the two forecast errors, which can also be expressed as a product of the correlation between the two forecast errors, <span class="math inline">\(\rho_{ab}\)</span>, and the standard deviations of each forecast error.</p>
+<p>By taking the derivative of the combined forecast error variance, and equating it to zero, we obtain the optimal weight (which minimizes the combined forecast error variance): <span class="math display">\[w^* = \frac{\sigma_a^2-\sigma_{ab}}{\sigma_a^2+\sigma_b^2-2\sigma_{ab}}\]</span></p>
+<p>A couple of features of interest become immediately apparent. First, when the two forecast errors are uncorrelated, the optimal weight assigned to the individual forecast is inversely proportional to the forecast error variance. Second, when the two forecast errors have the same variance, the optimal weight assigned to each individual forecast is equal to 0.5.</p>
+<p>Substitute <span class="math inline">\(w^*\)</span> in place of <span class="math inline">\(w\)</span> in the formula for variance to obtain: <span class="math display">\[Var\left[e_{c,t+1}(w^*)\right] = \sigma_c^2(w^*) = \frac{\sigma_a^2\sigma_b^2(1-\rho^2)}{\sigma_a^2+\sigma_b^2-2\rho\sigma_a\sigma_b}\]</span></p>
+<p>It can be shown that <span class="math inline">\(\sigma_c^2(w^*) \leq \min\{\sigma_a^2,\sigma_b^2\}\)</span>. That is to say that by combining forecasts we are not making things worse (so long as we use <em>optimal</em> weights).</p>
+<p>In practice <span class="math inline">\(\sigma_a\)</span>, <span class="math inline">\(\sigma_b\)</span>, and <span class="math inline">\(sigma_{ab}\)</span> are unknown. So, we estimate these using a pseudo-forecasting routine. Specifically, the sample estimator of <span class="math inline">\(w^*\)</span> is: <span class="math display">\[\hat{w}^* = \frac{\hat{\sigma}_i^2-\hat{\sigma}_{ij}}{\hat{\sigma}_i^2+\hat{\sigma}_j^2-2\hat{\sigma}_{ij}},\]</span> where <span class="math inline">\(\hat{\sigma}_i^2 = \frac{1}{P-1}\sum_{t=R}^{R+P-1}{e_{a,t+1}^2}\)</span> and <span class="math inline">\(\hat{\sigma}_j^2 = \frac{1}{P-1}\sum_{t=R}^{R+P-1}{e_{b,t+1}^2}\)</span> are sample forecast error variances, and <span class="math inline">\(\hat{\sigma}_{ij}=\frac{1}{P-1}\sum_{t=R}^{R+P-1}{e_{a,t+1}e_{b,t+1}}\)</span> is a sample forecast error covariance, where <span class="math inline">\(P\)</span> denotes the number of out-of-sample forecasts.</p>
+<p>The optimal weight has a straightforward interpretation in a regression setting. Consider the combined forecast equation as: <span class="math display">\[y_{t+1} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t} + \varepsilon_{t+1},\]</span> where <span class="math inline">\(\varepsilon_{t+1}\equiv e_{c,t+1}\)</span>. We can re-arrange the equation so that: <span class="math display">\[e_{a,t+1} = w (y_{b,t+1|t}-y_{a,t+1|t}) + \varepsilon_{t+1},\]</span> where <span class="math inline">\(w\)</span> is obtained by estimating a linear regression with an intercept restricted to zero.</p>
+<p>Alternatively, we can estimate an unconstrained variant of the combined forecast equation: <span class="math display">\[y_{t+1} = \alpha+\beta_a y_{a,t+1|t} + \beta_b y_{b,t+1|t} + \varepsilon_{t+1},\]</span> which relaxes the assumption that the forecasts are unbiased, as well as that the weights need to add up to one. Indeed, this unconstrained variant for forecast combination allows for the possibility of negative weights.</p>
+</div>
+<div id="forecast-encompassing" class="section level2" number="10.3">
+<h2>
+<span class="header-section-number">10.3</span> Forecast Encompassing<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecast-encompassing')" onmouseout="reset_tooltip('forecast-encompassing-tooltip')"><span class="tooltiptext" id="forecast-encompassing-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>A special case of forecast combination is when <span class="math inline">\(w=0\)</span>. Such an outcome (of the optimal weights) is known as forecast encompassing.</p>
+<p>It is said that <span class="math inline">\(y_{a,t+1|t}\)</span> encompasses <span class="math inline">\(y_{b,t+1|t}\)</span>, when given that the former is available, the latter provides no additional useful information.</p>
+<p>This is equivalent of testing the null hypothesis of <span class="math inline">\(w=0\)</span> in the combined forecast error equation, which, after rearranging terms, yields the following regression: <span class="math display">\[e_{a,t+1} = w\left(e_{a,t+1}-e_{b,t+1}\right)+\varepsilon_{t+1},\;~~t=R,\ldots,R+P-1\]</span> where <span class="math inline">\(\varepsilon_{t+1}\equiv e_{c,t+1}\)</span>, and where <span class="math inline">\(R\)</span> is the size of the (first) estimation window, and <span class="math inline">\(P\)</span> is the number of out-of-sample forecasts generated.</p>
+<p>We can test for the forecast encompassing by regressing the realized value on individual forecasts: <span class="math display">\[y_{t+1} = \alpha + \beta_1 y_{a,t+1|t} + \beta_2 y_{b,t+1|t} + \varepsilon_{t+1},\]</span> and testing the null hypothesis that <span class="math inline">\(\beta_2=0\)</span>, given that <span class="math inline">\(\beta_1=1\)</span>.</p>
 
+</div>
 </div>
 <p style="text-align: center;">
 <a href="forecast-evaluation.html"><button class="btn btn-default">Previous</button></a>
 <a href="forecasting-using-r.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>

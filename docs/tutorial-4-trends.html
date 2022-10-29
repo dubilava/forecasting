@@ -220,7 +220,6 @@ div.csl-indent {
 <a id="active-page" href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
 <a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
 <a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-moving-average.html" id="toc-tutorial-7-moving-average">Tutorial 7: Moving Average</a>
 <a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
 <a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
 <a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
@@ -257,7 +256,7 @@ div.csl-indent {
 <span id="cb50-2"><a href="tutorial-4-trends.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb50-3"><a href="tutorial-4-trends.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Simulated Series"</span>)<span class="sc">+</span></span>
 <span id="cb50-4"><a href="tutorial-4-trends.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-52-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-52-1.png" width="600"></p>
 <p>Add quarterly dummy variables to the data, and calculate Akaike Information Criteria (AIC) for linear and quadratic trend models with and without quarterly seasonal dummy variables (so, four models in total). Observe that the linear trend model with the seasonal component offers the best in-sample fit, based on AIC.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="tutorial-4-trends.html#cb51-1" aria-hidden="true" tabindex="-1"></a>dt<span class="sc">$</span>q <span class="ot">&lt;-</span> <span class="fu">quarter</span>(dt<span class="sc">$</span>date)</span>
 <span id="cb51-2"><a href="tutorial-4-trends.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -291,7 +290,7 @@ div.csl-indent {
 <span id="cb53-7"><a href="tutorial-4-trends.html#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>,<span class="at">y=</span><span class="st">"Trending Seasonal Series and Forecasts"</span>)<span class="sc">+</span></span>
 <span id="cb53-8"><a href="tutorial-4-trends.html#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
 <span id="cb53-9"><a href="tutorial-4-trends.html#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title=</span><span class="fu">element_blank</span>(),<span class="at">legend.position=</span><span class="fu">c</span>(.<span class="dv">15</span>,.<span class="dv">85</span>))</span></code></pre></div>
-<p><img src="forecasting_files/figure-html/unnamed-chunk-55-1.png" width="624"></p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-55-1.png" width="600"></p>
 <p>Test the hypotheses of forecast unbiasedness, efficiency, and no serial correlation of forecast errors.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tutorial-4-trends.html#cb54-1" aria-hidden="true" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">f.e=</span>y<span class="sc">-</span>f)]</span>
 <span id="cb54-2"><a href="tutorial-4-trends.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -314,7 +313,7 @@ div.csl-indent {
 <a href="tutorial-5-seasonality.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-22
+2022-10-29
  using 
 R version 4.2.1 (2022-06-23 ucrt)
 </p>
