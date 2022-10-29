@@ -6,4 +6,158 @@ library(ggplot2)
 library(data.table)
 ```
 
-`r newthought('Each model yields inaccurate forecasts')` in each own way. Taken together, several models can contribute to an accurate forecast, on average. As the joke goes: A mathematician, a physicist, and a statistician went hunting. They stumbled upon a deer. The mathematician fired first but missed the target to the left by a few inches. The physicist gave a shot next and missed the mark to the right by a few inches. Having observed this, the statistician exclaimed “We got him!”
+## Combining Forecast for Better Accuracy
+
+`r newthought('Every model yields forecasts')` that are inaccurate in their own way. Taken together, two or more models can each contribute to an accurate forecast, on average. As the joke goes: a mathematician, a physicist, and a statistician went hunting. They stumbled upon a deer. The mathematician took a shot first but missed the target to the left by a metre. The physicist gave a shot next and missed the mark to the right by a metre. Having observed this, the statistician exclaimed: “We got it!”
+
+The joke works because the first two scientists missed the target by the same distance and in an opposite direction. Had the mathematician, instead, missed the target by a few metres, or had the physicist, like the mathematician, missed the target to the right, the statistician would have been less excited about the expected outcome. 
+
+In accord with this analogy, the strategy of combining forecast to achieve a superior accuracy will best work if the models generate different enough forecasts with relatively similar expected loss functions. 
+
+Intuitively, a combined forecast aggregates more information or more ways of processing the information. 
+
+Practically, a method of forecast combination is akin to managing portfolio risk.
+
+
+## Optimal Weights for Forecast Combination
+
+Forecast combination implies mixing the forecasts from different models with some proportions. In other words, a combined forecast is a weighted sum of the individual forecasts. The weights need to be selected in a way that maximizes the combined forecast accuracy, i.e., minimizes the combined forecast loss. 
+
+Consider two forecasting methods (or models), $a$ and $b$, each respectively yielding one-step-ahead forecasts $y_{a,t+1|t}$ and $y_{b,t+1|t}$, and the associated forecast errors $e_{a,t+1} = y_{t+1}-y_{a,t+1|t}$ and $e_{b,t+1} = y_{t+1}-y_{b,t+1|t}$.
+
+A combined forecast, $y_{c,t+1|t}$, is the weighted sum of these two forecasts: $$y_{c,t+1|t} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t},$$ where the usual assumption about the weights apply, i.e., $0 \leq w \leq 1$.^[More broadly, if we have $n$ forecasts that we intend to combine, the associated weights, $w_i:i=1,\ldots,n$, will each be bounded by zero and one, and together they will add up to one.]
+
+A combined forecast error is the weighted sum of the individual forecast errors: $$e_{c,t+1} = (1-w)e_{a,t+1} + w e_{b,t+1}$$
+
+The combined forecast error is, on average, zero (assuming that the individual forecasts are all unbiased): $$E\left(e_{c,t+1}\right) = E\left[(1-w)e_{a,t+1} + w e_{b,t+1}\right] = 0$$
+
+The variance of a combined forecast error is: $$Var\left(e_{c,t+1}\right) = (1-w)^2 \sigma_a^2 + w^2  \sigma_b^2 + 2w(1-w)\sigma_{ab},$$ where $\sigma_a$ and $\sigma_b$ are the standard deviations of the forecast errors from models $a$ and $b$, and $\sigma_{ab}=\rho_{ab}\sigma_a\sigma_b$ is the covariance of the two forecast errors, which can also be expressed as a product of the correlation between the two forecast errors, $\rho_{ab}$, and the standard deviations of each forecast error.
+
+By taking the derivative of the combined forecast error variance, and equating it to zero, we obtain the optimal weight (which minimizes the combined forecast error variance): $$w^* = \frac{\sigma_a^2-\sigma_{ab}}{\sigma_a^2+\sigma_b^2-2\sigma_{ab}}$$
+
+A couple of features of interest become immediately apparent. First, when the two forecast errors are uncorrelated, the optimal weight assigned to the individual forecast is inversely proportional to the forecast error variance. Second, when the two forecast errors have the same variance, the optimal weight assigned to each individual forecast is equal to 0.5. 
+
+Substitute $w^*$ in place of $w$ in the formula for variance to obtain: $$Var\left[e_{c,t+1}(w^*)\right] = \sigma_c^2(w^*) = \frac{\sigma_a^2\sigma_b^2(1-\rho^2)}{\sigma_a^2+\sigma_b^2-2\rho\sigma_a\sigma_b}$$
+
+It can be shown that $\sigma_c^2(w^*) \leq \min\{\sigma_a^2,\sigma_b^2\}$. That is to say that by combining forecasts we are not making things worse (so long as we use *optimal* weights).
+
+In practice $\sigma_a$, $\sigma_b$, and $sigma_{ab}$ are unknown. So, we estimate these using a pseudo-forecasting routine. Specifically, the sample estimator of $w^*$ is: $$\hat{w}^* = \frac{\hat{\sigma}_i^2-\hat{\sigma}_{ij}}{\hat{\sigma}_i^2+\hat{\sigma}_j^2-2\hat{\sigma}_{ij}},$$ where $\hat{\sigma}_i^2 = \frac{1}{P-1}\sum_{t=R}^{R+P-1}{e_{a,t+1}^2}$ and $\hat{\sigma}_j^2 = \frac{1}{P-1}\sum_{t=R}^{R+P-1}{e_{b,t+1}^2}$ are sample forecast error variances, and $\hat{\sigma}_{ij}=\frac{1}{P-1}\sum_{t=R}^{R+P-1}{e_{a,t+1}e_{b,t+1}}$ is a sample forecast error covariance, where $P$ denotes the number of out-of-sample forecasts. 
+
+The optimal weight has a straightforward interpretation in a regression setting. Consider the combined forecast equation as: $$y_{t+1} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t} + \varepsilon_{t+1},$$ where $\varepsilon_{t+1}\equiv e_{c,t+1}$. We can re-arrange the equation so that: $$e_{a,t+1} = w (y_{b,t+1|t}-y_{a,t+1|t}) + \varepsilon_{t+1},$$ where $w$ is obtained by estimating a linear regression with an intercept restricted to zero.
+
+```{r echo=FALSE, message=FALSE, cache=FALSE}
+load("../../Books/forecasting/data/inflation.RData")
+load("../../Books/forecasting/data/funds.RData")
+
+dt <- merge(funds,inflation,by="date")
+colnames(dt) <- c("date","funds","inflation")
+
+dt[,`:=`(y=inflation)]
+dt[,`:=`(y1=shift(y,1),y2=shift(y,2),y3=shift(y,3),y4=shift(y,4))]
+
+ic_dt <- data.table(p=1:4,AIC=NA,SIC=NA)
+
+ar1 <- lm(y~y1,data=dt)
+ar2 <- lm(y~y1+y2,data=dt)
+ar3 <- lm(y~y1+y2+y3,data=dt)
+ar4 <- lm(y~y1+y2+y3+y4,data=dt)
+
+ic_dt$AIC[1] <- log(crossprod(ar1$resid))+2*length(ar1$coef)/length(ar1$resid)
+ic_dt$AIC[2] <- log(crossprod(ar2$resid))+2*length(ar2$coef)/length(ar2$resid)
+ic_dt$AIC[3] <- log(crossprod(ar3$resid))+2*length(ar3$coef)/length(ar3$resid)
+ic_dt$AIC[4] <- log(crossprod(ar4$resid))+2*length(ar4$coef)/length(ar4$resid)
+
+ic_dt$SIC[1] <- log(crossprod(ar1$resid))+log(length(ar1$resid))*length(ar1$coef)/length(ar1$resid)
+ic_dt$SIC[2] <- log(crossprod(ar2$resid))+log(length(ar2$resid))*length(ar2$coef)/length(ar2$resid)
+ic_dt$SIC[3] <- log(crossprod(ar3$resid))+log(length(ar3$resid))*length(ar3$coef)/length(ar3$resid)
+ic_dt$SIC[4] <- log(crossprod(ar4$resid))+log(length(ar4$resid))*length(ar4$coef)/length(ar4$resid)
+
+dt[,`:=`(y12=shift(y,12),y13=shift(y,13),y14=shift(y,14))]
+
+R <- which(dt$date=="1990-12-01")
+h <- 12
+P <- nrow(dt)-R-h+1
+
+dt[,`:=`(itr=NA,dir=NA)]
+
+for(i in 1:P){
+  
+  ar_itr <- lm(y~y1+y2+y3,data=dt[i:(R-1+i)])
+  ar_dir <- lm(y~y12+y13+y14,data=dt[i:(R-1+i)])
+  
+  dt[,`:=`(temp=y)]
+  
+  for(j in 1:h){
+    dt$temp[R-1+i+j] <- ar_itr$coefficients["(Intercept)"]+ar_itr$coefficients["y1"]*dt$temp[R-1+i+j-1]+ar_itr$coefficients["y2"]*dt$temp[R-1+i+j-2]+ar_itr$coefficients["y3"]*dt$temp[R-1+i+j-3]
+  }
+  
+  dt$itr[R+h-1+i] <- dt$temp[R-1+i+j]
+    
+  dt$dir[R+h-1+i] <- ar_dir$coefficients["(Intercept)"]+ar_dir$coefficients["y12"]*dt$y[R+h-1+i-1]+ar_dir$coefficients["y13"]*dt$y[R+h-1+i-2]+ar_dir$coefficients["y14"]*dt$y[R+h-1+i-3]
+  
+}
+
+dt$temp <- NULL
+
+long_dt <- melt(dt[,.(date,y,itr,dir)],id.vars="date")
+
+long_dt$variable <- factor(long_dt$variable,levels=unique(long_dt$variable),labels=c("observed series","iterated forecast","direct forecast"))
+
+ggplot(long_dt[date>="1992-01-01"],aes(x=date,y=value,color=variable,linetype=variable))+
+  geom_line(size=.8,na.rm=T)+
+  scale_color_manual(values=c("darkgray","coral","steelblue"))+
+  scale_linetype_manual(values=c(1,5,2))+
+  labs(x="Year",y="Year-Over-Year Inflation (%)",caption="retrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/CPIAUCNS")+
+  theme_classic()+
+  theme(axis.title = element_text(size=18),axis.text = element_text(size=14),legend.position="top",legend.title=element_blank(),legend.text=element_text(size=18))
+
+dt[,`:=`(e_itr=y-itr,e_dir=y-dir)]
+
+reg_w <- lm(e_itr~I(dir-itr)-1,data=dt)
+
+dt[,`:=`(cmb=(1-reg_w$coef)*itr+reg_w$coef*dir)]
+
+long_dt <- melt(dt[,.(date,y,itr,dir,cmb)],id.vars="date")
+
+long_dt$variable <- factor(long_dt$variable,levels=unique(long_dt$variable),labels=c("observed series","iterated forecast","direct forecast","combined forecast"))
+
+ggplot(long_dt[date>="1992-01-01"],aes(x=date,y=value,color=variable,linetype=variable))+
+  geom_line(size=.8,na.rm=T)+
+  scale_color_manual(values=c("darkgray","coral","steelblue","black"))+
+  scale_linetype_manual(values=c(1,5,2,1))+
+  labs(x="Year",y="Year-Over-Year Inflation (%)",caption="retrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/CPIAUCNS")+
+  theme_classic()+
+  theme(axis.title = element_text(size=18),axis.text = element_text(size=14),legend.position="top",legend.title=element_blank(),legend.text=element_text(size=18))
+
+```
+
+Alternatively, we can estimate an unconstrained variant of the combined forecast equation: $$y_{t+1} = \alpha+\beta_a y_{a,t+1|t} + \beta_b y_{b,t+1|t} + \varepsilon_{t+1},$$ which relaxes the assumption that the forecasts are unbiased, as well as that the weights need to add up to one. Indeed, this unconstrained variant for forecast combination allows for the possibility of negative weights.
+
+```{r echo=FALSE, message=FALSE, cache=FALSE}
+reg_w <- lm(y~itr+dir,data=dt)
+
+dt[,`:=`(cmb=reg_w$coef["(Intercept)"]+reg_w$coef["itr"]*itr+reg_w$coef["dir"]*dir)]
+
+long_dt <- melt(dt[,.(date,y,itr,dir,cmb)],id.vars="date")
+
+long_dt$variable <- factor(long_dt$variable,levels=unique(long_dt$variable),labels=c("observed series","iterated forecast","direct forecast","combined forecast"))
+
+ggplot(long_dt[date>="1992-01-01"],aes(x=date,y=value,color=variable,linetype=variable))+
+  geom_line(size=.8,na.rm=T)+
+  scale_color_manual(values=c("darkgray","coral","steelblue","black"))+
+  scale_linetype_manual(values=c(1,5,2,1))+
+  labs(x="Year",y="Year-Over-Year Inflation (%)",caption="retrieved from FRED, Federal Reserve Bank of St. Louis\nhttps://fred.stlouisfed.org/series/CPIAUCNS")+
+  theme_classic()+
+  theme(axis.title = element_text(size=18),axis.text = element_text(size=14),legend.position="top",legend.title=element_blank(),legend.text=element_text(size=18))
+
+```
+
+## Forecast Encompassing
+
+A special case of forecast combination is when $w=0$. Such an outcome (of the optimal weights) is known as forecast encompassing.
+
+It is said that $y_{a,t+1|t}$ encompasses $y_{b,t+1|t}$, when given that the former is available, the latter provides no additional useful information.
+
+This is equivalent of testing the null hypothesis of $w=0$ in the combined forecast error equation, which, after rearranging terms, yields the following regression: $$e_{a,t+1} = w\left(e_{a,t+1}-e_{b,t+1}\right)+\varepsilon_{t+1},\;~~t=R,\ldots,R+P-1$$ where $\varepsilon_{t+1}\equiv e_{c,t+1}$, and where $R$ is the size of the (first) estimation window, and $P$ is the number of out-of-sample forecasts generated.
+
+We can test for the forecast encompassing by regressing the realized value on individual forecasts: $$y_{t+1} = \alpha + \beta_1 y_{a,t+1|t} + \beta_2 y_{b,t+1|t} + \varepsilon_{t+1},$$ and testing the null hypothesis that $\beta_2=0$, given that $\beta_1=1$. 
