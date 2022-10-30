@@ -11,7 +11,7 @@ library(ggbrace)
 
 ## Point Forecast and Forecast Error
 
-`r newthought('A forecast')` is a random variable which has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster's choice of the loss function.
+`r newthought('A forecast is a random variable')` that has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution, but can also be the median of the distribution, depending on a forecaster's choice of the loss function (more about this later).
 
 Let $\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model. The subscript $t+h|t$ indicates that the forecast is made using information set in period $t$.] for period $t+h$ made in period $t$, that is, using using the available information at the time, $\Omega_t$. This is our 'best guess' about the actual realization of the random variable in period $t+h$, $y_{t+h}$. The difference between the realization and the forecast of the random variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}$$
 

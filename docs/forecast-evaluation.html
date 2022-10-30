@@ -134,7 +134,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -147,7 +147,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -214,6 +214,7 @@ div.csl-indent {
 <a id="active-page" href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> – Forecast Evaluation</a><ul class="toc-sections">
 <li class="toc"><a href="#the-need-for-the-forecast-evaluation"> The Need for the Forecast Evaluation</a></li>
 <li class="toc"><a href="#relative-forecast-accuracy-tests"> Relative Forecast Accuracy Tests</a></li>
+<li class="toc"><a href="#forecasting-year-on-year-monthly-inflation-12-steps-ahead"> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
 </ul>
 <a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> – Forecast Combination</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
@@ -244,16 +245,16 @@ div.csl-indent {
 <h2>
 <span class="header-section-number">9.1</span> The Need for the Forecast Evaluation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-need-for-the-forecast-evaluation')" onmouseout="reset_tooltip('the-need-for-the-forecast-evaluation-tooltip')"><span class="tooltiptext" id="the-need-for-the-forecast-evaluation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>We typically have several candidate econometric models or methods to forecast an economic variable of interest. Among these, we tend to select the most adequate using in-sample goodness of fit measures (e.g., AIC or SIC).</p>
-<p>A more sensible approach, at least from the standpoint of a forecaster, would be to assess goodness of fit in an out-of-sample setting. Recall that models that offer the superior in-sample fit don’t necessarily produce the most accurate out-of-sample forecasts. That is, while a better in-sample fit can be achieved by incorporating additional parameters in the model, such more complex models extrapolate the estimated parameter uncertainty into the forecasts, thus sabotaging their accuracy.</p>
+<p><span class="newthought">Among several available models</span> we can select one that offers the superior in-sample fit (e.g., based on the AIC or SIC), and then apply this model to generate the forecasts.</p>
+<p>A more sensible approach, at least from the standpoint of a forecaster, would be to assess goodness of fit in an out-of-sample setting. Recall that the model that offer the best in-sample fit doesn’t necessarily produce the most accurate out-of-sample forecasts, among the considered models. That is, for example, while a better in-sample fit can be achieved by incorporating additional parameters in the model, such more complex models extrapolate the estimated parameter uncertainty into the forecasts, thus sabotaging their accuracy.</p>
 <p>Thus far we have applied the following algorithm to identify ‘the best’ among the competing forecasts:</p>
 <ul>
-<li>Decide on a loss function (e.g., quadratic loss).</li>
-<li>Obtain forecasts, the forecast errors, and the corresponding sample expected loss (e.g., root mean squared forecast error) for each model in consideration.</li>
-<li>Rank the models according to their sample expected loss values.</li>
-<li>Select the model with the lowest sample expected loss.</li>
+<li>decide on a loss function (e.g., quadratic loss);</li>
+<li>obtain forecasts, the forecast errors, and the corresponding sample expected loss (e.g., root mean squared forecast error) for each model;</li>
+<li>rank the models on their sample expected loss values;</li>
+<li>select the model with the lowest sample expected loss.</li>
 </ul>
-<p>But the loss function is a function of a random variable, and in practice we deal with sample information, so sampling variation needs to be taken into the account. Statistical methods of evaluation are, therefore, desirable (at the very least).</p>
+<p>But the loss function is a function of the random variable, and in practice we deal with sample information, so sampling variation needs to be taken into the account. Statistical methods of evaluation are, therefore, desirable (to say it mildly).</p>
 </div>
 <div id="relative-forecast-accuracy-tests" class="section level2" number="9.2">
 <h2>
@@ -273,11 +274,25 @@ div.csl-indent {
 <h3>
 <span class="header-section-number">9.2.2</span> The Diebold-Mariano Test<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-diebold-mariano-test')" onmouseout="reset_tooltip('the-diebold-mariano-test-tooltip')"><span class="tooltiptext" id="the-diebold-mariano-test-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>The Diebold-Mariano (DM) test relaxes the aforementioned requirements on the forecast errors. The DM test statistic is: <span class="math display">\[\frac{\bar{d}_h}{\sqrt{\sigma_d^2/P}} \sim N(0,1),\]</span> where <span class="math inline">\(\bar{d}_h=P^{-1}\sum_{t=R}^{T-h} d(e_{t+h,ij})\)</span>, and where <span class="math inline">\(P=T-R-h+1\)</span> is the total number of forecasts generated using a rolling or recursive widnow scheme, for example.</p>
-<p>A modified version of the DM statistic, due to Harvey, Leybourne, and Newbold (1998), addresses the finite sample properties of the test, so that: <span class="math display">\[\sqrt{\frac{P+1-2h+P^{-1}h(h-1)}{P}}DM\sim t_{P-1},\]</span> where <span class="math inline">\(t_{P-1}\)</span> is a Student t distribution with <span class="math inline">\(P-1\)</span> degrees of freedom.</p>
+<p>The Diebold-Mariano (DM) test, put forward by <span class="citation">Diebold and Mariano (<a href="#ref-diebold1995" role="doc-biblioref">1995</a>)</span>, relaxes the aforementioned requirements on the forecast errors. The DM test statistic is: <span class="math display">\[\frac{\bar{d}_h}{\sqrt{\sigma_d^2/P}} \sim N(0,1),\]</span> where <span class="math inline">\(\bar{d}_h=P^{-1}\sum_{t=R}^{T-h} d(e_{t+h,ij})\)</span>, and where <span class="math inline">\(P=T-R-h+1\)</span> is the total number of forecasts generated using a rolling or recursive window scheme, for example.</p>
+<p>A modified version of the DM statistic, due to <span class="citation">Harvey, Leybourne, and Newbold (<a href="#ref-harvey1997" role="doc-biblioref">1997</a>)</span>, addresses the finite sample properties of the test, so that: <span class="math display">\[\sqrt{\frac{P+1-2h+P^{-1}h(h-1)}{P}}DM\sim t_{P-1},\]</span> where <span class="math inline">\(t_{P-1}\)</span> is a Student t distribution with <span class="math inline">\(P-1\)</span> degrees of freedom.</p>
 <p>In practice, the test of equal predictive ability can be applied within the framework of a regression model as follows: <span class="math display">\[d_{t+h} = \delta + \upsilon_{t+h}\;~~t = R,\ldots,T-h,\]</span> where <span class="math inline">\(d_{t+h} \equiv d(e_{t+h,ij})\)</span>. The null of equal predictive ability is equivalent of testing <span class="math inline">\(H_0: \delta = 0\)</span> in the OLS setting. Moreover, because <span class="math inline">\(d_{t+h}\)</span> may be serially correlated, autocorrelation consistent standard errors should be used for inference.</p>
-
 </div>
+</div>
+<div id="forecasting-year-on-year-monthly-inflation-12-steps-ahead" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-year-on-year-monthly-inflation-12-steps-ahead')" onmouseout="reset_tooltip('forecasting-year-on-year-monthly-inflation-12-steps-ahead-tooltip')"><span class="tooltiptext" id="forecasting-year-on-year-monthly-inflation-12-steps-ahead-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Two methods for generating multi-step-ahead forecasts from autoregressions, for example, are the iterated and direct methods. Each has advantages and disadvantages, and when the model is mis-specified, which more often than not tends to be the case, either of the two methods can yield more accurate forecasts. We will examine this using the U.S. year-on-year monthly inflation data.</p>
+<div class="figure">
+<span style="display:block;" id="fig:iterated-direct"></span>
+<p class="caption marginnote shownote">
+Figure 9.1: Iterated and Direct Forecasts
+</p>
+<img src="forecasting_files/figure-html/iterated-direct-1.png" alt="Iterated and Direct Forecasts" width="600">
+</div>
+<p>The foregoing figure illustrates the forecasts, obtained from iterated and direct multi-step forecasting methods. We examine the relative out-of-sample forecast accuracy of the two methods by regressing the loss differential <span class="math inline">\(d_t=e_{t,d}^2-e_{t,i}^2\)</span> on a constant, where <span class="math inline">\(t=R+h,\ldots,T\)</span>, and where the subscripts <span class="math inline">\(d\)</span> and <span class="math inline">\(i\)</span> indicate the direct and iterated multi-step forecasting method, respectively. In this example, as it turns out, we are unable to reject the null hypothesis of equal forecast accuracy as the DM test statistic happens to be -1.18.</p>
+
 </div>
 </div>
 <p style="text-align: center;">
@@ -285,9 +300,9 @@ div.csl-indent {
 <a href="forecast-combination.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-29
+2022-10-30
  using 
-R version 4.2.1 (2022-06-23 ucrt)
+R version 4.1.2 (2021-11-01)
 </p>
 </div>
 </div>

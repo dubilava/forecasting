@@ -6,7 +6,7 @@ description: "Forecasting With Time Series Models Using R"
 knit: bookdown::preview_chapter
 site: bookdown::bookdown_site
 link-citations: yes
-bibliography: ["book.bib","packages.bib"]
+bibliography: ["book.bib"]
 biblio-style: apalike
 always_allow_html: yes
 cover-image: forecasting-logo.png

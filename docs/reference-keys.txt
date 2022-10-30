@@ -17,6 +17,7 @@ fig:exchange
 fig:acfexchange
 fig:pacfexchange
 fig:forexchange
+fig:iterated-direct
 introduction-to-forecasting
 a-brief-history-of-the-study-of-forecasting
 features-of-time-series-data
@@ -76,6 +77,7 @@ the-need-for-the-forecast-evaluation
 relative-forecast-accuracy-tests
 the-morgan-granger-newbold-test
 the-diebold-mariano-test
+forecasting-year-on-year-monthly-inflation-12-steps-ahead
 forecast-combination
 benefits-of-forecast-combination
 optimal-weights-for-forecast-combination
