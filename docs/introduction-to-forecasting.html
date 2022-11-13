@@ -134,7 +134,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -147,7 +147,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -243,12 +243,11 @@ div.csl-indent {
 <h2>
 <span class="header-section-number">1.1</span> A Brief History of the Study of Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('a-brief-history-of-the-study-of-forecasting')" onmouseout="reset_tooltip('a-brief-history-of-the-study-of-forecasting-tooltip')"><span class="tooltiptext" id="a-brief-history-of-the-study-of-forecasting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p><span class="newthought">Roots of forecasting</span> extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used the services of others. Fortunetellers, for example, have been forecast experts of some sort, basing their predictions on magic. They are less common in the current age. Astrologers, who rely on astronomical phenomena to foresee the future, maintain their relevance to this date.</p>
+<p><span class="newthought">Roots of forecasting</span> extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used the services of others. This desire to guess what was to come, has been necessitated by potential benefits such information could offer.</p>
 <p>For many centuries, because the weather was the single most important factor that impacted the livelihood of people and, indeed, the fate of civilizations,<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> A sequence of droughts toward the end of the ninth century is considered one of the key reasons for the collapse of the Classic Mayan Civilization <span class="citation">(<a href="#ref-hodell1995" role="doc-biblioref">Hodell, Curtis, and Brenner 1995</a>)</span>.</span> much of forecasting revolved around weather forecasting. Early attempts at weather forecasting were rather simplistic. The Babylonians, for example, based their weather forecasts on the appearance of clouds. Over time, an advancement in the studies of physics and related fields, on the one hand, and the invention of measuring instruments such as barometer and thermometer, on the other hand, contributed to the development of the study of meteorology, the way we know it. The birth of the modern weather forecast, however, is attributed to the invention of the telegraph, which made it possible for the weather forecast to arrive sooner than the weather itself.</p>
 <p>Much like a better understanding of the laws of physics facilitated the inception of meteorological research, the development of the study of econometrics allowed for the introduction of the more rigorous forecasting methods. And as with the telegraph back in the 19th century, the development of the modern computer in the 20th century facilitated the effective use of econometric methods for economic forecasting. Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the massive increase in computing power allowed the storage and distribution of granular data that has further aided the advancement of the methods and practices of forecasting.</p>
 <p>All methods—primitive or complex, spurious or scientifically substantiated—have one thing in common: they all rely (or, at least, pretend to rely) upon <em>information</em>. Information is key in forecasting. It comes in many forms, and is condensed into <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with the <em>time series</em> data. A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy.</p>
-<p>Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’
-— Donald Ramsfeld</span> As a result, there is no such thing as a precise forecast, even if by fluke we were to exactly predict an outcome of an event. But some methods can yield more accurate forecasts, on average, than others. And in search of such methods, the study of time series econometrics has evolved.</p>
+<p>Accurate forecasting is difficult. Indeed, forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> Donald Rumsfeld, the U.S. Secretary of Defence, once famously said: ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’</span> In the context of model-based forecasting, these unknowns are: (i) that we don’t know the true model, so we assume one; (ii) that we don’t know the true parameters of the model, so we estimate those; and (iii) that we don’t know the future, and there is nothing we can do about it. As a result, there is no such thing as a perfect forecast, even if by fluke we were to exactly predict an outcome of an event. But some methods can yield more accurate forecasts, on average, than others. And in search of such methods, the study of time series econometrics has evolved.</p>
 
 </div>
 </div>
@@ -257,9 +256,9 @@ div.csl-indent {
 <a href="features-of-time-series-data.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-10-30
+2022-11-06
  using 
-R version 4.1.2 (2021-11-01)
+R version 4.2.1 (2022-06-23 ucrt)
 </p>
 </div>
 </div>

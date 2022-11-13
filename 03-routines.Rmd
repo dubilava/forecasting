@@ -25,7 +25,7 @@ Second, we don't know the true parameters of the model. Instead, using a subset 
 
 Finally, whether or not we well approximate the true model, and whether or not we succeed in generating precise parameter estimates, our forecasts may still be inaccurate because of *information uncertainty* for all those factors that have never happened in the past, and only characterize the future. 
 
-To illustrate the foregoing, we can decompose forecast error into its three components:
+To illustrate the foregoing, we can decompose the forecast error into its three components:
 $$\begin{aligned}
 		e_{t+h} & = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
 		& + \big[E(y_{t+h}|\Omega_{t}) - E(y_{t+h}|\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
@@ -34,30 +34,21 @@ $$\begin{aligned}
 		
 where $E(y_{t+h}|\Omega_{t};\theta)$ indicates that the forecast is made using a parametric model, and $E(y_{t+h}|\Omega_{t};\hat{\theta})$ indicates that the parameters of the model are estimated. 
 
-To the extent that at least the information uncertainty cannot be avoided, a forecaster is bound to commit forecast errors. The aim is to minimize the 'cost' associated with these errors. This is achieved by minimizing the expected loss function.
+Because the information uncertainty cannot be avoided, a forecast error is bound to be made. The aim of a forecaster is to minimize the model and parameter uncertainties. That is, to find a model that closely approximates the true model, and to estimate it's parameters as efficiently as possible. A forecaster can achieve this by minimizing the expected *loss function*.
 
 
 ## Loss Function
 
-A loss function, $L(e_{t+h|t})$, may take many different forms so long as it satisfies the following properties:
-$$\begin{aligned}
-		& L(e_{t+h|t}) = 0,\;~~\forall\;e_{t+h|t} = 0 \\
-		& L(e_{t+h|t}) \geq 0,\;~~\forall\;e_{t+h|t} \neq 0 \\
-		& L(e_{t+h|t}^{(i)}) > L(e_{t+h|t}^{(j)}),\;~~\forall\;|e_{t+h|t}^{(i)}| > |e_{t+h|t}^{(j)}|
-		\end{aligned}$$
+A loss function, which we denote by $L(e_{t+h})$, a transformation of a forecast error such that: (i) $L(e_{t+h}) = 0$ for all $e_{t+h}=0$; (ii) $L(e_{t+h}) \geq 0$ for all $e_{t+h} \neq 0$; and, when the loss function is symmetric about zero, (iii) $L(e_{t+h}) > L(e_{s+h})$ for all $|e_{t+h}| > |e_{s+h}|$. 
 
-Two commonly used symmetric^[There are also asymmetric loss functions, which are relevant in instances when it makes sense to 'penalize' the forecast error more so in one direction than another.] loss functions are *absolute* and *quadratic* loss functions:
-$$\begin{aligned}
-		& L{(e_{t+h|t})} = |e_{t+h|t}|\;~~\text{(absolute loss function)} \\
-		& L{(e_{t+h|t})} = (e_{t+h|t})^2\;~~\text{(quadratic loss function)}
-		\end{aligned}$$
+Two commonly used symmetric^[There are also asymmetric loss functions, which are relevant in instances when it makes sense to 'penalize' the forecast error more so in one direction than another.] loss functions are an *absolute* loss function, $L{(e_{t+h|t})} = |e_{t+h|t}|$, and a *quadratic* loss function, $L{(e_{t+h|t})} = (e_{t+h|t})^2$.
 
-The quadratic loss function is arguably the most popular loss function, partly because we already select models based on 'in-sample' quadratic loss (i.e. by minimizing the sum of squared residuals).
+The quadratic loss function is arguably the most popular among the loss functions, partly because it echoes the way we fit the data 'in-sample' (i.e. by minimizing the sum of squared residuals).
 
 
 ## Optimal Forecast
 
-Optimal forecast is the forecast that minimizes the expected loss:
+Optimal forecast is one that minimizes the expected loss:
 		$$\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right].$$
 
 
@@ -107,7 +98,7 @@ for(i in 1:P){
 ggplot(y_dt,aes(x=x,y=y))+
   annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="powderblue",color=NA,alpha=.5)+
   geom_vline(xintercept = c(1,R+1),size=.6,linetype=2)+
-  geom_line(size=.8,na.rm=T,color="steelblue")+
+  geom_line(size=1,na.rm=T,color="darkgray")+
   geom_point(data=y_dt[x==R+1],aes(x=x,y=recursive),size=3,color="coral")+
   geom_point(data=y_dt[x==R+2],aes(x=x,y=recursive),size=3,color="coral")+
   labs(title="",x="t",y=expression(y[t]))+
@@ -124,7 +115,7 @@ The rolling forecasting environment uses a sequence of rolling windows of the sa
 ggplot(y_dt,aes(x=x,y=y))+
   annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="powderblue",color=NA,alpha=.5)+
   geom_vline(xintercept = c(2,R+1),size=.6,linetype=2)+
-  geom_line(size=.8,na.rm=T,color="steelblue")+
+  geom_line(size=1,na.rm=T,color="darkgray")+
   geom_point(data=y_dt[x==R+1],aes(x=x,y=rolling),size=3,color="coral")+
   geom_point(data=y_dt[x==R+2],aes(x=x,y=rolling),size=3,color="coral")+
   labs(title="",x="t",y=expression(y[t]))+
@@ -141,7 +132,7 @@ The fixed forecasting environment uses one fixed window for model estimates, and
 ggplot(y_dt,aes(x=x,y=y))+
   annotate("rect",xmin=1,xmax=R,ymin=-Inf,ymax=Inf,fill="powderblue",color=NA,alpha=.5)+
   geom_vline(xintercept = c(1,R),size=.6,linetype=2)+
-  geom_line(size=.8,na.rm=T,color="steelblue")+
+  geom_line(size=1,na.rm=T,color="darkgray")+
   geom_point(data=y_dt[x==R+1],aes(x=x,y=fixed),size=3,color="coral")+
   geom_point(data=y_dt[x==R+2],aes(x=x,y=fixed),size=3,color="coral")+
   labs(title="",x="t",y=expression(y[t]))+

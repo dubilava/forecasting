@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Tutorial 1: Introduction to R | Educated Guess" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Forecasting With Time Series Models Using R" />
+
+
+<meta name="author" content="David Ubilava" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="Forecasting With Time Series Models Using R">
+
+<title>Tutorial 1: Introduction to R | Educated Guess</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var element_label= $("label[for *= 'tufte-sn-']");
+    var count = $(element_label).length;
+    $(element_label).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('for','tufte-sn-'+ ++index);
+      $(this).text(index);
+    });
+  });
+  $(document).ready(function () {
+    var element_input= $("input[id *= 'tufte-sn-']");
+    var count = $(element_input).length;
+    $(element_input).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).attr('id','tufte-sn-'+ ++index);
+    }); 
+  });
+  $(document).ready(function () {
+    var element_span= $("span[class *= 'sidenote-number']");
+    var count = $(element_span).length;
+    $(element_span).each(function( index ) {
+      //console.log( ++index + ": " + $( this ).text() );
+      $(this).text(++index);
+    }); 
+  });
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Educated Guess<p><p class="author">David Ubilava</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html" id="toc-an-intuitive-guide-to-forecasting-with-time-series-models-using-r">An Intuitive Guide to Forecasting With Time Series Models Using R</a>
+<a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
+<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
+<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
+<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> – Forecasting Methods and Routines</a>
+<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
+<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
+<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
+<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> – Vector Autoregression</a>
+<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">8</span> – Threshold Autoregression</a>
+<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> – Forecast Evaluation</a>
+<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> – Forecast Combination</a>
+<a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
+<a id="active-page" href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a><ul class="toc-sections">
+<li class="toc"><a href="#basic-coding"> Basic Coding</a></li>
+<li class="toc"><a href="#advanced-coding"> Advanced Coding</a></li>
+</ul>
+<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
+<a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
+<a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
+<a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
+<a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
+<a href="tutorial-8-vector-autoregression.html" id="toc-tutorial-8-vector-autoregression">Tutorial 8: Vector Autoregression</a>
+<a href="tutorial-9-threshold-autoregression.html" id="toc-tutorial-9-threshold-autoregression">Tutorial 9: Threshold Autoregression</a>
+<a href="tutorial-10-forecast-evaluation.html" id="toc-tutorial-10-forecast-evaluation">Tutorial 10: Forecast Evaluation</a>
+<a href="tutorial-11-forecast-combination.html" id="toc-tutorial-11-forecast-combination">Tutorial 11: Forecast Combination</a>
+<a href="references.html" id="toc-references">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="tutorial-1-introduction-to-r" class="section level1 unnumbered">
+<h1>Tutorial 1: Introduction to R</h1>
+<div id="basic-coding" class="section level2" number="10.4">
+<h2>
+<span class="header-section-number">10.4</span> Basic Coding<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('basic-coding')" onmouseout="reset_tooltip('basic-coding-tooltip')"><span class="tooltiptext" id="basic-coding-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>There are a number of ways in which we can work with data in R. Here, we will primarily rely on <code>data.table</code>, which is one of the ways of coding in R, the other prominent dialect being <code>tidyverse</code>. But to develop an intuition, let’s start off with base R, specifically–matrices.</p>
+<p>Consider a sequence of observations:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tutorial-1-introduction-to-r.html#cb1-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
+<span id="cb1-2"><a href="tutorial-1-introduction-to-r.html#cb1-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<pre><code>## [1] 1 0 4 3 2 6</code></pre>
+<p>This sequence, unlike a <em>vector</em>, has no dimensions. But we can transform it to a <span class="math inline">\(n \times 1\)</span> vector using the <code>as.matrix()</code> function:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tutorial-1-introduction-to-r.html#cb3-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(a)</span>
+<span id="cb3-2"><a href="tutorial-1-introduction-to-r.html#cb3-2" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    1
+## [2,]    0
+## [3,]    4
+## [4,]    3
+## [5,]    2
+## [6,]    6</code></pre>
+<p>The result is a <span class="math inline">\(6 \times 1\)</span> vector, or a column matrix. To obtain a <span class="math inline">\(1 \times 6\)</span> vector, or a row matrix, we <em>transpose</em> the aforementioned vector using the <code>t()</code> function:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="tutorial-1-introduction-to-r.html#cb5-1" aria-hidden="true" tabindex="-1"></a>bt <span class="ot">&lt;-</span> <span class="fu">t</span>(b)</span>
+<span id="cb5-2"><a href="tutorial-1-introduction-to-r.html#cb5-2" aria-hidden="true" tabindex="-1"></a>bt</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    0    4    3    2    6</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="tutorial-1-introduction-to-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(bt)</span></code></pre></div>
+<pre><code>## [1] 1 6</code></pre>
+<p>We can create any <span class="math inline">\(n \times k\)</span> matrix, using the <code>matrix()</code> function. For example, consider a <span class="math inline">\(3 \times 2\)</span> matrix:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="tutorial-1-introduction-to-r.html#cb9-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(a,<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb9-2"><a href="tutorial-1-introduction-to-r.html#cb9-2" aria-hidden="true" tabindex="-1"></a>B</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    3
+## [2,]    0    2
+## [3,]    4    6</code></pre>
+<p>Note that we included the earlier generated sequence of six values, which we assigned to <code>a</code>, as the elements of this matrix.</p>
+<p>We can add column names and row names to this matrix:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="tutorial-1-introduction-to-r.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(B) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"c1"</span>,<span class="st">"c2"</span>)</span>
+<span id="cb11-2"><a href="tutorial-1-introduction-to-r.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(B) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"r1"</span>,<span class="st">"r2"</span>,<span class="st">"r3"</span>)</span>
+<span id="cb11-3"><a href="tutorial-1-introduction-to-r.html#cb11-3" aria-hidden="true" tabindex="-1"></a>B</span></code></pre></div>
+<pre><code>##    c1 c2
+## r1  1  3
+## r2  0  2
+## r3  4  6</code></pre>
+<p>If, at this point, we would like to only work with, say, the first column of the matrix, we can call it using its column number or the column name as follows:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="tutorial-1-introduction-to-r.html#cb13-1" aria-hidden="true" tabindex="-1"></a>B[,<span class="st">"c1"</span>]</span></code></pre></div>
+<pre><code>## r1 r2 r3 
+##  1  0  4</code></pre>
+<p>Similarly, if we want to refer to a matrix element, say <span class="math inline">\(b_{3,2}\)</span>, we can do this by entering the respective indices in the brackets:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tutorial-1-introduction-to-r.html#cb15-1" aria-hidden="true" tabindex="-1"></a>B[<span class="dv">3</span>,<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<p>Matrix multiplication is done using <code>%*%</code> command, granted that the two matrices are compatible. For example, we obtain a product of matrix <span class="math inline">\(B\)</span> and a new <span class="math inline">\(2 \times 1\)</span> vector, <span class="math inline">\(d\)</span>, as follows:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="tutorial-1-introduction-to-r.html#cb17-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="sc">-</span><span class="dv">2</span>))</span>
+<span id="cb17-2"><a href="tutorial-1-introduction-to-r.html#cb17-2" aria-hidden="true" tabindex="-1"></a>Bd <span class="ot">&lt;-</span> B<span class="sc">%*%</span>d</span>
+<span id="cb17-3"><a href="tutorial-1-introduction-to-r.html#cb17-3" aria-hidden="true" tabindex="-1"></a>Bd</span></code></pre></div>
+<pre><code>##    [,1]
+## r1   -1
+## r2   -4
+## r3    8</code></pre>
+<p>We can add columns (and rows) to the existing matrix using a <code>cbind()</code> function:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="tutorial-1-introduction-to-r.html#cb19-1" aria-hidden="true" tabindex="-1"></a>c3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb19-2"><a href="tutorial-1-introduction-to-r.html#cb19-2" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">cbind</span>(B,c3)</span>
+<span id="cb19-3"><a href="tutorial-1-introduction-to-r.html#cb19-3" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
+<pre><code>##    c1 c2 c3
+## r1  1  3  0
+## r2  0  2  1
+## r3  4  6  0</code></pre>
+<p>We can invert a(n invertible) matrix using the <code>solve()</code> function:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="tutorial-1-introduction-to-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a>Di <span class="ot">&lt;-</span> <span class="fu">solve</span>(D)</span>
+<span id="cb21-2"><a href="tutorial-1-introduction-to-r.html#cb21-2" aria-hidden="true" tabindex="-1"></a>Di</span></code></pre></div>
+<pre><code>##            r1 r2         r3
+## c1 -1.0000000  0  0.5000000
+## c2  0.6666667  0 -0.1666667
+## c3 -1.3333333  1  0.3333333</code></pre>
+</div>
+<div id="advanced-coding" class="section level2" number="10.5">
+<h2>
+<span class="header-section-number">10.5</span> Advanced Coding<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('advanced-coding')" onmouseout="reset_tooltip('advanced-coding-tooltip')"><span class="tooltiptext" id="advanced-coding-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>By now, we have covered enough ground to obtain the least squares estimator. For that, we will generate vectors of dependent and independent variables, and then estimate the vector of parameters. Specifically, we will generate a sequence of 200 binary variables, which will serve as our independent variable <code>x</code>, and then we will construct the dependent variable <code>y</code> using the following formula: <span class="math inline">\(y=2+0.5x+e\)</span>, where <code>e</code> is a sequence of 200 standard normal random variables.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tutorial-1-introduction-to-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb23-2"><a href="tutorial-1-introduction-to-r.html#cb23-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">200</span>,<span class="at">replace=</span>T)</span>
+<span id="cb23-3"><a href="tutorial-1-introduction-to-r.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb23-4"><a href="tutorial-1-introduction-to-r.html#cb23-4" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>)</span>
+<span id="cb23-5"><a href="tutorial-1-introduction-to-r.html#cb23-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span><span class="fl">+0.5</span><span class="sc">*</span>x<span class="sc">+</span>e</span>
+<span id="cb23-6"><a href="tutorial-1-introduction-to-r.html#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="tutorial-1-introduction-to-r.html#cb23-7" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>,x)</span>
+<span id="cb23-8"><a href="tutorial-1-introduction-to-r.html#cb23-8" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span>
+<span id="cb23-9"><a href="tutorial-1-introduction-to-r.html#cb23-9" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>##        [,1]
+##   1.8699318
+## x 0.7639315</code></pre>
+<p>The foregoing “do it by hand” exercise can be easily replicated using the <code>lm()</code> function:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tutorial-1-introduction-to-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
+<span id="cb25-2"><a href="tutorial-1-introduction-to-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a>ols</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      1.8699       0.7639</code></pre>
+<p>We can apply the <code>summary()</code> function to see the complete set of regression results:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tutorial-1-introduction-to-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.44493 -0.77746 -0.06555  0.80647  2.22089 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.8699     0.1058  17.674  &lt; 2e-16 ***
+## x             0.7639     0.1511   5.054  9.8e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.069 on 198 degrees of freedom
+## Multiple R-squared:  0.1143, Adjusted R-squared:  0.1098 
+## F-statistic: 25.55 on 1 and 198 DF,  p-value: 9.8e-07</code></pre>
+
+</div>
+</div>
+<p style="text-align: center;">
+<a href="forecasting-using-r.html"><button class="btn btn-default">Previous</button></a>
+<a href="tutorial-2-data-management-and-visualisation.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2022-11-01
+ using 
+R version 4.1.2 (2021-11-01)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

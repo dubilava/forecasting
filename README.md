@@ -50,5 +50,6 @@ This website compiles teaching material for the subject of economic forecasting.
 ## Forecast Combination
 
 - [Lecture 10 slides](https://davidubilava.com/forecasting_slides/10-Combination.html)
+- [Book chapter 10](https://davidubilava.com/forecasting/docs/forecast-combination.html)
 
 
