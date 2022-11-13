@@ -8,9 +8,9 @@ library(data.table)
 
 ## Trends in the Data
 
-`r newthought('Trends are common in economic time series')` (and not only). Observed over an extended period of time, gross domestic product, population, agricultural yields, and most recently global temperatures, all increase, on average. A trend is a pattern of change (increase or decrease) of a time series. It is possible for the direction as well as the rate of the change to alter over time. Interest rates, for example, were trending upward prior to 1980s, after which they started trending downward. Agricultural yields of cereal crops, for example, have been trending upward, but the slope of the trend has flattened over time. 
+`r newthought('Trends are common')` in economic time series (and not only). A trend is a unidirectional change of time series over an extended period of time. Over an extended period of time, the direction of the change may change. That is, series that used to be trending upward may start trending downward.  Interest rates before and after 1980s featured such pattern, for example. Moreover, even if a series are, on average, increasing (or decreasing), the rate of change may alter over time. Agricultural yields of cereal crops, for example, have been increasing at a decreasing rate over the past several decades. 
 
-Modeling and forecasting trending time series is a fairly straightforward task. But before we get to it, let's examine the issues that may arise if we ignore the presence of trends when analyzing the time series data.
+Modeling and forecasting trending time series is a fairly straightforward task. But before we get to it, let's examine the issues associated with ignoring the presence of trends when analyzing the time series data.
 
 ## Spurious Relationships
 
@@ -18,9 +18,7 @@ Nothing about trending time series necessarily violates the classical linear reg
 
 ### Deterministic Trends
 
-To begin, we will illustrate the issue using two random variables, each containing a deterministic trend. To keep things simple, we will consider linear trends, but the "findings" of this exercise can be generalized to any form of a deterministic trend (some of the key forms we discuss below). 
-
-So, consider two trending variables: $$y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),$$ and $$x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),$$ where $Cov(\nu_t,\upsilon_t) = 0$. For simplicity, we can assume $\sigma_{\nu}^2=\sigma_{\upsilon}^2=1$. Suppose, $\gamma$ and $\delta$ are some positive scalars, say, $0.3$ and $0.5$, respectively. That is, $y$ and $x$ are trending in the same direction but at different rates. Below is an example of such time series:
+To begin, we will illustrate the issue using two random variables, each containing a deterministic trend. To keep things simple, we will consider linear trends, but the "findings" of this exercise can be generalized to any form of a deterministic trend (some of the key forms we discuss below). So, consider two trending variables: $$y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),$$ and $$x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),$$ where $Cov(\nu_t,\upsilon_t) = 0$. For simplicity, we can assume $\sigma_{\nu}^2=\sigma_{\upsilon}^2=1$. Suppose, $\gamma$ and $\delta$ are some positive scalars, say, $0.3$ and $0.5$, respectively. That is, $y$ and $x$ are trending in the same direction. Below is an example of such time series:
 ```{r echo=FALSE, message=FALSE, cache=TRUE}
 r <- 1000
 n <- 120
@@ -35,12 +33,12 @@ dt <- data.table(tr=tr,x=x,y=y)
 dl <- melt(dt,id.vars="tr")
 
 ggplot(dl,aes(x=tr,y=value,color=variable,linetype=variable)) +
-  geom_line(size=1) +
-  scale_color_manual(values=c("darkgray","coral"))+
+  geom_line(size=.8) +
+  scale_color_manual(values=c("powderblue","coral"))+
   scale_linetype_manual(values=c(1,5))+
   labs(x="t",y=expression(paste(y[t],", ",x[t],sep=""))) +
   theme_classic()+
-  theme(axis.title = element_text(size=16),axis.text = element_text(size=14),legend.position = "none")
+  theme(axis.title = element_text(size=14),axis.text = element_text(size=12),legend.position = "none")
 ```
 
 If we were to estimate $$y_t = \alpha+\beta x_t + \varepsilon_t,$$ we are likely to find the relationship between the two, in this case we will find $\beta>0$, even though, we know, these variables are not related. To illustrate this, we will generate 1000 samples of size 120 for $y$ and $x$, and in each case we will estimate the parameter $\beta$. The following graph illustrates the empirical distribution of these parameter estimates:
@@ -58,12 +56,12 @@ bmat <- data.table(bmat)
 colnames(bmat) <- "b"
 ggplot(bmat,aes(x=b)) +
   geom_histogram(color="white",fill="powderblue",alpha=.8,bins=30) +
-  labs(x=expression(hat(beta))) +
+  labs(x="b") +
   theme_classic()+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
 ```
 
-Luckily, we can easily "fix" the issue, by incorporating a trend in the regression: $$y_t = \alpha+\beta x_t + \eta t + \varepsilon_t.$$ Once the trend is accounted for, the previously illustrated bias disappears. Using a similar simulation exercise as before, the following graph illustrates the empirical distribution of these parameter estimates:
+Luckily, we can easily "fix" the issue, by incorporating a trend in the regression: $$y_t = \alpha+\beta x_t + \eta t + \varepsilon_t.$$ Once the trend is accounted for, the previously illustrated "bias" disappears. Using a similar simulation exercise as before, the following graph illustrates the empirical distribution of these parameter estimates:
 ```{r echo=FALSE, message=FALSE, cache=TRUE}
 amat <- matrix(NA,r,1)
 for(i in 1:r){
@@ -77,13 +75,13 @@ for(i in 1:r){
 amat <- data.table(amat)
 colnames(amat) <- "b"
 ggplot(amat,aes(x=b)) +
-  geom_histogram(color="white",fill="powderblue",alpha=.8,bins=30) +
+  geom_histogram(color="white",fill="coral",alpha=.8,bins=30) +
   labs(x="b") +
   theme_classic()+
   theme(axis.title = element_text(size=14),axis.text = element_text(size=12))
 ```
 
-In fact, this "fix" is equivalent to regressing a de-trended $y$ on a de-trended $x$. To de-trend a variable, we first run a regression: $y_t = \gamma_0 + \gamma_1 t + \nu_t$, and then obtain the fitted values for some fixed time period (typically zero), that is: $\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t$, where $\hat{\gamma}_0$ and $\hat{\nu}_t$ are the parameter estimate and the residuals from the foregoing regression. This equiavlence is the special case of the Frisch–Waugh–Lovell (FWL) theorem, due to @frisch1933 and @lovell1963.
+In fact, this "fix" is equivalent to regressing a de-trended $y$ on a de-trended $x$. To de-trend a variable, we first run a regression: $y_t = \gamma_0 + \gamma_1 t + \nu_t$, and then obtain the fitted values for some fixed trend (typically zero), that is: $\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t$, where $\hat{\gamma}_0$ and $\hat{\nu}_t$ are the parameter estimate and the residuals from the foregoing regression.
 
 ### Stochastic Trends
 
