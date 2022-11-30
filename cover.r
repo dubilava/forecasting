@@ -26,16 +26,19 @@ colnames(sub9) <- c("Term","Count")
 
 allwords_dt <- Reduce(rbind,list(edu,guess,sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub9))
 
-# square cover
-cover <- wordcloud2(data=allwords_dt,color=ifelse(allwords_dt[, 2]>=100,'coral','darkgray'),backgroundColor = "white",shuffle=F,rotateRatio = .6,ellipticity = 0.6)
+# # square cover
+# cover <- wordcloud2(data=allwords_dt,color=ifelse(allwords_dt[, 2]>=100,'coral','darkgray'),backgroundColor="white",shuffle=F,rotateRatio=.6,ellipticity=0.6)
+# 
+# saveWidget(cover,"cover.html",selfcontained=F)
+# 
+# webshot2::webshot("cover.html","cover.png",delay=1,vwidth=650,vheight=500)
 
-saveWidget(cover,"cover.html",selfcontained=F)
-
-webshot2::webshot("cover.html","cover.png",delay=1,vwidth=650,vheight=500)
-
-# narrow cover
 cover_narrow <- wordcloud2(data=allwords_dt,color=ifelse(allwords_dt[, 2]>=100,'coral','darkgray'),backgroundColor = "white",shuffle=F,rotateRatio = .6,ellipticity = 0.4)
 
 saveWidget(cover_narrow,"cover_narrow.html",selfcontained=F)
 
+# narrow cover
+webshot2::webshot("cover_narrow.html","cover.png",delay=1,vwidth=650,vheight=500)
+
+# wide cover
 webshot2::webshot("cover_narrow.html","cover_narrow.png",delay=1,vwidth=1500,vheight=500)
