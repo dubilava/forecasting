@@ -134,7 +134,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -147,7 +147,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -210,14 +210,14 @@ div.csl-indent {
 <li class="toc"><a href="#serial-dependence"> Serial Dependence</a></li>
 <li class="toc"><a href="#transformations"> Transformations</a></li>
 </ul>
-<a href="forecasting-methods-and-routines.html" id="toc-forecasting-methods-and-routines"><span class="toc-section-number">3</span> – Forecasting Methods and Routines</a>
+<a href="generating-and-evaluating-forecasts.html" id="toc-generating-and-evaluating-forecasts"><span class="toc-section-number">3</span> – Generating and Evaluating Forecasts</a>
 <a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
 <a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
 <a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
 <a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> – Vector Autoregression</a>
 <a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">8</span> – Threshold Autoregression</a>
-<a href="forecast-evaluation.html" id="toc-forecast-evaluation"><span class="toc-section-number">9</span> – Forecast Evaluation</a>
-<a href="forecast-combination.html" id="toc-forecast-combination"><span class="toc-section-number">10</span> – Forecast Combination</a>
+<a href="comparing-forecasts.html" id="toc-comparing-forecasts"><span class="toc-section-number">9</span> – Comparing Forecasts</a>
+<a href="combining-forecasts.html" id="toc-combining-forecasts"><span class="toc-section-number">10</span> – Combining Forecasts</a>
 <a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
@@ -263,13 +263,13 @@ Figure 2.1: White noise process
 </p>
 <img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise process" width="600">
 </div>
-<p>Such time series is a realization of what is referred to as a <em>white noise</em> process.<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an <em>Independent</em> white noise process. Without the indepence assumption we would have simply a white noise process.</span> That is, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if:
+<p>Such time series is a realization of what is referred to as a <em>white noise</em> process.<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an <em>Independent</em> white noise process. Without the indepence assumption we would have simply a white noise process.</span> That is, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if:
 <span class="math display">\[\begin{align*}
 &amp; E(Y_t) = 0,\;~\forall~t\\
 &amp; Var(Y_t) = \sigma^2,\;~\forall~t\\
 &amp; Cov(Y_t,Y_{t-k}) = 0,\;~\forall~k \ne 0
 \end{align*}\]</span></p>
-<p>Because each observation is drawn from the same distribution, white noise is a stationary process. Indeed, it is a special type of the stationary process insofar as its mean, variance, and covariance are time-invariant. Note, for stationarity, neither the mean nor the covariances are required to be equal to zero. Thus, <span class="math inline">\(\{Y_t\}\)</span> is a stationary process<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> To be precise, this is a definition of covariance-stationarity or weak form of stationarity. Strict stationarity is defined by time invariant joint distribution of random variables.</span> if its mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
+<p>Because each observation is drawn from the same distribution, white noise is a stationary process. Indeed, it is a special type of the stationary process insofar as its mean, variance, and covariance are time-invariant. Note, for stationarity, neither the mean nor the covariances are required to be equal to zero. Thus, <span class="math inline">\(\{Y_t\}\)</span> is a stationary process<label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> To be precise, this is a definition of covariance-stationarity or weak form of stationarity. Strict stationarity is defined by time invariant joint distribution of random variables.</span> if its mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
 <p>Why should we care about stationarity? The gist of the matter is that in each time period we only observe one realization of the respective random variable. We don’t have the sample of observations for that period—just a single observation is all we have. Of course, over time, we have many such observations—one for each period. The question then is, could we use this sample of time series and conclude something about the moments of the stochastic process? Stationarity in conjunction with <em>ergodicity</em> enables us to do just this.</p>
 <p>Ergodicity implies independence of two random variables that are far apart from each other in the stochastic process. That is, if <span class="math inline">\(\{Y_t\}\)</span> is stationary and ergodic with <span class="math inline">\(E(Y_t)=\mu\)</span>, then <span class="math inline">\(Cov(Y_t,Y_{t-k}) = 0\)</span> for some large integer <span class="math inline">\(k\)</span>. More importantly, when the process is stationary and ergodic, the mean of the sample of time series converges to the mean of the stochastc process as the sample size increases.</p>
 </div>
@@ -296,7 +296,7 @@ Figure 2.3: Partial Autocorrelation
 </p>
 <img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="600">
 </div>
-<p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.</span> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
+<p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<label for="tufte-sn-11" class="margin-toggle sidenote-number">11</label><input type="checkbox" id="tufte-sn-11" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">11</span> There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.</span> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
 </div>
 <div id="transformations" class="section level2" number="2.4">
 <h2>
@@ -332,12 +332,12 @@ Figure 2.6: Dow Jones Industrial Average: Log-Differences
 </div>
 <p style="text-align: center;">
 <a href="introduction-to-forecasting.html"><button class="btn btn-default">Previous</button></a>
-<a href="forecasting-methods-and-routines.html"><button class="btn btn-default">Next</button></a>
+<a href="generating-and-evaluating-forecasts.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-12-02
+2022-12-24
  using 
-R version 4.1.2 (2021-11-01)
+R version 4.2.2 (2022-10-31 ucrt)
 </p>
 </div>
 </div>

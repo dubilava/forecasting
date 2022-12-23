@@ -1,4 +1,4 @@
-# &ndash; Forecast Evaluation
+# &ndash; Comparing Forecasts
 ![](art/evaluation.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}

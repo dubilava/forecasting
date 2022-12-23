@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Forecasting Using R | Educated Guess" />
+<meta property="og:title" content="Chapter 3 – Generating and Evaluating Forecasts | Educated Guess" />
 <meta property="og:type" content="book" />
 <meta property="og:image" content="/forecasting-logo.png" />
 <meta property="og:description" content="Forecasting With Time Series Models Using R" />
@@ -23,7 +23,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Forecasting With Time Series Models Using R">
 
-<title>Forecasting Using R | Educated Guess</title>
+<title>Chapter 3 – Generating and Evaluating Forecasts | Educated Guess</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -205,7 +205,10 @@ div.csl-indent {
 <a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
 <a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
 <a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
-<a href="generating-and-evaluating-forecasts.html" id="toc-generating-and-evaluating-forecasts"><span class="toc-section-number">3</span> – Generating and Evaluating Forecasts</a>
+<a id="active-page" href="generating-and-evaluating-forecasts.html" id="toc-generating-and-evaluating-forecasts"><span class="toc-section-number">3</span> – Generating and Evaluating Forecasts</a><ul class="toc-sections">
+<li class="toc"><a href="#pseudo-forecasting-routine"> Pseudo-Forecasting Routine</a></li>
+<li class="toc"><a href="#forecast-assessment"> Forecast Assessment</a></li>
+</ul>
 <a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
 <a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
 <a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
@@ -213,7 +216,7 @@ div.csl-indent {
 <a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">8</span> – Threshold Autoregression</a>
 <a href="comparing-forecasts.html" id="toc-comparing-forecasts"><span class="toc-section-number">9</span> – Comparing Forecasts</a>
 <a href="combining-forecasts.html" id="toc-combining-forecasts"><span class="toc-section-number">10</span> – Combining Forecasts</a>
-<a id="active-page" href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
+<a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
 <a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
 <a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
 <a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
@@ -233,14 +236,72 @@ div.csl-indent {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="forecasting-using-r" class="section level1 unnumbered">
-<h1>Forecasting Using R</h1>
-<p>R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,<label for="tufte-sn-19" class="margin-toggle sidenote-number">19</label><input type="checkbox" id="tufte-sn-19" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">19</span> such as <a href="https://r4ds.had.co.nz/">R for Data Science</a></span>, as well as by applying a trial–and–error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language.</p>
-<p>We will work in RStudio—the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will ‘find’ and connect with the former seamlessly). R is available from <a href="https://cran.r-project.org/" target="_blank">CRAN</a>, and RStudio is available from <a href="https://www.rstudio.com/" target="_blank">RStudio</a>.</p>
+<div id="generating-and-evaluating-forecasts" class="section level1" number="3">
+<h1>
+<span class="header-section-number">Chapter 3</span> – Generating and Evaluating Forecasts</h1>
+<p><img src="art/forecast.png"></p>
+<div id="pseudo-forecasting-routine" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Pseudo-Forecasting Routine<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('pseudo-forecasting-routine')" onmouseout="reset_tooltip('pseudo-forecasting-routine-tooltip')"><span class="tooltiptext" id="pseudo-forecasting-routine-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p><span class="newthought">Forecast accuracy</span> should only be determined by considering how well a model performs on data not used in estimation. But to assess forecast accuracy we need access to the data, typically from future time periods, that was not used in estimation. This leads to the so-called ‘pseudo forecasting’ routine. This routine involves splitting the available data into two segments referred to as ‘in-sample’ and ‘out-of-sample’. The in-sample segment of a series is also known as the ‘estimation set’ or the ‘training set’. The out-of-sample segment of a series is also known as the ‘hold-out set’ or the ‘test set’.</p>
+<p>Thus, we make the so-called ‘genuine’ forecasts using only the information from the estimation set, and assess the accuracy of these forecasts in an out-of-sample setting.</p>
+<p>Because forecasting is often performed in a time series context, the estimation set typically predates the hold-out set. In non-dynamic settings such chronological ordering may not be necessary, however.</p>
+<p>There are different forecasting schemes for updating the information set in the pseudo-forecasting routine. These are: <em>recursive</em>, <em>rolling</em>, and <em>fixed</em>.</p>
+<p>The recursive forecasting environment uses a sequence of expanding windows to update model estimates and the information set.</p>
+<p><img src="forecasting_files/figure-html/recursive-1.png" width="600"></p>
+<p>The rolling forecasting environment uses a sequence of rolling windows of the same size to update model estimates and the information set.</p>
+<p><img src="forecasting_files/figure-html/rolling-1.png" width="600"></p>
+<p>The fixed forecasting environment uses one fixed window for model estimates, and only updates the information set.</p>
+<p><img src="forecasting_files/figure-html/fixed-1.png" width="600"></p>
+<p>The forecasts are made in period 13 for periods 14 and onward. The first estimation window of the pseudo-forecasting routine covers periods one–through–ten. In this illustration, shaded segments illustrate the range of the data used for estimation of model parameters.</p>
+</div>
+<div id="forecast-assessment" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Forecast Assessment<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecast-assessment')" onmouseout="reset_tooltip('forecast-assessment-tooltip')"><span class="tooltiptext" id="forecast-assessment-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>To assess the accuracy of a forecast method, we compare forecast errors from two (or more) methods to each other. Consider a time series, <span class="math inline">\(\{y_t\}\)</span>, with a total of <span class="math inline">\(T\)</span> observations. To generate genuine forecasts, we decide on the size of the in-sample set consisting of <span class="math inline">\(R\)</span> observations so that <span class="math inline">\(R &lt; T\)</span> (typically, <span class="math inline">\(R \approx 0.75T\)</span>), and the out-of-sample set consisting of <span class="math inline">\(P\)</span> observations, where <span class="math inline">\(P=T-R-h+1\)</span> and where <span class="math inline">\(h\)</span> is the forecast horizon.</p>
+<p>For example, if we are interested in one-step-ahead forecast assessment, this way we will produce a sequence of forecasts: <span class="math inline">\(\{y_{R+1|R},y_{R+2|{R+1}},\ldots,y_{T|{T-1}}\}\)</span> for <span class="math inline">\(\{Y_{R+1},Y_{R+2},\ldots,Y_{T}\}\)</span>.</p>
+<p>Forecast errors, <span class="math inline">\(e_{R+j} = y_{R+j} - y_{R+j|{R+j-1}}\)</span>, then can be computed for <span class="math inline">\(j = 1,\ldots,T-R\)</span>.</p>
+<p>Two most commonly applied measures of forecast accuracy are the <em>mean absolute forecast error</em> (MAFE) and the <em>root mean squared forecast error</em> (RMSFE):
+<span class="math display">\[\begin{aligned}
+\text{MAFE}  = &amp; \frac{1}{P}\sum_{i=1}^{P}|e_i|\\
+\text{RMSFE} = &amp; \sqrt{\frac{1}{P}\sum_{i=1}^{P}e_i^2}
+\end{aligned}\]</span>
+The lower is the measure of accuracy associated with a given method, the better this method performs in generating accurate forecasts. As noted earlier, ‘better’ does not mean ‘without errors’.</p>
+<p>Forecast errors of a ‘good’ forecasting method will have the following properties:</p>
+<ul>
+<li>zero mean; otherwise, the forecasts are biased.</li>
+<li>no correlation with the forecasts; otherwise, there is information left that should be used in computing forecasts.</li>
+<li>no serial correlation among one-step-ahead forecast errors. Note that <span class="math inline">\(k\)</span>-step-ahead forecasts, for <span class="math inline">\(k&gt;1\)</span>, can be, and usually are, serially correlated.</li>
+</ul>
+<p>Any forecasting method that does not satisfy these properties has a potential to be improved.</p>
+<p>The aforementioned three desired properties of forecast errors are, in effect, hypotheses that can be tested. This can be done in a basic regression setting.</p>
+<div id="unbiasedness" class="section level3" number="3.2.1">
+<h3>
+<span class="header-section-number">3.2.1</span> Unbiasedness<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('unbiasedness')" onmouseout="reset_tooltip('unbiasedness-tooltip')"><span class="tooltiptext" id="unbiasedness-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Testing <span class="math inline">\(E(e_{t+h|t})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+h|t} = \alpha+\upsilon_{t+h},\;~~t = R,\ldots,T-h,\]</span>
+where <span class="math inline">\(R\)</span> is the estimation window size, <span class="math inline">\(T\)</span> is the sample size, and <span class="math inline">\(h\)</span> is the forecast horizon length. The null of zero-mean forecast error is equivalent of testing <span class="math inline">\(H_0: \alpha = 0\)</span> in the OLS setting. For <span class="math inline">\(h\)</span>-step-ahead forecast errors, when <span class="math inline">\(h&gt;1\)</span>, autocorrelation consistent standard errors should be used.</p>
+</div>
+<div id="efficiency" class="section level3" number="3.2.2">
+<h3>
+<span class="header-section-number">3.2.2</span> Efficiency<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('efficiency')" onmouseout="reset_tooltip('efficiency-tooltip')"><span class="tooltiptext" id="efficiency-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Testing <span class="math inline">\(Cov(e_{t+h|t},\hat{y}_{t+h|t})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+h|t} = \alpha + \beta \hat{y}_{t+h|t} + \upsilon_{t+h},\;~~t = R,\ldots,T-h.\]</span> The null of forecast error independence of the information set is equivalent of testing <span class="math inline">\(H_0: \beta = 0\)</span> in the OLS setting. For <span class="math inline">\(h\)</span>-step-ahead forecast errors, when <span class="math inline">\(h&gt;1\)</span>, autocorrelation consistent standard errors should be used.</p>
+</div>
+<div id="no-autocorrelation" class="section level3" number="3.2.3">
+<h3>
+<span class="header-section-number">3.2.3</span> No Autocorrelation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('no-autocorrelation')" onmouseout="reset_tooltip('no-autocorrelation-tooltip')"><span class="tooltiptext" id="no-autocorrelation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Testing <span class="math inline">\(Cov(e_{t+1|t},e_{t|t-1})=0\)</span>. Set up a regression: <span class="math display">\[e_{t+1|t} = \alpha + \gamma e_{t|t-1} + \upsilon_{t+1},\;~~t = R+1,\ldots,T-1.\]</span> The null of no forecast error autocorrelation is equivalent of testing <span class="math inline">\(H_0: \gamma = 0\)</span> in the OLS setting.</p>
+
+</div>
+</div>
 </div>
 <p style="text-align: center;">
-<a href="combining-forecasts.html"><button class="btn btn-default">Previous</button></a>
-<a href="tutorial-1-introduction-to-r.html"><button class="btn btn-default">Next</button></a>
+<a href="features-of-time-series-data.html"><button class="btn btn-default">Previous</button></a>
+<a href="trends.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
 2022-12-24

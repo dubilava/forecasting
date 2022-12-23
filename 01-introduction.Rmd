@@ -16,7 +16,7 @@ We guess events that come with a fair bit of uncertainty. Such would be events f
 
 Making a claim about whether it will rain the next day is a guess because it may or may not rain. Rain is a random variable. By contrast, making a claim about whether the sun will rise the next day is hardly a guess. There is little prophecy associated with predicting the sunrise.
 
-A guess becomes a forecast if it relies on knowledge. Otherwise, it may as well be a gamble. We make a forecast if we guess rain for tomorrow because we observed clouds today. Here we account for our understanding of meteorological phenomena. We gamble if we make a guess of heads after the next flip of a coin because we observed tails after the current flip. We have not acquired any useful knowledge by observing the outcome of the current flip. 
+A guess that relies on knowledge is a forecast. Otherwise, it is merely a gamble.^[Consider card counting. A casino is a gambling house. Everyone is welcome so long as gambling is what they do. But when one attempts to 'beat the house' using knowledge that is accumulated by counting cards, the gamble becomes a forecast, and the gambler becomes *persona non grata*.] We make a forecast if we guess rain for tomorrow because we observed clouds today. Here we account for our understanding of meteorological phenomena. We gamble if we make a guess of heads after the next flip of a coin because we observed tails after the current flip. We have not acquired any new knowledge by observing the outcome of the current flip that would be useful in predicting the outcome of the next flip. 
 
 The more we know about underlying factors that affect the outcome of a random variable, the more accurate is our forecast. A good forecast doesn't need to be precise, however. It almost never is, only if by fluke. An imprecise forecast can be of value as well. That we were unable to exactly predict an event, tells us something about our understanding of the underlying processes. Such conjecture can be useful. Forecasting, even if inaccurate, can be useful.^[George Box's 'all models are wrong but some are useful' is certainly suitable for the study of forecasting.]
 
@@ -34,7 +34,7 @@ Much like a better understanding of the laws of physics facilitated the inceptio
 Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the massive increase in computing power allowed the storage and distribution of granular data that has further aided the advancement of the methods and practices of forecasting.
 
 
-## The Uncertainty of a Forecast
+## Knowing the Unknown
 
 All methods&mdash;primitive or complex, spurious or scientifically substantiated&mdash;have one thing in common: they all rely (or, at least, pretend to rely) upon *information*. Information is key in forecasting. It comes in many forms, and is condensed into *data*. When organized and stored in a certain way -- chronologically and at regular intervals -- we end up with the *time series* data. 
 

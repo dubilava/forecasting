@@ -1,4 +1,4 @@
-# &ndash; Forecast Combination
+# &ndash; Combining Forecasts
 ![](art/combination.png)
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
