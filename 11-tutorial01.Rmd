@@ -1,8 +1,10 @@
 # Forecasting Using R {-}
 
-R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,^[such as [R for Data Science](https://r4ds.had.co.nz/)], as well as by applying a trial--and--error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. 
+R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,^[such as [R for Data Science](https://r4ds.had.co.nz/)], as well as by applying a trial--and--error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R pretty much on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. I am going to get you started, you can go as far as you wish.
 
-We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former seamlessly). R is available from [CRAN](https://cran.r-project.org/){target="_blank"}, and RStudio is available from [RStudio](https://www.rstudio.com/){target="_blank"}. 
+We will work in RStudio---the go-to interface for R (as R itself is not an overly user-friendly platform). Thus, you will need to have installed both, R and RStudio on your devise (the latter will 'find' and connect with the former seamlessly). R is available from [CRAN](https://cran.r-project.org/){target="_blank"}, and RStudio is available from [RStudio](https://www.rstudio.com/){target="_blank"}.
+
+There are several 'dialects' of R coding language. We will primarily rely on data.table, which I find intuitive. The other popular dialect is tidyverse. [Forecasting Principles and Practice](https://otexts.com/fpp3/) by Hyndman and Athanasopoulos relies on tidyverse. Technically, you don't necessarily need either of these dialects to get the job done -- base R language would be just enough. But these dialects make things easier, and they are not too difficult to master anyway.
 
 
 # Tutorial 1: Introduction to R {-}

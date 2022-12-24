@@ -1,4 +1,4 @@
-# Tutorial 11: Forecast Combination {-}
+# Tutorial 10: Combining Forecasts {-}
 
 In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from a set of models using a rolling window procedure, we will combine these forecasts and assess the accuracy of the combined forecast. To run the code, the `data.table`, `ggplot2`, `lmtest`, and `sandwich` packages need to be installed and loaded.
 

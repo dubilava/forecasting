@@ -1,4 +1,4 @@
-# Tutorial 8: Vector Autoregression {-}
+# Tutorial 7: Vector Autoregression {-}
 
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(data.table)

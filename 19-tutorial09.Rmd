@@ -1,4 +1,4 @@
-# Tutorial 10: Forecast Evaluation {-}
+# Tutorial 9: Comparing Forecasts {-}
 
 In this tutorial, we will generate a time series, we will obtain one-step-ahead forecasts from competing models using a rolling window procedure, and we will perform the Diebold-Mariano type regression-based test for equal predictive ability of the competing models. To run the code, the `data.table`, `ggplot2`, `lmtest`, and `sandwich` packages need to be installed and loaded.
 
