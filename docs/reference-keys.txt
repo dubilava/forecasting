@@ -81,5 +81,3 @@ combining-forecasts
 benefits-of-forecast-combination
 optimal-weights-for-forecast-combination
 forecast-encompassing
-basic-coding
-advanced-coding
