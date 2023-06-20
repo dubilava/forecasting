@@ -88,7 +88,7 @@ It is important to note that distribution of the test statistic is non-standard.
 To illustrate some of the foregoing, consider the USD/EUR exchange rates.
 
 ```{r, exchange, fig.cap="USD/EUR exchange rates", echo=FALSE, message=FALSE}
-load("../../Books/forecasting/data/exchange_rates.RData")
+load("data/exchange_rates.RData")
 
 ggplot(exchange_rates,aes(x=date,y=y))+
   geom_line(color="powderblue",size=.8)+

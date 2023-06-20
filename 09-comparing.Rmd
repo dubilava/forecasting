@@ -54,8 +54,8 @@ In practice, the test of equal predictive ability can be applied within the fram
 Two methods for generating multi-step-ahead forecasts from autoregressions, for example, are the iterated and direct methods. Each has advantages and disadvantages, and when the model is mis-specified, which more often than not tends to be the case, either of the two methods can yield more accurate forecasts. We will examine this using the U.S. year-on-year monthly inflation data.
 
 ```{r iterated-direct, fig.cap="Iterated and Direct Forecasts", echo=FALSE, message=FALSE, cache=FALSE}
-load("../../Books/forecasting/data/inflation.RData")
-load("../../Books/forecasting/data/funds.RData")
+load("data/inflation.RData")
+load("data/funds.RData")
 
 dt <- merge(funds,inflation,by="date")
 colnames(dt) <- c("date","funds","inflation")

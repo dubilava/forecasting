@@ -1,5 +1,6 @@
 --- 
 title: "Educated Guess" 
+subtitle: "An Intuitive Guide to Forecasting With Time Series Models Using R"
 author: "David Ubilava"
 date: "`r format(Sys.Date(),'%B %Y')`"
 description: "Forecasting With Time Series Models Using R"
@@ -13,6 +14,10 @@ cover-image: forecasting-logo.png
 documentclass: book
 classoption: oneside
 fontsize: 12pt
+output:
+  bookdown::gitbook:
+    split_by: "chapter"
+    css: style.css
 ---
 
 
@@ -24,14 +29,14 @@ library(tufte)
 library(msmbstyle)
 ```
 
-
-# An Intuitive Guide to Forecasting With Time Series Models Using R {-}
+# {-}
+<!-- # An Intuitive Guide to Forecasting With Time Series Models Using R {-} -->
 
 ![](cover.png)
 
 'The future will be the child of the past and the present, even if a rebellious child.' This quote belongs to *George Crumb*&mdash;an American composer of classical music. I don’t listen to classical music, and I had not heard of George Crumb until when I searched for a quote by *Ilia Chavchavadze*&mdash;a Georgian public figure of the late 19th and early 20th centuries&mdash;who said: 'The present born from the past is a parent of the future.'
 
-Neither George Crumb nor Ilia Chavchavadze was an expert in forecasting or in time series analysis. But in their quotes, they both described rather eloquently the very essence of forecasting: We are able to make an educated guess about the future because we can observe and take lessons from the past.
+Neither George Crumb nor Ilia Chavchavadze was an expert in forecasting or in time series analysis. But in their quotes, they both described rather eloquently the very essence of forecasting: We can make an educated guess about the future because we observe and take lessons from the past.
 
 A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy. 
 
