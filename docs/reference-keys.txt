@@ -1,3 +1,4 @@
+fig:dag-birds
 fig:white-noise
 fig:acf
 fig:pacf
@@ -21,8 +22,9 @@ fig:iterated-direct
 introduction-to-forecasting
 what-forecast-is-and-is-not
 a-brief-history-of-the-study-of-forecasting
+through-the-lens-of-causal-inference
+self-fulfilling-prophecy
 knowing-the-unknown
-the-loss-function-and-the-optimal-point-forecast
 features-of-time-series-data
 stochastic-process-and-time-series
 stationarity

@@ -1,5 +1,5 @@
 p.caption {
-  color: darkgray;
+  color: dimgray;
   margin-top: 0px;
 }
 p code {
@@ -22,57 +22,38 @@ pre code {
               padding-right: 50%;
 }
 
-@media only screen and (min-width : 761px) {
-              a.dropbtn {
-                             display: none;
-              }
 
-              div.dropdown-content {
-                             display: block;
-                             position: fixed;
-                             overflow-y:scroll;
-                             top: 0px;
-                             left: 0px;
-                             height: 100%;
-                             width: 20%;
-                             float: left;
-              }
-
-              html {
-                             padding-left: 10%
-              }
-}
 
 .panel-active section {
 		padding-top: 0;
 }
 
 .dropdown-content a:hover {
-    background-color: powderblue;
+    background-color: lightgray;
 }
 
 li .dropbtn {
-    color: darkgray;
+    color: dimgray;
 }
 
 ul.navbar {
-		background-color: powderblue;
+		background-color: lightgray;
 		color: coral;
 }
 
 #active-page {
-		background-color: #ffffff;
+		background-color: white;
 		color: coral;
 }
 
 li.toc {
-		background-color: #ffffff;
+		background-color: white;
 		padding-left: 10px;
 }
 
 h1 {
-	color: coral;
-	border-bottom-color: coral;
+	color: dimgray;
+	border-bottom-color: dimgray;
 }
 
 h2 {
@@ -90,6 +71,11 @@ h3 {
 	line-height: 1.2;
 }
 
+.subtitle {
+	color: dimgray;
+	line-height: 1.1;
+}
+
 .author {
-	color: white;
+	color: dimgray;
 }
