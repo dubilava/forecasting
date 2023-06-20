@@ -79,3 +79,20 @@ h3 {
 .author {
 	color: dimgray;
 }
+
+.book .book-summary {
+  background: white;
+  border-right: none;
+}
+
+.summary a:hover {
+  color: coral !important;
+} 
+
+.book .book-summary ul.summary li.active>a { /*active TOC links*/
+  color: slategray !important;
+  border-left: solid 4px;
+  border-color: coral;
+  padding-left: 11px !important;
+}  
+

@@ -90,7 +90,7 @@ ggplot(dt)+
   theme(axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank(),panel.grid.major = element_blank())
 ```
 
-On this diagram, **Pressure** denotes air pressure, **Birds** denotes birds' behavior, and **Storm** denotes a storm. The subscripts clarify temporal ordering. The solid lines indicate a causal relationship, and the dashed line indicates a correlation without causality. The gray lines indicate an unobserved effect, and the black line indicates the observed effect. While we do not observe the true causal effects,^[Had we observed the true causal effects, one of them---the relationship between air pressure and birds' behavior---would deem obsolete. This is, of course, the case in the present age.] the observed correlation and the temporal ordering of the two outcomes of the same cause helps us build a useful predictive model. 
+On this diagram, **P** denotes air pressure, **B** denotes birds' behavior, and **S** denotes a storm. The subscripts clarify temporal ordering. The solid lines indicate a causal relationship, and the dashed line indicates a correlation without causality. The gray lines indicate an unobserved effect, and the black line indicates the observed effect. While we do not observe the true causal effects,^[Had we observed the true causal effects, one of them---the relationship between air pressure and birds' behavior---would deem obsolete. This is, of course, the case in the present age.] the observed correlation and the temporal ordering of the two outcomes of the same cause helps us build a useful predictive model. 
 
 This illustration alludes to a notable feature of forecasting. To make a forecast, one does not need a "clean" identification of the causal mechanism. A mere correlation might as well suffice. In some instances, this might even be a preferred setting. Correlation captures information on unobserved variables, which aids in forecasting, whereas causal inference specifically ignores this information. 
 
@@ -115,12 +115,30 @@ What we just described is known as the *efficient market hypothesis*. The effici
 ## Knowing the Unknown
 
 Methods of forecasting may differ, but they have one thing in common: they all rely---or at least pretend to rely---upon information. We record and observe information in the form of *data*. When the data are organized and stored in a certain way---chronologically and at regular intervals---we have a *time series*. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future. 
-<!-- Figure~\ref{c1:series} illustrates this.  -->
-<!-- \begin{figure}[htbp] -->
-<!-- 	\includegraphics[width=1.0\textwidth]{figures/c1/dot_hist.eps} -->
-<!-- 	\caption{Time series and its density} -->
-<!-- 	\label{c1:series} -->
-<!-- \end{figure} -->
+```{r time-series, fig.cap="Time series and its density", echo=FALSE, message=FALSE}
+n <- 20
+
+set.seed(24)
+x <- rnorm(n,3,1.5)
+for(i in 2:n) x[i] <- .2*x[i-1]+x[i]
+dt <- data.table(x=round(x),t=1:n)
+
+gg_ts <- ggplot(dt,aes(x=t,y=x))+
+  geom_line(color="black",linetype=1,linewidth=.8)+
+  geom_point(color="black",fill="gray",stroke=1,shape=21,size=3)+
+  ylim(0,7)+
+  labs(x=expression(t),y=expression(x[t]))+
+  theme_eg()
+
+gg_hist <- ggplot(dt,aes(x=x))+
+  geom_dotplot(binwidth=.3,color="black",fill="gray",stroke=2,stackratio=1.1)+
+  xlim(0,7)+
+  coord_flip()+
+  theme_eg()+
+  theme(axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank())
+
+plot_grid(gg_ts,gg_hist,align="hv",ncol=2,rel_widths = c(3,1))
+```
 
 The left-hand side of the graph features a time series of 20 observations, given by $x_t$, where $t=1,\ldots,20$. The observation in the first period, $x_1$, takes the value of two; the observation in the second period, $x_2$, takes the value of four; and so forth until the observation in the last period, $x_{20}$, which takes the value of five.  
 

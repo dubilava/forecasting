@@ -1,4 +1,5 @@
 fig:dag-birds
+fig:time-series
 fig:white-noise
 fig:acf
 fig:pacf

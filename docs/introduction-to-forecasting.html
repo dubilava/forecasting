@@ -324,7 +324,7 @@ div.csl-indent {
 Figure 1.1: Causality, correlation, and forecasting
 </p>
 </div>
-<p>On this diagram, <strong>Pressure</strong> denotes air pressure, <strong>Birds</strong> denotes birds’ behavior, and <strong>Storm</strong> denotes a storm. The subscripts clarify temporal ordering. The solid lines indicate a causal relationship, and the dashed line indicates a correlation without causality. The gray lines indicate an unobserved effect, and the black line indicates the observed effect. While we do not observe the true causal effects,<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> the observed correlation and the temporal ordering of the two outcomes of the same cause helps us build a useful predictive model.</p>
+<p>On this diagram, <strong>P</strong> denotes air pressure, <strong>B</strong> denotes birds’ behavior, and <strong>S</strong> denotes a storm. The subscripts clarify temporal ordering. The solid lines indicate a causal relationship, and the dashed line indicates a correlation without causality. The gray lines indicate an unobserved effect, and the black line indicates the observed effect. While we do not observe the true causal effects,<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> the observed correlation and the temporal ordering of the two outcomes of the same cause helps us build a useful predictive model.</p>
 <p>This illustration alludes to a notable feature of forecasting. To make a forecast, one does not need a “clean” identification of the causal mechanism. A mere correlation might as well suffice. In some instances, this might even be a preferred setting. Correlation captures information on unobserved variables, which aids in forecasting, whereas causal inference specifically ignores this information.</p>
 <p>That’s not to say that forecasting does not rely on causal relations. It does, very much so. And everything else held constant, the causal relationship would be preferred to the correlational. In our example, once the scientifically substantiated causal linkage between changes in atmospheric pressure and the occurrence of storms was established, there was little need and hardly any value in the correlational relationship between birds’ behavior and the occurrence of storms.</p>
 </div>
@@ -339,13 +339,13 @@ Figure 1.1: Causality, correlation, and forecasting
 </div>
 <div id="knowing-the-unknown" class="section level2 hasAnchor" number="1.5">
 <h2><span class="header-section-number">1.5</span> Knowing the Unknown<a href="introduction-to-forecasting.html#knowing-the-unknown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Methods of forecasting may differ, but they have one thing in common: they all rely—or at least pretend to rely—upon information. We record and observe information in the form of <em>data</em>. When the data are organized and stored in a certain way—chronologically and at regular intervals—we have a <em>time series</em>. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future.
-<!-- Figure~\ref{c1:series} illustrates this.  -->
-<!-- \begin{figure}[htbp] -->
-<!--    \includegraphics[width=1.0\textwidth]{figures/c1/dot_hist.eps} -->
-<!--    \caption{Time series and its density} -->
-<!--    \label{c1:series} -->
-<!-- \end{figure} --></p>
+Methods of forecasting may differ, but they have one thing in common: they all rely—or at least pretend to rely—upon information. We record and observe information in the form of <em>data</em>. When the data are organized and stored in a certain way—chronologically and at regular intervals—we have a <em>time series</em>. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future.
+<div class="figure"><span style="display:block;" id="fig:time-series"></span>
+<img src="forecasting_files/figure-html/time-series-1.png" alt="Time series and its density" width="600" />
+<p class="caption">
+Figure 1.2: Time series and its density
+</p>
+</div>
 <p>The left-hand side of the graph features a time series of 20 observations, given by <span class="math inline">\(x_t\)</span>, where <span class="math inline">\(t=1,\ldots,20\)</span>. The observation in the first period, <span class="math inline">\(x_1\)</span>, takes the value of two; the observation in the second period, <span class="math inline">\(x_2\)</span>, takes the value of four; and so forth until the observation in the last period, <span class="math inline">\(x_{20}\)</span>, which takes the value of five.</p>
 <p>The question is, given the observed data, what would be our best guess about <span class="math inline">\(x_{21}\)</span>, that is, the value of the observation in the subsequent period? In other words, the question asks us to forecast the next observation, given that we have observed the chronological sequence of the previous 20 observations.</p>
 <p>To answer this question, let’s summarize what we know. The density<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> of the observed time series, presented in the form of stacked dots on the right-hand side of the figure, does that. We can see that the observed values range from one to six, and some of them appear more frequently than others. Specifically, <em>three</em> appears most frequently in our observed sample. So, our best guess can be <em>three</em>.</p>
