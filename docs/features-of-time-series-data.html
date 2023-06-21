@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 – Features of Time Series Data | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 – Features of Time Series Data | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -118,10 +118,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -321,13 +317,13 @@ div.csl-indent {
 Figure 2.1: White noise process
 </p>
 </div>
-<p>Such time series is a realization of what is referred to as a <em>white noise</em> process.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> That is, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if:
+<p>Such time series is a realization of what is referred to as a <em>white noise</em> process.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> That is, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if:
 <span class="math display">\[\begin{align*}
 &amp; E(Y_t) = 0,\;~\forall~t\\
 &amp; Var(Y_t) = \sigma^2,\;~\forall~t\\
 &amp; Cov(Y_t,Y_{t-k}) = 0,\;~\forall~k \ne 0
 \end{align*}\]</span></p>
-<p>Because each observation is drawn from the same distribution, white noise is a stationary process. Indeed, it is a special type of the stationary process insofar as its mean, variance, and covariance are time-invariant. Note, for stationarity, neither the mean nor the covariances are required to be equal to zero. Thus, <span class="math inline">\(\{Y_t\}\)</span> is a stationary process<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> if its mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
+<p>Because each observation is drawn from the same distribution, white noise is a stationary process. Indeed, it is a special type of the stationary process insofar as its mean, variance, and covariance are time-invariant. Note, for stationarity, neither the mean nor the covariances are required to be equal to zero. Thus, <span class="math inline">\(\{Y_t\}\)</span> is a stationary process<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> if its mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
 <p>Why should we care about stationarity? The gist of the matter is that in each time period we only observe one realization of the respective random variable. We don’t have the sample of observations for that period—just a single observation is all we have. Of course, over time, we have many such observations—one for each period. The question then is, could we use this sample of time series and conclude something about the moments of the stochastic process? Stationarity in conjunction with <em>ergodicity</em> enables us to do just this.</p>
 <p>Ergodicity implies independence of two random variables that are far apart from each other in the stochastic process. That is, if <span class="math inline">\(\{Y_t\}\)</span> is stationary and ergodic with <span class="math inline">\(E(Y_t)=\mu\)</span>, then <span class="math inline">\(Cov(Y_t,Y_{t-k}) = 0\)</span> for some large integer <span class="math inline">\(k\)</span>. More importantly, when the process is stationary and ergodic, the mean of the sample of time series converges to the mean of the stochastc process as the sample size increases.</p>
 </div>
@@ -350,7 +346,7 @@ Figure 2.2: Autocorrelation
 Figure 2.3: Partial Autocorrelation
 </p>
 </div>
-<p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
+<p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
 </div>
 <div id="transformations" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> Transformations<a href="features-of-time-series-data.html#transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -381,10 +377,10 @@ Figure 2.6: Dow Jones Industrial Average: Log-Differences
 </div>
 <div class="footnotes">
 <hr />
-<ol start="12">
-<li id="fn12"><p>Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an <em>Independent</em> white noise process. Without the indepence assumption we would have simply a white noise process.<a href="features-of-time-series-data.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p>To be precise, this is a definition of covariance-stationarity or weak form of stationarity. Strict stationarity is defined by time invariant joint distribution of random variables.<a href="features-of-time-series-data.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p>There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.<a href="features-of-time-series-data.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<ol start="3">
+<li id="fn3"><p>Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an <em>Independent</em> white noise process. Without the indepence assumption we would have simply a white noise process.<a href="features-of-time-series-data.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>To be precise, this is a definition of covariance-stationarity or weak form of stationarity. Strict stationarity is defined by time invariant joint distribution of random variables.<a href="features-of-time-series-data.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.<a href="features-of-time-series-data.html#fnref5" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

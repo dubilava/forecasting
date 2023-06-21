@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Forecasting Using R | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Forecasting Using R | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -118,10 +118,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -304,15 +300,15 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="forecasting-using-r" class="section level1 unnumbered hasAnchor">
 <h1>Forecasting Using R<a href="forecasting-using-r.html#forecasting-using-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> as well as by applying a trial–and–error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R pretty much on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. These notes will get you started—you can go as far as you wish.</p>
+<p>R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> as well as by applying a trial–and–error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R pretty much on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. These notes will get you started—you can go as far as you wish.</p>
 <p>We will work in <a href="https://www.rstudio.com/" target="_blank">RStudio</a>—the go-to interface for R (available from <a href="https://cran.r-project.org/" target="_blank">CRAN</a>). You will need to have installed both, R and RStudio on your devise. RStudio will seamlessly ‘find’ and connect with R.</p>
-<p>There are several ‘dialects’ of R coding language. We will primarily rely on <code>data.table</code>, which I find intuitive. The other popular dialect is <code>tidyverse</code>.<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> Technically, you don’t necessarily need either of these dialects to get the job done—the base R language would be just enough. But these dialects make things easier, and they are not too difficult to master anyway.</p>
+<p>There are several ‘dialects’ of R coding language. We will primarily rely on <code>data.table</code>, which I find intuitive. The other popular dialect is <code>tidyverse</code>.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> Technically, you don’t necessarily need either of these dialects to get the job done—the base R language would be just enough. But these dialects make things easier, and they are not too difficult to master anyway.</p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="22">
-<li id="fn22"><p>such as <a href="https://r4ds.had.co.nz/">R for Data Science</a><a href="forecasting-using-r.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p><a href="https://otexts.com/fpp3/">Forecasting Principles and Practice</a> by Hyndman and Athanasopoulos relies on tidyverse, for example.<a href="forecasting-using-r.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<ol start="13">
+<li id="fn13"><p>such as <a href="https://r4ds.had.co.nz/">R for Data Science</a><a href="forecasting-using-r.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p><a href="https://otexts.com/fpp3/">Forecasting Principles and Practice</a> by Hyndman and Athanasopoulos relies on tidyverse, for example.<a href="forecasting-using-r.html#fnref14" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

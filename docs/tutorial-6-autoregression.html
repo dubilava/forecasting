@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Tutorial 6: Autoregression | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Tutorial 6: Autoregression | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -118,10 +118,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -351,7 +347,7 @@ div.csl-indent {
 <span id="cb65-6"><a href="tutorial-6-autoregression.html#cb65-6" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
 <span id="cb65-7"><a href="tutorial-6-autoregression.html#cb65-7" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-61-2.png" width="624" /></p>
-<p>Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), and AR(3) models, using all observations in the series,<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> to decide on the optimal lag length.</p>
+<p>Calculate Akaike Information Criteria (AIC) and Schwarz Information Criteria (SIC) for AR(1), AR(2), and AR(3) models, using all observations in the series,<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> to decide on the optimal lag length.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="tutorial-6-autoregression.html#cb66-1" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">y1=</span><span class="fu">shift</span>(y),<span class="at">y2=</span><span class="fu">shift</span>(y,<span class="dv">2</span>),<span class="at">y3=</span><span class="fu">shift</span>(y,<span class="dv">3</span>))]</span>
 <span id="cb66-2"><a href="tutorial-6-autoregression.html#cb66-2" tabindex="-1"></a></span>
 <span id="cb66-3"><a href="tutorial-6-autoregression.html#cb66-3" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[<span class="fu">complete.cases</span>(dt)]</span>
@@ -431,8 +427,8 @@ div.csl-indent {
 </div>
 <div class="footnotes">
 <hr />
-<ol start="31">
-<li id="fn31"><p>Note that after generating lagged dependent variables we discard first three rows of the data to ensure that information criteria apply the same <span class="math inline">\(T\)</span> across the models.<a href="tutorial-6-autoregression.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<ol start="22">
+<li id="fn22"><p>Note that after generating lagged dependent variables we discard first three rows of the data to ensure that information criteria apply the same <span class="math inline">\(T\)</span> across the models.<a href="tutorial-6-autoregression.html#fnref22" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

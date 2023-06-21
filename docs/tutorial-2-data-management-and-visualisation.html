@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Tutorial 2: Data Management and Visualisation | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Tutorial 2: Data Management and Visualisation | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -118,10 +118,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -327,7 +323,7 @@ div.csl-indent {
 ## 118:  2.4197029 0.20636847
 ## 119:  1.8521905 0.89256870
 ## 120:  2.3040499 1.28020209</code></pre>
-<p>So, we have generated<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
+<p>So, we have generated<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tutorial-2-data-management-and-visualisation.html#cb34-1" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb34-2"><a href="tutorial-2-data-management-and-visualisation.html#cb34-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-36-1.png" width="624" /></p>
@@ -414,8 +410,8 @@ div.csl-indent {
 </div>
 <div class="footnotes">
 <hr />
-<ol start="26">
-<li id="fn26"><p>Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.<a href="tutorial-2-data-management-and-visualisation.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<ol start="17">
+<li id="fn17"><p>Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.<a href="tutorial-2-data-management-and-visualisation.html#fnref17" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

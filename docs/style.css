@@ -90,3 +90,7 @@ text-decoration: none;
 .book.with-summary .book-body {
     left: 360px;
 }
+
+.book.font-family-1 {
+  font-family: 'Segoe UI', sans-serif;
+ }
