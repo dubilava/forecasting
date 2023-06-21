@@ -75,3 +75,18 @@ h2, h3, h4 {
 color: dimgray; /* darker color when hovering */
 text-decoration: none;
 }
+
+.book .book-summary {
+  width: 360px;
+  position:absolute;
+  top:0;
+  left:-360px;
+}
+
+.book.with-summary .book-header.fixed {
+    left: 360px;
+}
+
+.book.with-summary .book-body {
+    left: 360px;
+}
