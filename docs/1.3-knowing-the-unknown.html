@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="1.3 Knowing the Unknown | Educated Guess" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Forecasting With Time Series Models Using R" />
+
+
+<meta name="author" content="David Ubilava" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="Forecasting With Time Series Models Using R">
+
+<title>1.3 Knowing the Unknown | Educated Guess</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<!--bookdown:toc:end-->
+<!--bookdown:toc:start-->
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="knowing-the-unknown" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Knowing the Unknown</h2>
+<p>All methods—primitive or complex, spurious or scientifically substantiated—have one thing in common: they all rely (or, at least, pretend to rely) upon <em>information</em>. Information is key in forecasting. It comes in many forms, and is condensed into <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with the <em>time series</em> data.</p>
+<p>A forecast is a random variable that has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution.<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> It can also be the median of the distribution, depending on a forecaster’s choice of the loss function; more about this later.</span></p>
+<p>Let <span class="math inline">\(\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> be a point forecast<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> We use ‘hat’ to emphasize that the forecast is based on parameter estimates rather than true parameters of the model.</span> for period <span class="math inline">\(t+h\)</span> made in period <span class="math inline">\(t\)</span>, that is, using using the available information at the time. The information set is denoted by <span class="math inline">\(\Omega_t\)</span>, which can contain any predictor, including the lags of the dependent variable.</p>
+<p>Point forecast is our ‘best guess’ about the future realization of the random variable. The difference between this forecast and the actual realization of the random variable is the forecast error. That is, <span class="math display">\[e_{t+h|t} = \hat{y}_{t+h|t} - y_{t+h}\]</span><label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> Somewhat unconventionally, I define the forecast error by subtracting the actual realization of the random variable from its forecast. I do so for intuitive convenience. A positive forecast error, here, suggests that we overestimated our forecast. Likewise, a negative forecast error would mean that we underestimated the forecast.</span></p>
+<p>The more accurate is the forecast the smaller is the forecast error. There is no such thing as a perfect or the errorless forecast, even if by fluke we were to exactly predict an outcome of an event. There may be instances, if we are fortuitous, when a forecast is spot-on. But such an instance will be just that—a fluke. More often than not, a forecast error will be different from zero. Indeed, about half the time, forecast errors will be positive, and half the time—negative. And while on average the forecast error is expected to be zero, the forecast error variance is expected to have a positive value, thus implying uncertainty surrounding the point forecast.</p>
+<p>Accurate forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> Donald Rumsfeld, the U.S. Secretary of Defence, once famously said: ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’</span> In the context of model-based forecasting, these unknowns are: (i) that we don’t know the true model, so we assume one, which leads to the <em>model uncertainty</em>; (ii) that we don’t know the true parameters of the model, so we estimate those, which leads to the <em>parameter uncertainty</em>; and (iii) that we don’t know the future, and there is nothing we can do about it, which leads to the <em>information uncertainty</em>.</p>
+<p>To illustrate the foregoing, we can decompose the forecast error into its three components:
+<span class="math display">\[\begin{aligned}
+        e_{t+h} &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
+        &amp; + \big[E(y_{t+h}|\Omega_{t}) - E(y_{t+h}|\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
+        &amp; + \big[E(y_{t+h}|\Omega_{t};\theta)-E(y_{t+h}|\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
+        \end{aligned}\]</span></p>
+<p>where <span class="math inline">\(E(y_{t+h}|\Omega_{t};\theta)\)</span> indicates that the forecast is made using a parametric model, and <span class="math inline">\(E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> indicates that the parameters of the model are estimated.</p>
+<p>Because the information uncertainty cannot be avoided, we are bound to make a forecast error. The aim of a forecaster is to minimize the model and parameter uncertainties. That is, to find a model that closely approximates the true model, and to estimate it’s parameters as efficiently as possible. A forecaster can achieve this by minimizing the expected <em>loss function</em>.</p>
+</div>
+<p style="text-align: center;">
+<a href="1.2-a-brief-history-of-the-study-of-forecasting.html"><button class="btn btn-default">Previous</button></a>
+<a href="1.4-the-loss-function-and-the-optimal-point-forecast.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

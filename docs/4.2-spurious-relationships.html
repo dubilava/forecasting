@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="4.2 Spurious Relationships | Educated Guess" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Forecasting With Time Series Models Using R" />
+
+
+<meta name="author" content="David Ubilava" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="Forecasting With Time Series Models Using R">
+
+<title>4.2 Spurious Relationships | Educated Guess</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<!--bookdown:toc:end-->
+<!--bookdown:toc:start-->
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="spurious-relationships" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Spurious Relationships</h2>
+<p>Nothing about trending time series necessarily violates the classical linear regression model assumptions. The issue may arise, however, if an unobserved trending variable is simultaneously correlated with the dependent variable as well as one of the independent variables in a time series regression. In such case, we may find a (statistically significant) relationship between two or more unrelated economic variables simply because they are all trending. Such relationship is referred to as a <em>spurious relationship</em>.</p>
+<div id="deterministic-trends" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Deterministic Trends</h3>
+<p>To begin, we will illustrate the issue using two random variables, each containing a deterministic trend. To keep things simple, we will consider linear trends, but the “findings” of this exercise can be generalized to any form of a deterministic trend (some of the key forms we discuss below).</p>
+<p>So, consider two trending variables: <span class="math display">\[y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),\]</span> and <span class="math display">\[x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),\]</span> where <span class="math inline">\(Cov(\nu_t,\upsilon_t) = 0\)</span>. For simplicity, we can assume <span class="math inline">\(\sigma_{\nu}^2=\sigma_{\upsilon}^2=1\)</span>. Suppose, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\delta\)</span> are some positive scalars, say, <span class="math inline">\(0.3\)</span> and <span class="math inline">\(0.5\)</span>, respectively. That is, <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are trending in the same direction but at different rates. Below is an example of such time series:
+<img src="forecasting_files/figure-html/unnamed-chunk-6-1.png" width="600" /></p>
+<p>If we were to estimate <span class="math display">\[y_t = \alpha+\beta x_t + \varepsilon_t,\]</span> we are likely to find the relationship between the two, in this case we will find <span class="math inline">\(\beta&gt;0\)</span>, even though, we know, these variables are not related. To illustrate this, we will generate 1000 samples of size 120 for <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, and in each case we will estimate the parameter <span class="math inline">\(\beta\)</span>. The following graph illustrates the empirical distribution of these parameter estimates:
+<img src="forecasting_files/figure-html/unnamed-chunk-7-1.png" width="600" /></p>
+<p>Luckily, we can easily “fix” the issue, by incorporating a trend in the regression: <span class="math display">\[y_t = \alpha+\beta x_t + \eta t + \varepsilon_t.\]</span> Once the trend is accounted for, the previously illustrated bias disappears. Using a similar simulation exercise as before, the following graph illustrates the empirical distribution of these parameter estimates:
+<img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="600" /></p>
+<p>In fact, this “fix” is equivalent to regressing a de-trended <span class="math inline">\(y\)</span> on a de-trended <span class="math inline">\(x\)</span>. To de-trend a variable, we first run a regression: <span class="math inline">\(y_t = \gamma_0 + \gamma_1 t + \nu_t\)</span>, and then obtain the fitted values for some fixed time period (typically zero), that is: <span class="math inline">\(\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t\)</span>, where <span class="math inline">\(\hat{\gamma}_0\)</span> and <span class="math inline">\(\hat{\nu}_t\)</span> are the parameter estimate and the residuals from the foregoing regression. This equiavlence is the special case of the Frisch–Waugh–Lovell (FWL) theorem, due to <span class="citation">Frisch and Waugh (<label for="tufte-mn-2" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">1933<span class="marginnote">Frisch, Ragnar, and Frederick V Waugh. 1933. <span>“<span class="nocase">Partial Time Regressions as Compared With Individual Trends</span>.”</span> <em>Econometrica</em> 1 (4): 387–401.</span>)</span> and <span class="citation">Lovell (<label for="tufte-mn-3" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">1963<span class="marginnote">Lovell, Michael C. 1963. <span>“<span class="nocase">Seasonal Adjustment of Economic Time Series and Multiple Regression Analysis</span>.”</span> <em>Journal of the American Statistical Association</em> 58 (304): 993–1010.</span>)</span>.</p>
+</div>
+<div id="stochastic-trends" class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Stochastic Trends</h3>
+<p>A time series may also follow a <em>stochastic trend</em>. A random walk process, <span class="math inline">\(y_t=y_{t-1}+\zeta_t\)</span>, represents a stochastic trend.</p>
+<p>As it turns out, a spurious relationship can be detected between two stochastic trend processes. Suppose, in addition to the aforementioned random walk process, we have another random walk, <span class="math inline">\(x_t=x_{t-1}+\xi_t\)</span>. As before, to keep things simple, suppose <span class="math inline">\(\zeta\sim N(0,1)\)</span> and <span class="math inline">\(\xi\sim N(0,1)\)</span>, and <span class="math inline">\(Cov(\zeta_t,\xi_t)=0\)</span>. The two variables, obviously, are not related. And yet, if we regress one on another, we are likely to reject the null more frequently than we should. The following graph illustrates the empirical distribution of t statistics:
+<img src="forecasting_files/figure-html/unnamed-chunk-9-1.png" width="600" /></p>
+<p>The previous ‘fix’, which involved adding a trend in the regression, doesn’t quite work here, as observed in the following histogram.
+<img src="forecasting_files/figure-html/unnamed-chunk-10-1.png" width="600" /></p>
+<p>But there is a fix to the issue, and that involves first-differencing both series and regressing <span class="math inline">\(\Delta y_t\)</span> on <span class="math inline">\(\Delta x_t\)</span>, which resolves the issue:</p>
+<p><img src="forecasting_files/figure-html/unnamed-chunk-11-1.png" width="600" /></p>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="4.1-trends-in-the-data.html"><button class="btn btn-default">Previous</button></a>
+<a href="4.3-modeling.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

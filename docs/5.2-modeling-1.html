@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="5.2 Modeling | Educated Guess" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="/forecasting-logo.png" />
+<meta property="og:description" content="Forecasting With Time Series Models Using R" />
+
+
+<meta name="author" content="David Ubilava" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="Forecasting With Time Series Models Using R">
+
+<title>5.2 Modeling | Educated Guess</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<!--bookdown:toc:end-->
+<!--bookdown:toc:start-->
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="modeling-1" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Modeling</h2>
+<p>We typically model seasonality as a monthly or quarterly pattern, but it can also be modeled as a higher frequency pattern (e.g. weekly or daily).</p>
+<p>One way to account for seasonality in the data is to “remove” it prior to the use of the series (i.e., work with a seasonally adjusted time series). Indeed, some economic time series are only/also available in a seasonally-adjusted form.</p>
+<p>Otherwise, and perhaps more interestingly, we can incorporate the seasonal component into a regression setting.</p>
+<div id="seasonal-dummy-variables" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Seasonal dummy variables</h3>
+<p>A seasonal model, typically, is given by: <span class="math display">\[y_t = \sum_{i=1}^{s}\gamma_i d_{it} + \varepsilon_t,\]</span>
+where <span class="math inline">\(s\)</span> denotes the frequency of the data, and <span class="math inline">\(d_{it}\)</span> takes the value of one repeatedly after every <span class="math inline">\(s\)</span> periods, and is zero in all other periods, so that <span class="math inline">\(\sum_{i} d_{it} = 1\)</span>, <span class="math inline">\(\forall t\)</span>. Each <span class="math inline">\(\gamma_i\)</span> is, in effect, an intercept of a given season.</p>
+<p>Alternatively the seasonal model can be rewritten as: <span class="math display">\[y_t = \alpha + \sum_{i=1}^{s-1}\delta_i d_{it} + \varepsilon_t,\]</span> in which case <span class="math inline">\(\alpha\)</span> is an intercept of an omitted season, and <span class="math inline">\(\delta_i\)</span> represents a deviation from it during the <span class="math inline">\(i^{th}\)</span> season. This is a more typical form of a seasonal model.</p>
+<p>Both variants of a seasonal model result in an identical fit and forecasts. Indeed, the two models are equivalent. Assuming the dummy variable associated with a season <span class="math inline">\(s\)</span>, <span class="math inline">\(d_{s}\)</span>, was dropped, <span class="math inline">\(\alpha=\gamma_s\)</span>, and <span class="math inline">\(\alpha+\delta_i=\gamma_i\;~\forall~i\ne s\)</span>.</p>
+<p>Consider a monthly series of vehicle miles traveled in the United States (sourced from the online data portal of the Federal Reserve Bank of St. Louis) spanning the January 2003 – December 2015 period.</p>
+<div class="figure"><span style="display:block;" id="fig:miles"></span>
+<img src="forecasting_files/figure-html/miles-1.png" alt="Vehicle miles traveled in the U.S." width="600" />
+<p class="caption marginnote shownote">
+Figure 5.1: Vehicle miles traveled in the U.S.
+</p>
+</div>
+<p>Seasonality is apparent in the series. We can approximate the seasonality using monthly dummy variables. Specifically, we can estimate the model parameters by regressing vehicle miles traveled, which we denote by <span class="math inline">\(y\)</span>, on intercept and 11 monthly dummy variables, omitting the dummy variable associated with the month of December. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha}+\sum_{i=1}^{11}\hat{\delta}_{i}d_{it}\)</span>, which we overlay onto the time series:</p>
+<div class="figure"><span style="display:block;" id="fig:fitmiles"></span>
+<img src="forecasting_files/figure-html/fitmiles-1.png" alt="Fitted monthly dummy variables" width="600" />
+<p class="caption marginnote shownote">
+Figure 5.2: Fitted monthly dummy variables
+</p>
+</div>
+<p>As observed, the fitted series mimic the seasonal pattern of the U.S. vehicle miles traveled exceedingly well.</p>
+</div>
+<div id="seasonal-harmonic-variables" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Seasonal harmonic variables</h3>
+<p>When dealing with weekly or daily data, the dummy variable approach of modeling seasonality may not be practical, nor efficient in most instances, as that will require estimating another 51 or 364 parameters. A way to model seasonality without giving up too many degrees of freedom is by using the so-called seasonal harmonic variables, which are terms from a Fourier series.</p>
+<p>Fourier terms can be applied to model seasonality at any frequency. Suppose, for example, we are working with monthly time series. A model with Fourier terms will have the following form: <span class="math display">\[y_t = \alpha+\sum_{k=1}^{K}\left[\beta_{1k}\sin\left(\frac{2\pi kt}{12}\right)+\beta_{2k}\cos\left(\frac{2\pi kt}{12}\right)\right]+\varepsilon_t,\]</span> where the value of <span class="math inline">\(K\)</span> can be determined using an information criterion (e.g., AIC or SIC).</p>
+<p>Consider a weekly series of initial unemployment claims filed by individuals after a separation from an employer in the United States (sourced from the online data portal of the Federal Reserve Bank of St. Louis) spanning the January 1993 – December 2008 period.</p>
+<div class="figure"><span style="display:block;" id="fig:claims"></span>
+<img src="forecasting_files/figure-html/claims-1.png" alt="Initial unemployment claims in the U.S." width="600" />
+<p class="caption marginnote shownote">
+Figure 5.3: Initial unemployment claims in the U.S.
+</p>
+</div>
+<p>An apparent seasonal pattern is present in the series. It seems sensible to approximate the seasonality using Fourier series. Specifically, we can regress initial claims, which we denote by <span class="math inline">\(y\)</span>, on sine and cosine terms of up to order two, from a Fourier series. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha}+\sum_{k=1}^{2}\left[\hat{\beta}_{1k}\sin\left(\frac{2\pi kt}{52.143}\right)+\hat{\beta}_{2k}\cos\left(\frac{2\pi kt}{52.143}\right)\right]\)</span>, which we overlay onto the time series:</p>
+<div class="figure"><span style="display:block;" id="fig:fitclaims"></span>
+<img src="forecasting_files/figure-html/fitclaims-1.png" alt="Fitted Fourier terms up to order two" width="600" />
+<p class="caption marginnote shownote">
+Figure 5.4: Fitted Fourier terms up to order two
+</p>
+</div>
+<p>The fitted series mimic the general seasonal pattern reasonably well. There are some major departures at times, however. Especially so in the first week of the year, for example. While we could add higher order terms from a Fourier series to try and better approximate the seasonal pattern, perhaps a more efficient approach would be to simply add a dummy variable for the first week of the year, which should account for the beginning-of-calendar-year spike in the series.</p>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="5.1-seasonal-fluctuations-in-the-data.html"><button class="btn btn-default">Previous</button></a>
+<a href="5.3-forecasting-1.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

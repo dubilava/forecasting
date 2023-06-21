@@ -6,83 +6,218 @@
 ```{r echo=FALSE, include=FALSE, message=FALSE}
 library(ggplot2)
 library(data.table)
+library(ggthemes)
+library(extrafont)
+# font_import()
+loadfonts(device="win",quiet=T)
+library(cowplot)
+
+theme_eg <- function(base_size=12,base_family="Segoe Print",border=F){
+  theme(
+    panel.background=element_rect(fill="white",color=NA),
+    panel.grid=element_line(colour=NULL,linetype=3),
+    panel.grid.major=element_line(colour="dimgray"),
+    panel.grid.major.x=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_rect(fill="white",color=NA),
+    plot.title=element_text(family=base_family,size=rel(1.2),colour="dimgray"),
+    plot.caption=element_text(family=base_family,colour="darkgray"),
+    plot.margin=margin(.25,.25,.25,.25,"lines"),
+    axis.title=element_text(family=base_family,face="bold",size=rel(1.3),colour="dimgray"),
+    # axis.title.x=element_text(),
+    axis.text=element_text(family=base_family,size=rel(1.1),colour="dimgray",margin=margin(t=1,r=1,b=1,l=1)),
+    axis.line=element_line(colour="dimgray"),
+    axis.line.y=element_blank(),
+    axis.ticks=element_blank(),
+    legend.background=element_rect(fill="transparent",color=NA),
+    legend.position="none",
+    legend.title=element_blank(),
+    legend.text=element_text(family=base_family,size=rel(1.1),colour="dimgray"),
+    legend.key.size=unit(.75,'lines'),
+    strip.background=element_blank(),
+    strip.text=element_text(family=base_family,size=rel(0.9),colour="dimgray",face="bold",margin=margin(.5,0,.5,0,"lines"))
+  )
+}
 ```
 
 ## What Forecast Is and Is Not
 
-`r newthought('What is a forecast')` if not a guess? An educated guess, nonetheless. We guess when we don't know exactly how things may turn up. We may guess, for example, whether it will rain tomorrow. Or whether the next card out of the deck will be higher or lower than the current card. 
+`r newthought('What is a forecast')` if not a guess? An educated guess, nonetheless. We guess because we have no precise knowledge of how things will turn up in the future---near or distant. We may guess today whether it will rain tomorrow, for example. It may or may not rain tomorrow.^[Assuming that we live in a place that can get rain on any day of the year.] With each of these two outcomes having some chance of occurring, our claim about whether it will rain is a guess. 
 
-We guess events that come with a fair bit of uncertainty. Such would be events for which several outcomes, each with some chance of appearing, are possible. In other words, we guess random variables. 
+We guess events that are uncertain. These are events for which several outcomes---each with some chance of appearing---are possible. In other words, we guess random variables. Making a claim about whether it will rain tomorrow is a guess because rain is a random variable. In its simplest form, we can think of a rain as a discrete random variable---a binary random variable, to be precise---it either rains or it does not rain. Or, more accurately, we can think of a rain as a continuous random variable, albeit truncated from below at zero. So, it either does not rain. But if it rains, it may rain a little, or it may rain a lot. By contrast, making a claim about whether the sun will rise tomorrow is hardly a guess. We know with absolute precision when will the sun rise. There is no prophecy about predicting the sunrise. 
 
-Making a claim about whether it will rain the next day is a guess because it may or may not rain. Rain is a random variable. By contrast, making a claim about whether the sun will rise the next day is hardly a guess. There is little prophecy associated with predicting the sunrise.
+A forecast is a guess, but a guess is not necessarily a forecast. A guess that relies on some knowledge or understanding of the underlying causes of an event is a forecast. When commercial banks, or professional forecasters, guess whether the central bank will increase or decrease the nominal interest rates by some fraction of percentage points, they forecast because they base their guess on their understanding of the markets as well as on their understanding of how the central bank reacts to changes in the markets.
 
-A guess that relies on knowledge is a forecast. Otherwise, it is merely a gamble.^[Consider card counting. A casino is a gambling house. Everyone is welcome so long as gambling is what they do. But when one attempts to 'beat the house' using knowledge that is accumulated by counting cards, the gamble becomes a forecast, and the gambler becomes *persona non grata*.] We make a forecast if we guess rain for tomorrow because we observed clouds today. Here we account for our understanding of meteorological phenomena. We gamble if we make a guess of heads after the next flip of a coin because we observed tails after the current flip. We have not acquired any new knowledge by observing the outcome of the current flip that would be useful in predicting the outcome of the next flip. 
-
-The more we know about underlying factors that affect the outcome of a random variable, the more accurate is our forecast. A good forecast doesn't need to be precise, however. It almost never is, only if by fluke. An imprecise forecast can be of value as well. That we were unable to exactly predict an event, tells us something about our understanding of the underlying processes. Such conjecture can be useful. Forecasting, even if inaccurate, can be useful.^[George Box's 'all models are wrong but some are useful' is certainly suitable for the study of forecasting.]
+Otherwise, an uninformed guess is merely a gamble.^[Consider card counting. A casino is a gambling house where everyone is welcome so long as gambling is what they do. But when one attempts to "beat the house" using the knowledge accumulated by counting cards, the gamble becomes an educated guess and the gambler becomes *persona non grata*.] Thus, making a guess that it will rain tomorrow may be a forecast or a gamble. It is a forecast if we make a claim it will rain tomorrow because we looked out of the window and saw clouds today. Such a guess relies on our understanding of meteorological phenomena. It would be a gamble had we made the very same claim based on a hunch, without looking out of the window. 
 
 
 ## A Brief History of the Study of Forecasting
 
-Roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used the services of others. This desire to guess what was to come, has been necessitated by potential benefits such information could offer. 
+The roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own or have used the services of others. This desire to guess what was to come, has been necessitated by the potential benefits such information could offer. 
 
-For many centuries, because the weather was the single most important factor that impacted the livelihood of people and, indeed, the fate of civilizations,^[A sequence of droughts toward the end of the ninth century is considered one of the key reasons for the collapse of the Classic Mayan Civilization [@hodell1995].] much of forecasting revolved around weather forecasting. Early attempts at weather forecasting were rather simplistic. The Babylonians, for example, based their weather forecasts on the appearance of clouds. 
+For many centuries, much of forecasting revolved around weather forecasting. Primarily because weather was the single most important factor that impacted the livelihood of people, and indeed the fate of civilizations,^[A sequence of droughts toward the end of the ninth century is believed to be a reason for the collapse of the Classic Mayan civilization @hodell1995.] through its intrinsic links with agriculture. Early attempts at weather forecasting were rather simplistic. The Babylonians based their weather forecasts on the appearance of clouds. The ancient Egyptians measured the levels of the Nile River's waters to predict an approaching famine due to droughts or destructive floods. 
 
-Over time, an advancement in the studies of physics and related fields, on the one hand, and the invention of measuring instruments such as barometer and thermometer, on the other hand, contributed to the development of the study of meteorology, the way we know it. The birth of the modern weather forecast, however, is attributed to the invention of the telegraph, which made it possible for the weather forecast to arrive sooner than the weather itself. 
+Over time, advancements in physics and related fields, and the invention of measuring instruments such as the barometer and the thermometer, contributed to the development of the study of meteorology, the way we know it. The birth of the modern weather forecast is attributed to the invention of the telegraph, however. The telegraph made it possible for the weather forecast to travel sooner than the weather itself and thus made the weather forecast relevant. 
 
-Much like a better understanding of the laws of physics facilitated the inception of meteorological research, the development of the study of econometrics allowed for the introduction of the more rigorous forecasting methods. And as with the telegraph back in the 19th century, the development of the modern computer in the 20th century facilitated the effective use of econometric methods for economic forecasting. 
+Much like a better understanding of the laws of physics enabled meteorological research, the development of the study of econometrics helped develop the methods and practices of economic forecasting. Irving Fisher, one of the most influential economists of all times and the first generation econometrician---indeed, a founding member and the first president of the Econometric Society---was one of the first academic economists who contributed to the study of economic forecasting through his "Equation of Exchange," which he used as the foundation to forecast prices, albeit with varying success. 
 
-Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the massive increase in computing power allowed the storage and distribution of granular data that has further aided the advancement of the methods and practices of forecasting.
+Other notorious economic forecasters of that age, albeit not as known or celebrated academics as Fisher, were Charles Bullock and Warren Persons, who ran a Harvard-affiliated quasi-academic center for business cycle research with main purpose to generate economic forecasts based on historical precedents. Unlike Fisher's forecasts that were model-based, Bullock and Persons' forecasts were more data-driven.^[These and other "America's first economic forecasters" were primarily focused on predicting stock prices. Their initial success quickly faded with the failure to predict the Great Depression, which plummeted their reputation as forecasters and, with that, their own fortunes as well @friedman2013.]
+
+Much of the success of the early economic forecasters came during the early years of the 20th century. The failure to predict the Great Depression adversely impacted their reputation and, indeed, fortunes. As with the telegraph back in the 19th century, the evolution of the computing power in the second half of the 20th century facilitated the resurrection of economic forecasting, which became increasingly based on the effective use of econometric methods. Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the ease and affordability of computing power allowed the storage and distribution of high-frequency granular data that has further aided the advancement of the study of forecasting. 
+
+
+## Through the Lens of Causal Inference
+
+Forecasting relies on some understanding of cause and effect between two variables over two time periods, even if one is not intrinsically aware of such a relationship. Such an understanding was apparent in the Babylonians' and Egyptians' methods of weather forecasting. 
+
+Birds' behavior, historically, has been the single most reliable predictor of upcoming changes to the weather.^[As the adage goes, "*Hawks flying high means a clear sky. When they fly low, prepare for a blow.*"] The most likely reason for birds flying low is the sudden change in atmospheric pressure leading to the storm. Birds are "nature's barometers" of the sort. 
+
+We know it now, but our predecessors did not know it back when the barometer was yet to be invented. And yet, it turns out that their basing of the weather forecast on birds' behavior was not unfounded. 
+
+Birds do not cause storms; changes to air pressure do. But both the birds' behavior and the storm are the outcomes of the same cause---atmospheric pressure. As it happens, one outcome (birds' behavior) precedes the other outcome (the storm). And such temporal ordering of the events---each an outcome of an exogenous shock---helps build a simple forecasting model, which is based on a mere correlation, and yet it works. Consider the following diagram.
+
+```{r dag-birds, fig.cap="Causality, correlation, and forecasting", echo=FALSE, message=FALSE}
+nudge <- .05
+dt <- data.table(x=c(0,0,1,2),y=c(0,1,0,1),xbeg=c(0,0+nudge,0+2*nudge,NA),xend=c(0,1-nudge,1-1.5*nudge,NA),ybeg=c(1-1.5*nudge,1-1.5*nudge,0,NA),yend=c(0+1.5*nudge,0+1.5*nudge,0,NA),labels=c("B[t-1]","P[t-1]","S[t]",NA))
+
+# plot the graph
+ggplot(dt)+
+  geom_text(aes(x=x,y=y,label=labels),size=6,parse=T,color=c("black","gray","black","white"),na.rm=T,family="Segoe Print")+
+  geom_segment(aes(x=xbeg,y=ybeg,xend=xend,yend=yend),lineend = c("round"),linejoin = c("round"),arrow=arrow(type="closed",angle=30,length=unit(0.1,"in")),linewidth=1,linetype=c(1,1,5,1),color=c("gray","gray","black","white"),na.rm=T)+
+  geom_segment(data=dt[3,],aes(x=xend-.5*nudge,y=yend,xend=xend,yend=yend),lineend = c("round"),linejoin = c("round"),arrow=arrow(type="closed",angle=30,length=unit(0.1,"in")),linewidth=1,linetype=1,color="black")+
+  coord_cartesian(clip="off")+
+  theme_eg()+
+  theme(axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank(),panel.grid.major = element_blank())
+```
+
+On this diagram, **P** denotes air pressure, **B** denotes birds' behavior, and **S** denotes a storm. The subscripts clarify temporal ordering. The solid lines indicate a causal relationship, and the dashed line indicates a correlation without causality. The gray lines indicate an unobserved effect, and the black line indicates the observed effect. While we do not observe the true causal effects,^[Had we observed the true causal effects, one of them---the relationship between air pressure and birds' behavior---would deem obsolete. This is, of course, the case in the present age.] the observed correlation and the temporal ordering of the two outcomes of the same cause helps us build a useful predictive model. 
+
+This illustration alludes to a notable feature of forecasting. To make a forecast, one does not need a "clean" identification of the causal mechanism. A mere correlation might as well suffice. In some instances, this might even be a preferred setting. Correlation captures information on unobserved variables, which aids in forecasting, whereas causal inference specifically ignores this information. 
+
+That's not to say that forecasting does not rely on causal relations. It does, very much so. And everything else held constant, the causal relationship would be preferred to the correlational. In our example, once the scientifically substantiated causal linkage between changes in atmospheric pressure and the occurrence of storms was established, there was little need and hardly any value in the correlational relationship between birds' behavior and the occurrence of storms.
+
+
+## Self Fulfilling Prophecy
+
+The foregoing illustration paints an uncharacteristically simplistic picture of forecasting. It describes a rather simplified model as it omits several factors, other than air pressure, that could influence birds’ behavior or the formation of a storm. It also illustrates a relatively straightforward forecasting exercise because it involves relations between climate and nature. Such relationship is closer to a hard science than to a soft science. 
+
+Things become increasingly more complex and much less predictable when people, with their behavioral peculiarities, enter the equation. Economists, who obviously deal with systems that involve or are comprised by people, are notorious for making bad forecasts.^[One of the earliest economic forecasts that did not quite live up to the expectations, was that of Irving Fisher who, in early October of 1929, made the claim that "stock prices have reached what looks like a permanently high plateau." The Wall Street Crash and Great Depression followed shortly after.]
+
+Often, we fail to forecast because we cannot know what will happen in the future. But sometimes, we fail to forecast because we exactly know what is to come. The issue lies in our ability to influence the future because we could forecast it reasonably well. 
+
+An extreme case that helps illustrate the point is the concept of efficient markets. Consider a scenario where, through news, we learned that stock prices of a publicly traded company would increase tomorrow. This creates a temporal arbitrage opportunity: we can buy the stock today, when its price is still low, and sell it tomorrow, when its price has increased. 
+
+If we were the only people who became aware of such an opportunity, the scheme would just work. But the information is available to everyone and at once. Thus, many people will learn about this opportunity and act accordingly: They will all try to buy the shares of the company immediately to sell them for the higher price later. This will create demand, and the share prices will increase today instead of tomorrow. And the temporal arbitrage opportunity will be no more.
+
+What we just described is known as the *efficient market hypothesis*. The efficient market hypothesis suggests that markets adjust immediately and correctly to the relevant new information. As a result, traders cannot take advantage of this new information. The moment one realizes there can be an arbitrage opportunity, it is already too late. So, some things, such as stock prices, are unpredictable but not because we don't know what will happen to them. *Au contraire*, it is because we know this all too well. 
 
 
 ## Knowing the Unknown
 
-All methods&mdash;primitive or complex, spurious or scientifically substantiated&mdash;have one thing in common: they all rely (or, at least, pretend to rely) upon *information*. Information is key in forecasting. It comes in many forms, and is condensed into *data*. When organized and stored in a certain way -- chronologically and at regular intervals -- we end up with the *time series* data. 
+Methods of forecasting may differ, but they have one thing in common: they all rely---or at least pretend to rely---upon information. We record and observe information in the form of *data*. When the data are organized and stored in a certain way---chronologically and at regular intervals---we have a *time series*. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future. 
+```{r time-series, fig.cap="Time series and its density", echo=FALSE, message=FALSE}
+n <- 20
 
-A forecast is a random variable that has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution.^[It can also be the median of the distribution, depending on a forecaster's choice of the loss function; more about this later.]
+set.seed(24)
+x <- rnorm(n,3,1.5)
+for(i in 2:n) x[i] <- .2*x[i-1]+x[i]
+dt <- data.table(x=round(x),t=1:n)
 
-Let $\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})$ be a point forecast^[We use 'hat' to emphasize that the forecast is based on parameter estimates rather than true parameters of the model.] for period $t+h$ made in period $t$, that is, using using the available information at the time. The information set is denoted by $\Omega_t$, which can contain any predictor, including the lags of the dependent variable. 
+gg_ts <- ggplot(dt,aes(x=t,y=x))+
+  geom_line(color="black",linetype=1,linewidth=.8)+
+  geom_point(color="black",fill="gray",stroke=1,shape=21,size=3)+
+  ylim(0,7)+
+  labs(x=expression(t),y=expression(x[t]))+
+  theme_eg()
 
-Point forecast is our 'best guess' about the future realization of the random variable. The difference between this forecast and the actual realization of the random variable is the forecast error. That is, $$e_{t+h|t} = \hat{y}_{t+h|t} - y_{t+h}$$^[Somewhat unconventionally, I define the forecast error by subtracting the actual realization of the random variable from its forecast. I do so for intuitive convenience. A positive forecast error, here, suggests that we overestimated our forecast. Likewise, a negative forecast error would mean that we underestimated the forecast.]
+gg_hist <- ggplot(dt,aes(x=x))+
+  geom_dotplot(binwidth=.3,color="black",fill="gray",stroke=2,stackratio=1.1)+
+  xlim(0,7)+
+  coord_flip()+
+  theme_eg()+
+  theme(axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank())
 
-The more accurate is the forecast the smaller is the forecast error. There is no such thing as a perfect or the errorless forecast, even if by fluke we were to exactly predict an outcome of an event. There may be instances, if we are fortuitous, when a forecast is spot-on. But such an instance will be just that&mdash;a fluke. More often than not, a forecast error will be different from zero. Indeed, about half the time, forecast errors will be positive, and half the time&mdash;negative. And while on average the forecast error is expected to be zero, the forecast error variance is expected to have a positive value, thus implying uncertainty surrounding the point forecast. 
+plot_grid(gg_ts,gg_hist,align="hv",ncol=2,rel_widths = c(3,1))
+```
 
-Accurate forecasting is difficult because of all the unknowns we deal with in the process.^[Donald Rumsfeld, the U.S. Secretary of Defence, once famously said: '*As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don't know we don't know.*'] In the context of model-based forecasting, these unknowns are: (i) that we don't know the true model, so we assume one, which leads to the *model uncertainty*; (ii) that we don't know the true parameters of the model, so we estimate those, which leads to the *parameter uncertainty*; and (iii) that we don't know the future, and there is nothing we can do about it, which leads to the *information uncertainty*.
+The left-hand side of the graph features a time series of 20 observations, given by $x_t$, where $t=1,\ldots,20$. The observation in the first period, $x_1$, takes the value of two; the observation in the second period, $x_2$, takes the value of four; and so forth until the observation in the last period, $x_{20}$, which takes the value of five.  
 
-To illustrate the foregoing, we can decompose the forecast error into its three components:
-$$\begin{aligned}
-		e_{t+h} & = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
-		& + \big[E(y_{t+h}|\Omega_{t}) - E(y_{t+h}|\Omega_{t};\theta)\big]\;~~\text{(model uncertainty)}  \\
-		& + \big[E(y_{t+h}|\Omega_{t};\theta)-E(y_{t+h}|\Omega_{t};\hat{\theta})\big]\;~~\text{(parameter uncertainty)}
-		\end{aligned}$$
-		
-where $E(y_{t+h}|\Omega_{t};\theta)$ indicates that the forecast is made using a parametric model, and $E(y_{t+h}|\Omega_{t};\hat{\theta})$ indicates that the parameters of the model are estimated. 
+The question is, given the observed data, what would be our best guess about $x_{21}$, that is, the value of the observation in the subsequent period? In other words, the question asks us to forecast the next observation, given that we have observed the chronological sequence of the previous 20 observations. 
 
-Because the information uncertainty cannot be avoided, we are bound to make a forecast error. The aim of a forecaster is to minimize the model and parameter uncertainties. That is, to find a model that closely approximates the true model, and to estimate it's parameters as efficiently as possible. A forecaster can achieve this by minimizing the expected *loss function*.
+To answer this question, let's summarize what we know. The density^[The way we present it---because we "discretized" the time series for illustration purposes---technically, this is the probability mass function rather than the probability density function.] of the observed time series, presented in the form of stacked dots on the right-hand side of the figure, does that. We can see that the observed values range from one to six, and some of them appear more frequently than others. Specifically, *three* appears most frequently in our observed sample. So, our best guess can be *three*. 
 
+But we can also give another answer. We can see that the most recently observed value is five. And if we suspect some temporal dependence in the time series---that is, if we believe there is some positive correlation between back--to--back observations---then our guess may be tilted toward five. So, in this instance, our best guess could be *four*. 
 
-## The Loss Function and the Optimal Point Forecast
+The foregoing illustration alludes to an important clarifier of a forecast. A forecast is a bunch of outcomes or values, each with some probability of occurring. If a variable of interest is continuous, then a forecast is a density. More specifically, a forecast is a conditional density, which depends on the available information at the time when the forecast is made, and it combines everything we know or do not know about the unknown.^["*As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don't know we don't know.*" -- Donald Rumsfeld, former U.S. Secretary of Defense]
 
-A loss function, which we denote by $L(e_{t+h})$, a transformation of a forecast error such that: (i) $L(e_{t+h}) = 0$ for all $e_{t+h}=0$; (ii) $L(e_{t+h}) \geq 0$ for all $e_{t+h} \neq 0$; and, when the loss function is symmetric about zero, (iii) $L(e_{t+h}) > L(e_{s+h})$ for all $|e_{t+h}| > |e_{s+h}|$. 
+We rarely use a density to communicate our forecast, however. When commercial banks or professional forecasters make a guess about the upcoming interest rate hike by the central bank, they usually report a single value. That is a *point forecast*---the simplest and the most frequently used summary of a forecast. A point forecast is one value that qualifies or quantifies our guess about the future realization of an event, for example, a guess that it will rain tomorrow or a that the central bank will increase interest rates by 0.25 percentage points. In our illustration, the guess that in period 21 we could observe *three* is a point forecast. 
 
-Two commonly used symmetric^[There are also asymmetric loss functions, which are relevant in instances when it makes sense to 'penalize' the forecast error more so in one direction than another.] loss functions are an *absolute* loss function, $L{(e_{t+h|t})} = |e_{t+h|t}|$, and a *quadratic* loss function, $L{(e_{t+h|t})} = (e_{t+h|t})^2$.
-
-The quadratic loss function is arguably the most popular among the loss functions, partly because it echoes the way we fit the data 'in-sample' (i.e. by minimizing the sum of squared residuals).
-
-Optimal forecast is one that minimizes the expected loss:
-		$$\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right].$$
+We denote point forecast by $\hat{y}_{t+h|t}$, where $h$ is the forecast horizon.^[We use "hat" to emphasize that a forecast is based on parameter estimates rather than on the true parameters of the model.] In other words, $\hat{y}_{t+h|t}$ is an $h$-step-ahead point forecast made in period $t$. In the foregoing example, where we were attempting to guess the realization of the variable in period 21 based on information up to and including period 20, our forecast horizon was one. 
 
 
-Assuming the quadratic loss function:
-$$\begin{aligned}
-		E\left[L(e_{t+h|t})\right] & = E(e_{t+h|t}^2) = E(y_{t+h} - \hat{y}_{t+h|t})^2 \\
-		& = E(y_{t+h}^2)-2E(y_{t+h})\hat{y}_{t+h|t} + \hat{y}_{t+h|t}^2
-		\end{aligned}$$
+<!-- \section{Why We Can't Get It Right} -->
 
-By solving the optimization problem it follows that: $$\hat{y}_{t+h|t} = E(y_{t+h})$$
+<!-- The difference between a point forecast and the realized future outcome of a variable is the forecast error. That is, $$e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}.$$  -->
 
-If we assume that the conditional density of a forecast is a normal density, then: $E(y_{t+h}) = \mu_{t+h}$.
+<!-- We might commit an error in forecasting for many reasons, and we can consolidate these reasons into three categories. First, we might commit forecast error because of the very essence of the endeavor: we are trying to guess something in the future, which has not happened yet. Many factors contribute to the realization of a variable, including new factors that we do not observe or are unaware of at the time when we make a forecast. All economic forecasts pertaining to federal or state budgets of 2020 were off, by a large margin. At the time when projections were made, probably in the second half of 2019, nobody knew the once--in--a--lifetime global pandemic would derail economies around the world. These are unavoidable forecast errors that present themselves due to lack of information from the future. -->
 
-Thus, the optimal point forecast under the quadratic loss is the *mean* of the forecast distribution (for reference, the optimal point forecast under the absolute loss is the *median* of the distribution).
+<!-- Second, we may commit forecast error because the model we choose to generate forecasts is, at best, a close approximation of the true model. In the earlier illustration, the model that our predecessors used to forecast storms was obviously wrong. And although we made the case that it was "sufficiently good,"  the model was far from perfect and certainly not complete. Winds, for example, can direct clouds in another direction, resulting in no storm. And our model, at least the way we presented it, did not account for the wind. We commit such forecast errors because we are not aware of the true model due to our incompetence or ignorance. These are potentially avoidable forecast errors. Indeed, time series econometrics and forecasting evolve in search of true models. -->
 
-But some methods can yield more accurate forecasts, on average, than others. And in search of such methods, the study of time series econometrics has evolved.
+<!-- Third, we may commit forecast error because we rely on estimates of the model parameters, rather than on its true parameters. The estimates can be off for many different reasons. They could be off, for example, because of the measurement error in the variables that we apply or because of the sampling error. In any case, the discrepancy between estimated parameters and true parameters could lead to a forecast error. -->
+
+<!-- These three components of a forecast error are the known unknowns. They are pretty much unavoidable in practice. When we get a forecast exactly right, that usually is because the three errors, by fluke, have exactly offset one anther. -->
+
+
+<!-- \section{Minimizing the Risk of Getting It Wrong} -->
+
+<!-- A point forecast can be any value, any reasonable guess. The \textit{optimal} point forecast is the best guess. That is, the optimal point forecast is a point forecast that minimizes the risk of getting it wrong.  -->
+
+<!-- We measure risk using a \textit{loss function}. A loss function, which we denote by $l(e_{t+h|t})$, is a transformation of a forecast error such that the following conditions are satisfied: -->
+<!-- \begin{enumerate}[label=(\roman*)] -->
+<!-- 	\item $l(e_{t+h|t}) = 0$ for all $e_{t+h|t}=0$; -->
+<!-- 	\item $l(e_{t+h|t}) \geq 0$ for all $e_{t+h|t} \neq 0$. -->
+<!-- \end{enumerate} -->
+
+<!-- Commonly used functions assume the \textit{absolute} loss, $l(e_{t+h|t}) = \lvert e_{t+h|t}\rvert$, and the \textit{quadratic} loss, $l(e_{t+h|t}) = (e_{t+h|t})^2$. These are symmetric loss functions insofar as a positive error is deemed as bad as a negative error of similar magnitude.\sidenote{There are also asymmetric loss functions, which are relevant in instances when it makes sense to "penalize" the forecast error more so in one direction than another.} When symmetry is imposed, the following condition, in addition to the previous two, is also satisfied:  -->
+<!-- \begin{enumerate}[label=(\roman*)] -->
+<!-- 	\setcounter{enumi}{2} -->
+<!-- 	\item $l(e_{t+h|t}) \geq l(e_{s+h|s})$ for all $\lvert e_{t+h|t}\rvert \geq \lvert e_{s+h|s}\rvert$. -->
+<!-- \end{enumerate} -->
+
+<!-- The quadratic loss is particularly popular, partly because it echoes the way we typically fit the model to the data---i.e., using a least squares estimator. Figure~\ref{c1:loss} plots a sample of forecast errors mapped onto the quadratic loss function, represented by the U-shaped curve centered on zero (flipped clockwise for illustration purposes).  -->
+<!-- \begin{figure}[htbp] -->
+<!-- 	\includegraphics[width=1.0\textwidth]{figures/c1/loss.eps} -->
+<!-- 	\caption{Forecast errors and quadratic loss} -->
+<!-- 	\label{c1:loss} -->
+<!-- \end{figure} -->
+
+<!-- The optimal forecast minimizes the expected loss, -->
+<!-- $E[l(e_{t+h|t})]$. Assuming the quadratic loss function: -->
+<!-- \begin{align*} -->
+<!-- 	E[l(e_{t+h|t})] & = E(e_{t+h|t}^2) = E[(y_{t+h}-\hat{y}_{t+h|t})^2] \\ -->
+<!-- 	& = E\left\{[y_{t+h}-E(y_{t+h}|\Omega_t)+E(y_{t+h}|\Omega_t)-\hat{y}_{t+h|t}]^2\right\}  -->
+<!-- \end{align*} -->
+
+<!-- In this expected loss function, we subtracted and added $E\left(y_{t+h}|\Omega_t\right)$, where $\Omega_t$ is the \textit{information set}---the available knowledge at the time when the forecast is made, to make an intuitive point. The loss function is given by the square of a sum of: (i) the deviations of the future realizations of a variable from their conditional mean, $y_{t+h}-E\left(y_{t+h}|\Omega_t\right)$, and (ii) the discrepancies between the conditional mean and a point forecast, $E\left(y_{t+h}|\Omega_t\right)-\hat{y}_{t+h|t}$. As it turns out, a point forecast that minimizes the expected loss function is the conditional mean of the random variable: -->
+<!-- \begin{equation} -->
+<!-- 	\hat{y}_{t+h|t} = E\left(y_{t+h}|\Omega_t\right). -->
+<!-- 	\label{c1:optimal} -->
+<!-- \end{equation} -->
+
+<!-- This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization---assuming the quadratic loss---is the weighted average of its all possible future realizations. The equality in equation~\eqref{c1:optimal} is implied in Figure~\ref{c1:loss}. If we were to slide the U-shaped curve to the left or to the right, the expected value of the loss functions, which are given by dots that form the U-shaped curve, will only increase.  -->
+
+<!-- In Figure~\ref{c1:series} we illustrated a time series and the density of the observed values over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that \textit{one} and \textit{six} occur with a probability of 0.05, \textit{two} occurs with a probability of 0.15, \textit{five} occurs with a probability of 0.20, \textit{four} occurs with a probability of 0.25, and \textit{three} occurs with a probability of 0.30. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be ${1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55$. If we know that the value must be an integer, then we round our forecast to \textit{four}. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of \textit{four} gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.  -->
+
+
+<!-- \section{Getting It Right for the Right Reasons} -->
+
+<!-- There may be instances---if we are fortuitous---when our forecast is spot-on. But such an instance will be just that---a fluke. For the most part, our forecasts will be off, and this is perfectly okay, so long as \textit{on average} we are spot-on.  -->
+
+<!-- In fact, we may make an impeccable guess about the future for the wrong reasons. Suppose our "model" is such that it always predicts a recession. Then, every so often, we will get it right. Because recessions happen. But we will be getting it right for the wrong reason. Because our "model" is clearly wrong. Recessions are not the only outcomes of the business cycle. -->
+
+<!-- %And, of course, it is possible---and usually is the case---to make a faulty guess when the forecast is right.  -->
+
+<!-- The time series in Figure~\ref{c1:series} were generated so that each observation was drawn from independent and identically distributed random variables. The presented density then serves as a close approximation of a forecast. Assuming quadratic loss, the optimal forecast would be, as we calculated above, \textit{four}. Had we only observed the very last observation, which is \textit{five}, our best guess for the next observation would have been \textit{five}. If the next observation turned out to be five, then we would have guessed it right for the wrong reason. The right forecast would have been \textit{four}, even if it turned out to be inaccurate. -->
+
+<!-- Even if we are---by luck or serendipity---successful in fully eliminating the fraction of forecast errors that are attributed to model and parameter uncertainties, we are bound to get things wrong most of the time because we do not observe the future. So, there is no use in chasing the perfect forecast. Such a thing cannot exist. Instead, we should search for a model that closely approximates the true data generating process, and to estimate parameters of this model as efficiently as possible. Indeed, these aims have largely motivated the development of time series econometrics. -->
 
