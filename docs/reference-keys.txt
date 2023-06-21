@@ -1,5 +1,7 @@
 fig:dag-birds
 fig:time-series
+fig:loss-function
+eq:optimal
 fig:white-noise
 fig:acf
 fig:pacf
@@ -26,6 +28,9 @@ a-brief-history-of-the-study-of-forecasting
 through-the-lens-of-causal-inference
 self-fulfilling-prophecy
 knowing-the-unknown
+why-we-cant-get-it-right
+minimizing-the-risk-of-getting-it-wrong
+getting-it-right-for-the-right-reasons
 features-of-time-series-data
 stochastic-process-and-time-series
 stationarity

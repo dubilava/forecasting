@@ -169,6 +169,9 @@ div.csl-indent {
 <li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
 <li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>1.6</b> Why We Can’t Get It Right</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>1.7</b> Minimizing the Risk of Getting It Wrong</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.8</b> Getting It Right for the Right Reasons</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
 <ul>
@@ -304,12 +307,12 @@ div.csl-indent {
 <div id="base-r-and-matrix-manipulations" class="section level2 unnumbered hasAnchor">
 <h2>Base R and matrix manipulations<a href="tutorial-1-introduction-to-r.html#base-r-and-matrix-manipulations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are a number of ways in which we can work with data in R. Here, we will primarily rely on <code>data.table</code>, the other prominent dialect being <code>tidyverse</code>. But to develop an intuition, let’s start off with base R, specifically—matrices.</p>
-<p>Consider a random sequence of observations:<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a></p>
+<p>Consider a random sequence of observations:<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tutorial-1-introduction-to-r.html#cb1-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
 <span id="cb1-2"><a href="tutorial-1-introduction-to-r.html#cb1-2" tabindex="-1"></a>a</span></code></pre></div>
 <pre><code>## [1] 1 0 4 3 2 6</code></pre>
 <p>We used <code>c()</code> function to combine the set of observations. Without this function, that is if we were to just list the observations separated by commas, we would have received an error message.</p>
-<p>This sequence, unlike a <em>vector</em>, has no dimensions.<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a> But we can transform it to a <span class="math inline">\(n \times 1\)</span> vector, and call it <code>b</code>, using the <code>as.matrix()</code> function:</p>
+<p>This sequence, unlike a <em>vector</em>, has no dimensions.<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a> But we can transform it to a <span class="math inline">\(n \times 1\)</span> vector, and call it <code>b</code>, using the <code>as.matrix()</code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tutorial-1-introduction-to-r.html#cb3-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(a)</span>
 <span id="cb3-2"><a href="tutorial-1-introduction-to-r.html#cb3-2" tabindex="-1"></a>b</span></code></pre></div>
 <pre><code>##      [,1]
@@ -427,9 +430,9 @@ div.csl-indent {
 </div>
 <div class="footnotes">
 <hr />
-<ol start="23">
-<li id="fn23"><p>In these tutorials, we will use the ‘assignment’ operator, <code>&lt;-</code>, which is, for all practical purposes, equivalent to the ‘equal’ operator, <code>=</code>.<a href="tutorial-1-introduction-to-r.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>You don’t need to take my word for it. You can check this for yourself by running the <code>dim(a)</code> in your R console, for example.<a href="tutorial-1-introduction-to-r.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<ol start="24">
+<li id="fn24"><p>In these tutorials, we will use the ‘assignment’ operator, <code>&lt;-</code>, which is, for all practical purposes, equivalent to the ‘equal’ operator, <code>=</code>.<a href="tutorial-1-introduction-to-r.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>You don’t need to take my word for it. You can check this for yourself by running the <code>dim(a)</code> in your R console, for example.<a href="tutorial-1-introduction-to-r.html#fnref25" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

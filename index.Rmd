@@ -21,7 +21,7 @@ fontsize: 12pt
 knitr::opts_chunk$set(eval=TRUE, echo=FALSE, cache=TRUE, message=FALSE, warning=FALSE, fig.width=6.5, fig.height=4.0)
 library(ggplot2)
 library(data.table)
-# library(tufte)
+library(tufte)
 # library(msmbstyle)
 ```
 
