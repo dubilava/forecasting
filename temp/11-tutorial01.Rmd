@@ -1,0 +1,118 @@
+# Forecasting Using R {-}
+
+R is a programming language for data analysis and visualization. Here I introduce basic commands that should facilitate your understanding of R. You can further enhance your skillset using numerous online resources,^[such as [R for Data Science](https://r4ds.had.co.nz/)] as well as by applying a trial--and--error approach, which has been my own time-tested routine for mastering R. To the extent that new packages and features are added to R pretty much on a daily basis, there are virtually no limits to how far you can advance your knowledge of this programming language. These notes will get you started&mdash;you can go as far as you wish.
+
+We will work in [RStudio](https://www.rstudio.com/){target="_blank"}&mdash;the go-to interface for R (available from [CRAN](https://cran.r-project.org/){target="_blank"}). You will need to have installed both, R and RStudio on your devise. RStudio will seamlessly 'find' and connect with R.
+
+There are several 'dialects' of R coding language. We will primarily rely on `data.table`, which I find intuitive. The other popular dialect is `tidyverse`.^[[Forecasting Principles and Practice](https://otexts.com/fpp3/) by Hyndman and Athanasopoulos relies on tidyverse, for example.] Technically, you don't necessarily need either of these dialects to get the job done&mdash;the base R language would be just enough. But these dialects make things easier, and they are not too difficult to master anyway.
+
+
+# Tutorial 1: Introduction to R {-}
+
+```{r echo=FALSE, include=FALSE, message=FALSE}
+library(data.table)
+library(ggplot2)
+```
+
+## Base R and matrix manipulations {-}
+
+There are a number of ways in which we can work with data in R. Here, we will primarily rely on `data.table`, the other prominent dialect being `tidyverse`. But to develop an intuition, let's start off with base R, specifically&mdash;matrices. 
+
+Consider a random sequence of observations:^[In these tutorials, we will use the 'assignment' operator, `<-`, which is, for all practical purposes, equivalent to the 'equal' operator, `=`.]
+```{r echo=TRUE}
+a <- c(1,0,4,3,2,6)
+a
+```
+
+We used `c()` function to combine the set of observations. Without this function, that is if we were to just list the observations separated by commas, we would have received an error message.
+
+This sequence, unlike a *vector*, has no dimensions.^[You don't need to take my word for it. You can check this for yourself by running the `dim(a)` in your R console, for example.] But we can transform it to a $n \times 1$ vector, and call it `b`, using the `as.matrix()` function: 
+```{r echo=TRUE}
+b <- as.matrix(a)
+b
+dim(b)
+```
+
+The result is a $6 \times 1$ vector, or a column matrix. To obtain a $1 \times 6$ vector, or a row matrix, we *transpose* the aforementioned vector using the `t()` function:
+```{r echo=TRUE}
+bt <- t(b)
+bt
+dim(bt)
+```
+
+We can create any $n \times k$ matrix, using the `matrix()` function. For example, consider a $3 \times 2$ matrix:
+```{r echo=TRUE}
+B <- matrix(a,nrow=3,ncol=2)
+B
+```
+
+Note that we included the earlier generated sequence of six values, which we assigned to `a`, as the elements of this matrix. 
+
+We can add column names and row names to this matrix:
+```{r echo=TRUE}
+colnames(B) <- c("c1","c2")
+rownames(B) <- c("r1","r2","r3")
+B
+```
+
+If, at this point, we would like to only work with, say, the first column of the matrix, we can call it using its column number or the column name as follows:
+```{r echo=TRUE}
+B[,"c1"]
+```
+
+Note that we indicated the column name after comma within the brackets placed immediately after the matrix. In general, the syntax goes as follows `M[r,c]`, where `M` is the name of the matrix (in our example `B`), `r` is the row number(s) or the row name(s), and `c` is the column number(s) or column names(s). 
+
+So, for example, if we want to extract a matrix element, say $b_{3,2}$, we can do this by entering the respective indices in the brackets:
+```{r echo=TRUE}
+B[3,2]
+```
+
+Matrix multiplication is done using `%*%` command, granted that the two matrices are compatible. For example, we obtain a product of matrix $B$ and a new $2 \times 1$ vector, $d$, as follows:
+```{r echo=TRUE}
+d <- as.matrix(c(5,-2))
+Bd <- B%*%d
+Bd
+```
+
+We can add columns (and rows) to the existing matrix using a `cbind()` function:
+```{r echo=TRUE}
+c3 <- c(0,1,0)
+D <- cbind(B,c3)
+D
+```
+
+We can invert a(n invertible) matrix using the `solve()` function:
+```{r echo=TRUE}
+Di <- solve(D)
+Di
+```
+
+## Estimating parameters using OLS {-}
+
+By now, we have covered enough ground to obtain the least squares estimator. For that, we will generate vectors of dependent and independent variables, and then estimate the vector of parameters. Specifically, we will generate a sequence of 200 binary variables, which will serve as our independent variable `x`, and then we will construct the dependent variable `y` using the following formula: $y=2+0.5x+e$, where `e` is a sequence of 200 standard normal random variables.
+```{r echo=TRUE}
+set.seed(1)
+x <- sample(c(0,1),200,replace=T)
+set.seed(2)
+e <- rnorm(200)
+y <- 2+0.5*x+e
+
+X <- cbind(1,x)
+b <- solve(t(X)%*%X)%*%t(X)%*%y
+b
+```
+
+Note that when generating the random samples of observations, we set seeds (in two instances). We did so to ensure that the results exactly replicate every time we re-run the model. Otherwise, owing to the random sampling, the parameter estimates that I observe will differ from those that you observe and, moreover, they will differ from each other every time you re-run the code.
+
+The foregoing "do it by hand" exercise can be easily replicated using the `lm()` function:
+```{r echo=TRUE, cache=FALSE}
+ols <- lm(y~x)
+ols
+```
+
+We can apply the `summary()` function to the `lm()` output to see the complete summary of the regression results:
+```{r echo=TRUE, cache=FALSE}
+summary(ols)
+```
+
+

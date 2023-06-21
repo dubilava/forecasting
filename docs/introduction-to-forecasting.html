@@ -2,106 +2,63 @@
 <html lang="" xml:lang="">
 <head>
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 1 – Introduction to Forecasting | Educated Guess" />
-<meta property="og:type" content="book" />
-<meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Forecasting With Time Series Models Using R" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 – Introduction to Forecasting | Educated Guess</title>
+  <meta name="description" content="Forecasting With Time Series Models Using R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
+  <meta property="og:title" content="Chapter 1 – Introduction to Forecasting | Educated Guess" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/forecasting-logo.png" />
+  <meta property="og:description" content="Forecasting With Time Series Models Using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 – Introduction to Forecasting | Educated Guess" />
+  
+  <meta name="twitter:description" content="Forecasting With Time Series Models Using R" />
+  <meta name="twitter:image" content="/forecasting-logo.png" />
 
 <meta name="author" content="David Ubilava" />
 
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Forecasting With Time Series Models Using R">
-
-<title>Chapter 1 – Introduction to Forecasting | Educated Guess</title>
-
-<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
-<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
-<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
-<script>
-function toggle_visibility(id1, id2) {
-var e = document.getElementById(id1);
-var f = document.getElementById(id2);
-
-e.style.display = ((e.style.display!='none') ? 'none' : 'block');
-
-if(f.classList.contains('fa-plus-square')) {
-    f.classList.add('fa-minus-square')
-    f.classList.remove('fa-plus-square')
-} else {
-    f.classList.add('fa-plus-square')
-    f.classList.remove('fa-minus-square')
-}
-
-}
-</script>
-<script>
-function copy_link(id) {
-  var dummy = document.createElement('input'),
-  text = window.location.href.split(/[?#]/)[0] + '#' + id;
-  document.body.appendChild(dummy);
-  dummy.value = text;
-  dummy.select();
-  document.execCommand('copy');
-  document.body.removeChild(dummy);
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  var tooltip = document.getElementById(id + '-tooltip');
-  tooltip.innerHTML = 'Copied!';
-}
-
-function reset_tooltip(id) {
-  var tooltip = document.getElementById(id);
-  tooltip.innerHTML = 'Copy link';
-}
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>
-  $(document).ready(function () {
-    var element_label= $("label[for *= 'tufte-sn-']");
-    var count = $(element_label).length;
-    $(element_label).each(function( index ) {
-      //console.log( ++index + ": " + $( this ).text() );
-      $(this).attr('for','tufte-sn-'+ ++index);
-      $(this).text(index);
-    });
-  });
-  $(document).ready(function () {
-    var element_input= $("input[id *= 'tufte-sn-']");
-    var count = $(element_input).length;
-    $(element_input).each(function( index ) {
-      //console.log( ++index + ": " + $( this ).text() );
-      $(this).attr('id','tufte-sn-'+ ++index);
-    }); 
-  });
-  $(document).ready(function () {
-    var element_span= $("span[class *= 'sidenote-number']");
-    var count = $(element_span).length;
-    $(element_span).each(function( index ) {
-      //console.log( ++index + ": " + $( this ).text() );
-      $(this).text(++index);
-    }); 
-  });
-</script>
+  
+<link rel="prev" href="forecasting-with-time-series-models.html"/>
+<link rel="next" href="features-of-time-series-data.html"/>
+<script src="book_assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="book_assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -161,7 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -186,92 +146,183 @@ div.csl-indent {
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
-
 </head>
 
 <body>
 
 
 
-<div class="row">
-<div class="col-sm-12">
-<div id="TOC">
-<ul class="navbar">
-<li class="msmb"><p class="title">Educated Guess<p><p class="author">David Ubilava</p>
-<li class="dropdown" style="float:right">
-<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
-<div class="dropdown-content">
-<a href="index.html" id="toc-an-intuitive-guide-to-forecasting-with-time-series-models-using-r">An Intuitive Guide to Forecasting With Time Series Models Using R</a>
-<a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
-<a id="active-page" href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a><ul class="toc-sections">
-<li class="toc"><a href="#what-forecast-is-and-is-not"> What Forecast Is and Is Not</a></li>
-<li class="toc"><a href="#a-brief-history-of-the-study-of-forecasting"> A Brief History of the Study of Forecasting</a></li>
-<li class="toc"><a href="#knowing-the-unknown"> Knowing the Unknown</a></li>
-<li class="toc"><a href="#the-loss-function-and-the-optimal-point-forecast"> The Loss Function and the Optimal Point Forecast</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>An Intuitive Guide to Forecasting With Time Series Models Using R</a></li>
+<li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
+<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.3</b> Knowing the Unknown</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#the-loss-function-and-the-optimal-point-forecast"><i class="fa fa-check"></i><b>1.4</b> The Loss Function and the Optimal Point Forecast</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>2.1</b> Stochastic Process and Time Series</a></li>
+<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a></li>
+<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#serial-dependence"><i class="fa fa-check"></i><b>2.3</b> Serial Dependence</a></li>
+<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.4</b> Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>3</b> – Generating and Evaluating Forecasts</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>3.1</b> Pseudo-Forecasting Routine</a></li>
+<li class="chapter" data-level="3.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>3.2</b> Forecast Assessment</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>3.2.1</b> Unbiasedness</a></li>
+<li class="chapter" data-level="3.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>3.2.2</b> Efficiency</a></li>
+<li class="chapter" data-level="3.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.2.3</b> No Autocorrelation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> – Trends</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>4.1</b> Trends in the Data</a></li>
+<li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>4.2</b> Spurious Relationships</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>4.2.1</b> Deterministic Trends</a></li>
+<li class="chapter" data-level="4.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>4.2.2</b> Stochastic Trends</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.3</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>4.3.1</b> Trends in mortgage rates</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.4</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> – Seasonality</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>5.1</b> Seasonal Fluctuations in the Data</a></li>
+<li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>5.2.1</b> Seasonal dummy variables</a></li>
+<li class="chapter" data-level="5.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>5.2.2</b> Seasonal harmonic variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.3</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>6</b> – Autoregression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>6.1</b> Stochastic Cycles</a></li>
+<li class="chapter" data-level="6.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>6.2.1</b> First-order autoregression</a></li>
+<li class="chapter" data-level="6.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>6.2.2</b> Unit Roots and Non-stationarity</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>6.3.1</b> Iterative Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="6.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>6.3.2</b> Direct Method of Multistep Forecasting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> – Vector Autoregression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>7.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
+<li class="chapter" data-level="7.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>7.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>7.2.1</b> In-Sample Granger Causality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>7.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>7.3.1</b> One-step-ahead forecasts</a></li>
+<li class="chapter" data-level="7.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>7.3.2</b> Multi-step-ahead forecasts</a></li>
+<li class="chapter" data-level="7.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>7.3.3</b> Out-of-Sample Granger Causality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> – Threshold Autoregression</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>8.1</b> Regime-Dependent Nonlinearity</a></li>
+<li class="chapter" data-level="8.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>8.2</b> Modeling</a></li>
+<li class="chapter" data-level="8.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>8.3.1</b> Skeleton Extrapolation</a></li>
+<li class="chapter" data-level="8.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>8.3.2</b> Analytical Method</a></li>
+<li class="chapter" data-level="8.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>8.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>9</b> – Comparing Forecasts</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>9.1</b> The Need for the Forecast Evaluation</a></li>
+<li class="chapter" data-level="9.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>9.2</b> Relative Forecast Accuracy Tests</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>9.2.1</b> The Morgan-Granger-Newbold Test</a></li>
+<li class="chapter" data-level="9.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>9.2.2</b> The Diebold-Mariano Test</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>9.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>10</b> – Combining Forecasts</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>10.1</b> Benefits of Forecast Combination</a></li>
+<li class="chapter" data-level="10.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>10.2</b> Optimal Weights for Forecast Combination</a></li>
+<li class="chapter" data-level="10.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>10.3</b> Forecast Encompassing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="forecasting-using-r.html"><a href="forecasting-using-r.html"><i class="fa fa-check"></i>Forecasting Using R</a></li>
+<li class="chapter" data-level="" data-path="tutorial-1-introduction-to-r.html"><a href="tutorial-1-introduction-to-r.html"><i class="fa fa-check"></i>Tutorial 1: Introduction to R</a>
+<ul>
+<li class="chapter" data-level="" data-path="tutorial-1-introduction-to-r.html"><a href="tutorial-1-introduction-to-r.html#base-r-and-matrix-manipulations"><i class="fa fa-check"></i>Base R and matrix manipulations</a></li>
+<li class="chapter" data-level="" data-path="tutorial-1-introduction-to-r.html"><a href="tutorial-1-introduction-to-r.html#estimating-parameters-using-ols"><i class="fa fa-check"></i>Estimating parameters using OLS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="tutorial-2-data-management-and-visualisation.html"><a href="tutorial-2-data-management-and-visualisation.html"><i class="fa fa-check"></i>Tutorial 2: Data Management and Visualisation</a></li>
+<li class="chapter" data-level="" data-path="tutorial-3-forecasting-methods-and-routines.html"><a href="tutorial-3-forecasting-methods-and-routines.html"><i class="fa fa-check"></i>Tutorial 3: Forecasting Methods and Routines</a></li>
+<li class="chapter" data-level="" data-path="tutorial-4-trends.html"><a href="tutorial-4-trends.html"><i class="fa fa-check"></i>Tutorial 4: Trends</a></li>
+<li class="chapter" data-level="" data-path="tutorial-5-seasonality.html"><a href="tutorial-5-seasonality.html"><i class="fa fa-check"></i>Tutorial 5: Seasonality</a></li>
+<li class="chapter" data-level="" data-path="tutorial-6-autoregression.html"><a href="tutorial-6-autoregression.html"><i class="fa fa-check"></i>Tutorial 6: Autoregression</a></li>
+<li class="chapter" data-level="" data-path="tutorial-7-vector-autoregression.html"><a href="tutorial-7-vector-autoregression.html"><i class="fa fa-check"></i>Tutorial 7: Vector Autoregression</a></li>
+<li class="chapter" data-level="" data-path="tutorial-8-threshold-autoregression.html"><a href="tutorial-8-threshold-autoregression.html"><i class="fa fa-check"></i>Tutorial 8: Threshold Autoregression</a></li>
+<li class="chapter" data-level="" data-path="tutorial-9-comparing-forecasts.html"><a href="tutorial-9-comparing-forecasts.html"><i class="fa fa-check"></i>Tutorial 9: Comparing Forecasts</a></li>
+<li class="chapter" data-level="" data-path="tutorial-10-combining-forecasts.html"><a href="tutorial-10-combining-forecasts.html"><i class="fa fa-check"></i>Tutorial 10: Combining Forecasts</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
-<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
-<a href="generating-and-evaluating-forecasts.html" id="toc-generating-and-evaluating-forecasts"><span class="toc-section-number">3</span> – Generating and Evaluating Forecasts</a>
-<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
-<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
-<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> – Vector Autoregression</a>
-<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">8</span> – Threshold Autoregression</a>
-<a href="comparing-forecasts.html" id="toc-comparing-forecasts"><span class="toc-section-number">9</span> – Comparing Forecasts</a>
-<a href="combining-forecasts.html" id="toc-combining-forecasts"><span class="toc-section-number">10</span> – Combining Forecasts</a>
-<a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
-<a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
-<a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
-<a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
-<a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
-<a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-vector-autoregression.html" id="toc-tutorial-7-vector-autoregression">Tutorial 7: Vector Autoregression</a>
-<a href="tutorial-8-threshold-autoregression.html" id="toc-tutorial-8-threshold-autoregression">Tutorial 8: Threshold Autoregression</a>
-<a href="tutorial-9-comparing-forecasts.html" id="toc-tutorial-9-comparing-forecasts">Tutorial 9: Comparing Forecasts</a>
-<a href="tutorial-10-combining-forecasts.html" id="toc-tutorial-10-combining-forecasts">Tutorial 10: Combining Forecasts</a>
-<a href="references.html" id="toc-references">References</a>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-12">
-<div id="introduction-to-forecasting" class="section level1" number="1">
-<h1>
-<span class="header-section-number">Chapter 1</span> – Introduction to Forecasting</h1>
-<p><img src="art/astrologer.png"></p>
-<div id="what-forecast-is-and-is-not" class="section level2" number="1.1">
-<h2>
-<span class="header-section-number">1.1</span> What Forecast Is and Is Not<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('what-forecast-is-and-is-not')" onmouseout="reset_tooltip('what-forecast-is-and-is-not-tooltip')"><span class="tooltiptext" id="what-forecast-is-and-is-not-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Educated Guess</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-forecasting" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> – Introduction to Forecasting<a href="introduction-to-forecasting.html#introduction-to-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><img src="art/astrologer.png" /></p>
+<div id="what-forecast-is-and-is-not" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> What Forecast Is and Is Not<a href="introduction-to-forecasting.html#what-forecast-is-and-is-not" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><span class="newthought">What is a forecast</span> if not a guess? An educated guess, nonetheless. We guess when we don’t know exactly how things may turn up. We may guess, for example, whether it will rain tomorrow. Or whether the next card out of the deck will be higher or lower than the current card.</p>
 <p>We guess events that come with a fair bit of uncertainty. Such would be events for which several outcomes, each with some chance of appearing, are possible. In other words, we guess random variables.</p>
 <p>Making a claim about whether it will rain the next day is a guess because it may or may not rain. Rain is a random variable. By contrast, making a claim about whether the sun will rise the next day is hardly a guess. There is little prophecy associated with predicting the sunrise.</p>
-<p>A guess that relies on knowledge is a forecast. Otherwise, it is merely a gamble.<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> Consider card counting. A casino is a gambling house. Everyone is welcome so long as gambling is what they do. But when one attempts to ‘beat the house’ using knowledge that is accumulated by counting cards, the gamble becomes a forecast, and the gambler becomes <em>persona non grata</em>.</span> We make a forecast if we guess rain for tomorrow because we observed clouds today. Here we account for our understanding of meteorological phenomena. We gamble if we make a guess of heads after the next flip of a coin because we observed tails after the current flip. We have not acquired any new knowledge by observing the outcome of the current flip that would be useful in predicting the outcome of the next flip.</p>
-<p>The more we know about underlying factors that affect the outcome of a random variable, the more accurate is our forecast. A good forecast doesn’t need to be precise, however. It almost never is, only if by fluke. An imprecise forecast can be of value as well. That we were unable to exactly predict an event, tells us something about our understanding of the underlying processes. Such conjecture can be useful. Forecasting, even if inaccurate, can be useful.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> George Box’s ‘all models are wrong but some are useful’ is certainly suitable for the study of forecasting.</span></p>
+<p>A guess that relies on knowledge is a forecast. Otherwise, it is merely a gamble.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> We make a forecast if we guess rain for tomorrow because we observed clouds today. Here we account for our understanding of meteorological phenomena. We gamble if we make a guess of heads after the next flip of a coin because we observed tails after the current flip. We have not acquired any new knowledge by observing the outcome of the current flip that would be useful in predicting the outcome of the next flip.</p>
+<p>The more we know about underlying factors that affect the outcome of a random variable, the more accurate is our forecast. A good forecast doesn’t need to be precise, however. It almost never is, only if by fluke. An imprecise forecast can be of value as well. That we were unable to exactly predict an event, tells us something about our understanding of the underlying processes. Such conjecture can be useful. Forecasting, even if inaccurate, can be useful.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 </div>
-<div id="a-brief-history-of-the-study-of-forecasting" class="section level2" number="1.2">
-<h2>
-<span class="header-section-number">1.2</span> A Brief History of the Study of Forecasting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('a-brief-history-of-the-study-of-forecasting')" onmouseout="reset_tooltip('a-brief-history-of-the-study-of-forecasting-tooltip')"><span class="tooltiptext" id="a-brief-history-of-the-study-of-forecasting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<div id="a-brief-history-of-the-study-of-forecasting" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> A Brief History of the Study of Forecasting<a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own, or have used the services of others. This desire to guess what was to come, has been necessitated by potential benefits such information could offer.</p>
-<p>For many centuries, because the weather was the single most important factor that impacted the livelihood of people and, indeed, the fate of civilizations,<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> A sequence of droughts toward the end of the ninth century is considered one of the key reasons for the collapse of the Classic Mayan Civilization <span class="citation">(<a href="#ref-hodell1995" role="doc-biblioref">Hodell, Curtis, and Brenner 1995</a>)</span>.</span> much of forecasting revolved around weather forecasting. Early attempts at weather forecasting were rather simplistic. The Babylonians, for example, based their weather forecasts on the appearance of clouds.</p>
+<p>For many centuries, because the weather was the single most important factor that impacted the livelihood of people and, indeed, the fate of civilizations,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> much of forecasting revolved around weather forecasting. Early attempts at weather forecasting were rather simplistic. The Babylonians, for example, based their weather forecasts on the appearance of clouds.</p>
 <p>Over time, an advancement in the studies of physics and related fields, on the one hand, and the invention of measuring instruments such as barometer and thermometer, on the other hand, contributed to the development of the study of meteorology, the way we know it. The birth of the modern weather forecast, however, is attributed to the invention of the telegraph, which made it possible for the weather forecast to arrive sooner than the weather itself.</p>
 <p>Much like a better understanding of the laws of physics facilitated the inception of meteorological research, the development of the study of econometrics allowed for the introduction of the more rigorous forecasting methods. And as with the telegraph back in the 19th century, the development of the modern computer in the 20th century facilitated the effective use of econometric methods for economic forecasting.</p>
 <p>Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the massive increase in computing power allowed the storage and distribution of granular data that has further aided the advancement of the methods and practices of forecasting.</p>
 </div>
-<div id="knowing-the-unknown" class="section level2" number="1.3">
-<h2>
-<span class="header-section-number">1.3</span> Knowing the Unknown<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('knowing-the-unknown')" onmouseout="reset_tooltip('knowing-the-unknown-tooltip')"><span class="tooltiptext" id="knowing-the-unknown-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<div id="knowing-the-unknown" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Knowing the Unknown<a href="introduction-to-forecasting.html#knowing-the-unknown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>All methods—primitive or complex, spurious or scientifically substantiated—have one thing in common: they all rely (or, at least, pretend to rely) upon <em>information</em>. Information is key in forecasting. It comes in many forms, and is condensed into <em>data</em>. When organized and stored in a certain way – chronologically and at regular intervals – we end up with the <em>time series</em> data.</p>
-<p>A forecast is a random variable that has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution.<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> It can also be the median of the distribution, depending on a forecaster’s choice of the loss function; more about this later.</span></p>
-<p>Let <span class="math inline">\(\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> be a point forecast<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> We use ‘hat’ to emphasize that the forecast is based on parameter estimates rather than true parameters of the model.</span> for period <span class="math inline">\(t+h\)</span> made in period <span class="math inline">\(t\)</span>, that is, using using the available information at the time. The information set is denoted by <span class="math inline">\(\Omega_t\)</span>, which can contain any predictor, including the lags of the dependent variable.</p>
-<p>Point forecast is our ‘best guess’ about the future realization of the random variable. The difference between this forecast and the actual realization of the random variable is the forecast error. That is, <span class="math display">\[e_{t+h|t} = \hat{y}_{t+h|t} - y_{t+h}\]</span><label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> Somewhat unconventionally, I define the forecast error by subtracting the actual realization of the random variable from its forecast. I do so for intuitive convenience. A positive forecast error, here, suggests that we overestimated our forecast. Likewise, a negative forecast error would mean that we underestimated the forecast.</span></p>
+<p>A forecast is a random variable that has some distribution and, thus, moments. The simplest form of a forecast is a point forecast, which usually is the mean of the distribution.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p>Let <span class="math inline">\(\hat{y}_{t+h|t}=E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> be a point forecast<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> for period <span class="math inline">\(t+h\)</span> made in period <span class="math inline">\(t\)</span>, that is, using using the available information at the time. The information set is denoted by <span class="math inline">\(\Omega_t\)</span>, which can contain any predictor, including the lags of the dependent variable.</p>
+<p>Point forecast is our ‘best guess’ about the future realization of the random variable. The difference between this forecast and the actual realization of the random variable is the forecast error. That is, <span class="math display">\[e_{t+h|t} = \hat{y}_{t+h|t} - y_{t+h}\]</span><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
 <p>The more accurate is the forecast the smaller is the forecast error. There is no such thing as a perfect or the errorless forecast, even if by fluke we were to exactly predict an outcome of an event. There may be instances, if we are fortuitous, when a forecast is spot-on. But such an instance will be just that—a fluke. More often than not, a forecast error will be different from zero. Indeed, about half the time, forecast errors will be positive, and half the time—negative. And while on average the forecast error is expected to be zero, the forecast error variance is expected to have a positive value, thus implying uncertainty surrounding the point forecast.</p>
-<p>Accurate forecasting is difficult because of all the unknowns we deal with in the process.<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> Donald Rumsfeld, the U.S. Secretary of Defence, once famously said: ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’</span> In the context of model-based forecasting, these unknowns are: (i) that we don’t know the true model, so we assume one, which leads to the <em>model uncertainty</em>; (ii) that we don’t know the true parameters of the model, so we estimate those, which leads to the <em>parameter uncertainty</em>; and (iii) that we don’t know the future, and there is nothing we can do about it, which leads to the <em>information uncertainty</em>.</p>
+<p>Accurate forecasting is difficult because of all the unknowns we deal with in the process.<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> In the context of model-based forecasting, these unknowns are: (i) that we don’t know the true model, so we assume one, which leads to the <em>model uncertainty</em>; (ii) that we don’t know the true parameters of the model, so we estimate those, which leads to the <em>parameter uncertainty</em>; and (iii) that we don’t know the future, and there is nothing we can do about it, which leads to the <em>information uncertainty</em>.</p>
 <p>To illustrate the foregoing, we can decompose the forecast error into its three components:
 <span class="math display">\[\begin{aligned}
         e_{t+h} &amp; = \big[y_{t+h}-E(y_{t+h}|\Omega_{t})\big]\;~~\text{(information uncertainty)}  \\
@@ -281,12 +332,10 @@ div.csl-indent {
 <p>where <span class="math inline">\(E(y_{t+h}|\Omega_{t};\theta)\)</span> indicates that the forecast is made using a parametric model, and <span class="math inline">\(E(y_{t+h}|\Omega_{t};\hat{\theta})\)</span> indicates that the parameters of the model are estimated.</p>
 <p>Because the information uncertainty cannot be avoided, we are bound to make a forecast error. The aim of a forecaster is to minimize the model and parameter uncertainties. That is, to find a model that closely approximates the true model, and to estimate it’s parameters as efficiently as possible. A forecaster can achieve this by minimizing the expected <em>loss function</em>.</p>
 </div>
-<div id="the-loss-function-and-the-optimal-point-forecast" class="section level2" number="1.4">
-<h2>
-<span class="header-section-number">1.4</span> The Loss Function and the Optimal Point Forecast<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-loss-function-and-the-optimal-point-forecast')" onmouseout="reset_tooltip('the-loss-function-and-the-optimal-point-forecast-tooltip')"><span class="tooltiptext" id="the-loss-function-and-the-optimal-point-forecast-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<div id="the-loss-function-and-the-optimal-point-forecast" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> The Loss Function and the Optimal Point Forecast<a href="introduction-to-forecasting.html#the-loss-function-and-the-optimal-point-forecast" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A loss function, which we denote by <span class="math inline">\(L(e_{t+h})\)</span>, a transformation of a forecast error such that: (i) <span class="math inline">\(L(e_{t+h}) = 0\)</span> for all <span class="math inline">\(e_{t+h}=0\)</span>; (ii) <span class="math inline">\(L(e_{t+h}) \geq 0\)</span> for all <span class="math inline">\(e_{t+h} \neq 0\)</span>; and, when the loss function is symmetric about zero, (iii) <span class="math inline">\(L(e_{t+h}) &gt; L(e_{s+h})\)</span> for all <span class="math inline">\(|e_{t+h}| &gt; |e_{s+h}|\)</span>.</p>
-<p>Two commonly used symmetric<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> There are also asymmetric loss functions, which are relevant in instances when it makes sense to ‘penalize’ the forecast error more so in one direction than another.</span> loss functions are an <em>absolute</em> loss function, <span class="math inline">\(L{(e_{t+h|t})} = |e_{t+h|t}|\)</span>, and a <em>quadratic</em> loss function, <span class="math inline">\(L{(e_{t+h|t})} = (e_{t+h|t})^2\)</span>.</p>
+<p>Two commonly used symmetric<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> loss functions are an <em>absolute</em> loss function, <span class="math inline">\(L{(e_{t+h|t})} = |e_{t+h|t}|\)</span>, and a <em>quadratic</em> loss function, <span class="math inline">\(L{(e_{t+h|t})} = (e_{t+h|t})^2\)</span>.</p>
 <p>The quadratic loss function is arguably the most popular among the loss functions, partly because it echoes the way we fit the data ‘in-sample’ (i.e. by minimizing the sum of squared residuals).</p>
 <p>Optimal forecast is one that minimizes the expected loss:
 <span class="math display">\[\min_{\hat{y}_{t+h|t}} E\left[L\left(e_{t+h|t}\right)\right] = \min_{\hat{y}_{t+h|t}} E\left[L\left(y_{t+h}-\hat{y}_{t+h|t}\right)\right].\]</span></p>
@@ -302,19 +351,99 @@ div.csl-indent {
 
 </div>
 </div>
-<p style="text-align: center;">
-<a href="forecasting-with-time-series-models.html"><button class="btn btn-default">Previous</button></a>
-<a href="features-of-time-series-data.html"><button class="btn btn-default">Next</button></a>
-</p>
-<p class="build-date">Page built: 
-2023-03-26
- using 
-R version 4.2.2 (2022-10-31 ucrt)
-</p>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-hodell1995" class="csl-entry">
+Hodell, David A, Jason H Curtis, and Mark Brenner. 1995. <span>“<span class="nocase">Possible Role of Climate in the Collapse of Classic Maya Civilization</span>.”</span> <em>Nature</em> 375 (6530): 391–94.
 </div>
 </div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Consider card counting. A casino is a gambling house. Everyone is welcome so long as gambling is what they do. But when one attempts to ‘beat the house’ using knowledge that is accumulated by counting cards, the gamble becomes a forecast, and the gambler becomes <em>persona non grata</em>.<a href="introduction-to-forecasting.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>George Box’s ‘all models are wrong but some are useful’ is certainly suitable for the study of forecasting.<a href="introduction-to-forecasting.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>A sequence of droughts toward the end of the ninth century is considered one of the key reasons for the collapse of the Classic Mayan Civilization <span class="citation">(<a href="#ref-hodell1995">Hodell, Curtis, and Brenner 1995</a>)</span>.<a href="introduction-to-forecasting.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>It can also be the median of the distribution, depending on a forecaster’s choice of the loss function; more about this later.<a href="introduction-to-forecasting.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>We use ‘hat’ to emphasize that the forecast is based on parameter estimates rather than true parameters of the model.<a href="introduction-to-forecasting.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Somewhat unconventionally, I define the forecast error by subtracting the actual realization of the random variable from its forecast. I do so for intuitive convenience. A positive forecast error, here, suggests that we overestimated our forecast. Likewise, a negative forecast error would mean that we underestimated the forecast.<a href="introduction-to-forecasting.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Donald Rumsfeld, the U.S. Secretary of Defence, once famously said: ‘<em>As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don’t know we don’t know.</em>’<a href="introduction-to-forecasting.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>There are also asymmetric loss functions, which are relevant in instances when it makes sense to ‘penalize’ the forecast error more so in one direction than another.<a href="introduction-to-forecasting.html#fnref8" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
 
+          </div>
+        </div>
+      </div>
+<a href="forecasting-with-time-series-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="features-of-time-series-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
 
-
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
+
 </html>

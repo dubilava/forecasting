@@ -1,0 +1,7 @@
+# Tutorial 5: Seasonality {-}
+
+```{r echo=FALSE, include=FALSE, message=FALSE}
+library(ggplot2)
+library(data.table)
+```
+

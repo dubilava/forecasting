@@ -1,12 +1,17 @@
-msmbstyle::msmb_html_book:
-    toc: TRUE
-    toc_depth: 1
+  bookdown::gitbook:
+    lib_dir: "book_assets"
     split_by: chapter
     split_bib: yes
-    margin_references: FALSE
-    output_file: forecasting
     css: style.css
-    includes:
-      in_header: thishtmlfile.html
+# msmbstyle::msmb_html_book:
+#     toc: TRUE
+#     toc_depth: 1
+#     split_by: chapter
+#     split_bib: yes
+#     margin_references: FALSE
+#     output_file: forecasting
+#     css: style.css
+#     includes:
+#       in_header: thishtmlfile.html
   
   

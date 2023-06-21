@@ -2,106 +2,63 @@
 <html lang="" xml:lang="">
 <head>
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 9 – Comparing Forecasts | Educated Guess" />
-<meta property="og:type" content="book" />
-<meta property="og:image" content="/forecasting-logo.png" />
-<meta property="og:description" content="Forecasting With Time Series Models Using R" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 – Comparing Forecasts | Educated Guess</title>
+  <meta name="description" content="Forecasting With Time Series Models Using R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
+  <meta property="og:title" content="Chapter 9 – Comparing Forecasts | Educated Guess" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/forecasting-logo.png" />
+  <meta property="og:description" content="Forecasting With Time Series Models Using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 – Comparing Forecasts | Educated Guess" />
+  
+  <meta name="twitter:description" content="Forecasting With Time Series Models Using R" />
+  <meta name="twitter:image" content="/forecasting-logo.png" />
 
 <meta name="author" content="David Ubilava" />
 
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta name="description" content="Forecasting With Time Series Models Using R">
-
-<title>Chapter 9 – Comparing Forecasts | Educated Guess</title>
-
-<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
-<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
-<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
-<script>
-function toggle_visibility(id1, id2) {
-var e = document.getElementById(id1);
-var f = document.getElementById(id2);
-
-e.style.display = ((e.style.display!='none') ? 'none' : 'block');
-
-if(f.classList.contains('fa-plus-square')) {
-    f.classList.add('fa-minus-square')
-    f.classList.remove('fa-plus-square')
-} else {
-    f.classList.add('fa-plus-square')
-    f.classList.remove('fa-minus-square')
-}
-
-}
-</script>
-<script>
-function copy_link(id) {
-  var dummy = document.createElement('input'),
-  text = window.location.href.split(/[?#]/)[0] + '#' + id;
-  document.body.appendChild(dummy);
-  dummy.value = text;
-  dummy.select();
-  document.execCommand('copy');
-  document.body.removeChild(dummy);
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  var tooltip = document.getElementById(id + '-tooltip');
-  tooltip.innerHTML = 'Copied!';
-}
-
-function reset_tooltip(id) {
-  var tooltip = document.getElementById(id);
-  tooltip.innerHTML = 'Copy link';
-}
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>
-  $(document).ready(function () {
-    var element_label= $("label[for *= 'tufte-sn-']");
-    var count = $(element_label).length;
-    $(element_label).each(function( index ) {
-      //console.log( ++index + ": " + $( this ).text() );
-      $(this).attr('for','tufte-sn-'+ ++index);
-      $(this).text(index);
-    });
-  });
-  $(document).ready(function () {
-    var element_input= $("input[id *= 'tufte-sn-']");
-    var count = $(element_input).length;
-    $(element_input).each(function( index ) {
-      //console.log( ++index + ": " + $( this ).text() );
-      $(this).attr('id','tufte-sn-'+ ++index);
-    }); 
-  });
-  $(document).ready(function () {
-    var element_span= $("span[class *= 'sidenote-number']");
-    var count = $(element_span).length;
-    $(element_span).each(function( index ) {
-      //console.log( ++index + ": " + $( this ).text() );
-      $(this).text(++index);
-    }); 
-  });
-</script>
+  
+<link rel="prev" href="threshold-autoregression.html"/>
+<link rel="next" href="combining-forecasts.html"/>
+<script src="book_assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="book_assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -161,7 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -186,65 +146,161 @@ div.csl-indent {
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
-
 </head>
 
 <body>
 
 
 
-<div class="row">
-<div class="col-sm-12">
-<div id="TOC">
-<ul class="navbar">
-<li class="msmb"><p class="title">Educated Guess<p><p class="author">David Ubilava</p>
-<li class="dropdown" style="float:right">
-<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
-<div class="dropdown-content">
-<a href="index.html" id="toc-an-intuitive-guide-to-forecasting-with-time-series-models-using-r">An Intuitive Guide to Forecasting With Time Series Models Using R</a>
-<a href="forecasting-with-time-series-models.html" id="toc-forecasting-with-time-series-models">Forecasting With Time Series Models</a>
-<a href="introduction-to-forecasting.html" id="toc-introduction-to-forecasting"><span class="toc-section-number">1</span> – Introduction to Forecasting</a>
-<a href="features-of-time-series-data.html" id="toc-features-of-time-series-data"><span class="toc-section-number">2</span> – Features of Time Series Data</a>
-<a href="generating-and-evaluating-forecasts.html" id="toc-generating-and-evaluating-forecasts"><span class="toc-section-number">3</span> – Generating and Evaluating Forecasts</a>
-<a href="trends.html" id="toc-trends"><span class="toc-section-number">4</span> – Trends</a>
-<a href="seasonality.html" id="toc-seasonality"><span class="toc-section-number">5</span> – Seasonality</a>
-<a href="autoregression.html" id="toc-autoregression"><span class="toc-section-number">6</span> – Autoregression</a>
-<a href="vector-autoregression.html" id="toc-vector-autoregression"><span class="toc-section-number">7</span> – Vector Autoregression</a>
-<a href="threshold-autoregression.html" id="toc-threshold-autoregression"><span class="toc-section-number">8</span> – Threshold Autoregression</a>
-<a id="active-page" href="comparing-forecasts.html" id="toc-comparing-forecasts"><span class="toc-section-number">9</span> – Comparing Forecasts</a><ul class="toc-sections">
-<li class="toc"><a href="#the-need-for-the-forecast-evaluation"> The Need for the Forecast Evaluation</a></li>
-<li class="toc"><a href="#relative-forecast-accuracy-tests"> Relative Forecast Accuracy Tests</a></li>
-<li class="toc"><a href="#forecasting-year-on-year-monthly-inflation-12-steps-ahead"> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>An Intuitive Guide to Forecasting With Time Series Models Using R</a></li>
+<li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
+<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.3</b> Knowing the Unknown</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#the-loss-function-and-the-optimal-point-forecast"><i class="fa fa-check"></i><b>1.4</b> The Loss Function and the Optimal Point Forecast</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>2.1</b> Stochastic Process and Time Series</a></li>
+<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a></li>
+<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#serial-dependence"><i class="fa fa-check"></i><b>2.3</b> Serial Dependence</a></li>
+<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.4</b> Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>3</b> – Generating and Evaluating Forecasts</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>3.1</b> Pseudo-Forecasting Routine</a></li>
+<li class="chapter" data-level="3.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>3.2</b> Forecast Assessment</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>3.2.1</b> Unbiasedness</a></li>
+<li class="chapter" data-level="3.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>3.2.2</b> Efficiency</a></li>
+<li class="chapter" data-level="3.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.2.3</b> No Autocorrelation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>4</b> – Trends</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>4.1</b> Trends in the Data</a></li>
+<li class="chapter" data-level="4.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>4.2</b> Spurious Relationships</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>4.2.1</b> Deterministic Trends</a></li>
+<li class="chapter" data-level="4.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>4.2.2</b> Stochastic Trends</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>4.3</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>4.3.1</b> Trends in mortgage rates</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>4.4</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>5</b> – Seasonality</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>5.1</b> Seasonal Fluctuations in the Data</a></li>
+<li class="chapter" data-level="5.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>5.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>5.2.1</b> Seasonal dummy variables</a></li>
+<li class="chapter" data-level="5.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>5.2.2</b> Seasonal harmonic variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>5.3</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>6</b> – Autoregression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>6.1</b> Stochastic Cycles</a></li>
+<li class="chapter" data-level="6.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>6.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>6.2.1</b> First-order autoregression</a></li>
+<li class="chapter" data-level="6.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>6.2.2</b> Unit Roots and Non-stationarity</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>6.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>6.3.1</b> Iterative Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="6.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>6.3.2</b> Direct Method of Multistep Forecasting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>7</b> – Vector Autoregression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>7.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
+<li class="chapter" data-level="7.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>7.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>7.2.1</b> In-Sample Granger Causality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>7.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>7.3.1</b> One-step-ahead forecasts</a></li>
+<li class="chapter" data-level="7.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>7.3.2</b> Multi-step-ahead forecasts</a></li>
+<li class="chapter" data-level="7.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>7.3.3</b> Out-of-Sample Granger Causality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>8</b> – Threshold Autoregression</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>8.1</b> Regime-Dependent Nonlinearity</a></li>
+<li class="chapter" data-level="8.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>8.2</b> Modeling</a></li>
+<li class="chapter" data-level="8.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>8.3.1</b> Skeleton Extrapolation</a></li>
+<li class="chapter" data-level="8.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>8.3.2</b> Analytical Method</a></li>
+<li class="chapter" data-level="8.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>8.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>9</b> – Comparing Forecasts</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>9.1</b> The Need for the Forecast Evaluation</a></li>
+<li class="chapter" data-level="9.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>9.2</b> Relative Forecast Accuracy Tests</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>9.2.1</b> The Morgan-Granger-Newbold Test</a></li>
+<li class="chapter" data-level="9.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>9.2.2</b> The Diebold-Mariano Test</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>9.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>10</b> – Combining Forecasts</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>10.1</b> Benefits of Forecast Combination</a></li>
+<li class="chapter" data-level="10.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>10.2</b> Optimal Weights for Forecast Combination</a></li>
+<li class="chapter" data-level="10.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>10.3</b> Forecast Encompassing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="forecasting-using-r.html"><a href="forecasting-using-r.html"><i class="fa fa-check"></i>Forecasting Using R</a></li>
+<li class="chapter" data-level="" data-path="tutorial-1-introduction-to-r.html"><a href="tutorial-1-introduction-to-r.html"><i class="fa fa-check"></i>Tutorial 1: Introduction to R</a>
+<ul>
+<li class="chapter" data-level="" data-path="tutorial-1-introduction-to-r.html"><a href="tutorial-1-introduction-to-r.html#base-r-and-matrix-manipulations"><i class="fa fa-check"></i>Base R and matrix manipulations</a></li>
+<li class="chapter" data-level="" data-path="tutorial-1-introduction-to-r.html"><a href="tutorial-1-introduction-to-r.html#estimating-parameters-using-ols"><i class="fa fa-check"></i>Estimating parameters using OLS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="tutorial-2-data-management-and-visualisation.html"><a href="tutorial-2-data-management-and-visualisation.html"><i class="fa fa-check"></i>Tutorial 2: Data Management and Visualisation</a></li>
+<li class="chapter" data-level="" data-path="tutorial-3-forecasting-methods-and-routines.html"><a href="tutorial-3-forecasting-methods-and-routines.html"><i class="fa fa-check"></i>Tutorial 3: Forecasting Methods and Routines</a></li>
+<li class="chapter" data-level="" data-path="tutorial-4-trends.html"><a href="tutorial-4-trends.html"><i class="fa fa-check"></i>Tutorial 4: Trends</a></li>
+<li class="chapter" data-level="" data-path="tutorial-5-seasonality.html"><a href="tutorial-5-seasonality.html"><i class="fa fa-check"></i>Tutorial 5: Seasonality</a></li>
+<li class="chapter" data-level="" data-path="tutorial-6-autoregression.html"><a href="tutorial-6-autoregression.html"><i class="fa fa-check"></i>Tutorial 6: Autoregression</a></li>
+<li class="chapter" data-level="" data-path="tutorial-7-vector-autoregression.html"><a href="tutorial-7-vector-autoregression.html"><i class="fa fa-check"></i>Tutorial 7: Vector Autoregression</a></li>
+<li class="chapter" data-level="" data-path="tutorial-8-threshold-autoregression.html"><a href="tutorial-8-threshold-autoregression.html"><i class="fa fa-check"></i>Tutorial 8: Threshold Autoregression</a></li>
+<li class="chapter" data-level="" data-path="tutorial-9-comparing-forecasts.html"><a href="tutorial-9-comparing-forecasts.html"><i class="fa fa-check"></i>Tutorial 9: Comparing Forecasts</a></li>
+<li class="chapter" data-level="" data-path="tutorial-10-combining-forecasts.html"><a href="tutorial-10-combining-forecasts.html"><i class="fa fa-check"></i>Tutorial 10: Combining Forecasts</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
-<a href="combining-forecasts.html" id="toc-combining-forecasts"><span class="toc-section-number">10</span> – Combining Forecasts</a>
-<a href="forecasting-using-r.html" id="toc-forecasting-using-r">Forecasting Using R</a>
-<a href="tutorial-1-introduction-to-r.html" id="toc-tutorial-1-introduction-to-r">Tutorial 1: Introduction to R</a>
-<a href="tutorial-2-data-management-and-visualisation.html" id="toc-tutorial-2-data-management-and-visualisation">Tutorial 2: Data Management and Visualisation</a>
-<a href="tutorial-3-forecasting-methods-and-routines.html" id="toc-tutorial-3-forecasting-methods-and-routines">Tutorial 3: Forecasting Methods and Routines</a>
-<a href="tutorial-4-trends.html" id="toc-tutorial-4-trends">Tutorial 4: Trends</a>
-<a href="tutorial-5-seasonality.html" id="toc-tutorial-5-seasonality">Tutorial 5: Seasonality</a>
-<a href="tutorial-6-autoregression.html" id="toc-tutorial-6-autoregression">Tutorial 6: Autoregression</a>
-<a href="tutorial-7-vector-autoregression.html" id="toc-tutorial-7-vector-autoregression">Tutorial 7: Vector Autoregression</a>
-<a href="tutorial-8-threshold-autoregression.html" id="toc-tutorial-8-threshold-autoregression">Tutorial 8: Threshold Autoregression</a>
-<a href="tutorial-9-comparing-forecasts.html" id="toc-tutorial-9-comparing-forecasts">Tutorial 9: Comparing Forecasts</a>
-<a href="tutorial-10-combining-forecasts.html" id="toc-tutorial-10-combining-forecasts">Tutorial 10: Combining Forecasts</a>
-<a href="references.html" id="toc-references">References</a>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-12">
-<div id="comparing-forecasts" class="section level1" number="9">
-<h1>
-<span class="header-section-number">Chapter 9</span> – Comparing Forecasts</h1>
-<p><img src="art/evaluation.png"></p>
-<div id="the-need-for-the-forecast-evaluation" class="section level2" number="9.1">
-<h2>
-<span class="header-section-number">9.1</span> The Need for the Forecast Evaluation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-need-for-the-forecast-evaluation')" onmouseout="reset_tooltip('the-need-for-the-forecast-evaluation-tooltip')"><span class="tooltiptext" id="the-need-for-the-forecast-evaluation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Educated Guess</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="comparing-forecasts" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> – Comparing Forecasts<a href="comparing-forecasts.html#comparing-forecasts" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><img src="art/evaluation.png" /></p>
+<div id="the-need-for-the-forecast-evaluation" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> The Need for the Forecast Evaluation<a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><span class="newthought">Among several available models</span> we can select one that offers the superior in-sample fit (e.g., based on the AIC or SIC), and then apply this model to generate the forecasts.</p>
 <p>A more sensible approach, at least from the standpoint of a forecaster, would be to assess goodness of fit in an out-of-sample setting. Recall that the model that offer the best in-sample fit doesn’t necessarily produce the most accurate out-of-sample forecasts, among the considered models. That is, for example, while a better in-sample fit can be achieved by incorporating additional parameters in the model, such more complex models extrapolate the estimated parameter uncertainty into the forecasts, thus sabotaging their accuracy.</p>
 <p>Thus far we have applied the following algorithm to identify ‘the best’ among the competing forecasts:</p>
@@ -256,58 +312,119 @@ div.csl-indent {
 </ul>
 <p>But the loss function is a function of the random variable, and in practice we deal with sample information, so sampling variation needs to be taken into the account. Statistical methods of evaluation are, therefore, desirable (to say it mildly).</p>
 </div>
-<div id="relative-forecast-accuracy-tests" class="section level2" number="9.2">
-<h2>
-<span class="header-section-number">9.2</span> Relative Forecast Accuracy Tests<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('relative-forecast-accuracy-tests')" onmouseout="reset_tooltip('relative-forecast-accuracy-tests-tooltip')"><span class="tooltiptext" id="relative-forecast-accuracy-tests-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<div id="relative-forecast-accuracy-tests" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Relative Forecast Accuracy Tests<a href="comparing-forecasts.html#relative-forecast-accuracy-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Here we will cover two tests for the hypothesis that two forecasts are equivalent, in the sense that the associated loss differential is not statistically significantly different from zero.</p>
 <p>Consider a time series of length <span class="math inline">\(T\)</span>. Suppose <span class="math inline">\(h\)</span>-step-ahead forecasts for periods <span class="math inline">\(R+h\)</span> through <span class="math inline">\(T\)</span> have been generated from two competing models <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>: <span class="math inline">\(y_{t+h|t,i}\)</span> and <span class="math inline">\(y_{t+h|t,j}\)</span>, with corresponding forecast errors: <span class="math inline">\(e_{t+h,i}\)</span> and <span class="math inline">\(e_{t+h,j}\)</span>. The null hypothesis of equal predictive ability can be given in terms of the unconditional expectation of the loss differential: <span class="math display">\[H_0: E\left[d(e_{t+h,ij})\right] = 0,\]</span> where <span class="math inline">\(d(e_{t+h,ij}) = L(e_{t+h,i})-L(e_{t+h,j})\)</span>.</p>
-<div id="the-morgan-granger-newbold-test" class="section level3" number="9.2.1">
-<h3>
-<span class="header-section-number">9.2.1</span> The Morgan-Granger-Newbold Test<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-morgan-granger-newbold-test')" onmouseout="reset_tooltip('the-morgan-granger-newbold-test-tooltip')"><span class="tooltiptext" id="the-morgan-granger-newbold-test-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<div id="the-morgan-granger-newbold-test" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> The Morgan-Granger-Newbold Test<a href="comparing-forecasts.html#the-morgan-granger-newbold-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The Morgan-Granger-Newbold (MGN) test is based on auxiliary variables: <span class="math inline">\(u_{1,t+h} = e_{t+h,i}-e_{t+h,j}\)</span> and <span class="math inline">\(u_{2,t+h} = e_{t+h,i}+e_{t+h,j}\)</span>. It follows that: <span class="math display">\[E(u_{1,t+h},u_{2,t+h}) = MSFE(i,t+h)-MSFE(j,t+h).\]</span> Thus, the hypothesis of interest is equivalent to testing whether the two auxiliary variables are correlated.</p>
 <p>The MGN test statistic is: <span class="math display">\[\frac{r}{\sqrt{(P-1)^{-1}(1-r^2)}}\sim t_{P-1},\]</span> where <span class="math inline">\(t_{P-1}\)</span> is a Student t distribution with <span class="math inline">\(P-1\)</span> degrees of freedom, <span class="math inline">\(P\)</span> is the number of out-of-sample forecasts, and <span class="math display">\[r=\frac{\sum_{t=R}^{T-h}{u_{1,t+h}u_{2,t+h}}}{\sqrt{\sum_{t=R}^{T-h}{u_{1,t+h}^2}\sum_{t=R}^{T-h}{u_{2,t+h}^2}}}\]</span></p>
 <p>The MGN test relies on the assumption that forecast errors (of the forecasts to be compared) are unbiased, normally distributed, and uncorrelated (with each other). These are rather strict assumptions that are, often, violated in empirical applications.</p>
 </div>
-<div id="the-diebold-mariano-test" class="section level3" number="9.2.2">
-<h3>
-<span class="header-section-number">9.2.2</span> The Diebold-Mariano Test<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-diebold-mariano-test')" onmouseout="reset_tooltip('the-diebold-mariano-test-tooltip')"><span class="tooltiptext" id="the-diebold-mariano-test-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
-<p>The Diebold-Mariano (DM) test, put forward by <span class="citation">Diebold and Mariano (<a href="#ref-diebold1995" role="doc-biblioref">1995</a>)</span>, relaxes the aforementioned requirements on the forecast errors. The DM test statistic is: <span class="math display">\[\frac{\bar{d}_h}{\sqrt{\sigma_d^2/P}} \sim N(0,1),\]</span> where <span class="math inline">\(\bar{d}_h=P^{-1}\sum_{t=R}^{T-h} d(e_{t+h,ij})\)</span>, and where <span class="math inline">\(P=T-R-h+1\)</span> is the total number of forecasts generated using a rolling or recursive window scheme, for example.</p>
-<p>A modified version of the DM statistic, due to <span class="citation">Harvey, Leybourne, and Newbold (<a href="#ref-harvey1997" role="doc-biblioref">1997</a>)</span>, addresses the finite sample properties of the test, so that: <span class="math display">\[\sqrt{\frac{P+1-2h+P^{-1}h(h-1)}{P}}DM\sim t_{P-1},\]</span> where <span class="math inline">\(t_{P-1}\)</span> is a Student t distribution with <span class="math inline">\(P-1\)</span> degrees of freedom.</p>
+<div id="the-diebold-mariano-test" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> The Diebold-Mariano Test<a href="comparing-forecasts.html#the-diebold-mariano-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Diebold-Mariano (DM) test, put forward by <span class="citation">Diebold and Mariano (<a href="#ref-diebold1995">1995</a>)</span>, relaxes the aforementioned requirements on the forecast errors. The DM test statistic is: <span class="math display">\[\frac{\bar{d}_h}{\sqrt{\sigma_d^2/P}} \sim N(0,1),\]</span> where <span class="math inline">\(\bar{d}_h=P^{-1}\sum_{t=R}^{T-h} d(e_{t+h,ij})\)</span>, and where <span class="math inline">\(P=T-R-h+1\)</span> is the total number of forecasts generated using a rolling or recursive window scheme, for example.</p>
+<p>A modified version of the DM statistic, due to <span class="citation">Harvey, Leybourne, and Newbold (<a href="#ref-harvey1997">1997</a>)</span>, addresses the finite sample properties of the test, so that: <span class="math display">\[\sqrt{\frac{P+1-2h+P^{-1}h(h-1)}{P}}DM\sim t_{P-1},\]</span> where <span class="math inline">\(t_{P-1}\)</span> is a Student t distribution with <span class="math inline">\(P-1\)</span> degrees of freedom.</p>
 <p>In practice, the test of equal predictive ability can be applied within the framework of a regression model as follows: <span class="math display">\[d_{t+h} = \delta + \upsilon_{t+h}\;~~t = R,\ldots,T-h,\]</span> where <span class="math inline">\(d_{t+h} \equiv d(e_{t+h,ij})\)</span>. The null of equal predictive ability is equivalent of testing <span class="math inline">\(H_0: \delta = 0\)</span> in the OLS setting. Moreover, because <span class="math inline">\(d_{t+h}\)</span> may be serially correlated, autocorrelation consistent standard errors should be used for inference.</p>
 </div>
 </div>
-<div id="forecasting-year-on-year-monthly-inflation-12-steps-ahead" class="section level2" number="9.3">
-<h2>
-<span class="header-section-number">9.3</span> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('forecasting-year-on-year-monthly-inflation-12-steps-ahead')" onmouseout="reset_tooltip('forecasting-year-on-year-monthly-inflation-12-steps-ahead-tooltip')"><span class="tooltiptext" id="forecasting-year-on-year-monthly-inflation-12-steps-ahead-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<div id="forecasting-year-on-year-monthly-inflation-12-steps-ahead" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead<a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Two methods for generating multi-step-ahead forecasts from autoregressions, for example, are the iterated and direct methods. Each has advantages and disadvantages, and when the model is mis-specified, which more often than not tends to be the case, either of the two methods can yield more accurate forecasts. We will examine this using the U.S. year-on-year monthly inflation data.</p>
-<div class="figure">
-<span style="display:block;" id="fig:iterated-direct"></span>
-<p class="caption marginnote shownote">
+<div class="figure"><span style="display:block;" id="fig:iterated-direct"></span>
+<img src="forecasting_files/figure-html/iterated-direct-1.png" alt="Iterated and Direct Forecasts" width="600" />
+<p class="caption">
 Figure 9.1: Iterated and Direct Forecasts
 </p>
-<img src="forecasting_files/figure-html/iterated-direct-1.png" alt="Iterated and Direct Forecasts" width="600">
 </div>
 <p>The foregoing figure illustrates the forecasts, obtained from iterated and direct multi-step forecasting methods. We examine the relative out-of-sample forecast accuracy of the two methods by regressing the loss differential <span class="math inline">\(d_t=e_{t,d}^2-e_{t,i}^2\)</span> on a constant, where <span class="math inline">\(t=R+h,\ldots,T\)</span>, and where the subscripts <span class="math inline">\(d\)</span> and <span class="math inline">\(i\)</span> indicate the direct and iterated multi-step forecasting method, respectively. In this example, as it turns out, we are unable to reject the null hypothesis of equal forecast accuracy as the DM test statistic happens to be -1.18.</p>
 
 </div>
 </div>
-<p style="text-align: center;">
-<a href="threshold-autoregression.html"><button class="btn btn-default">Previous</button></a>
-<a href="combining-forecasts.html"><button class="btn btn-default">Next</button></a>
-</p>
-<p class="build-date">Page built: 
-2023-03-26
- using 
-R version 4.2.2 (2022-10-31 ucrt)
-</p>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-diebold1995" class="csl-entry">
+Diebold, Francis X, and Robert S Mariano. 1995. <span>“<span>Comparing Predictive Accuracy</span>.”</span> <em>Journal of Business &amp; Economic Statistics</em> 13 (3): 253–63.
+</div>
+<div id="ref-harvey1997" class="csl-entry">
+Harvey, David, Stephen Leybourne, and Paul Newbold. 1997. <span>“<span class="nocase">Testing the Equality of Prediction Mean Squared Errors</span>.”</span> <em>International Journal of Forecasting</em> 13 (2): 281–91.
 </div>
 </div>
+            </section>
 
+          </div>
+        </div>
+      </div>
+<a href="threshold-autoregression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="combining-forecasts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
 
-
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
+
 </html>
