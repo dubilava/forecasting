@@ -14,19 +14,15 @@ cover-image: forecasting-logo.png
 documentclass: book
 classoption: oneside
 fontsize: 12pt
-output:
-  bookdown::gitbook:
-    split_by: "chapter"
-    css: style.css
 ---
 
 
 ```{r, include=FALSE, eval=TRUE}
-knitr::opts_chunk$set(eval = TRUE, echo = FALSE, cache = TRUE, message = FALSE, warning = FALSE, fig.width=6.25, fig.height=4.5)
+knitr::opts_chunk$set(eval=TRUE, echo=FALSE, cache=TRUE, message=FALSE, warning=FALSE, fig.width=6.5, fig.height=4.0)
 library(ggplot2)
 library(data.table)
-library(tufte)
-library(msmbstyle)
+# library(tufte)
+# library(msmbstyle)
 ```
 
 # {-}

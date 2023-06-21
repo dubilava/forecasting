@@ -1,6 +1,6 @@
 p.caption {
-  color: dimgray;
-  margin-top: 0px;
+  color: #777;
+  margin-top: 10px;
 }
 p code {
   white-space: inherit;
@@ -11,59 +11,6 @@ pre {
 }
 pre code {
   white-space: inherit;
-}
-
-
-
-.eqn-mouseover {
-              display: flex;
-              align-items: flex-start;
-              justify-content: flex-start;
-              padding-right: 50%;
-}
-
-
-
-.panel-active section {
-		padding-top: 0;
-}
-
-.dropdown-content a:hover {
-    background-color: lightgray;
-}
-
-li .dropbtn {
-    color: dimgray;
-}
-
-ul.navbar {
-		background-color: lightgray;
-		color: coral;
-}
-
-#active-page {
-		background-color: white;
-		color: coral;
-}
-
-li.toc {
-		background-color: white;
-		padding-left: 10px;
-}
-
-h1 {
-	color: dimgray;
-	border-bottom-color: dimgray;
-}
-
-h2 {
-	color: coral;
-	border-bottom-color: coral;
-}
-
-h3 {
-	color: coral;
-	border-bottom-color: coral;
 }
 
 .title {
@@ -78,9 +25,6 @@ h3 {
 
 .author {
 	color: dimgray;
-<<<<<<< HEAD
-}
-=======
 }
 
 .book .book-summary {
@@ -97,6 +41,37 @@ h3 {
   border-left: solid 4px;
   border-color: coral;
   padding-left: 11px !important;
-}  
+}
 
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
+/* The next two rules make the horizontal line go straight across in top navbar */
+
+.summary > li:first-child {
+    height: 50px;
+    padding-top: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.07);
+}
+
+.book .book-summary ul.summary li.divider {
+    height: 0px;
+}
+
+/*------------- Body and header text---------------- */
+
+h1 {
+  color: dimgray;
+}
+
+h2, h3, h4 {
+  color: coral;
+}
+
+/*-----Body Links-------*/
+
+.book .book-body .page-wrapper .page-inner section.normal a {
+  color: coral;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal a:hover {
+color: dimgray; /* darker color when hovering */
+text-decoration: none;
+}

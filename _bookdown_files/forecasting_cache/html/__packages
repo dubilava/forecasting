@@ -3,6 +3,9 @@ data.table
 tufte
 bookdown
 msmbstyle
+ggthemes
+extrafont
+cowplot
 zoo
 xts
 Quandl
@@ -10,10 +13,7 @@ ggbrace
 fastDummies
 urca
 forecast
-cowplot
 lmtest
 sandwich
 kableExtra
 MASS
-ggthemes
-extrafont

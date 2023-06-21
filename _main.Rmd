@@ -1,3 +1,29 @@
+--- 
+title: "Educated Guess" 
+subtitle: "An Intuitive Guide to Forecasting With Time Series Models Using R"
+author: "David Ubilava"
+date: "`r format(Sys.Date(),'%B %Y')`"
+description: "Forecasting With Time Series Models Using R"
+knit: bookdown::preview_chapter
+site: bookdown::bookdown_site
+link-citations: yes
+bibliography: ["book.bib"]
+biblio-style: apalike
+always_allow_html: yes
+cover-image: forecasting-logo.png
+documentclass: book
+classoption: oneside
+fontsize: 12pt
+---
+
+# {-}
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
 # Forecasting With Time Series Models {-}
 
 # &ndash; Introduction to Forecasting
@@ -219,4 +245,235 @@ We denote point forecast by $\hat{y}_{t+h|t}$, where $h$ is the forecast horizon
 <!-- The time series in Figure~\ref{c1:series} were generated so that each observation was drawn from independent and identically distributed random variables. The presented density then serves as a close approximation of a forecast. Assuming quadratic loss, the optimal forecast would be, as we calculated above, \textit{four}. Had we only observed the very last observation, which is \textit{five}, our best guess for the next observation would have been \textit{five}. If the next observation turned out to be five, then we would have guessed it right for the wrong reason. The right forecast would have been \textit{four}, even if it turned out to be inaccurate. -->
 
 <!-- Even if we are---by luck or serendipity---successful in fully eliminating the fraction of forecast errors that are attributed to model and parameter uncertainties, we are bound to get things wrong most of the time because we do not observe the future. So, there is no use in chasing the perfect forecast. Such a thing cannot exist. Instead, we should search for a model that closely approximates the true data generating process, and to estimate parameters of this model as efficiently as possible. Indeed, these aims have largely motivated the development of time series econometrics. -->
+
+
+<!--chapter:end:01-introduction.Rmd-->
+
+
+# &ndash; Features of Time Series Data
+
+Placeholder
+
+
+## Stochastic Process and Time Series
+## Stationarity
+## Serial Dependence
+## Transformations
+
+<!--chapter:end:02-timeseries.Rmd-->
+
+
+# &ndash; Generating and Evaluating Forecasts
+
+Placeholder
+
+
+## Pseudo-Forecasting Routine
+## Forecast Assessment
+### Unbiasedness
+### Efficiency
+### No Autocorrelation
+
+<!--chapter:end:03-routines.Rmd-->
+
+
+# &ndash; Trends
+
+Placeholder
+
+
+## Trends in the Data
+## Spurious Relationships
+### Deterministic Trends
+### Stochastic Trends
+## Modeling
+### Trends in mortgage rates
+## Forecasting
+
+<!--chapter:end:04-trends.Rmd-->
+
+
+# &ndash; Seasonality
+
+Placeholder
+
+
+## Seasonal Fluctuations in the Data
+## Modeling
+### Seasonal dummy variables
+### Seasonal harmonic variables
+## Forecasting
+
+<!--chapter:end:05-seasonality.Rmd-->
+
+
+# &ndash; Autoregression
+
+Placeholder
+
+
+## Stochastic Cycles
+## Modeling
+### First-order autoregression
+### Unit Roots and Non-stationarity
+## Forecasting
+### Iterative Method of Multistep Forecasting
+### Direct Method of Multistep Forecasting
+
+<!--chapter:end:06-univariate.Rmd-->
+
+
+# &ndash; Vector Autoregression
+
+Placeholder
+
+
+## Dynamic Feedbacks Among Economic Variables
+## Modeling
+### In-Sample Granger Causality
+## Forecasting
+### One-step-ahead forecasts
+### Multi-step-ahead forecasts
+### Out-of-Sample Granger Causality
+
+<!--chapter:end:07-multivariate.Rmd-->
+
+
+# &ndash; Threshold Autoregression
+
+Placeholder
+
+
+## Regime-Dependent Nonlinearity
+## Modeling
+## Forecasting
+### Skeleton Extrapolation
+### Analytical Method
+### Numerical Method: Bootstrap Resampling
+
+<!--chapter:end:08-nonlinear.Rmd-->
+
+
+# &ndash; Comparing Forecasts
+
+Placeholder
+
+
+## The Need for the Forecast Evaluation
+## Relative Forecast Accuracy Tests
+### The Morgan-Granger-Newbold Test
+### The Diebold-Mariano Test
+## Forecasting Year-on-Year Monthly Inflation 12-steps-ahead
+
+<!--chapter:end:09-comparing.Rmd-->
+
+
+# &ndash; Combining Forecasts
+
+Placeholder
+
+
+## Benefits of Forecast Combination
+## Optimal Weights for Forecast Combination
+## Forecast Encompassing
+
+<!--chapter:end:10-combining.Rmd-->
+
+
+# Forecasting Using R {-}
+
+Placeholder
+
+
+## Base R and matrix manipulations {-}
+## Estimating parameters using OLS {-}
+
+<!--chapter:end:11-tutorial01.Rmd-->
+
+
+# Tutorial 2: Data Management and Visualisation{-}
+
+Placeholder
+
+
+
+<!--chapter:end:12-tutorial02.Rmd-->
+
+
+# Tutorial 3: Forecasting Methods and Routines {-}
+
+Placeholder
+
+
+
+<!--chapter:end:13-tutorial03.Rmd-->
+
+
+# Tutorial 4: Trends {-}
+
+Placeholder
+
+
+
+<!--chapter:end:14-tutorial04.Rmd-->
+
+# Tutorial 5: Seasonality {-}
+
+```{r echo=FALSE, include=FALSE, message=FALSE}
+library(ggplot2)
+library(data.table)
+```
+
+
+<!--chapter:end:15-tutorial05.Rmd-->
+
+
+# Tutorial 6: Autoregression {-}
+
+Placeholder
+
+
+
+<!--chapter:end:16-tutorial06.Rmd-->
+
+
+# Tutorial 7: Vector Autoregression {-}
+
+Placeholder
+
+
+
+<!--chapter:end:17-tutorial07.Rmd-->
+
+
+# Tutorial 8: Threshold Autoregression {-}
+
+Placeholder
+
+
+
+<!--chapter:end:18-tutorial08.Rmd-->
+
+
+# Tutorial 9: Comparing Forecasts {-}
+
+Placeholder
+
+
+
+<!--chapter:end:19-tutorial09.Rmd-->
+
+
+# Tutorial 10: Combining Forecasts {-}
+
+Placeholder
+
+
+
+<!--chapter:end:20-tutorial10.Rmd-->
+
+# References {-}
+
+
+<!--chapter:end:21-references.Rmd-->
 
