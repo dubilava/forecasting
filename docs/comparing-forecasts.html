@@ -6,11 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 – Comparing Forecasts | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-<<<<<<< HEAD
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
-=======
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
   <meta property="og:title" content="Chapter 9 – Comparing Forecasts | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -35,17 +31,6 @@
   
 <link rel="prev" href="threshold-autoregression.html"/>
 <link rel="next" href="combining-forecasts.html"/>
-<<<<<<< HEAD
-<script src="book_assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-=======
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,7 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 
@@ -64,15 +48,9 @@
 
 
 
-<<<<<<< HEAD
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="book_assets/anchor-sections-1.1.0/anchor-sections.js"></script>
-=======
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 <style type="text/css">
@@ -140,13 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<<<<<<< HEAD
 <style type="text/css">
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-=======
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -183,24 +158,17 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<<<<<<< HEAD
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>An Intuitive Guide to Forecasting With Time Series Models Using R</a></li>
-=======
+<li><a href="./">Educated Guess</a></li>
+<li class="divider"></li>
 <li><a href="index.html#section" id="toc-section"></a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
-<<<<<<< HEAD
-<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.3</b> Knowing the Unknown</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#the-loss-function-and-the-optimal-point-forecast"><i class="fa fa-check"></i><b>1.4</b> The Loss Function and the Optimal Point Forecast</a></li>
-=======
 <li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
 <li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </ul></li>
 <li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
 <ul>
@@ -368,7 +336,7 @@ div.csl-indent {
 <h2><span class="header-section-number">9.3</span> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead<a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Two methods for generating multi-step-ahead forecasts from autoregressions, for example, are the iterated and direct methods. Each has advantages and disadvantages, and when the model is mis-specified, which more often than not tends to be the case, either of the two methods can yield more accurate forecasts. We will examine this using the U.S. year-on-year monthly inflation data.</p>
 <div class="figure"><span style="display:block;" id="fig:iterated-direct"></span>
-<img src="forecasting_files/figure-html/iterated-direct-1.png" alt="Iterated and Direct Forecasts" width="600" />
+<img src="forecasting_files/figure-html/iterated-direct-1.png" alt="Iterated and Direct Forecasts" width="624" />
 <p class="caption">
 Figure 9.1: Iterated and Direct Forecasts
 </p>
@@ -395,16 +363,6 @@ Harvey, David, Stephen Leybourne, and Paul Newbold. 1997. <span>“<span class="
 <a href="combining-forecasts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<<<<<<< HEAD
-<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-=======
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -413,7 +371,6 @@ Harvey, David, Stephen Leybourne, and Paul Newbold. 1997. <span>“<span class="
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

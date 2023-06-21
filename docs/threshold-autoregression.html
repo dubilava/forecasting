@@ -6,11 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 – Threshold Autoregression | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-<<<<<<< HEAD
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
-=======
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
   <meta property="og:title" content="Chapter 8 – Threshold Autoregression | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -35,17 +31,6 @@
   
 <link rel="prev" href="vector-autoregression.html"/>
 <link rel="next" href="comparing-forecasts.html"/>
-<<<<<<< HEAD
-<script src="book_assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-=======
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,7 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 
@@ -64,15 +48,9 @@
 
 
 
-<<<<<<< HEAD
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="book_assets/anchor-sections-1.1.0/anchor-sections.js"></script>
-=======
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 <style type="text/css">
@@ -140,13 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<<<<<<< HEAD
 <style type="text/css">
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-=======
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -183,24 +158,17 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<<<<<<< HEAD
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>An Intuitive Guide to Forecasting With Time Series Models Using R</a></li>
-=======
+<li><a href="./">Educated Guess</a></li>
+<li class="divider"></li>
 <li><a href="index.html#section" id="toc-section"></a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
-<<<<<<< HEAD
-<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.3</b> Knowing the Unknown</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#the-loss-function-and-the-optimal-point-forecast"><i class="fa fa-check"></i><b>1.4</b> The Loss Function and the Optimal Point Forecast</a></li>
-=======
 <li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
 <li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </ul></li>
 <li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
 <ul>
@@ -338,11 +306,7 @@ div.csl-indent {
 <h2><span class="header-section-number">8.1</span> Regime-Dependent Nonlinearity<a href="threshold-autoregression.html#regime-dependent-nonlinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><span class="newthought">A linear model is a crude approximation</span> of a true model. It may very well be possible that a nonlinear model offers a better fit to the data. Nonlinear models come in many flavours. Here we will consider a specific type of nonlinear models that belongs to the family of <em>regime-dependent</em> models.</p>
 <p>A regime-dependent model can be seen as a combination of linear specifications that are linked to each other in some (nonlinear) way. To that end, such nonlinear models are also referred to as the piece-wise linear models—i.e., each piece, or segment, of the model is linear, but when taken together we have a nonlinear model at hand.</p>
-<<<<<<< HEAD
-<p>Here, we will consider two representative regime-dependent models: a time-varying threshold autoregression (TVAR) and a self-exciting threshold autoregression (SETAR). In both instances, we will assume that the switch between the regimes happens based on some threshold variable, and that it happens instantaneously.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
-=======
 <p>Here, we will consider two representative regime-dependent models: a time-varying threshold autoregression (TVAR) and a self-exciting threshold autoregression (SETAR). In both instances, we will assume that the switch between the regimes happens based on some threshold variable, and that it happens instantaneously.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </div>
 <div id="modeling-4" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Modeling<a href="threshold-autoregression.html#modeling-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -350,11 +314,7 @@ div.csl-indent {
 <p>This specification assumes a linear trend, but that doesn’t need to be the case. We can have quadratic or cubic trends, for example, or we can have no trend component at all.</p>
 <p>A simple augmentation of the foregoing model is an autoregressive model with a switching trend component: <span class="math display">\[y_t = \delta_{0} + \delta_{1} t + \delta_{2}(t-\tau)I(t&gt;\tau) + \beta y_{t-1} + \varepsilon_t,\]</span> where <span class="math inline">\(\tau\)</span> is the threshold parameter.</p>
 <p>Such switch can be extended to the whole autoregression. For example, a two-regime AR(p) with drift can be given by: <span class="math display">\[y_t = \delta_0 + \delta_1 t + \sum_{i=1}^{p}\beta_{1i} y_{t-i} + \left[\delta_2(t-\tau) + \sum_{i=1}^{p}\beta_{2i} y_{t-i}\right]I(t&gt;\tau) + \varepsilon_t.\]</span> This equation implies that not only the trend, but also the autoregressive dynamics change around <span class="math inline">\(\tau\)</span>.</p>
-<<<<<<< HEAD
-<p>The foregoing nonlinear specifications assumes that the switch in the model occurs at some point in time, i.e. the regime-switching variable is a function of time. But the regime-switching variable can also be a function of the dependent variable or, indeed, any other (exogenous) variable: <span class="math display">\[y_t = \alpha_0 + \sum_{i=1}^{p}\beta_{0i} y_{t-i} + \left(\alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i}\right)I(s_t&gt;\kappa) + \varepsilon_t,\]</span> where <span class="math inline">\(s_t\)</span> is the regime-switching variable, and <span class="math inline">\(\kappa\)</span> is the threshold, such that <span class="math inline">\(\underline{s}_t &lt; \kappa &lt; \overline{s}_t\)</span>, where <span class="math inline">\(\underline{s}_t\)</span> and <span class="math inline">\(\overline{s}_t\)</span> are the lower and upper quantiles of the regime-switching variable.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></p>
-=======
 <p>The foregoing nonlinear specifications assumes that the switch in the model occurs at some point in time, i.e. the regime-switching variable is a function of time. But the regime-switching variable can also be a function of the dependent variable or, indeed, any other (exogenous) variable: <span class="math display">\[y_t = \alpha_0 + \sum_{i=1}^{p}\beta_{0i} y_{t-i} + \left(\alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i}\right)I(s_t&gt;\kappa) + \varepsilon_t,\]</span> where <span class="math inline">\(s_t\)</span> is the regime-switching variable, and <span class="math inline">\(\kappa\)</span> is the threshold, such that <span class="math inline">\(\underline{s}_t &lt; \kappa &lt; \overline{s}_t\)</span>, where <span class="math inline">\(\underline{s}_t\)</span> and <span class="math inline">\(\overline{s}_t\)</span> are the lower and upper quantiles of the regime-switching variable.<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a></p>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <p>This equation is referred to as a threshold autoregression, or TAR(p). More specifically, if in a TAR(p), <span class="math inline">\(s_t = y_{t-d}\)</span>, <span class="math inline">\(d = 1,\ldots,m\)</span>, then it is a self-exciting threshold autoregression, or SETAR(p); alternatively, if <span class="math inline">\(s_t = \Delta y_{t-d}\)</span>, <span class="math inline">\(d = 1,\ldots,m\)</span>, then the model is referred to as a <em>momentum</em> threshold autoregression, or momentum-TAR(p). The latter is typically applied when <span class="math inline">\(y_t\)</span> is an I(1) process.</p>
 <p>A TAR (any version of it) can take a multiple-regime form: <span class="math display">\[y_t = \alpha_1 + \sum_{i=1}^{p}\beta_{1i} y_{t-i} + \sum_{j=2}^{K}{\left(\alpha_j + \sum_{i=1}^{p}\beta_{ji} y_{t-i}\right)I(s_t&gt;\kappa_j)} + \varepsilon_t,\]</span> where <span class="math inline">\(K\)</span> depicts the number of regimes in the equation.</p>
 <p>When estimating TAR-type models, we usually have no <em>a priori</em> knowledge on the number of regimes, the autoregressive order in each regime, the regime-switching (or threshold) variable, and the value(s) of the threshold parameter(s).</p>
@@ -420,15 +380,9 @@ y_{t+2|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t+1|t}^b + \ldots + \beta_{1p} y_{t
 </div>
 <div class="footnotes">
 <hr />
-<<<<<<< HEAD
-<ol start="16">
-<li id="fn16"><p>There are other members of the family of regime-dependent models, e.g., a smooth transition autregression (STAR), which relax this assumption of an instantaneous switch between the regimes.<a href="threshold-autoregression.html#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p>Such restriction is usually needed to ensure that there are enough observations in each of the regimes of the model.<a href="threshold-autoregression.html#fnref17" class="footnote-back">↩︎</a></p></li>
-=======
 <ol start="18">
 <li id="fn18"><p>There are other members of the family of regime-dependent models, e.g., a smooth transition autregression (STAR), which relax this assumption of an instantaneous switch between the regimes.<a href="threshold-autoregression.html#fnref18" class="footnote-back">↩︎</a></p></li>
 <li id="fn19"><p>Such restriction is usually needed to ensure that there are enough observations in each of the regimes of the model.<a href="threshold-autoregression.html#fnref19" class="footnote-back">↩︎</a></p></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </ol>
 </div>
             </section>
@@ -440,16 +394,6 @@ y_{t+2|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t+1|t}^b + \ldots + \beta_{1p} y_{t
 <a href="comparing-forecasts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<<<<<<< HEAD
-<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-=======
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -458,7 +402,6 @@ y_{t+2|t}^b &amp;= (\alpha_1 + \beta_{11} y_{t+1|t}^b + \ldots + \beta_{1p} y_{t
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

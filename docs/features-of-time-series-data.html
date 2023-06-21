@@ -6,11 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 – Features of Time Series Data | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-<<<<<<< HEAD
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
-=======
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
   <meta property="og:title" content="Chapter 2 – Features of Time Series Data | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -35,17 +31,6 @@
   
 <link rel="prev" href="introduction-to-forecasting.html"/>
 <link rel="next" href="generating-and-evaluating-forecasts.html"/>
-<<<<<<< HEAD
-<script src="book_assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-=======
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,7 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 
@@ -64,15 +48,9 @@
 
 
 
-<<<<<<< HEAD
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="book_assets/anchor-sections-1.1.0/anchor-sections.js"></script>
-=======
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 <style type="text/css">
@@ -140,13 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<<<<<<< HEAD
 <style type="text/css">
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-=======
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -183,24 +158,17 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<<<<<<< HEAD
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>An Intuitive Guide to Forecasting With Time Series Models Using R</a></li>
-=======
+<li><a href="./">Educated Guess</a></li>
+<li class="divider"></li>
 <li><a href="index.html#section" id="toc-section"></a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
-<<<<<<< HEAD
-<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.3</b> Knowing the Unknown</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#the-loss-function-and-the-optimal-point-forecast"><i class="fa fa-check"></i><b>1.4</b> The Loss Function and the Optimal Point Forecast</a></li>
-=======
 <li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
 <li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </ul></li>
 <li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
 <ul>
@@ -345,31 +313,18 @@ div.csl-indent {
 <p>If all random variables, from where the time series are drawn, have the same distribution, then we refer to such data as <em>stationary</em> time series. Stationarity is an important feature, and the assumption on which time series econometrics heavily relies.</p>
 <p>Consider a simplest kind of a time series comprised of realizations from independent and identically distributed (iid) normal random variable with zero mean and constant variance: <span class="math inline">\(Y_t \sim iid~\text{N}\left(0,\sigma^2\right)\)</span>. The following graph plots the realized time series from this process:</p>
 <div class="figure"><span style="display:block;" id="fig:white-noise"></span>
-<<<<<<< HEAD
-<p class="caption">
-Figure 2.1: White noise process
-</p>
-<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise process" width="600"  />
-</div>
-<p>Such time series is a realization of what is referred to as a <em>white noise</em> process.<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> That is, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if:
-=======
-<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise process" width="600" />
+<img src="forecasting_files/figure-html/white-noise-1.png" alt="White noise process" width="624" />
 <p class="caption">
 Figure 2.1: White noise process
 </p>
 </div>
 <p>Such time series is a realization of what is referred to as a <em>white noise</em> process.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> That is, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if:
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <span class="math display">\[\begin{align*}
 &amp; E(Y_t) = 0,\;~\forall~t\\
 &amp; Var(Y_t) = \sigma^2,\;~\forall~t\\
 &amp; Cov(Y_t,Y_{t-k}) = 0,\;~\forall~k \ne 0
 \end{align*}\]</span></p>
-<<<<<<< HEAD
-<p>Because each observation is drawn from the same distribution, white noise is a stationary process. Indeed, it is a special type of the stationary process insofar as its mean, variance, and covariance are time-invariant. Note, for stationarity, neither the mean nor the covariances are required to be equal to zero. Thus, <span class="math inline">\(\{Y_t\}\)</span> is a stationary process<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> if its mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
-=======
 <p>Because each observation is drawn from the same distribution, white noise is a stationary process. Indeed, it is a special type of the stationary process insofar as its mean, variance, and covariance are time-invariant. Note, for stationarity, neither the mean nor the covariances are required to be equal to zero. Thus, <span class="math inline">\(\{Y_t\}\)</span> is a stationary process<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> if its mean and variance are independent of <span class="math inline">\(t\)</span>, and the autocovariances are independent of <span class="math inline">\(t\)</span> for all <span class="math inline">\(k\)</span>.</p>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <p>Why should we care about stationarity? The gist of the matter is that in each time period we only observe one realization of the respective random variable. We don’t have the sample of observations for that period—just a single observation is all we have. Of course, over time, we have many such observations—one for each period. The question then is, could we use this sample of time series and conclude something about the moments of the stochastic process? Stationarity in conjunction with <em>ergodicity</em> enables us to do just this.</p>
 <p>Ergodicity implies independence of two random variables that are far apart from each other in the stochastic process. That is, if <span class="math inline">\(\{Y_t\}\)</span> is stationary and ergodic with <span class="math inline">\(E(Y_t)=\mu\)</span>, then <span class="math inline">\(Cov(Y_t,Y_{t-k}) = 0\)</span> for some large integer <span class="math inline">\(k\)</span>. More importantly, when the process is stationary and ergodic, the mean of the sample of time series converges to the mean of the stochastc process as the sample size increases.</p>
 </div>
@@ -379,98 +334,54 @@ Figure 2.1: White noise process
 <p>Under the assumption of stationarity, <span class="math inline">\(Var(Y_{t})=Var(Y_{t-k})\)</span>, so the autocorrelation can be simplified to: <span class="math inline">\(\rho_k= \frac{Cov(Y_{t},Y_{t-k})}{Var(Y_{t})}.\)</span></p>
 <p>Autocorrelations are commonly illustrated via the so-called <em>autocorrelogram</em>, which plots the sequence of autocorrelation coefficients against the lags at which these coefficients are obtained. The following figure illustrates an autocorrelogram for a sample of time series with 240 observations:</p>
 <div class="figure"><span style="display:block;" id="fig:acf"></span>
-<<<<<<< HEAD
+<img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="624" />
 <p class="caption">
 Figure 2.2: Autocorrelation
 </p>
-<img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="600"  />
-=======
-<img src="forecasting_files/figure-html/acf-1.png" alt="Autocorrelation" width="600" />
-<p class="caption">
-Figure 2.2: Autocorrelation
-</p>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </div>
 <p>For each lag, <span class="math inline">\(k\)</span>, the vertical line extending from zero represents an estimate of the autocorrelation coefficient at that lag. The dashed lines denote the 95% confidence interval, given by <span class="math inline">\(\pm 1.96/\sqrt{T}\)</span>, where <span class="math inline">\(T\)</span> is the size of the time series sample.</p>
 <p>Another relevant measure of the time series dependence is <em>partial</em> autocorrelation, which is correlation between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k}\)</span> net of any correlations between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k+j}\)</span>, for all <span class="math inline">\(j=1,\ldots,k-1\)</span>. Similar to autocorrelations, partial autocorrelations, here denoted by <span class="math inline">\(\pi\)</span>, can also be illustrated using autocorrelograms:</p>
 <div class="figure"><span style="display:block;" id="fig:pacf"></span>
-<<<<<<< HEAD
-<p class="caption">
-Figure 2.3: Partial Autocorrelation
-</p>
-<img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="600"  />
-</div>
-<p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
-=======
-<img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="600" />
+<img src="forecasting_files/figure-html/pacf-1.png" alt="Partial Autocorrelation" width="624" />
 <p class="caption">
 Figure 2.3: Partial Autocorrelation
 </p>
 </div>
 <p>Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary and ergodic stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </div>
 <div id="transformations" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> Transformations<a href="features-of-time-series-data.html#transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It is common to transform time series by taking logarithms (if applicable), by first-differencing the series, or by first-differencing the logarithms of the series. Such transformations are done to work with a suitable variable for the desired econometric analysis, or to address some underlying issues of the series (e.g., nonstationarity).</p>
 <p>Consider the Dow Jones Industrial Average (commonly referred to as the Dow Jones Index), for example. In levels, the series are clearly nonstationary. This is because the series are trending upward (on average), and also because the series become more volatile over time.</p>
 <div class="figure"><span style="display:block;" id="fig:dji"></span>
-<<<<<<< HEAD
-<p class="caption">
-Figure 2.4: Dow Jones Industrial Average
-</p>
-<img src="forecasting_files/figure-html/dji-1.png" alt="Dow Jones Industrial Average" width="600"  />
-</div>
-<p>Could first-differencing resolve the issue of nonstationarity? Turns out, not exactly. The first-differenced Dow Jones Index, while no longer trending, reveals increasing volatility over time.</p>
-<div class="figure"><span style="display:block;" id="fig:ddji"></span>
-<p class="caption">
-Figure 2.5: Dow Jones Industrial Average: Differences
-</p>
-<img src="forecasting_files/figure-html/ddji-1.png" alt="Dow Jones Industrial Average: Differences" width="600"  />
-</div>
-<p>As it turns out, we can largely resolve the issue if we first-difference the log-transformed series. When we log-transform the series, the difference in observations from two different period is no longer measured in absolute terms, rather it is measured in relative terms. Then, by first-differencing the log-transformed series we, in effect, obtain a measure of a growth rate of the original series. The growth rate of the Dow Jones Index appears to be stationary.</p>
-<div class="figure"><span style="display:block;" id="fig:dlndji"></span>
-<p class="caption">
-Figure 2.6: Dow Jones Industrial Average: Log-Differences
-</p>
-<img src="forecasting_files/figure-html/dlndji-1.png" alt="Dow Jones Industrial Average: Log-Differences" width="600"  />
-=======
-<img src="forecasting_files/figure-html/dji-1.png" alt="Dow Jones Industrial Average" width="600" />
+<img src="forecasting_files/figure-html/dji-1.png" alt="Dow Jones Industrial Average" width="624" />
 <p class="caption">
 Figure 2.4: Dow Jones Industrial Average
 </p>
 </div>
 <p>Could first-differencing resolve the issue of nonstationarity? Turns out, not exactly. The first-differenced Dow Jones Index, while no longer trending, reveals increasing volatility over time.</p>
 <div class="figure"><span style="display:block;" id="fig:ddji"></span>
-<img src="forecasting_files/figure-html/ddji-1.png" alt="Dow Jones Industrial Average: Differences" width="600" />
+<img src="forecasting_files/figure-html/ddji-1.png" alt="Dow Jones Industrial Average: Differences" width="624" />
 <p class="caption">
 Figure 2.5: Dow Jones Industrial Average: Differences
 </p>
 </div>
 <p>As it turns out, we can largely resolve the issue if we first-difference the log-transformed series. When we log-transform the series, the difference in observations from two different period is no longer measured in absolute terms, rather it is measured in relative terms. Then, by first-differencing the log-transformed series we, in effect, obtain a measure of a growth rate of the original series. The growth rate of the Dow Jones Index appears to be stationary.</p>
 <div class="figure"><span style="display:block;" id="fig:dlndji"></span>
-<img src="forecasting_files/figure-html/dlndji-1.png" alt="Dow Jones Industrial Average: Log-Differences" width="600" />
+<img src="forecasting_files/figure-html/dlndji-1.png" alt="Dow Jones Industrial Average: Log-Differences" width="624" />
 <p class="caption">
 Figure 2.6: Dow Jones Industrial Average: Log-Differences
 </p>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </div>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<<<<<<< HEAD
-<ol start="9">
-<li id="fn9"><p>Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an <em>Independent</em> white noise process. Without the indepence assumption we would have simply a white noise process.<a href="features-of-time-series-data.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>To be precise, this is a definition of covariance-stationarity or weak form of stationarity. Strict stationarity is defined by time invariant joint distribution of random variables.<a href="features-of-time-series-data.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.<a href="features-of-time-series-data.html#fnref11" class="footnote-back">↩︎</a></p></li>
-=======
 <ol start="11">
 <li id="fn11"><p>Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normally distributed. Without the normality assumption we would have an <em>Independent</em> white noise process. Without the indepence assumption we would have simply a white noise process.<a href="features-of-time-series-data.html#fnref11" class="footnote-back">↩︎</a></p></li>
 <li id="fn12"><p>To be precise, this is a definition of covariance-stationarity or weak form of stationarity. Strict stationarity is defined by time invariant joint distribution of random variables.<a href="features-of-time-series-data.html#fnref12" class="footnote-back">↩︎</a></p></li>
 <li id="fn13"><p>There are, of course, formal tests of stationarity, which we will discuss in one of the subsequent chapters.<a href="features-of-time-series-data.html#fnref13" class="footnote-back">↩︎</a></p></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </ol>
 </div>
             </section>
@@ -482,16 +393,6 @@ Figure 2.6: Dow Jones Industrial Average: Log-Differences
 <a href="generating-and-evaluating-forecasts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<<<<<<< HEAD
-<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-=======
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -500,7 +401,6 @@ Figure 2.6: Dow Jones Industrial Average: Log-Differences
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

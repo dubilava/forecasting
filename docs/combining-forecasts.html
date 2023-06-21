@@ -6,11 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 – Combining Forecasts | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-<<<<<<< HEAD
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
-=======
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
   <meta property="og:title" content="Chapter 10 – Combining Forecasts | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -35,17 +31,6 @@
   
 <link rel="prev" href="comparing-forecasts.html"/>
 <link rel="next" href="forecasting-using-r.html"/>
-<<<<<<< HEAD
-<script src="book_assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-=======
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,7 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 
@@ -64,15 +48,9 @@
 
 
 
-<<<<<<< HEAD
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="book_assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="book_assets/anchor-sections-1.1.0/anchor-sections.js"></script>
-=======
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 
 
 <style type="text/css">
@@ -140,13 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<<<<<<< HEAD
 <style type="text/css">
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-=======
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -183,24 +158,17 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<<<<<<< HEAD
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>An Intuitive Guide to Forecasting With Time Series Models Using R</a></li>
-=======
+<li><a href="./">Educated Guess</a></li>
+<li class="divider"></li>
 <li><a href="index.html#section" id="toc-section"></a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
 <li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
-<<<<<<< HEAD
-<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.3</b> Knowing the Unknown</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#the-loss-function-and-the-optimal-point-forecast"><i class="fa fa-check"></i><b>1.4</b> The Loss Function and the Optimal Point Forecast</a></li>
-=======
 <li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
 <li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </ul></li>
 <li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
 <ul>
@@ -346,11 +314,7 @@ div.csl-indent {
 <h2><span class="header-section-number">10.2</span> Optimal Weights for Forecast Combination<a href="combining-forecasts.html#optimal-weights-for-forecast-combination" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Forecast combination implies mixing the forecasts from different models with some proportions. In other words, a combined forecast is a weighted sum of the individual forecasts. The weights need to be selected in a way that maximizes the combined forecast accuracy, i.e., minimizes the combined forecast loss.</p>
 <p>Consider two forecasting methods (or models), <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, each respectively yielding one-step-ahead forecasts <span class="math inline">\(y_{a,t+1|t}\)</span> and <span class="math inline">\(y_{b,t+1|t}\)</span>, and the associated forecast errors <span class="math inline">\(e_{a,t+1} = y_{t+1}-y_{a,t+1|t}\)</span> and <span class="math inline">\(e_{b,t+1} = y_{t+1}-y_{b,t+1|t}\)</span>.</p>
-<<<<<<< HEAD
-<p>A combined forecast, <span class="math inline">\(y_{c,t+1|t}\)</span>, is the weighted sum of these two forecasts: <span class="math display">\[y_{c,t+1|t} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t},\]</span> where the usual assumption about the weights apply, i.e., <span class="math inline">\(0 \leq w \leq 1\)</span>.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
-=======
 <p>A combined forecast, <span class="math inline">\(y_{c,t+1|t}\)</span>, is the weighted sum of these two forecasts: <span class="math display">\[y_{c,t+1|t} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t},\]</span> where the usual assumption about the weights apply, i.e., <span class="math inline">\(0 \leq w \leq 1\)</span>.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <p>A combined forecast error is the weighted sum of the individual forecast errors: <span class="math display">\[e_{c,t+1} = (1-w)e_{a,t+1} + w e_{b,t+1}\]</span></p>
 <p>The combined forecast error is, on average, zero (assuming that the individual forecasts are all unbiased): <span class="math display">\[E\left(e_{c,t+1}\right) = E\left[(1-w)e_{a,t+1} + w e_{b,t+1}\right] = 0\]</span></p>
 <p>The variance of a combined forecast error is: <span class="math display">\[Var\left(e_{c,t+1}\right) = (1-w)^2 \sigma_a^2 + w^2  \sigma_b^2 + 2w(1-w)\sigma_{ab},\]</span> where <span class="math inline">\(\sigma_a\)</span> and <span class="math inline">\(\sigma_b\)</span> are the standard deviations of the forecast errors from models <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, and <span class="math inline">\(\sigma_{ab}=\rho_{ab}\sigma_a\sigma_b\)</span> is the covariance of the two forecast errors, which can also be expressed as a product of the correlation between the two forecast errors, <span class="math inline">\(\rho_{ab}\)</span>, and the standard deviations of each forecast error.</p>
@@ -373,13 +337,8 @@ div.csl-indent {
 </div>
 <div class="footnotes">
 <hr />
-<<<<<<< HEAD
-<ol start="18">
-<li id="fn18"><p>More broadly, if we have <span class="math inline">\(n\)</span> forecasts that we intend to combine, the associated weights, <span class="math inline">\(w_i:i=1,\ldots,n\)</span>, will each be bounded by zero and one, and together they will add up to one.<a href="combining-forecasts.html#fnref18" class="footnote-back">↩︎</a></p></li>
-=======
 <ol start="20">
 <li id="fn20"><p>More broadly, if we have <span class="math inline">\(n\)</span> forecasts that we intend to combine, the associated weights, <span class="math inline">\(w_i:i=1,\ldots,n\)</span>, will each be bounded by zero and one, and together they will add up to one.<a href="combining-forecasts.html#fnref20" class="footnote-back">↩︎</a></p></li>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 </ol>
 </div>
             </section>
@@ -391,16 +350,6 @@ div.csl-indent {
 <a href="forecasting-using-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<<<<<<< HEAD
-<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-=======
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -409,7 +358,6 @@ div.csl-indent {
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
->>>>>>> 086d413ce30e4ab175ad075e53e16bdd8e122dd7
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
