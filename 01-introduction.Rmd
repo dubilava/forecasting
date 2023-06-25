@@ -128,14 +128,14 @@ for(i in 2:n) x[i] <- .2*x[i-1]+x[i]
 dt <- data.table(x=round(x),t=1:n)
 
 gg_ts <- ggplot(dt,aes(x=t,y=x))+
-  geom_line(color="black",linetype=1,linewidth=.8)+
-  geom_point(color="black",fill="gray",stroke=1,shape=21,size=4)+
+  geom_line(color="dimgray",linetype=1,linewidth=.8)+
+  geom_point(color="dimgray",fill="lightgray",stroke=1,shape=21,size=4)+
   ylim(0,7)+
   labs(x=expression(t),y=expression(x[t]))+
   theme_eg()
 
 gg_hist <- ggplot(dt,aes(x=x))+
-  geom_dotplot(binwidth=.3,color="black",fill="gray",stroke=2,stackratio=1.1)+
+  geom_dotplot(binwidth=.3,color="dimgray",fill="lightgray",stroke=2,stackratio=1.1)+
   xlim(0,7)+
   coord_flip()+
   theme_eg()+
@@ -201,8 +201,8 @@ line_dt[,`:=`(e=x-mean(x))]
 line_dt[,`:=`(l=e^2)]
 
 gg_errors <- ggplot(dt,aes(x=t,y=e))+
-  geom_line(color="black",linetype=1,linewidth=.8)+
-  geom_point(color="black",fill="gray",stroke=1,shape=21,size=3)+
+  geom_line(color="dimgray",linetype=1,linewidth=.8)+
+  geom_point(color="dimgray",fill="lightgray",stroke=1,shape=21,size=3)+
   ylim(-3.5,3.5)+
   labs(x=expression(t),y=expression(e[t]))+
   theme_eg()
@@ -210,13 +210,13 @@ gg_errors <- ggplot(dt,aes(x=t,y=e))+
 map_dt <- data.table(x=c(max(dt$e),max(dt$e)),xend=c(max(dt$e),0),y=c(0,dt[e==max(dt$e)]$l),yend=c(dt[e==max(dt$e)]$l,dt[e==max(dt$e)]$l))
 
 gg_loss <- ggplot()+
-  geom_vline(xintercept=0,color="gray",linewidth=.4)+
-  geom_text(data=data.table(x=rep(0,2),y=seq(5,10,5)),aes(x=x,y=y),label=seq(5,10,5),hjust=1,nudge_x=-.4,size=4.5,family="Segoe Print")+
+  # geom_vline(xintercept=0,color="gray",linewidth=.4)+
+  geom_text(data=data.table(x=rep(0,2),y=seq(5,10,5)),aes(x=x,y=y),label=seq(5,10,5),hjust=1,nudge_x=-.4,size=4.5,color="dimgray",family="Segoe Print")+
   geom_text(data=data.table(x=c(3.1,-.65),y=c(0,7)),aes(x=x,y=y),label=c("e['5']","l(e['5'])"),hjust=.5,size=5,parse=T,family="Segoe Print")+
   geom_line(data=line_dt,aes(x=e,y=l),color="black",linetype=1,linewidth=.8,na.rm=T)+
   geom_segment(data=map_dt,aes(x=x,y=y,xend=xend,yend=yend),linetype=5,color="gray",linewidth=.8)+
-  geom_point(data=dt,aes(x=e,y=0),color="black",fill="gray",stroke=1,shape=21,size=3)+
-  geom_point(data=dt,aes(x=0,y=l),color="black",fill="black",stroke=1,shape=21,size=3)+
+  geom_point(data=dt,aes(x=e,y=0),color="dimgray",fill="lightgray",stroke=1,shape=21,size=3)+
+  geom_point(data=dt,aes(x=0,y=l),color="dimgray",fill="coral",stroke=1,shape=21,size=3)+
   xlim(-3.5,3.5)+
   ylim(0,11)+
   coord_flip()+
@@ -239,7 +239,9 @@ In this expected loss function, we subtracted and added $E\left(y_{t+h}|\Omega_t
 	(\#eq:optimal)
 \end{equation}
 
-This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization---assuming the quadratic loss---is the weighted average of its all possible future realizations. The equality in equation \@ref(eq:optimal) is implied in Figure \@ref(fig:loss-function). If we were to slide the U-shaped curve to the left or to the right, the expected value of the loss functions, which are given by dots that form the U-shaped curve, will only increase.
+This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization---assuming the quadratic loss---is the weighted average of its all possible future realizations. The equality in equation \@ref(eq:optimal) is implied in Figure \@ref(fig:loss-function). If we were to slide the U-shaped curve to the left or to the right, the expected value of the loss functions, which are given by dots that form the U-shaped curve, will only increase. The following animation illustrates this.
+
+![](gifs/quadratic-loss.gif)
 
 In Figure \@ref(fig:time-series) we illustrated a time series and the density of the observed values over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that *one* and *six* occur with a probability of $0.05$, *two* occurs with a probability of $0.15$, *five* occurs with a probability of $0.20$, *four* occurs with a probability of $0.25$, and *three* occurs with a probability of $0.30$. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be ${1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55$. If we know that the value must be an integer, then we round our forecast to *four*. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of *four* gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.
 

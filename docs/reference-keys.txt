@@ -8,6 +8,7 @@ fig:pacf
 fig:dji
 fig:ddji
 fig:dlndji
+fig:iterated-direct
 fig:intrates
 fig:lintrend
 fig:exptrend
@@ -21,7 +22,6 @@ fig:exchange
 fig:acfexchange
 fig:pacfexchange
 fig:forexchange
-fig:iterated-direct
 introduction-to-forecasting
 what-forecast-is-and-is-not
 a-brief-history-of-the-study-of-forecasting
@@ -42,6 +42,16 @@ forecast-assessment
 unbiasedness
 efficiency
 no-autocorrelation
+comparing-forecasts
+the-need-for-the-forecast-evaluation
+relative-forecast-accuracy-tests
+the-morgan-granger-newbold-test
+the-diebold-mariano-test
+forecasting-year-on-year-monthly-inflation-12-steps-ahead
+combining-forecasts
+benefits-of-forecast-combination
+optimal-weights-for-forecast-combination
+forecast-encompassing
 trends
 trends-in-the-data
 spurious-relationships
@@ -79,13 +89,3 @@ forecasting-4
 skeleton-extrapolation
 analytical-method
 numerical-method-bootstrap-resampling
-comparing-forecasts
-the-need-for-the-forecast-evaluation
-relative-forecast-accuracy-tests
-the-morgan-granger-newbold-test
-the-diebold-mariano-test
-forecasting-year-on-year-monthly-inflation-12-steps-ahead
-combining-forecasts
-benefits-of-forecast-combination
-optimal-weights-for-forecast-combination
-forecast-encompassing
