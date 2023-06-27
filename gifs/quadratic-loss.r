@@ -36,7 +36,7 @@ theme_eg <- function(base_size=12,base_family="Segoe Print",border=F){
 set.seed(1)
 dt <- data.table(e=rnorm(100))
 
-dev <- c(seq(0,1.5,.05),seq(1.4,-1.5,-.05),seq(-1.4,0,.05))
+dev <- c(seq(0,1.5,.02),seq(1.4,-1.5,-.02),seq(-1.4,0,.02))
 
 for(i in 1:length(dev)){
   
@@ -48,16 +48,16 @@ for(i in 1:length(dev)){
   
   gg <- ggplot(data=dt)+
     geom_line(aes(x=e1+dev[i],y=loss_quadratic),color="dimgray",linewidth=1)+
-    geom_point(aes(x=e1+dev[i],y=loss_quadratic),color="dimgray",size=2)+
-    geom_point(aes(x=e,y=0),color="dimgray",fill="lightgray",stroke=1,shape=21,size=2)+
-    geom_point(aes(x=dev[i],y=loss_quadratic),color="coral",fill="coral",stroke=1,shape=21,size=2,alpha=.5)+
-    geom_segment(aes(x=dev[i]-.2,xend=dev[i]+.1,y=el,yend=el),color="coral",linewidth=.8)+
-    annotate(geom="text",x=dev[i]+.1,y=el,label=el,parse=T,hjust=0,vjust=0,color="coral",size=6,family="Segoe UI Semibold")+
-    coord_cartesian(xlim=c(-3,3),ylim=c(0,14))+
+    geom_point(aes(x=e1+dev[i],y=loss_quadratic),color="dimgray",fill="white",stroke=.5,shape=21,size=1.5)+
+    geom_point(aes(x=e,y=0),color="dimgray",fill="lightgray",stroke=.5,shape=21,size=2)+
+    geom_segment(aes(x=dev[i]-.2,xend=dev[i]+.1,y=el,yend=el),color="coral",linewidth=.8,lineend="round")+
+    geom_point(aes(x=dev[i],y=loss_quadratic),color="coral",fill="lightgray",stroke=.5,shape=21,size=2)+
+    annotate(geom="text",x=dev[i]+.15,y=el,label=sprintf('%.2f',el),hjust=0,vjust=0,color="coral",size=5)+
+    coord_cartesian(xlim=c(-3,3),ylim=c(0,16))+
     labs(x=expression(e),y=expression(e^2))+
     theme_eg()
   
-  ggsave(paste0("gifs/quadratic-loss/w",str_pad(i,3,pad="0"),".png"),width=800,height=500,unit="px",dpi=100)
+  ggsave(paste0("gifs/quadratic-loss/w",str_pad(i,3,pad="0"),".png"),width=1600*.4,height=900*.4,unit="px",dpi=100)
   
 }
 
@@ -70,7 +70,7 @@ the_list <- paste0("gifs/quadratic-loss/",list.files("gifs/quadratic-loss/"))
 frames <- lapply(the_list,image_read)
 
 ## generate a gif
-animation <- image_animate(image_join(frames),fps=10)
+animation <- image_animate(image_join(frames),fps=25)
 
 ## save the gif
 image_write(animation,"gifs/quadratic-loss.gif")
