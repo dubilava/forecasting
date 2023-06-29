@@ -80,18 +80,8 @@ We know it now, but our predecessors did not know it back when the barometer was
 
 Birds do not cause storms; changes to air pressure do. But both the birds' behavior and the storm are the outcomes of the same cause---atmospheric pressure. As it happens, one outcome (birds' behavior) precedes the other outcome (the storm). And such temporal ordering of the events---each an outcome of an exogenous shock---helps build a simple forecasting model, which is based on a mere correlation, and yet it works. Consider the following diagram.
 
-```{r dag-birds, fig.cap="Causality, correlation, and forecasting", echo=FALSE, message=FALSE}
-nudge <- .05
-dt <- data.table(x=c(0,0,1,2),y=c(0,1,0,1),xbeg=c(0,0+nudge,0+2*nudge,NA),xend=c(0,1-nudge,1-1.5*nudge,NA),ybeg=c(1-1.5*nudge,1-1.5*nudge,0,NA),yend=c(0+1.5*nudge,0+1.5*nudge,0,NA),labels=c("B[t-1]","P[t-1]","S[t]",NA))
-
-# plot the graph
-ggplot(dt)+
-  geom_text(aes(x=x,y=y,label=labels),size=6,parse=T,color=c("black","gray","black","white"),na.rm=T,family="Segoe Print")+
-  geom_segment(aes(x=xbeg,y=ybeg,xend=xend,yend=yend),lineend = c("round"),linejoin = c("round"),arrow=arrow(type="closed",angle=30,length=unit(0.1,"in")),linewidth=1,linetype=c(1,1,5,1),color=c("gray","gray","black","white"),na.rm=T)+
-  geom_segment(data=dt[3,],aes(x=xend-.5*nudge,y=yend,xend=xend,yend=yend),lineend = c("round"),linejoin = c("round"),arrow=arrow(type="closed",angle=30,length=unit(0.1,"in")),linewidth=1,linetype=1,color="black")+
-  coord_cartesian(clip="off")+
-  theme_eg()+
-  theme(axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank(),panel.grid.major = element_blank())
+```{r birds, fig.cap="Causality, Correlation, and Forecasting"}
+knitr::include_graphics("figures/c1/dag-birds.png")
 ```
 
 On this diagram, **P** denotes air pressure, **B** denotes birds' behavior, and **S** denotes a storm. The subscripts clarify temporal ordering. The solid lines indicate a causal relationship, and the dashed line indicates a correlation without causality. The gray lines indicate an unobserved effect, and the black line indicates the observed effect. Based on this diagram, while we do not observe the true causal effect, the observed correlation and the temporal ordering of the two outcomes of the same cause helps us build a useful predictive model. Of course, had we observed the true causal effects, the relationship between air pressure and birds' behavior would deem obsolete. 
@@ -119,29 +109,9 @@ What we just described is known as the *efficient market hypothesis*. The effici
 ## Knowing the Unknown
 
 Methods of forecasting may differ, but they have one thing in common: they all rely---or at least pretend to rely---upon information. We record and observe information in the form of *data*. When the data are organized and stored in a certain way---chronologically and at regular intervals---we have a *time series*. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future. 
-```{r time-series, fig.cap="Time series and its density", echo=FALSE, message=FALSE}
-n <- 20
 
-set.seed(24)
-x <- rnorm(n,3,1.5)
-for(i in 2:n) x[i] <- .2*x[i-1]+x[i]
-dt <- data.table(x=round(x),t=1:n)
-
-gg_ts <- ggplot(dt,aes(x=t,y=x))+
-  geom_line(color="dimgray",linetype=1,linewidth=.8)+
-  geom_point(color="dimgray",fill="lightgray",stroke=1,shape=21,size=4)+
-  ylim(0,7)+
-  labs(x=expression(t),y=expression(x[t]))+
-  theme_eg()
-
-gg_hist <- ggplot(dt,aes(x=x))+
-  geom_dotplot(binwidth=.3,color="dimgray",fill="lightgray",stroke=2,stackratio=1.1)+
-  xlim(0,7)+
-  coord_flip()+
-  theme_eg()+
-  theme(axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank())
-
-plot_grid(gg_ts,gg_hist,align="hv",ncol=2,rel_widths = c(3,1))
+```{r time-series, fig.cap="A time series and its density"}
+knitr::include_graphics("figures/c1/time-series.png")
 ```
 
 The left-hand side of the graph features a time series of 20 observations, given by $x_t$, where $t=1,\ldots,20$. The observation in the first period, $x_1$, takes the value of two; the observation in the second period, $x_2$, takes the value of four; and so forth until the observation in the last period, $x_{20}$, which takes the value of five.  
@@ -188,62 +158,27 @@ iii.  $l(e_{t+h|t}) \geq l(e_{s+h|s})$ for all $\lvert e_{t+h|t}\rvert \geq \lve
 
 The quadratic loss is particularly popular, partly because it echoes the way we typically fit the model to the data---i.e., using a least squares estimator. The following figure plots a sample of forecast errors mapped onto the quadratic loss function, represented by the U-shaped curve centered on zero (flipped clockwise for illustration purposes).
 
-```{r loss-function, fig.cap="Forecast error and loss function", echo=FALSE, message=FALSE}
-n <- 7
-set.seed(4)
-dt <- data.table(x=rnorm(n,5,2))
-dt[,`:=`(e=x-mean(x))]
-dt[,`:=`(l=e^2)]
-dt[,`:=`(t=1:n)]
-
-line_dt <- data.table(x=rnorm(n*100,5,2))
-line_dt[,`:=`(e=x-mean(x))]
-line_dt[,`:=`(l=e^2)]
-
-gg_errors <- ggplot(dt,aes(x=t,y=e))+
-  geom_line(color="dimgray",linetype=1,linewidth=.8)+
-  geom_point(color="dimgray",fill="lightgray",stroke=1,shape=21,size=3)+
-  ylim(-3.5,3.5)+
-  labs(x=expression(t),y=expression(e[t]))+
-  theme_eg()
-
-map_dt <- data.table(x=c(max(dt$e),max(dt$e)),xend=c(max(dt$e),0),y=c(0,dt[e==max(dt$e)]$l),yend=c(dt[e==max(dt$e)]$l,dt[e==max(dt$e)]$l))
-
-gg_loss <- ggplot()+
-  # geom_vline(xintercept=0,color="gray",linewidth=.4)+
-  geom_text(data=data.table(x=rep(0,2),y=seq(5,10,5)),aes(x=x,y=y),label=seq(5,10,5),hjust=1,nudge_x=-.4,size=4.5,color="dimgray",family="Segoe Print")+
-  geom_text(data=data.table(x=c(3.1,-.65),y=c(0,7)),aes(x=x,y=y),label=c("e['5']","l(e['5'])"),hjust=.5,size=5,parse=T,family="Segoe Print")+
-  geom_line(data=line_dt,aes(x=e,y=l),color="black",linetype=1,linewidth=.8,na.rm=T)+
-  geom_segment(data=map_dt,aes(x=x,y=y,xend=xend,yend=yend),linetype=5,color="gray",linewidth=.8)+
-  geom_point(data=dt,aes(x=e,y=0),color="dimgray",fill="lightgray",stroke=1,shape=21,size=3)+
-  geom_point(data=dt,aes(x=0,y=l),color="dimgray",fill="coral",stroke=1,shape=21,size=3)+
-  xlim(-3.5,3.5)+
-  ylim(0,11)+
-  coord_flip()+
-  theme_eg()+
-  theme(axis.title=element_blank(),axis.text=element_blank(),axis.line=element_blank())
-
-plot_grid(gg_errors,gg_loss,align="hv",ncol=2,rel_widths = c(2,2))
+```{r loss, fig.cap="Forecast errors and the quadratic loss"}
+knitr::include_graphics("figures/c1/loss.png")
 ```
 
 The optimal forecast minimizes the expected loss,
 $E[l(e_{t+h|t})]$. Assuming the quadratic loss function:
-\begin{align*}
-	E[l(e_{t+h|t})] & = E(e_{t+h|t}^2) = E[(y_{t+h}-\hat{y}_{t+h|t})^2] \\
-	& = E\left\{[y_{t+h}-E(y_{t+h}|\Omega_t)+E(y_{t+h}|\Omega_t)-\hat{y}_{t+h|t}]^2\right\}
-\end{align*}
-
-In this expected loss function, we subtracted and added $E\left(y_{t+h}|\Omega_t\right)$, where $\Omega_t$ is the \textit{information set}---the available knowledge at the time when the forecast is made, to make an intuitive point. The loss function is given by the square of a sum of: (i) the deviations of the future realizations of a variable from their conditional mean, $y_{t+h}-E\left(y_{t+h}|\Omega_t\right)$, and (ii) the discrepancies between the conditional mean and a point forecast, $E\left(y_{t+h}|\Omega_t\right)-\hat{y}_{t+h|t}$. As it turns out, a point forecast that minimizes the expected loss function is the conditional mean of the random variable:
 \begin{equation}
-	\hat{y}_{t+h|t} = E\left(y_{t+h}|\Omega_t\right).
+	E[l(e_{t+h|t})] = E(e_{t+h|t}^2) = E[(y_{t+h}-\hat{y}_{t+h|t})^2].
+\end{equation}
+
+As it turns out, a point forecast that minimizes the expected loss function is the mean of the random variable:
+\begin{equation}
+	\hat{y}_{t+h|t} = E\left(y_{t+h}\right).
 	(\#eq:optimal)
 \end{equation}
 
-This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization---assuming the quadratic loss---is the weighted average of its all possible future realizations. The equality in equation \@ref(eq:optimal) is implied in Figure \@ref(fig:loss-function). If we were to slide the U-shaped curve to the left or to the right, the expected value of the loss functions, which are given by dots that form the U-shaped curve, will only increase. The following animation illustrates this.
+This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization---assuming the quadratic loss---is the weighted sum of its all possible future realizations. The equality in equation \@ref(eq:optimal) is implied in Figure \@ref(fig:loss). If we were to use any value other than the mean---which would imply sliding the U-shaped curve to the left or to the right---the expected value of the loss function will only increase. The following animation presents a visualization of this thought exercise.
 
 ![](gifs/quadratic-loss.gif)
 
-In Figure \@ref(fig:time-series) we illustrated a time series and the density of the observed values over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that *one* and *six* occur with a probability of $0.05$, *two* occurs with a probability of $0.15$, *five* occurs with a probability of $0.20$, *four* occurs with a probability of $0.25$, and *three* occurs with a probability of $0.30$. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be ${1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55$. If we know that the value must be an integer, then we round our forecast to *four*. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of *four* gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.
+In Figure \@ref(fig:time-series) we illustrated a time series and its density over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that *one* and *six* occur with a probability of $0.05$, *two* occurs with a probability of $0.15$, *five* occurs with a probability of $0.20$, *four* occurs with a probability of $0.25$, and *three* occurs with a probability of $0.30$. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be ${1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55$. If we know that the value must be an integer, then we round our forecast to *four*. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of *four* gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.
 
 
 ## Getting It Right for the Right Reasons

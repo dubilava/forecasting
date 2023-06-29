@@ -1,6 +1,6 @@
-fig:dag-birds
+fig:birds
 fig:time-series
-fig:loss-function
+fig:loss
 eq:optimal
 fig:white-noise
 fig:acf
