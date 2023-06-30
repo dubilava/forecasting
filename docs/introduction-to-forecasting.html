@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 – Introduction to Forecasting | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 – Introduction to Forecasting | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -119,6 +119,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -167,14 +171,19 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
 <li class="chapter" data-level="1.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>1.6</b> Why We Can’t Get It Right</a></li>
 <li class="chapter" data-level="1.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>1.7</b> Minimizing the Risk of Getting It Wrong</a></li>
-<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.8</b> Getting It Right for the Right Reasons</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>1.8</b> Economists Do It With Models</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.9</b> Getting It Right for the Right Reasons</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>2.1</b> Stochastic Process and Time Series</a></li>
-<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a></li>
-<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#serial-dependence"><i class="fa fa-check"></i><b>2.3</b> Serial Dependence</a></li>
-<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.4</b> Transformations</a></li>
+<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>2.2</b> Stationarity and Ergodicity</a></li>
+<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>2.3</b> White Noise Process</a></li>
+<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>2.4</b> Autocorrelation</a></li>
+<li class="chapter" data-level="2.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>2.5</b> Autocorrelogram and It’s Forensic Features</a></li>
+<li class="chapter" data-level="2.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>2.6</b> Partial Autocorrelation</a></li>
+<li class="chapter" data-level="2.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.7</b> Transformations</a></li>
+<li class="chapter" data-level="2.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>2.8</b> Getting to the Root of It</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>3</b> – Generating and Evaluating Forecasts</a>
 <ul>
@@ -348,7 +357,7 @@ Figure 1.1: Causality, Correlation, and Forecasting
 <div id="knowing-the-unknown" class="section level2 hasAnchor" number="1.5">
 <h2><span class="header-section-number">1.5</span> Knowing the Unknown<a href="introduction-to-forecasting.html#knowing-the-unknown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Methods of forecasting may differ, but they have one thing in common: they all rely—or at least pretend to rely—upon information. We record and observe information in the form of <em>data</em>. When the data are organized and stored in a certain way—chronologically and at regular intervals—we have a <em>time series</em>. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future.</p>
-<div class="figure"><span style="display:block;" id="fig:time-series"></span>
+<div class="figure"><span style="display:block;" id="fig:time-series-c1"></span>
 <img src="figures/c1/time-series.png" alt="A time series and its density" width="1040" />
 <p class="caption">
 Figure 1.2: A time series and its density
@@ -401,10 +410,14 @@ Figure 1.3: Forecast errors and the quadratic loss
 \end{equation}\]</span></p>
 <p>This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization—assuming the quadratic loss—is the weighted sum of its all possible future realizations. The equality in equation <a href="introduction-to-forecasting.html#eq:optimal">(1.1)</a> is implied in Figure <a href="introduction-to-forecasting.html#fig:loss">1.3</a>. If we were to use any value other than the mean—which would imply sliding the U-shaped curve to the left or to the right—the expected value of the loss function will only increase. The following animation presents a visualization of this thought exercise.</p>
 <p><img src="gifs/quadratic-loss.gif" /></p>
-<p>In Figure <a href="introduction-to-forecasting.html#fig:time-series">1.2</a> we illustrated a time series and its density over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that <em>one</em> and <em>six</em> occur with a probability of <span class="math inline">\(0.05\)</span>, <em>two</em> occurs with a probability of <span class="math inline">\(0.15\)</span>, <em>five</em> occurs with a probability of <span class="math inline">\(0.20\)</span>, <em>four</em> occurs with a probability of <span class="math inline">\(0.25\)</span>, and <em>three</em> occurs with a probability of <span class="math inline">\(0.30\)</span>. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be <span class="math inline">\({1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55\)</span>. If we know that the value must be an integer, then we round our forecast to <em>four</em>. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of <em>four</em> gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.</p>
+<p>In Figure <a href="introduction-to-forecasting.html#fig:time-series-c1">1.2</a> we illustrated a time series and its density over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that <em>one</em> and <em>six</em> occur with a probability of <span class="math inline">\(0.05\)</span>, <em>two</em> occurs with a probability of <span class="math inline">\(0.15\)</span>, <em>five</em> occurs with a probability of <span class="math inline">\(0.20\)</span>, <em>four</em> occurs with a probability of <span class="math inline">\(0.25\)</span>, and <em>three</em> occurs with a probability of <span class="math inline">\(0.30\)</span>. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be <span class="math inline">\({1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55\)</span>. If we know that the value must be an integer, then we round our forecast to <em>four</em>. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of <em>four</em> gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.</p>
 </div>
-<div id="getting-it-right-for-the-right-reasons" class="section level2 hasAnchor" number="1.8">
-<h2><span class="header-section-number">1.8</span> Getting It Right for the Right Reasons<a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="economists-do-it-with-models" class="section level2 hasAnchor" number="1.8">
+<h2><span class="header-section-number">1.8</span> Economists Do It With Models<a href="introduction-to-forecasting.html#economists-do-it-with-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One of the most used, and sometimes abused, quotes in economics at least, comes from George Box who said: “<em>All models are wrong but some are useful.</em>”</p>
+</div>
+<div id="getting-it-right-for-the-right-reasons" class="section level2 hasAnchor" number="1.9">
+<h2><span class="header-section-number">1.9</span> Getting It Right for the Right Reasons<a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There may be instances—if we are fortuitous—when our forecast is spot-on. But such an instance will be just that—a fluke. For the most part, our forecasts will be off, and this is perfectly okay, so long as <em>on average</em> we are spot-on.</p>
 <p>In fact, we may make an impeccable guess about the future for the wrong reasons. Suppose our “model” is such that it always predicts a recession. Then, every so often, we will get it right. Because recessions happen. But we will be getting it right for the wrong reason. Because our “model” is clearly wrong. Recessions are not the only outcomes of the business cycle.</p>
 <p>The time series in the figure above were generated so that each observation was drawn from independent and identically distributed random variables. The presented density then serves as a close approximation of a forecast. Assuming quadratic loss, the optimal forecast would be, as we calculated above, <em>four</em>. Had we only observed the very last observation, which is <em>five</em>, our best guess for the next observation would have been <em>five</em>. If the next observation turned out to be five, then we would have guessed it right for the wrong reason. The right forecast would have been <em>four</em>, even if it turned out to be inaccurate.</p>

@@ -110,7 +110,7 @@ What we just described is known as the *efficient market hypothesis*. The effici
 
 Methods of forecasting may differ, but they have one thing in common: they all rely---or at least pretend to rely---upon information. We record and observe information in the form of *data*. When the data are organized and stored in a certain way---chronologically and at regular intervals---we have a *time series*. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future. 
 
-```{r time-series, fig.cap="A time series and its density"}
+```{r time-series-c1, fig.cap="A time series and its density"}
 knitr::include_graphics("figures/c1/time-series.png")
 ```
 
@@ -178,7 +178,11 @@ This is to say that given what we know about the dynamic properties of a time se
 
 ![](gifs/quadratic-loss.gif)
 
-In Figure \@ref(fig:time-series) we illustrated a time series and its density over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that *one* and *six* occur with a probability of $0.05$, *two* occurs with a probability of $0.15$, *five* occurs with a probability of $0.20$, *four* occurs with a probability of $0.25$, and *three* occurs with a probability of $0.30$. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be ${1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55$. If we know that the value must be an integer, then we round our forecast to *four*. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of *four* gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.
+In Figure \@ref(fig:time-series-c1) we illustrated a time series and its density over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that *one* and *six* occur with a probability of $0.05$, *two* occurs with a probability of $0.15$, *five* occurs with a probability of $0.20$, *four* occurs with a probability of $0.25$, and *three* occurs with a probability of $0.30$. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be ${1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55$. If we know that the value must be an integer, then we round our forecast to *four*. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of *four* gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.
+
+## Economists Do It With Models
+
+One of the most used, and sometimes abused, quotes in economics at least, comes from George Box who said: "*All models are wrong but some are useful.*" 
 
 
 ## Getting It Right for the Right Reasons

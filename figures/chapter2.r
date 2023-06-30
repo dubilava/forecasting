@@ -48,17 +48,17 @@ dt <- data.table(x=x,t=(1-4):(n-4))
 
 # graph the time series
 gg_ts <- ggplot(dt,aes(x=t,y=x))+
-  geom_line(data=dt[t>0 & t<=6],color="black",linetype=1,linewidth=.8)+
-  geom_line(data=dt[t<=1],color="gray",linetype=5,linewidth=.8)+
-  geom_line(data=dt[t>5],color="gray",linetype=5,linewidth=.8)+
-  geom_point(data=dt[t>0 & t<=6],color="black",fill="gray",stroke = 1,shape=21,size=4)+
-  geom_point(data=dt[t<=0 | t>6],color="gray",fill="gray",stroke = 1,shape=21,size=4)+
+  geom_line(data=dt[t>0 & t<=6],color="coral",linetype=1,linewidth=.8)+
+  geom_line(data=dt[t<=1],color="darkgray",linetype=5,linewidth=.8)+
+  geom_line(data=dt[t>5],color="darkgray",linetype=5,linewidth=.8)+
+  geom_point(data=dt[t>0 & t<=6],color="coral",fill="lightgray",stroke=1,shape=21,size=3)+
+  geom_point(data=dt[t<=0 | t>6],color="darkgray",fill="white",stroke = 1,shape=21,size=3)+
   ylim(0,7)+
   labs(x=expression(t),y=expression(y[t]))+
   theme_eg()
 
-ggsave("figures/c2/tseries.png",gg_ts,width=6.5,height=3.75,dpi="retina",device="png")
-ggsave("figures/c2/tseries.eps",gg_ts,width=6.5,height=3.75,dpi="retina",device=cairo_ps)
+ggsave("figures/c2/time-series.png",gg_ts,width=6.5,height=3.75,dpi="retina",device="png")
+ggsave("figures/c2/time-series.eps",gg_ts,width=6.5,height=3.75,dpi="retina",device=cairo_ps)
 
 
 # 2.2 - stationarity ----
@@ -73,8 +73,8 @@ dt <- data.table(x=round(x),t=1:n)
 
 # graph the time series
 gg_ts1 <- ggplot(dt[t<=5],aes(x=t,y=x))+
-  geom_line(color="black",linetype=5,linewidth=.8)+
-  geom_point(color="black",fill="gray",stroke = 1,shape=21,size=3)+
+  geom_line(color="coral",linetype=5,linewidth=.8)+
+  geom_point(color="coral",fill="lightgray",stroke = 1,shape=21,size=3)+
   ylim(0,8)+
   labs(title="(a) stationary stochastic process",x=expression(t),y=expression(y[t]))+
   scale_x_continuous(breaks=c(1:5),labels=c(1:5),limits=c(1,6))+
@@ -83,7 +83,7 @@ gg_ts1 <- ggplot(dt[t<=5],aes(x=t,y=x))+
 
 # graph the dot-density (stationary)
 gg_hist <- ggplot(dt,aes(x=x))+
-  geom_dotplot(binwidth=.4,color=NA,fill="gray",stroke = 2)+
+  geom_dotplot(binwidth=.4,color=NA,fill="lightgray",stroke = 2)+
   xlim(0,8)+
   coord_flip()+
   theme_eg()+
@@ -102,8 +102,8 @@ gg_stationary <- ggdraw(aligned_plots[[1]]) +
 
 # graph the time series
 gg_ts2 <- ggplot(dt[t<=5],aes(x=t,y=x))+
-  geom_line(color="black",linetype=5,linewidth=.8)+
-  geom_point(color="black",fill="gray",stroke = 1,shape=21,size=3)+
+  geom_line(color="coral",linetype=5,linewidth=.8)+
+  geom_point(color="coral",fill="lightgray",stroke = 1,shape=21,size=3)+
   ylim(0,8)+
   labs(title="(b) nonstationary stochastic process",x=expression(t),y=expression(y[t]))+
   scale_x_continuous(breaks=c(1:5),labels=c(1:5),limits=c(1,6))+
@@ -112,35 +112,35 @@ gg_ts2 <- ggplot(dt[t<=5],aes(x=t,y=x))+
 
 # graph the dot-densities (nonstationary)
 gg_h1 <- ggplot(dt,aes(x=x-2))+
-  geom_dotplot(binwidth=.4,color=NA,fill="gray",stroke = 2)+
+  geom_dotplot(binwidth=.4,color=NA,fill="lightgray",stroke = 2)+
   xlim(0,8)+
   coord_flip()+
   theme_eg()+
   theme(panel.background=element_rect(fill="transparent",color=NA),plot.background=element_rect(fill="transparent",color=NA),axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank(),panel.grid=element_blank(),panel.grid.major=element_blank())#,plot.margin=margin(.5,0,.2,0,"cm"))
 
 gg_h2 <- ggplot(dt,aes(x=x-1))+
-  geom_dotplot(binwidth=.4,color=NA,fill="gray",stroke = 2)+
+  geom_dotplot(binwidth=.4,color=NA,fill="lightgray",stroke = 2)+
   xlim(0,8)+
   coord_flip()+
   theme_eg()+
   theme(panel.background=element_rect(fill="transparent",color=NA),plot.background=element_rect(fill="transparent",color=NA),axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank(),panel.grid=element_blank(),panel.grid.major=element_blank())#,plot.margin=margin(.5,0,.2,0,"cm"))
 
 gg_h3 <- ggplot(dt,aes(x=x-0))+
-  geom_dotplot(binwidth=.4,color=NA,fill="gray",stroke = 2)+
+  geom_dotplot(binwidth=.4,color=NA,fill="lightgray",stroke = 2)+
   xlim(0,8)+
   coord_flip()+
   theme_eg()+
   theme(panel.background=element_rect(fill="transparent",color=NA),plot.background=element_rect(fill="transparent",color=NA),axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank(),panel.grid=element_blank(),panel.grid.major=element_blank())#,plot.margin=margin(.5,0,.2,0,"cm"))
 
 gg_h4 <- ggplot(dt,aes(x=x+1))+
-  geom_dotplot(binwidth=.4,color=NA,fill="gray",stroke = 2)+
+  geom_dotplot(binwidth=.4,color=NA,fill="lightgray",stroke = 2)+
   xlim(0,8)+
   coord_flip()+
   theme_eg()+
   theme(panel.background=element_rect(fill="transparent",color=NA),plot.background=element_rect(fill="transparent",color=NA),axis.title=element_blank(),axis.title.y=element_blank(),axis.text=element_blank(),axis.line=element_blank(),panel.grid=element_blank(),panel.grid.major=element_blank())#,plot.margin=margin(.5,0,.2,0,"cm"))
 
 gg_h5 <- ggplot(dt,aes(x=x+2))+
-  geom_dotplot(binwidth=.4,color=NA,fill="gray",stroke = 2)+
+  geom_dotplot(binwidth=.4,color=NA,fill="lightgray",stroke = 2)+
   xlim(0,8)+
   coord_flip()+
   theme_eg()+
@@ -171,7 +171,7 @@ wn_dt <- data.table(t=1:n,x=x)
 
 # plot the time series
 gg_wn <- ggplot(wn_dt,aes(x=t,y=x))+
-  geom_line(linewidth=.5,color="black")+
+  geom_line(linewidth=.5,color="coral")+
   ylim(-2.5,2.5)+
   xlim(0,125)+
   labs(x="t",y=expression(y[t]))+
@@ -179,7 +179,7 @@ gg_wn <- ggplot(wn_dt,aes(x=t,y=x))+
 
 # graph the dot-density of the series
 gg_dots <- ggplot(wn_dt,aes(x=x))+
-  geom_dotplot(binwidth=.15,color="black",fill="gray",stroke=1,method="histodot",stackratio=1.1)+
+  geom_dotplot(binwidth=.15,color="coral",fill="lightgray",stroke=1,method="histodot",stackratio=1.1)+
   xlim(-2.5,2.5)+
   coord_flip()+
   theme_eg()+
@@ -188,8 +188,8 @@ gg_dots <- ggplot(wn_dt,aes(x=x))+
 # combine the two graphs
 gg_comb <- plot_grid(gg_wn,gg_dots,align="hv",ncol=2,rel_widths = c(3,1))
 
-ggsave("figures/c2/whitenoise.png",gg_comb,width=6.5,height=3.75,dpi="retina",device="png")
-ggsave("figures/c2/whitenoise.eps",gg_comb,width=6.5,height=3.75,dpi="retina",device=cairo_ps)
+ggsave("figures/c2/white-noise.png",gg_comb,width=6.5,height=3.75,dpi="retina",device="png")
+ggsave("figures/c2/white-noise.eps",gg_comb,width=6.5,height=3.75,dpi="retina",device=cairo_ps)
 
 
 # 2.4 - time series (unrate) ----

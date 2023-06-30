@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 – Combining Forecasts | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 – Combining Forecasts | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -119,6 +119,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -167,14 +171,19 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
 <li class="chapter" data-level="1.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>1.6</b> Why We Can’t Get It Right</a></li>
 <li class="chapter" data-level="1.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>1.7</b> Minimizing the Risk of Getting It Wrong</a></li>
-<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.8</b> Getting It Right for the Right Reasons</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>1.8</b> Economists Do It With Models</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.9</b> Getting It Right for the Right Reasons</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>2.1</b> Stochastic Process and Time Series</a></li>
-<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity"><i class="fa fa-check"></i><b>2.2</b> Stationarity</a></li>
-<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#serial-dependence"><i class="fa fa-check"></i><b>2.3</b> Serial Dependence</a></li>
-<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.4</b> Transformations</a></li>
+<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>2.2</b> Stationarity and Ergodicity</a></li>
+<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>2.3</b> White Noise Process</a></li>
+<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>2.4</b> Autocorrelation</a></li>
+<li class="chapter" data-level="2.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>2.5</b> Autocorrelogram and It’s Forensic Features</a></li>
+<li class="chapter" data-level="2.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>2.6</b> Partial Autocorrelation</a></li>
+<li class="chapter" data-level="2.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.7</b> Transformations</a></li>
+<li class="chapter" data-level="2.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>2.8</b> Getting to the Root of It</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>3</b> – Generating and Evaluating Forecasts</a>
 <ul>
@@ -313,7 +322,7 @@ div.csl-indent {
 <h2><span class="header-section-number">5.2</span> Optimal Weights for Forecast Combination<a href="combining-forecasts.html#optimal-weights-for-forecast-combination" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Forecast combination implies mixing the forecasts from different models with some proportions. In other words, a combined forecast is a weighted sum of the individual forecasts. The weights need to be selected in a way that maximizes the combined forecast accuracy, i.e., minimizes the combined forecast loss.</p>
 <p>Consider two forecasting methods (or models), <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, each respectively yielding one-step-ahead forecasts <span class="math inline">\(y_{a,t+1|t}\)</span> and <span class="math inline">\(y_{b,t+1|t}\)</span>, and the associated forecast errors <span class="math inline">\(e_{a,t+1} = y_{t+1}-y_{a,t+1|t}\)</span> and <span class="math inline">\(e_{b,t+1} = y_{t+1}-y_{b,t+1|t}\)</span>.</p>
-<p>A combined forecast, <span class="math inline">\(y_{c,t+1|t}\)</span>, is the weighted sum of these two forecasts: <span class="math display">\[y_{c,t+1|t} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t},\]</span> where the usual assumption about the weights apply, i.e., <span class="math inline">\(0 \leq w \leq 1\)</span>.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+<p>A combined forecast, <span class="math inline">\(y_{c,t+1|t}\)</span>, is the weighted sum of these two forecasts: <span class="math display">\[y_{c,t+1|t} = (1-w)y_{a,t+1|t} + w y_{b,t+1|t},\]</span> where the usual assumption about the weights apply, i.e., <span class="math inline">\(0 \leq w \leq 1\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <p>A combined forecast error is the weighted sum of the individual forecast errors: <span class="math display">\[e_{c,t+1} = (1-w)e_{a,t+1} + w e_{b,t+1}\]</span></p>
 <p>The combined forecast error is, on average, zero (assuming that the individual forecasts are all unbiased): <span class="math display">\[E\left(e_{c,t+1}\right) = E\left[(1-w)e_{a,t+1} + w e_{b,t+1}\right] = 0\]</span></p>
 <p>The variance of a combined forecast error is: <span class="math display">\[Var\left(e_{c,t+1}\right) = (1-w)^2 \sigma_a^2 + w^2  \sigma_b^2 + 2w(1-w)\sigma_{ab},\]</span> where <span class="math inline">\(\sigma_a\)</span> and <span class="math inline">\(\sigma_b\)</span> are the standard deviations of the forecast errors from models <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, and <span class="math inline">\(\sigma_{ab}=\rho_{ab}\sigma_a\sigma_b\)</span> is the covariance of the two forecast errors, which can also be expressed as a product of the correlation between the two forecast errors, <span class="math inline">\(\rho_{ab}\)</span>, and the standard deviations of each forecast error.</p>
@@ -336,8 +345,8 @@ div.csl-indent {
 </div>
 <div class="footnotes">
 <hr />
-<ol start="6">
-<li id="fn6"><p>More broadly, if we have <span class="math inline">\(n\)</span> forecasts that we intend to combine, the associated weights, <span class="math inline">\(w_i:i=1,\ldots,n\)</span>, will each be bounded by zero and one, and together they will add up to one.<a href="combining-forecasts.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<ol start="3">
+<li id="fn3"><p>More broadly, if we have <span class="math inline">\(n\)</span> forecasts that we intend to combine, the associated weights, <span class="math inline">\(w_i:i=1,\ldots,n\)</span>, will each be bounded by zero and one, and together they will add up to one.<a href="combining-forecasts.html#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
