@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 – Features of Time Series Data | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 – Features of Time Series Data | Educated Guess" />
   <meta property="og:type" content="book" />
@@ -118,10 +118,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -331,7 +327,7 @@ Figure 2.1: Observed time series
 <h2><span class="header-section-number">2.2</span> Stationarity and Ergodicity<a href="features-of-time-series-data.html#stationarity-and-ergodicity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The random variables that comprise the stochastic process may or may not have the same distributions. If they have the same distributions, then the stochastic process is . Otherwise, the stochastic process is .</p>
 <p>To get an idea of whether a stochastic process is stationary or nonstationary, we would need to compare the distributions, or joint distributions, of the random variables comprising the stochastic process. This seems to be a straightforward exercise. Except, it also is an infeasible exercise. The gist of the matter is that we never observe the distribution or the density of <span class="math inline">\(Y_t\)</span>. Rather, in each period, we only observe its one realization, <span class="math inline">\(y_t\)</span>.</p>
-When we observe a time series, we can not be too sure whether these are realizations of a stationary stochastic process or a nonstationary stochastic process. The exact same realizations can come from a stationary process or a nonstationary process, as we can see in Figure~<a href="features-of-time-series-data.html#fig:stochastic">2.2</a>.
+When we observe a time series, we can not be too sure whether these are realizations of a stationary stochastic process or a nonstationary stochastic process. The exact same realizations can come from a stationary process or a nonstationary process, as we can see in Figure <a href="features-of-time-series-data.html#fig:stochastic">2.2</a>.
 <div class="figure"><span style="display:block;" id="fig:stochastic"></span>
 <img src="figures/c2/stochastic.png" alt="Stationary and nonstationary series" width="1040" />
 <p class="caption">
