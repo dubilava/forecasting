@@ -118,11 +118,11 @@ The left-hand side of the graph features a time series of 20 observations, given
 
 The question is, given the observed data, what would be our best guess about $x_{21}$, that is, the value of the observation in the subsequent period? In other words, the question asks us to forecast the next observation, given that we have observed the chronological sequence of the previous 20 observations. 
 
-To answer this question, let's summarize what we know. The density^[The way we present it---because we "discretized" the time series for illustration purposes---technically, this is the probability mass function rather than the probability density function.] of the observed time series, presented in the form of stacked dots on the right-hand side of the figure, does that. We can see that the observed values range from one to six, and some of them appear more frequently than others. Specifically, *three* appears most frequently in our observed sample. So, our best guess can be *three*. 
+To answer this question, let's summarize what we know. The density of the observed time series, presented in the form of stacked dots on the right-hand side of the figure, does that. Technically, what we illustrate here is the probability mass rather than the probability density. We can see that the observed values range from one to six, and some of them appear more frequently than others. Specifically, *three* appears most frequently in our observed sample. So, our best guess can be *three*. 
 
 But we can also give another answer. We can see that the most recently observed value is five. And if we suspect some temporal dependence in the time series---that is, if we believe there is some positive correlation between back--to--back observations---then our guess may be tilted toward five. So, in this instance, our best guess could be *four*. 
 
-The foregoing illustration alludes to an important clarifier of a forecast. A forecast is a bunch of outcomes or values, each with some probability of occurring. If a variable of interest is continuous, then a forecast is a density. More specifically, a forecast is a conditional density, which depends on the available information at the time when the forecast is made, and it combines everything we know or do not know about the unknown. Or, in words of former U.S. Secretary of Defense, Donald Rumsfeld: "*As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns--the ones we don't know we don't know.*"
+The foregoing illustration alludes to an important clarifier of a forecast. A forecast is a bunch of outcomes or values, each with some probability of occurring. If a variable of interest is continuous, then a forecast is a density. More specifically, a forecast is a conditional density, which depends on the available information at the time when the forecast is made, and it combines everything we know or do not know about the unknown.^[In words of the former U.S. Secretary of Defense, Donald Rumsfeld "*As we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns--the ones we don't know we don't know.*"]
 
 We rarely use a density to communicate our forecast, however. When commercial banks or professional forecasters make a guess about the upcoming interest rate hike by the central bank, they usually report a single value. That is a *point forecast*---the simplest and most frequently used summary of a forecast. A point forecast is one value that qualifies or quantifies our guess about the future realization of an event, for example, a guess that it will rain tomorrow or a that the central bank will increase interest rates by 0.25 percentage points. In our illustration, the guess that in period 21 we could observe *three* is a point forecast. 
 
@@ -182,12 +182,14 @@ In Figure \@ref(fig:time-series-c1) we illustrated a time series and its density
 
 ## Economists Do It With Models
 
-One of the most used, and sometimes abused, quotes in economics at least, comes from George Box who said: "*All models are wrong but some are useful.*" 
+Model is our simplified vision about how things are interrelated. Whether the things are truly related is irrelevant. Because model is not the truth. Model is our understanding of the truth, which may very well be wrong.^[George Box went so far as to say: "*All models are wrong but some are useful.*" ]
+
+As knowledge accumulates, our understanding of the true relationship between things improves. So, we come up with better models that help us more accurately approximate the truth.
 
 
 ## Getting It Right for the Right Reasons
 
-There may be instances---if we are fortuitous---when our forecast is spot-on. But such an instance will be just that---a fluke. For the most part, our forecasts will be off, and this is perfectly okay, so long as *on average* we are spot-on.
+There may be instances---if we are fortuitous---when our forecast is spot-on. But such an instance will be just that---a fluke. Because our model is a simplified approximation of the truth, we cannot count on getting the forecast exactly right. For the most part, our forecasts will be off, and this is perfectly okay, so long as *on average* we are spot-on.
 
 In fact, we may make an impeccable guess about the future for the wrong reasons. Suppose our "model" is such that it always predicts a recession. Then, every so often, we will get it right. Because recessions happen. But we will be getting it right for the wrong reason. Because our "model" is clearly wrong. Recessions are not the only outcomes of the business cycle.
 

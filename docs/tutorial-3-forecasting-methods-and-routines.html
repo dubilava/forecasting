@@ -306,7 +306,7 @@ div.csl-indent {
 <div id="tutorial-3-forecasting-methods-and-routines" class="section level1 unnumbered hasAnchor">
 <h1>Tutorial 3: Forecasting Methods and Routines<a href="tutorial-3-forecasting-methods-and-routines.html#tutorial-3-forecasting-methods-and-routines" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this tutorial, we will introduce ‘for loop’, and illustrate its use by generating time series as well as by generating one-step-ahead forecasts. We will also perform forecast error diagnostics. To run the code, the <code>data.table</code> and <code>ggplot2</code> packages need to be installed and loaded.</p>
-<p>Let’s generate a random walk process, such that <span class="math inline">\(y_{t} = y_{t-1}+e_{t}\)</span>, where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>, and where <span class="math inline">\(y_{0}=0\)</span>, for <span class="math inline">\(t=1,\ldots,120\)</span>.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></p>
+<p>Let’s generate a random walk process, such that <span class="math inline">\(y_{t} = y_{t-1}+e_{t}\)</span>, where <span class="math inline">\(e_{t} \sim N(0,1)\)</span>, and where <span class="math inline">\(y_{0}=0\)</span>, for <span class="math inline">\(t=1,\ldots,120\)</span>.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
 <span id="cb38-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-2" tabindex="-1"></a></span>
 <span id="cb38-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb38-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
@@ -329,7 +329,7 @@ div.csl-indent {
 <span id="cb40-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Year&quot;</span>,<span class="at">y=</span><span class="st">&quot;Random Walk&quot;</span>)<span class="sc">+</span></span>
 <span id="cb40-4"><a href="tutorial-3-forecasting-methods-and-routines.html#cb40-4" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-43-1.png" width="624" /></p>
-<p>Generate a sequence of one-step-ahead forecasts from January 2017 onward by simply averaging the observed time series up to the period when the forecast is made.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
+<p>Generate a sequence of one-step-ahead forecasts from January 2017 onward by simply averaging the observed time series up to the period when the forecast is made.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb41-1" tabindex="-1"></a>dt<span class="sc">$</span>f <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb41-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb41-2" tabindex="-1"></a></span>
 <span id="cb41-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb41-3" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">which</span>(dt<span class="sc">$</span>date<span class="sc">==</span><span class="fu">as.Date</span>(<span class="st">&quot;2017-01-01&quot;</span>))<span class="sc">-</span><span class="dv">1</span></span>
@@ -356,8 +356,8 @@ We test this hypothesis by regressing the forecast error on the constant, and ch
 <pre><code>##               Estimate Std. Error    t value     Pr(&gt;|t|)
 ## (Intercept) -0.1437252  1.5861275 -0.0906139 0.9281928187
 ## f            0.9995059  0.2822414  3.5413157 0.0009247749</code></pre>
-<p>We reject the null, which suggests that there is some information in the data that we do not use well enough.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></p>
-<p>No serial correlation in one-step-ahead forecast errors: <span class="math inline">\(Cov(e_{t+1|t},y_{t|t-1})=0\)</span>. We perform this test by regressing the forecast error on its lag, and checking whether the slope coefficient is statistically significantly different from zero.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
+<p>We reject the null, which suggests that there is some information in the data that we do not use well enough.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
+<p>No serial correlation in one-step-ahead forecast errors: <span class="math inline">\(Cov(e_{t+1|t},y_{t|t-1})=0\)</span>. We perform this test by regressing the forecast error on its lag, and checking whether the slope coefficient is statistically significantly different from zero.<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a></p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tutorial-3-forecasting-methods-and-routines.html#cb48-1" tabindex="-1"></a>dt[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">e1=</span><span class="fu">shift</span>(e))]</span>
 <span id="cb48-2"><a href="tutorial-3-forecasting-methods-and-routines.html#cb48-2" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="tutorial-3-forecasting-methods-and-routines.html#cb48-3" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(e<span class="sc">~</span>e1,<span class="at">data=</span>dt))<span class="sc">$</span>coefficients</span></code></pre></div>
@@ -480,12 +480,12 @@ We test this hypothesis by regressing the forecast error on the constant, and ch
 </div>
 <div class="footnotes">
 <hr />
-<ol start="15">
-<li id="fn15"><p>The following code is deliberately done inefficiently to illustrate the use of the ‘for loop’. For reference, a much more efficient code, after setting the seed, would have been
-<code>y &lt;- cumsum(rnorm(n))</code><a href="tutorial-3-forecasting-methods-and-routines.html#fnref15" class="footnote-back">↩︎</a></p></li>
-<li id="fn16"><p>This is equivalent to the <em>expanding window</em> scheme for generating forecasts.<a href="tutorial-3-forecasting-methods-and-routines.html#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p>Because, as we know, the true data generating process is random walk, a better use of information would involve assigning all the weights to the most recent observation rather than spreading them evenly across all observations in the estimation window.<a href="tutorial-3-forecasting-methods-and-routines.html#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p>Note: first we need to generate lagged forecast errors.<a href="tutorial-3-forecasting-methods-and-routines.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<ol start="16">
+<li id="fn16"><p>The following code is deliberately done inefficiently to illustrate the use of the ‘for loop’. For reference, a much more efficient code, after setting the seed, would have been
+<code>y &lt;- cumsum(rnorm(n))</code><a href="tutorial-3-forecasting-methods-and-routines.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>This is equivalent to the <em>expanding window</em> scheme for generating forecasts.<a href="tutorial-3-forecasting-methods-and-routines.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>Because, as we know, the true data generating process is random walk, a better use of information would involve assigning all the weights to the most recent observation rather than spreading them evenly across all observations in the estimation window.<a href="tutorial-3-forecasting-methods-and-routines.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>Note: first we need to generate lagged forecast errors.<a href="tutorial-3-forecasting-methods-and-routines.html#fnref19" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

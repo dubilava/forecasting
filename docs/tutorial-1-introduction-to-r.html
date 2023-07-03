@@ -308,12 +308,12 @@ div.csl-indent {
 <div id="base-r-and-matrix-manipulations" class="section level2 unnumbered hasAnchor">
 <h2>Base R and matrix manipulations<a href="tutorial-1-introduction-to-r.html#base-r-and-matrix-manipulations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are a number of ways in which we can work with data in R. Here, we will primarily rely on <code>data.table</code>, the other prominent dialect being <code>tidyverse</code>. But to develop an intuition, let’s start off with base R, specifically—matrices.</p>
-<p>Consider a random sequence of observations:<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
+<p>Consider a random sequence of observations:<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tutorial-1-introduction-to-r.html#cb1-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
 <span id="cb1-2"><a href="tutorial-1-introduction-to-r.html#cb1-2" tabindex="-1"></a>a</span></code></pre></div>
 <pre><code>## [1] 1 0 4 3 2 6</code></pre>
 <p>We used <code>c()</code> function to combine the set of observations. Without this function, that is if we were to just list the observations separated by commas, we would have received an error message.</p>
-<p>This sequence, unlike a <em>vector</em>, has no dimensions.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> But we can transform it to a <span class="math inline">\(n \times 1\)</span> vector, and call it <code>b</code>, using the <code>as.matrix()</code> function:</p>
+<p>This sequence, unlike a <em>vector</em>, has no dimensions.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> But we can transform it to a <span class="math inline">\(n \times 1\)</span> vector, and call it <code>b</code>, using the <code>as.matrix()</code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tutorial-1-introduction-to-r.html#cb3-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(a)</span>
 <span id="cb3-2"><a href="tutorial-1-introduction-to-r.html#cb3-2" tabindex="-1"></a>b</span></code></pre></div>
 <pre><code>##      [,1]
@@ -431,9 +431,9 @@ div.csl-indent {
 </div>
 <div class="footnotes">
 <hr />
-<ol start="12">
-<li id="fn12"><p>In these tutorials, we will use the ‘assignment’ operator, <code>&lt;-</code>, which is, for all practical purposes, equivalent to the ‘equal’ operator, <code>=</code>.<a href="tutorial-1-introduction-to-r.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p>You don’t need to take my word for it. You can check this for yourself by running the <code>dim(a)</code> in your R console, for example.<a href="tutorial-1-introduction-to-r.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<ol start="13">
+<li id="fn13"><p>In these tutorials, we will use the ‘assignment’ operator, <code>&lt;-</code>, which is, for all practical purposes, equivalent to the ‘equal’ operator, <code>=</code>.<a href="tutorial-1-introduction-to-r.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>You don’t need to take my word for it. You can check this for yourself by running the <code>dim(a)</code> in your R console, for example.<a href="tutorial-1-introduction-to-r.html#fnref14" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

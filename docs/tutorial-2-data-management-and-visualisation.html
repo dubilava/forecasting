@@ -328,7 +328,7 @@ div.csl-indent {
 ## 118:  2.4197029 0.20636847
 ## 119:  1.8521905 0.89256870
 ## 120:  2.3040499 1.28020209</code></pre>
-<p>So, we have generated<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
+<p>So, we have generated<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> a dataset that contains two variables (<code>x</code> which is a realization of the uniformly distributed random variable, and <code>y</code> which consists of a deterministic component, function of <code>x</code>, and of an idiosyncratic component), stored in two columns, each of length 120. To get a feel whether there is any relationship between these two variables, we can generate a simple scatterplot.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tutorial-2-data-management-and-visualisation.html#cb34-1" tabindex="-1"></a><span class="fu">ggplot</span>(dt,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span></span>
 <span id="cb34-2"><a href="tutorial-2-data-management-and-visualisation.html#cb34-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="forecasting_files/figure-html/unnamed-chunk-36-1.png" width="624" /></p>
@@ -415,8 +415,8 @@ div.csl-indent {
 </div>
 <div class="footnotes">
 <hr />
-<ol start="14">
-<li id="fn14"><p>Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.<a href="tutorial-2-data-management-and-visualisation.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<ol start="15">
+<li id="fn15"><p>Notice that prior to sampling we set seed to some value (to <code>1</code> in this instance). We do so to ensure that we can exactly replicate the sample in the future.<a href="tutorial-2-data-management-and-visualisation.html#fnref15" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
