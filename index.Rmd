@@ -4,15 +4,15 @@ subtitle: "An Intuitive Guide to Forecasting With Time Series Models Using R"
 author: "David Ubilava"
 date: "`r format(Sys.Date(),'%B %Y')`"
 description: "Forecasting With Time Series Models Using R"
-knit: bookdown::preview_chapter
+documentclass: book
+classoption: oneside
 site: bookdown::bookdown_site
+knit: bookdown::preview_chapter
+always_allow_html: yes
 link-citations: yes
 bibliography: ["book.bib"]
 biblio-style: apalike
-always_allow_html: yes
 cover-image: forecasting-logo.png
-documentclass: book
-classoption: oneside
 fontsize: 12pt
 ---
 
@@ -37,3 +37,9 @@ Neither George Crumb nor Ilia Chavchavadze was an expert in forecasting or in ti
 A diverse set of forecasting methods typically rely on insights from econometric analysis of time series. In time series analysis, the implied assumption is that the past tends to repeat itself, at least to some extent. So, if we well study the past, we may be able to forecast an event with some degree of accuracy. 
 
 This book is about econometric models that help us learn the past to predict the future. It aims to serve as a primer for econometric time series analysis and forecasting. The book consists of two parts. The first part introduces econometric models and methods for forecasting. This part helps develop intuition behind time series modeling and forecasting. The second part presents tutorials that complement the material from the first part. The tutorials help with hands-on experience in coding in R to forecast time series data. 
+
+
+
+
+
+

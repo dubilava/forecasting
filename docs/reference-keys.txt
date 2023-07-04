@@ -5,6 +5,8 @@ eq:optimal
 fig:time-series-c2
 fig:stochastic
 fig:white-noise
+eq:ur
+eq:rw
 fig:iterated-direct
 fig:intrates
 fig:lintrend
@@ -19,6 +21,7 @@ fig:exchange
 fig:acfexchange
 fig:pacfexchange
 fig:forexchange
+forecasting-with-time-series-models
 introduction-to-forecasting
 what-forecast-is-and-is-not
 a-brief-history-of-the-study-of-forecasting

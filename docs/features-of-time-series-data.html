@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 – Features of Time Series Data | Educated Guess</title>
+  <title>Chapter 3 – Features of Time Series Data | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 – Features of Time Series Data | Educated Guess" />
+  <meta property="og:title" content="Chapter 3 – Features of Time Series Data | Educated Guess" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/forecasting-logo.png" />
   <meta property="og:description" content="Forecasting With Time Series Models Using R" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 – Features of Time Series Data | Educated Guess" />
+  <meta name="twitter:title" content="Chapter 3 – Features of Time Series Data | Educated Guess" />
   
   <meta name="twitter:description" content="Forecasting With Time Series Models Using R" />
   <meta name="twitter:image" content="/forecasting-logo.png" />
@@ -119,6 +119,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -155,119 +159,120 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./">Educated Guess</a></li>
+
 <li class="divider"></li>
 <li><a href="index.html#section" id="toc-section"></a></li>
-<li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
-<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
+<li class="chapter" data-level="1" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i><b>1</b> Forecasting With Time Series Models</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>2</b> – Introduction to Forecasting</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
-<li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
-<li class="chapter" data-level="1.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>1.6</b> Why We Can’t Get It Right</a></li>
-<li class="chapter" data-level="1.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>1.7</b> Minimizing the Risk of Getting It Wrong</a></li>
-<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>1.8</b> Economists Do It With Models</a></li>
-<li class="chapter" data-level="1.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.9</b> Getting It Right for the Right Reasons</a></li>
+<li class="chapter" data-level="2.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>2.1</b> What Forecast Is and Is Not</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>2.2</b> A Brief History of the Study of Forecasting</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>2.3</b> Through the Lens of Causal Inference</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>2.4</b> Self Fulfilling Prophecy</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>2.5</b> Knowing the Unknown</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>2.6</b> Why We Can’t Get It Right</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>2.7</b> Minimizing the Risk of Getting It Wrong</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>2.8</b> Economists Do It With Models</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>2.9</b> Getting It Right for the Right Reasons</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
+<li class="chapter" data-level="3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>3</b> – Features of Time Series Data</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>2.1</b> Stochastic Process and Time Series</a></li>
-<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>2.2</b> Stationarity and Ergodicity</a></li>
-<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>2.3</b> White Noise Process</a></li>
-<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>2.4</b> Autocorrelation</a></li>
-<li class="chapter" data-level="2.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>2.5</b> Autocorrelogram and It’s Forensic Features</a></li>
-<li class="chapter" data-level="2.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>2.6</b> Partial Autocorrelation</a></li>
-<li class="chapter" data-level="2.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.7</b> Transformations</a></li>
-<li class="chapter" data-level="2.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>2.8</b> Getting to the Root of It</a></li>
+<li class="chapter" data-level="3.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>3.1</b> Stochastic Process and Time Series</a></li>
+<li class="chapter" data-level="3.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>3.2</b> Stationarity and Ergodicity</a></li>
+<li class="chapter" data-level="3.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>3.3</b> White Noise Process</a></li>
+<li class="chapter" data-level="3.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>3.4</b> Autocorrelation</a></li>
+<li class="chapter" data-level="3.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>3.5</b> Autocorrelogram and It’s Forensic Features</a></li>
+<li class="chapter" data-level="3.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>3.6</b> Partial Autocorrelation</a></li>
+<li class="chapter" data-level="3.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>3.7</b> Transformations</a></li>
+<li class="chapter" data-level="3.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>3.8</b> Getting to the Root of It</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>3</b> – Generating and Evaluating Forecasts</a>
+<li class="chapter" data-level="4" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>4</b> – Generating and Evaluating Forecasts</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>3.1</b> Pseudo-Forecasting Routine</a></li>
-<li class="chapter" data-level="3.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>3.2</b> Forecast Assessment</a>
+<li class="chapter" data-level="4.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>4.1</b> Pseudo-Forecasting Routine</a></li>
+<li class="chapter" data-level="4.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>4.2</b> Forecast Assessment</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>3.2.1</b> Unbiasedness</a></li>
-<li class="chapter" data-level="3.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>3.2.2</b> Efficiency</a></li>
-<li class="chapter" data-level="3.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.2.3</b> No Autocorrelation</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>4</b> – Comparing Forecasts</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>4.1</b> The Need for the Forecast Evaluation</a></li>
-<li class="chapter" data-level="4.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>4.2</b> Relative Forecast Accuracy Tests</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>4.2.1</b> The Morgan-Granger-Newbold Test</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>4.2.2</b> The Diebold-Mariano Test</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>4.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>5</b> – Combining Forecasts</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>5.1</b> Benefits of Forecast Combination</a></li>
-<li class="chapter" data-level="5.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>5.2</b> Optimal Weights for Forecast Combination</a></li>
-<li class="chapter" data-level="5.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>5.3</b> Forecast Encompassing</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>6</b> – Trends</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>6.1</b> Trends in the Data</a></li>
-<li class="chapter" data-level="6.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>6.2</b> Spurious Relationships</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>6.2.1</b> Deterministic Trends</a></li>
-<li class="chapter" data-level="6.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>6.2.2</b> Stochastic Trends</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>6.3</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>6.3.1</b> Trends in mortgage rates</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>6.4</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>7</b> – Seasonality</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>7.1</b> Seasonal Fluctuations in the Data</a></li>
-<li class="chapter" data-level="7.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>7.2</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>7.2.1</b> Seasonal dummy variables</a></li>
-<li class="chapter" data-level="7.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>7.2.2</b> Seasonal harmonic variables</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>7.3</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>8</b> – Autoregression</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>8.1</b> Stochastic Cycles</a></li>
-<li class="chapter" data-level="8.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>8.2</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>8.2.1</b> First-order autoregression</a></li>
-<li class="chapter" data-level="8.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>8.2.2</b> Unit Roots and Non-stationarity</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>8.3.1</b> Iterative Method of Multistep Forecasting</a></li>
-<li class="chapter" data-level="8.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>8.3.2</b> Direct Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="4.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>4.2.1</b> Unbiasedness</a></li>
+<li class="chapter" data-level="4.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>4.2.2</b> Efficiency</a></li>
+<li class="chapter" data-level="4.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>4.2.3</b> No Autocorrelation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>9</b> – Vector Autoregression</a>
+<li class="chapter" data-level="5" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>5</b> – Comparing Forecasts</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>9.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
-<li class="chapter" data-level="9.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>9.2</b> Modeling</a>
+<li class="chapter" data-level="5.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>5.1</b> The Need for the Forecast Evaluation</a></li>
+<li class="chapter" data-level="5.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>5.2</b> Relative Forecast Accuracy Tests</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>9.2.1</b> In-Sample Granger Causality</a></li>
+<li class="chapter" data-level="5.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>5.2.1</b> The Morgan-Granger-Newbold Test</a></li>
+<li class="chapter" data-level="5.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>5.2.2</b> The Diebold-Mariano Test</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
+<li class="chapter" data-level="5.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>5.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>6</b> – Combining Forecasts</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>9.3.1</b> One-step-ahead forecasts</a></li>
-<li class="chapter" data-level="9.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>9.3.2</b> Multi-step-ahead forecasts</a></li>
-<li class="chapter" data-level="9.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>9.3.3</b> Out-of-Sample Granger Causality</a></li>
+<li class="chapter" data-level="6.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>6.1</b> Benefits of Forecast Combination</a></li>
+<li class="chapter" data-level="6.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>6.2</b> Optimal Weights for Forecast Combination</a></li>
+<li class="chapter" data-level="6.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>6.3</b> Forecast Encompassing</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>7</b> – Trends</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>7.1</b> Trends in the Data</a></li>
+<li class="chapter" data-level="7.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>7.2</b> Spurious Relationships</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>7.2.1</b> Deterministic Trends</a></li>
+<li class="chapter" data-level="7.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>7.2.2</b> Stochastic Trends</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>7.3</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>7.3.1</b> Trends in mortgage rates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>7.4</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>8</b> – Seasonality</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>8.1</b> Seasonal Fluctuations in the Data</a></li>
+<li class="chapter" data-level="8.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>8.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>8.2.1</b> Seasonal dummy variables</a></li>
+<li class="chapter" data-level="8.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>8.2.2</b> Seasonal harmonic variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>9</b> – Autoregression</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>9.1</b> Stochastic Cycles</a></li>
+<li class="chapter" data-level="9.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>9.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>9.2.1</b> First-order autoregression</a></li>
+<li class="chapter" data-level="9.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>9.2.2</b> Unit Roots and Non-stationarity</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>9.3.1</b> Iterative Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="9.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>9.3.2</b> Direct Method of Multistep Forecasting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>10</b> – Threshold Autoregression</a>
+<li class="chapter" data-level="10" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>10</b> – Vector Autoregression</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>10.1</b> Regime-Dependent Nonlinearity</a></li>
-<li class="chapter" data-level="10.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>10.2</b> Modeling</a></li>
-<li class="chapter" data-level="10.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>10.3</b> Forecasting</a>
+<li class="chapter" data-level="10.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>10.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
+<li class="chapter" data-level="10.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>10.2</b> Modeling</a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>10.3.1</b> Skeleton Extrapolation</a></li>
-<li class="chapter" data-level="10.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>10.3.2</b> Analytical Method</a></li>
-<li class="chapter" data-level="10.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>10.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
+<li class="chapter" data-level="10.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>10.2.1</b> In-Sample Granger Causality</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>10.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>10.3.1</b> One-step-ahead forecasts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>10.3.2</b> Multi-step-ahead forecasts</a></li>
+<li class="chapter" data-level="10.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>10.3.3</b> Out-of-Sample Granger Causality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>11</b> – Threshold Autoregression</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>11.1</b> Regime-Dependent Nonlinearity</a></li>
+<li class="chapter" data-level="11.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>11.2</b> Modeling</a></li>
+<li class="chapter" data-level="11.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>11.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>11.3.1</b> Skeleton Extrapolation</a></li>
+<li class="chapter" data-level="11.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>11.3.2</b> Analytical Method</a></li>
+<li class="chapter" data-level="11.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>11.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="forecasting-using-r.html"><a href="forecasting-using-r.html"><i class="fa fa-check"></i>Forecasting Using R</a></li>
@@ -303,78 +308,78 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="features-of-time-series-data" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> – Features of Time Series Data<a href="features-of-time-series-data.html#features-of-time-series-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="features-of-time-series-data" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> – Features of Time Series Data<a href="features-of-time-series-data.html#features-of-time-series-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="art/timeseries.png" /></p>
-<div id="stochastic-process-and-time-series" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Stochastic Process and Time Series<a href="features-of-time-series-data.html#stochastic-process-and-time-series" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="stochastic-process-and-time-series" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Stochastic Process and Time Series<a href="features-of-time-series-data.html#stochastic-process-and-time-series" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A time series is a set of data observed at regular intervals and stored in chronological order. Each data point of a time series is a realization of a random variable. A time series is an observed sequence of realizations of chronologically stored random variables.</p>
-Let’s unpack the foregoing sentence. What do we mean exactly when we say “observed sequence”? This is a segment of time that covers the starting period and the ending period of the time series. Think of this segment as a history of the observed data as depicted in <a href="features-of-time-series-data.html#fig:time-series-c2">2.1</a>, for example.
+Let’s unpack the foregoing sentence. What do we mean exactly when we say “observed sequence”? This is a segment of time that covers the starting period and the ending period of the time series. Think of this segment as a history of the observed data as depicted in <a href="features-of-time-series-data.html#fig:time-series-c2">3.1</a>, for example.
 <div class="figure"><span style="display:block;" id="fig:time-series-c2"></span>
 <img src="figures/c2/time-series.png" alt="Observed time series" width="1040" />
 <p class="caption">
-Figure 2.1: Observed time series
+Figure 3.1: Observed time series
 </p>
 </div>
-<p>The black solid lines and circles indicate an observed part of the series, and the gray dashed lines and circles are a part of the series we do not observe. So, in this illustration, the observed sequence of historical data, or the time series, ranges from period 1 to period 6.</p>
+<p>The black solid lines and circles indicate an observed part of the series, and the gray dashed lines and circles are a part of the series we do not observe. So, in this illustration, the observed sequence of historical data, or the time series, ranges from period 1 to period 6.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 <p>We usually have limited access to the past. We certainly have no access to the future. So, an observed time series can only run as far as the present time. And we often do not have access to the part of the history that predates the very first observation of a time series at hand. For example, we cannot have the actual measurements of temperature from times when the thermometer was yet to be invented. We also cannot have data on unemployment rates in post-Soviet countries because, well, tHeRe wAS nO uNeMpLoYmEnt in the USSR.</p>
 <p>To formalize, a time series is a finite sample from an underlying doubly–infinite sequence: <span class="math inline">\(\{\ldots,y_{-1},y_{0},y_1,y_2,\ldots,y_T,y_{T+1},\ldots\}\)</span>. This is to say that the history extends beyond the starting and ending points of the sample at hand.</p>
-<p>These time series is a set of realizations from random variables indexed by time, <span class="math inline">\(\{\ldots,Y_{-1},Y_0,Y_1,\ldots,Y_T,Y_{T+1}\ldots\}\)</span>. This sequence of random variables is known as the . Thus, a time series is a realization of a stochastic process.</p>
+<p>These time series is a set of realizations from random variables indexed by time, <span class="math inline">\(\{\ldots,Y_{-1},Y_0,Y_1,\ldots,Y_T,Y_{T+1}\ldots\}\)</span>. This sequence of random variables is known as the <em>stochastic process</em>. Thus, a time series is a realization of a stochastic process.</p>
 <p>Suppose, for example, a stochastic process consists of a set of normally distributed random variables. Each of these random variables has a distribution that we can fully describe by its mean and standard deviation. By definition, in each time period, virtually any value can be the realization of this random variable. But we only observe one value—one realization—and this is all the information we can get about this given random variable in this given time period.</p>
-<p>The November 2022 unemployment rate in the United States was 3.4 percent. In a parallel universe—e.g., if we could re-run the sequence of macroeconomic events that led to this realization—the unemployment rate may have been higher or lower. But we don’t have the luxury of observing parallel universes. We don’t get to re-write histories. The unemployment rate of 3.4 percent is the only value that will ever be known for this period. The same is true for all the preceding and succeeding periods. In other words, out of infinite possible time series runs that we could have observed, we only observe one such run, and that is the only history that will ever be known to us.</p>
+<p>The November 2022 unemployment rate in the United States was <span class="math inline">\(3.4\)</span> percent.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> In a parallel universe—e.g., if we could re-run the sequence of macroeconomic events that led to this realization—the unemployment rate may have been higher or lower. But we don’t have the luxury of observing parallel universes. We don’t get to re-write histories. The unemployment rate of <span class="math inline">\(3.4\)</span> percent is the only value that will ever be known for this period. The same is true for all the preceding and succeeding periods. In other words, out of infinite possible time series runs that we could have observed, we only observe one such run, and that is the only history that will ever be known to us.</p>
 </div>
-<div id="stationarity-and-ergodicity" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Stationarity and Ergodicity<a href="features-of-time-series-data.html#stationarity-and-ergodicity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The random variables that comprise the stochastic process may or may not have the same distributions. If they have the same distributions, then the stochastic process is . Otherwise, the stochastic process is .</p>
-<p>To get an idea of whether a stochastic process is stationary or nonstationary, we would need to compare the distributions, or joint distributions, of the random variables comprising the stochastic process. This seems to be a straightforward exercise. Except, it also is an infeasible exercise. The gist of the matter is that we never observe the distribution or the density of <span class="math inline">\(Y_t\)</span>. Rather, in each period, we only observe its one realization, <span class="math inline">\(y_t\)</span>.</p>
-When we observe a time series, we can not be too sure whether these are realizations of a stationary stochastic process or a nonstationary stochastic process. The exact same realizations can come from a stationary process or a nonstationary process, as we can see in Figure <a href="features-of-time-series-data.html#fig:stochastic">2.2</a>.
+<div id="stationarity-and-ergodicity" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Stationarity and Ergodicity<a href="features-of-time-series-data.html#stationarity-and-ergodicity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The random variables that comprise the stochastic process may or may not have the same distributions. If they have the same distributions, then the stochastic process is <em>stationary</em>.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> Otherwise, the stochastic process is <em>non-stationary</em>.</p>
+<p>To get an idea of whether a stochastic process is stationary or non-stationary, we would need to compare the distributions, or joint distributions, of the random variables comprising the stochastic process. This seems to be a straightforward exercise. Except, it also is an unfeasible exercise. The gist of the matter is that we never observe the distribution or the density of <span class="math inline">\(Y_t\)</span>. Rather, in each period, we only observe its one realization, <span class="math inline">\(y_t\)</span>.</p>
+When we observe a time series, we can not be too sure whether these are realizations of a stationary stochastic process or a non-stationary stochastic process. The exact same realizations can come from a stationary process or a non-stationary process, as we can see in Figure <a href="features-of-time-series-data.html#fig:stochastic">3.2</a>.
 <div class="figure"><span style="display:block;" id="fig:stochastic"></span>
 <img src="figures/c2/stochastic.png" alt="Stationary and nonstationary series" width="1040" />
 <p class="caption">
-Figure 2.2: Stationary and nonstationary series
+Figure 3.2: Stationary and nonstationary series
 </p>
 </div>
-<p>Panel (a) illustrates the stationary stochastic process (densities in each time period are identical); panel (b) illustrates the nonstationary stochastic process (densities shift upward over time). And yet, in both instances, we observe an identical time series.</p>
-<p>That the same observed time series may be a manifestation of a stationary process or a nonstationary process may seem problematic, which it would have been had we only observed a very short time series with only a handful of observations. But in practice, luckily, we usually work with at least several dozen observations, often hundreds or thousands of observations. A long enough time series allows us to infer a lot more from the single realizations of random variables than what would seem to be plausible.</p>
-<p>This is where ergodocity, in conjunction with stationarity, kicks in. Ergodicity implies independence of random variables that are sufficiently far apart from each other in the stochastic process. An important practical benefits of it is that when the process is stationary and ergodic, the moments of the time series converge to the moments of the stochastic process as the sample size increases. So, the mean of the time series will be equal to the mean of the random variables comprising the stochastic process, the variance of the time series will be equal to the variance of the random variables comprising the stochastic process, etc. Ergodicity has the effect of the law of large numbers in time series analysis, in the sense that the distribution of a long enough time series is representative of the distribution of the random variables comprising the underlying stationary stochastic process.</p>
+<p>Panel (a) illustrates the stationary stochastic process (densities in each time period are identical); panel (b) illustrates the non-stationary stochastic process (densities shift upward over time).<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> And yet, in both instances, we observe an identical time series.</p>
+<p>That the same observed time series may be a manifestation of a stationary process or a non-stationary process may seem problematic, which it would have been had we only observed a very short time series with only a handful of observations. But in practice, luckily, we usually work with at least several dozen observations, often hundreds or thousands of observations. A long enough time series allows us to infer a lot more from the single realizations of random variables than what would seem to be plausible.</p>
+<p>This is where <em>ergodocity</em>, in conjunction with stationarity, kicks in. Ergodicity implies independence of random variables that are sufficiently far apart from each other in the stochastic process.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> An important practical benefits of it is that when the process is stationary and ergodic, the moments of the time series converge to the moments of the stochastic process as the sample size increases. So, the mean of the time series will be equal to the mean of the random variables comprising the stochastic process, the variance of the time series will be equal to the variance of the random variables comprising the stochastic process, etc. Ergodicity has the effect of the law of large numbers in time series analysis, in the sense that the distribution of a long enough time series is representative of the distribution of the random variables comprising the underlying stationary stochastic process.</p>
 </div>
-<div id="white-noise-process" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> White Noise Process<a href="features-of-time-series-data.html#white-noise-process" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Consider a time series comprising of realizations from independent and identically distributed (iid) normal random variable with zero mean and constant variance: <span class="math inline">\(Y_t \sim iid~\text{N}\left(0,\sigma^2\right)\)</span>. Thus, by construction, neither the mean nor the variance of the random variables change with time. Such stochastic process is referred to as a process. That is, an ordered sequence of random variables indexed by <span class="math inline">\(t\)</span>, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if for all time periods:<br />
+<div id="white-noise-process" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> White Noise Process<a href="features-of-time-series-data.html#white-noise-process" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider a time series comprising of realizations from independent and identically distributed (iid) normal random variable with zero mean and constant variance: <span class="math inline">\(Y_t \sim iid~\text{N}\left(0,\sigma^2\right)\)</span>. Thus, by construction, neither the mean nor the variance of the random variables change with time. Such stochastic process is referred to as a White Noise process.<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> That is, an ordered sequence of random variables indexed by <span class="math inline">\(t\)</span>, <span class="math inline">\(\{Y_t\}\)</span>, is a white noise process if for all time periods:<br />
 <span class="math display">\[\begin{align*}
     &amp; E(Y_t) = 0,\\
     &amp; Var(Y_t) = \sigma^2,\\
     &amp; Cov(Y_t,Y_{t-k}) = 0,\;~~k = \pm1,\pm2,\ldots
 \end{align*}\]</span></p>
 <p>When a time series is the realization of a white noise process, it is as if each observation of the time series are drawn from the same distribution. Indeed, white noise is nothing but a sequence of the same random variable.</p>
-<p>Because each observation is drawn from the same distribution, white noise is a stationary process. It is a special type of the stationary process insofar as its mean, variance, and covariances are all time-invariant. For stationarity, neither the mean nor the covariances are required to be equal to zero; they just need to not vary with time.</p>
+<p>Because each observation is drawn from the same distribution, white noise is a stationary process. It is a special type of the stationary process insofar as its mean, variance, and covariances are all time-invariant. For stationarity, neither the mean nor the covariances are required to be equal to zero; they just need to not vary with time.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p>
 A white noise, by construction, is also an ergodic process. With long enough time series, this means, we can get a pretty good idea of the underlying stochastic process. We can see this below.
 <div class="figure"><span style="display:block;" id="fig:white-noise"></span>
 <img src="gifs/white-noise.gif" alt="White noise"  />
 <p class="caption">
-Figure 2.3: White noise
+Figure 3.3: White noise
 </p>
 </div>
-<p>The figure features a series of 120 observations, each drawn from a random variable that is standard normally distributed. Because we simulated the data, we know that Figure~<span class="math inline">\(\ref{c2:wn}\)</span> certainly features the time series from a Gaussian white noise process. But had we not known that, we could have guess it, just by observing the density of this time series (presented on the right-hand side of the graph).</p>
+<p>The figure features a series of 120 observations, each drawn from a random variable that is standard normally distributed. Because we simulated the data, we know that Figure <a href="features-of-time-series-data.html#fig:white-noise">3.3</a> certainly features the time series from a Gaussian white noise process. But had we not known that, we could have guess it, just by observing the density of this time series (presented on the right-hand side of the graph).</p>
 <p>In a time series regression analysis, we assume that error terms are a white noise process. This is to say that error terms are spherical disturbances insofar as they have constant variance and they are not serially correlated—two of the assumptions of the Gauss-Markov theorem.</p>
 </div>
-<div id="autocorrelation" class="section level2 hasAnchor" number="2.4">
-<h2><span class="header-section-number">2.4</span> Autocorrelation<a href="features-of-time-series-data.html#autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A time series that are not serially correlated are hardly the norm. Most economic (and not only) time series are characterized by temporal dependence, which is observed most prominently among observations that are at a temporal proximity from one another.</p>
-<p>Depending on a time series, this correlation can be strong or weak. Take the unemployment rate. The December 2022 U.S. unemployment rate is unlikely to be much different than 3.4 percent—the rate observed in November 2022. This is because the macroeconomic fundamentals that lead to the observed levels of unemployment do not change overnight, or over a period of several weeks.
-% On the other hand, one would expect no correlation between the back-to-back daily returns from a stock, because if there was one, that would go against the efficient market hypothesis.</p>
-<p>In general, because of the sequential nature of the stochastic process, we are likely to observe, or at least expect to observe, some dependence among the temporally adjacent random variables. That is, <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k}\)</span> can be correlated for a reasonably small integer <span class="math inline">\(k\)</span>. Such correlation, referred to as the , or more specifically, the <span class="math inline">\(k^{th}\)</span> order autocorrelation or the lag <span class="math inline">\(k\)</span> autocorrelation, is given by: <span class="math display">\[\rho_k=Cor(Y_{t},Y_{t-k}) = \frac{Cov(Y_{t},Y_{t-k})}{\sqrt{Var(Y_{t})}\sqrt{Var(Y_{t-k})}},\;~~k=1,2,\ldots\]</span></p>
-<p>Before moving any further, note that this expression is very much the “usual” formula for the (Pearson) correlation coefficient. This becomes immediately obvious if we think of <span class="math inline">\(Y_t\)</span> as <span class="math inline">\(Y\)</span> and of <span class="math inline">\(Y_{t-k}\)</span> as <span class="math inline">\(X\)</span>. The key difference is that in the case of autocorrelation, the two variables that enter the formula are the members of the same stochastic process, only temporally separated by <span class="math inline">\(k\)</span> periods.</p>
+<div id="autocorrelation" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Autocorrelation<a href="features-of-time-series-data.html#autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A time series that are not serially correlated are hardly the norm. Most economic (and not only) time series are characterized by temporal dependence, which is observed most prominently among observations that are at a temporal proximity from one another.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
+<p>Depending on a time series, this correlation can be strong or weak. Take the unemployment rate. The December 2022 U.S. unemployment rate is unlikely to be much different than 3.4 percent—the rate observed in November 2022.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> This is because the macroeconomic fundamentals that lead to the observed levels of unemployment do not change overnight, or over a period of several weeks.
+% On the other hand, one would expect no correlation between the back-to-back daily returns<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> from a stock, because if there was one, that would go against the efficient market hypothesis.</p>
+<p>In general, because of the sequential nature of the stochastic process, we are likely to observe, or at least expect to observe, some dependence among the temporally adjacent random variables. That is, <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k}\)</span> can be correlated for a reasonably small integer <span class="math inline">\(k\)</span>. Such correlation, referred to as the <em>autocorrelation</em>, or more specifically, the <span class="math inline">\(k^{th}\)</span> order autocorrelation or the lag <span class="math inline">\(k\)</span> autocorrelation, is given by: <span class="math display">\[\rho_k=Cor(Y_{t},Y_{t-k}) = \frac{Cov(Y_{t},Y_{t-k})}{\sqrt{Var(Y_{t})}\sqrt{Var(Y_{t-k})}},\;~~k=1,2,\ldots\]</span></p>
+<p>Before moving any further, note that this expression is very much the “usual” formula for the (Pearson) correlation coefficient.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> This becomes immediately obvious if we think of <span class="math inline">\(Y_t\)</span> as <span class="math inline">\(Y\)</span> and of <span class="math inline">\(Y_{t-k}\)</span> as <span class="math inline">\(X\)</span>. The key difference is that in the case of autocorrelation, the two variables that enter the formula are the members of the same stochastic process, only temporally separated by <span class="math inline">\(k\)</span> periods.</p>
 <p>While it might seem that this complicates the formula (we have added subscripts to the variables), the opposite is really the case so long as we assume a stationary stochastic process. Recall, stationarity implies that the random variables comprising the stochastic process have the same distribution. So, the variances of any two random variables in the stochastic process, <span class="math inline">\(Y_{t}\)</span> and <span class="math inline">\(Y_{t-k}\)</span> in this instance, are equal to each other. We denote variance by <span class="math inline">\(\gamma_0\)</span>. So, <span class="math inline">\(Var(Y_{t})=Var(Y_{t-k})=\gamma_0\)</span>.</p>
-<p>Stationarity also implies similar joint densities of the sets of temporally separated random variables. So, the covariance between the two random variables comprising the same stochastic process, referred to as the , depends on a temporal distance between these two variables but not on time. We will denote the lag <span class="math inline">\(k\)</span> autocovariance—i.e., the covariance between <span class="math inline">\(Y_{t}\)</span> and <span class="math inline">\(Y_{t-k}\)</span>—by <span class="math inline">\(\gamma_k\)</span>.</p>
+<p>Stationarity also implies similar joint densities of the sets of temporally separated random variables. So, the covariance between the two random variables comprising the same stochastic process, referred to as the <em>autocovariance</em>, depends on a temporal distance between these two variables but not on time. We will denote the lag <span class="math inline">\(k\)</span> autocovariance—i.e., the covariance between <span class="math inline">\(Y_{t}\)</span> and <span class="math inline">\(Y_{t-k}\)</span>—by <span class="math inline">\(\gamma_k\)</span>.</p>
 <p>The lag <span class="math inline">\(k\)</span> autocorrelation then can be expressed as: <span class="math display">\[\rho_k= \frac{\gamma_k}{\gamma_0},\]</span> where the denominator is the product of two standard deviations that are equal to each other, and thus constitute the variance of the random variable comprising the stochastic process.</p>
 <p>In practice, we only observe the sample of realizations of the random variables. So, we obtain the estimate of the autocorrelation using the sample variance and covariance of a time series. That is, <span class="math display">\[\hat{\rho}_k=\frac{\sum_{t=1}^{T}\left(y_t-\mu\right)\left(y_{t-k}-\mu\right)}{\sum_{t=1}^{T}\left(y_{t}-\mu\right)^2},\]</span> where, owing to stationarity, <span class="math inline">\(E(y_t)=E(y_{t-k})=\mu\)</span>, and owing to ergodicity, <span class="math inline">\(E(y_t)=\frac{1}{T}\sum_{t=1}^{T}y_t\)</span>.</p>
 We mentioned unemployment rate above. Figure~<span class="math inline">\(\ref{c2:ur}\)</span> presents the forty years of monthly data of the U.S. unemployment rate (not seasonally adjusted). Despite some short-term fluctuations, we observe that the rates are serially correlated—high values are followed by high values, and low values are followed by low values.
 To get a better sense of the degree of correlation, we can generate scatterplots of the current period unemployment rate against the lagged period unemployment rate. Figure~<span class="math inline">\(\ref{c2:cor-ur}\)</span> features two such graphs.
 <p>What we suspected becomes clear from these graphs—the unemployment rate is a highly autocorrelated series. The lag 1 autocorrelation is <span class="math inline">\(0.97\)</span>, and the lag 12 autocorrelation is <span class="math inline">\(0.79\)</span>. To paint a more complete picture, we might also want to know autocorrelations at lags between 1 and 12, as well as in those beyond lag 12. For that, we could generate a large panel of scatterplots, but that would take a fair bit of space. Unnecessarily. Because there is a more concise way of presenting these correlations. That way is .</p>
 </div>
-<div id="autocorrelogram-and-its-forensic-features" class="section level2 hasAnchor" number="2.5">
-<h2><span class="header-section-number">2.5</span> Autocorrelogram and It’s Forensic Features<a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="autocorrelogram-and-its-forensic-features" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Autocorrelogram and It’s Forensic Features<a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Autocorrelogram consolidates autocorrelation coefficients by plotting them in an ascending order of the lags at which these coefficients are obtained. We can use this to illustrate how strongly a variable is related with its near and more distant past self.</p>
 An autocorrelogram can help us guess some important features of the time series. For example, when none of the autocorrelation coefficients are (statistically) different from zero, we have the case of a white noise process (assuming the mean of the series is zero). Figure~<span class="math inline">\(\ref{c2:ac-wn}\)</span> plots the autocorrelogram of the white noise process illustrated in Figure~<span class="math inline">\(\ref{c2:wn}\)</span>.
 <p>The gray dots are estimates of the autocorrelation coefficients. The dashed lines denote the 95% confidence interval, given by <span class="math inline">\(0\pm 1.96/\sqrt{T}\)</span>, where <span class="math inline">\(T\)</span> is the length of the time series.</p>
@@ -383,42 +388,72 @@ Stock prices, and more recently cryptocurrency prices, are best characterized by
 This Bitcoin price series, which feature the boom and bust of the cryptocurrency during the considered three-year period, appear to behave somewhat erratically. Sudden increases and decreases in the price levels that may be short-lived or last relatively longer time spans tends to characterize a random walk process. To confirm this suspicion, let’s have a look at the autocorrelogram generated from these data. Figure~<span class="math inline">\(\ref{c2:ac-btc}\)</span> plots the autocorrelation coefficients up to the 30th lag.
 <p>This autocorrelogram supports our guess that Bitcoin prices likely follow a random walk process. The price in the current period is strongly (almost perfectly) correlated with the price in the preceding period. More importantly, at least from the standpoint of confirming our guess that the time series follow a random walk process, the price in the current period is also rather strongly correlated with the prices in all prior periods.</p>
 </div>
-<div id="partial-autocorrelation" class="section level2 hasAnchor" number="2.6">
-<h2><span class="header-section-number">2.6</span> Partial Autocorrelation<a href="features-of-time-series-data.html#partial-autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="partial-autocorrelation" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Partial Autocorrelation<a href="features-of-time-series-data.html#partial-autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 Does the presence of a correlations between current observation and the relatively distant past observations mean that the prices in those previous periods can help explain the price in the current period? An autocorrelogram cannot answer this question. For example, we may observe the second order autocorrelation for two reasons. It may be because there is an actual linkage between the current price and the price two periods ago. Or it may be because of the transitivity of the first order autocorrelations between the successive observations. Figure~<span class="math inline">\(\ref{c2:ac-dag}\)</span> illustrates this schematically.
 <p>If <span class="math inline">\(Y_t\)</span> is correlated with <span class="math inline">\(Y_{t-1}\)</span> and, therefore, <span class="math inline">\(Y_{t-1}\)</span> is correlated with <span class="math inline">\(Y_{t-2}\)</span> (solid arrows), we can observe a correlation between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-2}\)</span> (dashed arrow) regardless whether there is linkage between the two.</p>
 <p>This graph makes it clear how to go about figuring out which of the aforementioned two reasons may be the one, or the more likely one, for the observed second order autocorrelation. We need to for <span class="math inline">\(Y_{t-1}\)</span>, which in this instance plays the role of a potential mediator between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-2}\)</span>. So, what we are really trying to find out is whether there is any remaining linkage between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-2}\)</span> once we account for the existing linkages between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-1}\)</span>, and<span class="math inline">\(Y_{t-1}\)</span> and <span class="math inline">\(Y_{t-2}\)</span>.</p>
 The foregoing alludes to another relevant measure of the time series dependence— autocorrelation, which is a correlation between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k}\)</span> net of any correlations between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-k+j}\)</span>, for all <span class="math inline">\(j=1,\ldots,k-1\)</span>. Similar to autocorrelations, we can use an autocorrelogram to present partial autocorrelations, which we denote by <span class="math inline">\(\pi\)</span>. Figure~<span class="math inline">\(\ref{c2:pac}\)</span> plots partial autocorrelation coefficients based on the Bitcoin prices.
 <p>Partial autocorrelations help us answer the question stated in the beginning of this section: only the immediate past price explains the current price, which confirms the random walk hypothesis.</p>
-<p>% Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. By contrast, Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary. If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
+<p>% Autocorrelogram is a useful tool for detecting dynamic properties of a time series. For example, autocorrelations of the stationary stochastic process dissipate to zero as <span class="math inline">\(k\)</span> increases. By contrast, Thus, by observing autocorrelograms, in conjunction with a visual inspection of the time series, we can get an idea whether the process is stationary.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> If a time series appear nonstationary, we can make changes to it, so that the transformed series becomes stationary.</p>
 </div>
-<div id="transformations" class="section level2 hasAnchor" number="2.7">
-<h2><span class="header-section-number">2.7</span> Transformations<a href="features-of-time-series-data.html#transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="transformations" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Transformations<a href="features-of-time-series-data.html#transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Stationarity is an important feature and the assumption on which time series econometrics heavily relies. When this assumption is violated, things can go wrong insofar as it can impact our ability to make an accurate or even a reasonable forecast.</p>
 <p>That a time series may not be the realization of a stationary process is hardly the dead-end. We can circumvent the issue by transforming the time series. Transformation usually involves taking logarithms (if possible), first-differencing, or first-differencing the already log-transformed series. Such transformations are done not only to address some underlying data issues (e.g., nonstationarity), but also to work with a suitable variable for the desired econometric analysis (e.g., we might be interested in forecasting inflation rates).</p>
 To examine the effect of transformation, let’s revisit the Bitcoin prices. As we saw, the series is nonstationary in levels. Could we resolve the issue by first-differencing the series? Figure~<span class="math inline">\(\ref{c2:btc-change}\)</span> plots the first-differenced Bitcoin prices. Such transformation addresses the erratic trending behavior. But the variance of this first-differenced series does not appear to be constant over time.
 What if we were to first-difference the log-transformed series? Such transformation, specifically in the context of prices, has a concrete meaning. When we log-transform a series, the difference in observations from two periods is no longer measured in absolute terms, rather it is measured in relative terms. When we then first-difference the log-transformed series, we obtain a measure of the rate of change of the original series. When the original series is prices, the rate of change is a return. Thus, by first-differencing the log-transformed Bitcoin prices, we obtain Bitcoin returns. Figure~<span class="math inline">\(\ref{c2:btc-growth}\)</span> plots this series.
-<p>These are only some of the common ways to transform the data. First-differencing, in particular, is a go-to technique to achieve stationarity in a time series that is otherwise non-stationary. We usually refer to variables as integrated of order <span class="math inline">\(d\)</span>, which we denote by <span class="math inline">\(I(d)\)</span>. The order of integration tells us the number of times the series need to be first-differenced to make it stationary. So, when the series is <span class="math inline">\(I(0)\)</span> no such transformation is required. A stationary time series is integrated of order zero. When the series is <span class="math inline">\(I(1)\)</span>, a first-differencing will result in a stationary series. While in principle <span class="math inline">\(d\)</span> can be any positive integer, many time series, and certainly the vast majority economic time series, are at most <span class="math inline">\(I(2)\)</span>, usually <span class="math inline">\(I(1)\)</span> or <span class="math inline">\(I(0)\)</span>.</p>
+<p>These are only some of the common ways to transform the data.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> First-differencing, in particular, is a go-to technique to achieve stationarity in a time series that is otherwise non-stationary. We usually refer to variables as integrated of order <span class="math inline">\(d\)</span>, which we denote by <span class="math inline">\(I(d)\)</span>. The order of integration tells us the number of times the series need to be first-differenced to make it stationary. So, when the series is <span class="math inline">\(I(0)\)</span> no such transformation is required. A stationary time series is integrated of order zero. When the series is <span class="math inline">\(I(1)\)</span>, a first-differencing will result in a stationary series. While in principle <span class="math inline">\(d\)</span> can be any positive integer, many time series, and certainly the vast majority economic time series, are at most <span class="math inline">\(I(2)\)</span>, usually <span class="math inline">\(I(1)\)</span> or <span class="math inline">\(I(0)\)</span>.</p>
 </div>
-<div id="getting-to-the-root-of-it" class="section level2 hasAnchor" number="2.8">
-<h2><span class="header-section-number">2.8</span> Getting to the Root of It<a href="features-of-time-series-data.html#getting-to-the-root-of-it" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="getting-to-the-root-of-it" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Getting to the Root of It<a href="features-of-time-series-data.html#getting-to-the-root-of-it" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To difference or not to difference? This is the question that any time series analyst asks themselves, typically at the start of the analysis. The answer is simple: one should difference a time series if they must, otherwise they should not.</p>
 <p>We can get an idea whether a time series are stationary (or not) by observing the data and, especially, their autocorrelations. But there are better, more formal ways of testing whether the series is integrated. For that we now briefly turn to a unit root test.</p>
-<p>The test, proposed by , involves regressing the first-differenced values of the series on the lagged values of the series. That is:
-<span class="math display">\[\begin{equation}
+<p>The test, proposed by <span class="citation">(<a href="#ref-dickey1979">Dickey and Fuller 1979</a>)</span>, involves regressing the first-differenced values of the series on the lagged values of the series. That is:
+<span class="math display" id="eq:ur">\[\begin{equation}
     \Delta y_t = \alpha + \phi y_{t-1}+\varepsilon_t
-    \label{c2:ur}
+    \tag{3.1}
 \end{equation}\]</span></p>
 <p>The null hypothesis of a unit root, or indeed, of nonstationarity, is equivalent to <span class="math inline">\(H_0:\phi=0\)</span>. And the one-sided alternative is that <span class="math inline">\(H_1:\phi &lt; 0\)</span>. Where did this come from?</p>
 <p>Notice that the left-hand side of the equation is <span class="math inline">\(\Delta y_t = y_t - y_{t-1}\)</span>. And if we move <span class="math inline">\(y_{t-1}\)</span> to the right, we obtain:
-<span class="math display">\[\begin{equation}
+<span class="math display" id="eq:rw">\[\begin{equation}
     y_t = \alpha + (\phi+1) y_{t-1}+\varepsilon_t
-    \label{c2:rw}
+    \tag{3.2}
 \end{equation}\]</span></p>
-<p>If <span class="math inline">\(\alpha=0\)</span> and <span class="math inline">\(\phi=0\)</span>, then equation~<span class="math inline">\(\eqref{c2:rw}\)</span> represents a random walk, and if <span class="math inline">\(\alpha\ne 0\)</span> and <span class="math inline">\(\phi=0\)</span>, then the equation represents a random walk with drift. Both are nonstationary processes.</p>
+<p>If <span class="math inline">\(\alpha=0\)</span> and <span class="math inline">\(\phi=0\)</span>, then equation <a href="features-of-time-series-data.html#eq:rw">(3.2)</a> represents a random walk, and if <span class="math inline">\(\alpha\ne 0\)</span> and <span class="math inline">\(\phi=0\)</span>, then the equation represents a random walk with drift. Both are nonstationary processes.</p>
 <p>Thus, testing whether the time series has a unit root, that is whether the time series is integrated, is a straightforward task. We need to regress <span class="math inline">\(\Delta y_t\)</span> on <span class="math inline">\(y_{t-1}\)</span>, obtain the t statistic, and compare it to the relevant critical values. The only remaining caveat is that the distribution of the t statistic is not standard, instead it has what is known as the Dickey-Fuller distribution. In practice all this means once we obtain the t statistic we compare it to the critical values from the Dickey-Fuller distribution.</p>
 
 </div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-box1964" class="csl-entry">
+Box, George EP, and David R Cox. 1964. <span>“<span class="nocase">An Analysis of Transformations</span>.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 26 (2): 211–43.
+</div>
+<div id="ref-dickey1979" class="csl-entry">
+Dickey, David A, and Wayne A Fuller. 1979. <span>“<span class="nocase">Distribution of the Estimators for Autoregressive Time Series With a Unit Root</span>.”</span> <em>Journal of the American Statistical Association</em> 74 (366a): 427–31.
+</div>
+<div id="ref-tobler1970" class="csl-entry">
+Tobler, Waldo R. 1970. <span>“<span class="nocase">A Computer Movie Simulating Urban Growth in the Detroit Region</span>.”</span> <em>Economic Geography</em> 46 (sup1): 234–40.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>It is common to “normalize” the time index so that the first observation is 1, the second observation is 2, etc. Of course, the starting time period need not be normalized to 1, and the temporal increment need not be 1 either.<a href="features-of-time-series-data.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Not seasonally adjusted value, from U.S. Bureau of Labor Statistics via FRED, Federal Reserve Bank of St. Louis online data portal.<a href="features-of-time-series-data.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Intuitively, a stochastic process is (strictly) stationary if a time shift does not change its statistical properties. More formally, stationary implies that the joint density of <span class="math inline">\(Y_r,\ldots,Y_{r+j}\)</span> is the same as the joint density of <span class="math inline">\(Y_s,\ldots,Y_{s+j}\)</span>, for any integers <span class="math inline">\(r \ne s\)</span> and <span class="math inline">\(j\)</span>.<a href="features-of-time-series-data.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>This is one of the forms of non-stationary processes in which the mean increases over time but the variance remains constant. Anther variant might have been, for example, if the variance increased over time while the mean remained constant. Indeed, any change in the way densities look would constitute a non-stationary process.<a href="features-of-time-series-data.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>This is only an intuitive definition of the concept. The formal definition is mathematically tedious.<a href="features-of-time-series-data.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Technically, this is a <em>Gaussian</em> white noise process as the random variables are iid normal. Without the assumption of normality we would have an <em>Independent</em> white noise process. Without the assumption of independence we would have a white noise process.<a href="features-of-time-series-data.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>To be precise, this describes covariance-stationarity or the <em>weak</em> form of stationarity. The <em>strict</em> form of stationarity is defined by time invariant joint distribution of random variables.<a href="features-of-time-series-data.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>A temporal equivalent of what is known as The First Law of Geography: “<em>Everything is related to everything else, but near things are more related than distant things.</em>” <span class="citation">(<a href="#ref-tobler1970">Tobler 1970</a>)</span><a href="features-of-time-series-data.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>Lo and behold, the December 2022 U.S. unemployment rate was 3.3 percent.<a href="features-of-time-series-data.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Return, or return on investment, is the relative change in the value of an asset, typically expressed in percentage terms.<a href="features-of-time-series-data.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>Pearson correlation coefficient is given by <span class="math inline">\(\frac{\sigma_{XY}}{\sigma_X\sigma_Y}\)</span>, where <span class="math inline">\(\sigma_X\)</span> and <span class="math inline">\(\sigma_Y\)</span> are the standard deviations of random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and <span class="math inline">\(\sigma_{XY}\)</span> is the covariance between these two random variables.<a href="features-of-time-series-data.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>There are, of course, formal tests of stationarity, which we will discuss later.<a href="features-of-time-series-data.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>Indeed, the log-transformation is the special case of the Box-Cox transformation <span class="citation">(<a href="#ref-box1964">Box and Cox 1964</a>)</span>.<a href="features-of-time-series-data.html#fnref16" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

@@ -4,3 +4,4 @@ bookdown::gitbook:
     toc:
       before: |
         <li><a href="./">Educated Guess</a></li>
+    

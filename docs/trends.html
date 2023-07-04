@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 – Trends | Educated Guess</title>
+  <title>Chapter 7 – Trends | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 – Trends | Educated Guess" />
+  <meta property="og:title" content="Chapter 7 – Trends | Educated Guess" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/forecasting-logo.png" />
   <meta property="og:description" content="Forecasting With Time Series Models Using R" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 – Trends | Educated Guess" />
+  <meta name="twitter:title" content="Chapter 7 – Trends | Educated Guess" />
   
   <meta name="twitter:description" content="Forecasting With Time Series Models Using R" />
   <meta name="twitter:image" content="/forecasting-logo.png" />
@@ -119,6 +119,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -155,119 +159,120 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./">Educated Guess</a></li>
+
 <li class="divider"></li>
 <li><a href="index.html#section" id="toc-section"></a></li>
-<li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
-<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
+<li class="chapter" data-level="1" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i><b>1</b> Forecasting With Time Series Models</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>2</b> – Introduction to Forecasting</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
-<li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
-<li class="chapter" data-level="1.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>1.6</b> Why We Can’t Get It Right</a></li>
-<li class="chapter" data-level="1.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>1.7</b> Minimizing the Risk of Getting It Wrong</a></li>
-<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>1.8</b> Economists Do It With Models</a></li>
-<li class="chapter" data-level="1.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.9</b> Getting It Right for the Right Reasons</a></li>
+<li class="chapter" data-level="2.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>2.1</b> What Forecast Is and Is Not</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>2.2</b> A Brief History of the Study of Forecasting</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>2.3</b> Through the Lens of Causal Inference</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>2.4</b> Self Fulfilling Prophecy</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>2.5</b> Knowing the Unknown</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>2.6</b> Why We Can’t Get It Right</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>2.7</b> Minimizing the Risk of Getting It Wrong</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>2.8</b> Economists Do It With Models</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>2.9</b> Getting It Right for the Right Reasons</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
+<li class="chapter" data-level="3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>3</b> – Features of Time Series Data</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>2.1</b> Stochastic Process and Time Series</a></li>
-<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>2.2</b> Stationarity and Ergodicity</a></li>
-<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>2.3</b> White Noise Process</a></li>
-<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>2.4</b> Autocorrelation</a></li>
-<li class="chapter" data-level="2.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>2.5</b> Autocorrelogram and It’s Forensic Features</a></li>
-<li class="chapter" data-level="2.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>2.6</b> Partial Autocorrelation</a></li>
-<li class="chapter" data-level="2.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.7</b> Transformations</a></li>
-<li class="chapter" data-level="2.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>2.8</b> Getting to the Root of It</a></li>
+<li class="chapter" data-level="3.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>3.1</b> Stochastic Process and Time Series</a></li>
+<li class="chapter" data-level="3.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>3.2</b> Stationarity and Ergodicity</a></li>
+<li class="chapter" data-level="3.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>3.3</b> White Noise Process</a></li>
+<li class="chapter" data-level="3.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>3.4</b> Autocorrelation</a></li>
+<li class="chapter" data-level="3.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>3.5</b> Autocorrelogram and It’s Forensic Features</a></li>
+<li class="chapter" data-level="3.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>3.6</b> Partial Autocorrelation</a></li>
+<li class="chapter" data-level="3.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>3.7</b> Transformations</a></li>
+<li class="chapter" data-level="3.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>3.8</b> Getting to the Root of It</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>3</b> – Generating and Evaluating Forecasts</a>
+<li class="chapter" data-level="4" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>4</b> – Generating and Evaluating Forecasts</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>3.1</b> Pseudo-Forecasting Routine</a></li>
-<li class="chapter" data-level="3.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>3.2</b> Forecast Assessment</a>
+<li class="chapter" data-level="4.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>4.1</b> Pseudo-Forecasting Routine</a></li>
+<li class="chapter" data-level="4.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>4.2</b> Forecast Assessment</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>3.2.1</b> Unbiasedness</a></li>
-<li class="chapter" data-level="3.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>3.2.2</b> Efficiency</a></li>
-<li class="chapter" data-level="3.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.2.3</b> No Autocorrelation</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>4</b> – Comparing Forecasts</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>4.1</b> The Need for the Forecast Evaluation</a></li>
-<li class="chapter" data-level="4.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>4.2</b> Relative Forecast Accuracy Tests</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>4.2.1</b> The Morgan-Granger-Newbold Test</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>4.2.2</b> The Diebold-Mariano Test</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>4.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>5</b> – Combining Forecasts</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>5.1</b> Benefits of Forecast Combination</a></li>
-<li class="chapter" data-level="5.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>5.2</b> Optimal Weights for Forecast Combination</a></li>
-<li class="chapter" data-level="5.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>5.3</b> Forecast Encompassing</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>6</b> – Trends</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>6.1</b> Trends in the Data</a></li>
-<li class="chapter" data-level="6.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>6.2</b> Spurious Relationships</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>6.2.1</b> Deterministic Trends</a></li>
-<li class="chapter" data-level="6.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>6.2.2</b> Stochastic Trends</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>6.3</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>6.3.1</b> Trends in mortgage rates</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>6.4</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>7</b> – Seasonality</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>7.1</b> Seasonal Fluctuations in the Data</a></li>
-<li class="chapter" data-level="7.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>7.2</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>7.2.1</b> Seasonal dummy variables</a></li>
-<li class="chapter" data-level="7.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>7.2.2</b> Seasonal harmonic variables</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>7.3</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>8</b> – Autoregression</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>8.1</b> Stochastic Cycles</a></li>
-<li class="chapter" data-level="8.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>8.2</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>8.2.1</b> First-order autoregression</a></li>
-<li class="chapter" data-level="8.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>8.2.2</b> Unit Roots and Non-stationarity</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>8.3.1</b> Iterative Method of Multistep Forecasting</a></li>
-<li class="chapter" data-level="8.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>8.3.2</b> Direct Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="4.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>4.2.1</b> Unbiasedness</a></li>
+<li class="chapter" data-level="4.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>4.2.2</b> Efficiency</a></li>
+<li class="chapter" data-level="4.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>4.2.3</b> No Autocorrelation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>9</b> – Vector Autoregression</a>
+<li class="chapter" data-level="5" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>5</b> – Comparing Forecasts</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>9.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
-<li class="chapter" data-level="9.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>9.2</b> Modeling</a>
+<li class="chapter" data-level="5.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>5.1</b> The Need for the Forecast Evaluation</a></li>
+<li class="chapter" data-level="5.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>5.2</b> Relative Forecast Accuracy Tests</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>9.2.1</b> In-Sample Granger Causality</a></li>
+<li class="chapter" data-level="5.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>5.2.1</b> The Morgan-Granger-Newbold Test</a></li>
+<li class="chapter" data-level="5.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>5.2.2</b> The Diebold-Mariano Test</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
+<li class="chapter" data-level="5.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>5.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>6</b> – Combining Forecasts</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>9.3.1</b> One-step-ahead forecasts</a></li>
-<li class="chapter" data-level="9.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>9.3.2</b> Multi-step-ahead forecasts</a></li>
-<li class="chapter" data-level="9.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>9.3.3</b> Out-of-Sample Granger Causality</a></li>
+<li class="chapter" data-level="6.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>6.1</b> Benefits of Forecast Combination</a></li>
+<li class="chapter" data-level="6.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>6.2</b> Optimal Weights for Forecast Combination</a></li>
+<li class="chapter" data-level="6.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>6.3</b> Forecast Encompassing</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>7</b> – Trends</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>7.1</b> Trends in the Data</a></li>
+<li class="chapter" data-level="7.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>7.2</b> Spurious Relationships</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>7.2.1</b> Deterministic Trends</a></li>
+<li class="chapter" data-level="7.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>7.2.2</b> Stochastic Trends</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>7.3</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>7.3.1</b> Trends in mortgage rates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>7.4</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>8</b> – Seasonality</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>8.1</b> Seasonal Fluctuations in the Data</a></li>
+<li class="chapter" data-level="8.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>8.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>8.2.1</b> Seasonal dummy variables</a></li>
+<li class="chapter" data-level="8.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>8.2.2</b> Seasonal harmonic variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>9</b> – Autoregression</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>9.1</b> Stochastic Cycles</a></li>
+<li class="chapter" data-level="9.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>9.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>9.2.1</b> First-order autoregression</a></li>
+<li class="chapter" data-level="9.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>9.2.2</b> Unit Roots and Non-stationarity</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>9.3.1</b> Iterative Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="9.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>9.3.2</b> Direct Method of Multistep Forecasting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>10</b> – Threshold Autoregression</a>
+<li class="chapter" data-level="10" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>10</b> – Vector Autoregression</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>10.1</b> Regime-Dependent Nonlinearity</a></li>
-<li class="chapter" data-level="10.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>10.2</b> Modeling</a></li>
-<li class="chapter" data-level="10.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>10.3</b> Forecasting</a>
+<li class="chapter" data-level="10.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>10.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
+<li class="chapter" data-level="10.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>10.2</b> Modeling</a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>10.3.1</b> Skeleton Extrapolation</a></li>
-<li class="chapter" data-level="10.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>10.3.2</b> Analytical Method</a></li>
-<li class="chapter" data-level="10.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>10.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
+<li class="chapter" data-level="10.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>10.2.1</b> In-Sample Granger Causality</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>10.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>10.3.1</b> One-step-ahead forecasts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>10.3.2</b> Multi-step-ahead forecasts</a></li>
+<li class="chapter" data-level="10.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>10.3.3</b> Out-of-Sample Granger Causality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>11</b> – Threshold Autoregression</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>11.1</b> Regime-Dependent Nonlinearity</a></li>
+<li class="chapter" data-level="11.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>11.2</b> Modeling</a></li>
+<li class="chapter" data-level="11.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>11.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>11.3.1</b> Skeleton Extrapolation</a></li>
+<li class="chapter" data-level="11.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>11.3.2</b> Analytical Method</a></li>
+<li class="chapter" data-level="11.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>11.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="forecasting-using-r.html"><a href="forecasting-using-r.html"><i class="fa fa-check"></i>Forecasting Using R</a></li>
@@ -303,19 +308,19 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trends" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> – Trends<a href="trends.html#trends" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="trends" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> – Trends<a href="trends.html#trends" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="art/trends.png" /></p>
-<div id="trends-in-the-data" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Trends in the Data<a href="trends.html#trends-in-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="trends-in-the-data" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Trends in the Data<a href="trends.html#trends-in-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><span class="newthought">Trends are common in economic time series</span> (and not only). Observed over an extended period of time, gross domestic product, population, agricultural yields, and most recently global temperatures, all increase, on average. A trend is a pattern of change (increase or decrease) of a time series. It is possible for the direction as well as the rate of the change to alter over time. Interest rates, for example, were trending upward prior to 1980s, after which they started trending downward. Agricultural yields of cereal crops, for example, have been trending upward, but the slope of the trend has flattened over time.</p>
 <p>Modeling and forecasting trending time series is a fairly straightforward task. But before we get to it, let’s examine the issues that may arise if we ignore the presence of trends when analyzing the time series data.</p>
 </div>
-<div id="spurious-relationships" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Spurious Relationships<a href="trends.html#spurious-relationships" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="spurious-relationships" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Spurious Relationships<a href="trends.html#spurious-relationships" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Nothing about trending time series necessarily violates the classical linear regression model assumptions. The issue may arise, however, if an unobserved trending variable is simultaneously correlated with the dependent variable as well as one of the independent variables in a time series regression. In such case, we may find a (statistically significant) relationship between two or more unrelated economic variables simply because they are all trending. Such relationship is referred to as a <em>spurious relationship</em>.</p>
-<div id="deterministic-trends" class="section level3 hasAnchor" number="6.2.1">
-<h3><span class="header-section-number">6.2.1</span> Deterministic Trends<a href="trends.html#deterministic-trends" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="deterministic-trends" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Deterministic Trends<a href="trends.html#deterministic-trends" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To begin, we will illustrate the issue using two random variables, each containing a deterministic trend. To keep things simple, we will consider linear trends, but the “findings” of this exercise can be generalized to any form of a deterministic trend (some of the key forms we discuss below).</p>
 <p>So, consider two trending variables: <span class="math display">\[y_t = \gamma t + \nu_t,\;~~\nu\sim N(0,\sigma_{\nu}^2),\]</span> and <span class="math display">\[x_t = \delta t + \upsilon_t,\;~~\upsilon\sim N(0,\sigma_{\upsilon}^2),\]</span> where <span class="math inline">\(Cov(\nu_t,\upsilon_t) = 0\)</span>. For simplicity, we can assume <span class="math inline">\(\sigma_{\nu}^2=\sigma_{\upsilon}^2=1\)</span>. Suppose, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\delta\)</span> are some positive scalars, say, <span class="math inline">\(0.3\)</span> and <span class="math inline">\(0.5\)</span>, respectively. That is, <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are trending in the same direction but at different rates. Below is an example of such time series:
 <img src="forecasting_files/figure-html/unnamed-chunk-8-1.png" width="624" /></p>
@@ -325,8 +330,8 @@ div.csl-indent {
 <img src="forecasting_files/figure-html/unnamed-chunk-10-1.png" width="624" /></p>
 <p>In fact, this “fix” is equivalent to regressing a de-trended <span class="math inline">\(y\)</span> on a de-trended <span class="math inline">\(x\)</span>. To de-trend a variable, we first run a regression: <span class="math inline">\(y_t = \gamma_0 + \gamma_1 t + \nu_t\)</span>, and then obtain the fitted values for some fixed time period (typically zero), that is: <span class="math inline">\(\tilde{y}_t = \hat{\gamma}_0+\hat{\nu}_t\)</span>, where <span class="math inline">\(\hat{\gamma}_0\)</span> and <span class="math inline">\(\hat{\nu}_t\)</span> are the parameter estimate and the residuals from the foregoing regression. This equiavlence is the special case of the Frisch–Waugh–Lovell (FWL) theorem, due to <span class="citation">Frisch and Waugh (<a href="#ref-frisch1933">1933</a>)</span> and <span class="citation">Lovell (<a href="#ref-lovell1963">1963</a>)</span>.</p>
 </div>
-<div id="stochastic-trends" class="section level3 hasAnchor" number="6.2.2">
-<h3><span class="header-section-number">6.2.2</span> Stochastic Trends<a href="trends.html#stochastic-trends" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="stochastic-trends" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Stochastic Trends<a href="trends.html#stochastic-trends" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A time series may also follow a <em>stochastic trend</em>. A random walk process, <span class="math inline">\(y_t=y_{t-1}+\zeta_t\)</span>, represents a stochastic trend.</p>
 <p>As it turns out, a spurious relationship can be detected between two stochastic trend processes. Suppose, in addition to the aforementioned random walk process, we have another random walk, <span class="math inline">\(x_t=x_{t-1}+\xi_t\)</span>. As before, to keep things simple, suppose <span class="math inline">\(\zeta\sim N(0,1)\)</span> and <span class="math inline">\(\xi\sim N(0,1)\)</span>, and <span class="math inline">\(Cov(\zeta_t,\xi_t)=0\)</span>. The two variables, obviously, are not related. And yet, if we regress one on another, we are likely to reject the null more frequently than we should. The following graph illustrates the empirical distribution of t statistics:
 <img src="forecasting_files/figure-html/unnamed-chunk-11-1.png" width="624" /></p>
@@ -336,8 +341,8 @@ div.csl-indent {
 <p><img src="forecasting_files/figure-html/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
 </div>
-<div id="modeling" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Modeling<a href="trends.html#modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="modeling" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Modeling<a href="trends.html#modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As seen, accounting for trends in a time series can help us resolve some regression issues. But a trend in and of itself can be an inherent feature of a times series. To that end, we can, and indeed should, account for trends, when they are present, to forecast time series. In what follows, the main focus is deterministic trends. We will address stochastic trends in another chapter.</p>
 <p>The simplest (and perhaps most frequently applied) model to account for the trending time series is a <em>linear</em> trend model: <span class="math display">\[y_t = \alpha + \beta t\]</span></p>
 <p>Other likely candidate trend specifications are <em>polynomial</em> (e.g. quadratic, cubic, etc.), <em>exponential</em>, and <em>shifting</em> (or <em>switching</em>) trend models, respectively given by:
@@ -354,20 +359,20 @@ div.csl-indent {
 </ul>
 <p>We will cover the shifting/switching trend models in another chapter.</p>
 <p>Trends are (relatively) easy to model and forecast. Caution is needed, however, with (higher order) polynomial trends, as they may fit well in-sample, but cause major problems out-of-sample.</p>
-<div id="trends-in-mortgage-rates" class="section level3 hasAnchor" number="6.3.1">
-<h3><span class="header-section-number">6.3.1</span> Trends in mortgage rates<a href="trends.html#trends-in-mortgage-rates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="trends-in-mortgage-rates" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Trends in mortgage rates<a href="trends.html#trends-in-mortgage-rates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider monthly series of the U.S. mortgage rates (sourced from the online data portal of the Federal Reserve Bank of St. Louis) spanning the January 1991 – December 2020 period.</p>
 <div class="figure"><span style="display:block;" id="fig:intrates"></span>
 <img src="forecasting_files/figure-html/intrates-1.png" alt="30-Year Fixed Rate Mortgage Average in the U.S." width="624" />
 <p class="caption">
-Figure 6.1: 30-Year Fixed Rate Mortgage Average in the U.S.
+Figure 7.1: 30-Year Fixed Rate Mortgage Average in the U.S.
 </p>
 </div>
 <p>The series feature apparent downward trend, which we can approximate by a linear trend model. We estimate the model parameters by regressing interest rates, which we denote by <span class="math inline">\(y\)</span> on time index, which we denote by <span class="math inline">\(t\)</span>. Fitted values are then given by: <span class="math inline">\(\hat{y}_t = \hat{\alpha} + \hat{\beta} t\)</span>, which we overlay onto the time series:</p>
 <div class="figure"><span style="display:block;" id="fig:lintrend"></span>
 <img src="forecasting_files/figure-html/lintrend-1.png" alt="Fitted linear trend" width="624" />
 <p class="caption">
-Figure 6.2: Fitted linear trend
+Figure 7.2: Fitted linear trend
 </p>
 </div>
 <p>It appears that the linear trend well approximates the general long-term pattern of the time series. One potential issue becomes immediately apparent, however. If we were to present a multi-decade prediction, at some point, forecasts will enter the negative range, which makes no economic sense.</p>
@@ -375,14 +380,14 @@ Figure 6.2: Fitted linear trend
 <div class="figure"><span style="display:block;" id="fig:exptrend"></span>
 <img src="forecasting_files/figure-html/exptrend-1.png" alt="Fitted exponential trend" width="624" />
 <p class="caption">
-Figure 6.3: Fitted exponential trend
+Figure 7.3: Fitted exponential trend
 </p>
 </div>
 <p>As it turns out, the exponential trend also well approximates the general long-term pattern of the time series. And, moreover, there is not risl for forecasts to ever take on a negative value, thus remaining economically sensible. Whether linear or exponential trend model yields a more accurate short-term forecasts, is a matter of forecast accuracy testing.</p>
 </div>
 </div>
-<div id="forecasting" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Forecasting<a href="trends.html#forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="forecasting" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Forecasting<a href="trends.html#forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The predictors of the deterministic trend models are pre-determined, which means, after fitting the model, we can readily obtain point and interval forecasts for any horizon <span class="math inline">\(h\)</span>.</p>
 <p>If a linear trend model is assumed, then a realization of the stochastic process at forecast horizon <span class="math inline">\(h\)</span> is: <span class="math display">\[y_{t+h} = \alpha + \beta (t+h) + \varepsilon_{t+h},\]</span> where <span class="math inline">\(\varepsilon_{t+h}\sim iid~\text{N}(0,\sigma^2_{\varepsilon})\)</span> is the error term.</p>
 <p>Point forecast of <span class="math inline">\(y_{t+h}\)</span> is given by: <span class="math display">\[\hat{y}_{t+h|t} = E(y_{t+h}|\Omega_t;\hat{\theta}) = \hat{\alpha} + \hat{\beta} (t+h)\]</span></p>
@@ -393,7 +398,7 @@ Figure 6.3: Fitted exponential trend
 <div class="figure"><span style="display:block;" id="fig:fortrend"></span>
 <img src="forecasting_files/figure-html/fortrend-1.png" alt="Linear trend forecast" width="624" />
 <p class="caption">
-Figure 6.4: Linear trend forecast
+Figure 7.4: Linear trend forecast
 </p>
 </div>
 <p>Several characteristics of the deterministic trend forecasts:</p>

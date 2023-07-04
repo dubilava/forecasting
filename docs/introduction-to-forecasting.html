@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 – Introduction to Forecasting | Educated Guess</title>
+  <title>Chapter 2 – Introduction to Forecasting | Educated Guess</title>
   <meta name="description" content="Forecasting With Time Series Models Using R" />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 – Introduction to Forecasting | Educated Guess" />
+  <meta property="og:title" content="Chapter 2 – Introduction to Forecasting | Educated Guess" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/forecasting-logo.png" />
   <meta property="og:description" content="Forecasting With Time Series Models Using R" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 – Introduction to Forecasting | Educated Guess" />
+  <meta name="twitter:title" content="Chapter 2 – Introduction to Forecasting | Educated Guess" />
   
   <meta name="twitter:description" content="Forecasting With Time Series Models Using R" />
   <meta name="twitter:image" content="/forecasting-logo.png" />
@@ -119,6 +119,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -155,119 +159,120 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./">Educated Guess</a></li>
+
 <li class="divider"></li>
 <li><a href="index.html#section" id="toc-section"></a></li>
-<li class="chapter" data-level="" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i>Forecasting With Time Series Models</a></li>
-<li class="chapter" data-level="1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>1</b> – Introduction to Forecasting</a>
+<li class="chapter" data-level="1" data-path="forecasting-with-time-series-models.html"><a href="forecasting-with-time-series-models.html"><i class="fa fa-check"></i><b>1</b> Forecasting With Time Series Models</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html"><i class="fa fa-check"></i><b>2</b> – Introduction to Forecasting</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>1.1</b> What Forecast Is and Is Not</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> A Brief History of the Study of Forecasting</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>1.3</b> Through the Lens of Causal Inference</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>1.4</b> Self Fulfilling Prophecy</a></li>
-<li class="chapter" data-level="1.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>1.5</b> Knowing the Unknown</a></li>
-<li class="chapter" data-level="1.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>1.6</b> Why We Can’t Get It Right</a></li>
-<li class="chapter" data-level="1.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>1.7</b> Minimizing the Risk of Getting It Wrong</a></li>
-<li class="chapter" data-level="1.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>1.8</b> Economists Do It With Models</a></li>
-<li class="chapter" data-level="1.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>1.9</b> Getting It Right for the Right Reasons</a></li>
+<li class="chapter" data-level="2.1" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#what-forecast-is-and-is-not"><i class="fa fa-check"></i><b>2.1</b> What Forecast Is and Is Not</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting"><i class="fa fa-check"></i><b>2.2</b> A Brief History of the Study of Forecasting</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference"><i class="fa fa-check"></i><b>2.3</b> Through the Lens of Causal Inference</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#self-fulfilling-prophecy"><i class="fa fa-check"></i><b>2.4</b> Self Fulfilling Prophecy</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#knowing-the-unknown"><i class="fa fa-check"></i><b>2.5</b> Knowing the Unknown</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#why-we-cant-get-it-right"><i class="fa fa-check"></i><b>2.6</b> Why We Can’t Get It Right</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong"><i class="fa fa-check"></i><b>2.7</b> Minimizing the Risk of Getting It Wrong</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#economists-do-it-with-models"><i class="fa fa-check"></i><b>2.8</b> Economists Do It With Models</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-forecasting.html"><a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons"><i class="fa fa-check"></i><b>2.9</b> Getting It Right for the Right Reasons</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>2</b> – Features of Time Series Data</a>
+<li class="chapter" data-level="3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html"><i class="fa fa-check"></i><b>3</b> – Features of Time Series Data</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>2.1</b> Stochastic Process and Time Series</a></li>
-<li class="chapter" data-level="2.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>2.2</b> Stationarity and Ergodicity</a></li>
-<li class="chapter" data-level="2.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>2.3</b> White Noise Process</a></li>
-<li class="chapter" data-level="2.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>2.4</b> Autocorrelation</a></li>
-<li class="chapter" data-level="2.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>2.5</b> Autocorrelogram and It’s Forensic Features</a></li>
-<li class="chapter" data-level="2.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>2.6</b> Partial Autocorrelation</a></li>
-<li class="chapter" data-level="2.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>2.7</b> Transformations</a></li>
-<li class="chapter" data-level="2.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>2.8</b> Getting to the Root of It</a></li>
+<li class="chapter" data-level="3.1" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stochastic-process-and-time-series"><i class="fa fa-check"></i><b>3.1</b> Stochastic Process and Time Series</a></li>
+<li class="chapter" data-level="3.2" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#stationarity-and-ergodicity"><i class="fa fa-check"></i><b>3.2</b> Stationarity and Ergodicity</a></li>
+<li class="chapter" data-level="3.3" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#white-noise-process"><i class="fa fa-check"></i><b>3.3</b> White Noise Process</a></li>
+<li class="chapter" data-level="3.4" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelation"><i class="fa fa-check"></i><b>3.4</b> Autocorrelation</a></li>
+<li class="chapter" data-level="3.5" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#autocorrelogram-and-its-forensic-features"><i class="fa fa-check"></i><b>3.5</b> Autocorrelogram and It’s Forensic Features</a></li>
+<li class="chapter" data-level="3.6" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#partial-autocorrelation"><i class="fa fa-check"></i><b>3.6</b> Partial Autocorrelation</a></li>
+<li class="chapter" data-level="3.7" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#transformations"><i class="fa fa-check"></i><b>3.7</b> Transformations</a></li>
+<li class="chapter" data-level="3.8" data-path="features-of-time-series-data.html"><a href="features-of-time-series-data.html#getting-to-the-root-of-it"><i class="fa fa-check"></i><b>3.8</b> Getting to the Root of It</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>3</b> – Generating and Evaluating Forecasts</a>
+<li class="chapter" data-level="4" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html"><i class="fa fa-check"></i><b>4</b> – Generating and Evaluating Forecasts</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>3.1</b> Pseudo-Forecasting Routine</a></li>
-<li class="chapter" data-level="3.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>3.2</b> Forecast Assessment</a>
+<li class="chapter" data-level="4.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#pseudo-forecasting-routine"><i class="fa fa-check"></i><b>4.1</b> Pseudo-Forecasting Routine</a></li>
+<li class="chapter" data-level="4.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#forecast-assessment"><i class="fa fa-check"></i><b>4.2</b> Forecast Assessment</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>3.2.1</b> Unbiasedness</a></li>
-<li class="chapter" data-level="3.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>3.2.2</b> Efficiency</a></li>
-<li class="chapter" data-level="3.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>3.2.3</b> No Autocorrelation</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>4</b> – Comparing Forecasts</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>4.1</b> The Need for the Forecast Evaluation</a></li>
-<li class="chapter" data-level="4.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>4.2</b> Relative Forecast Accuracy Tests</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>4.2.1</b> The Morgan-Granger-Newbold Test</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>4.2.2</b> The Diebold-Mariano Test</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>4.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>5</b> – Combining Forecasts</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>5.1</b> Benefits of Forecast Combination</a></li>
-<li class="chapter" data-level="5.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>5.2</b> Optimal Weights for Forecast Combination</a></li>
-<li class="chapter" data-level="5.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>5.3</b> Forecast Encompassing</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>6</b> – Trends</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>6.1</b> Trends in the Data</a></li>
-<li class="chapter" data-level="6.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>6.2</b> Spurious Relationships</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>6.2.1</b> Deterministic Trends</a></li>
-<li class="chapter" data-level="6.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>6.2.2</b> Stochastic Trends</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>6.3</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>6.3.1</b> Trends in mortgage rates</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>6.4</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>7</b> – Seasonality</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>7.1</b> Seasonal Fluctuations in the Data</a></li>
-<li class="chapter" data-level="7.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>7.2</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>7.2.1</b> Seasonal dummy variables</a></li>
-<li class="chapter" data-level="7.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>7.2.2</b> Seasonal harmonic variables</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>7.3</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>8</b> – Autoregression</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>8.1</b> Stochastic Cycles</a></li>
-<li class="chapter" data-level="8.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>8.2</b> Modeling</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>8.2.1</b> First-order autoregression</a></li>
-<li class="chapter" data-level="8.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>8.2.2</b> Unit Roots and Non-stationarity</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>8.3.1</b> Iterative Method of Multistep Forecasting</a></li>
-<li class="chapter" data-level="8.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>8.3.2</b> Direct Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="4.2.1" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#unbiasedness"><i class="fa fa-check"></i><b>4.2.1</b> Unbiasedness</a></li>
+<li class="chapter" data-level="4.2.2" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#efficiency"><i class="fa fa-check"></i><b>4.2.2</b> Efficiency</a></li>
+<li class="chapter" data-level="4.2.3" data-path="generating-and-evaluating-forecasts.html"><a href="generating-and-evaluating-forecasts.html#no-autocorrelation"><i class="fa fa-check"></i><b>4.2.3</b> No Autocorrelation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>9</b> – Vector Autoregression</a>
+<li class="chapter" data-level="5" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html"><i class="fa fa-check"></i><b>5</b> – Comparing Forecasts</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>9.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
-<li class="chapter" data-level="9.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>9.2</b> Modeling</a>
+<li class="chapter" data-level="5.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-need-for-the-forecast-evaluation"><i class="fa fa-check"></i><b>5.1</b> The Need for the Forecast Evaluation</a></li>
+<li class="chapter" data-level="5.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#relative-forecast-accuracy-tests"><i class="fa fa-check"></i><b>5.2</b> Relative Forecast Accuracy Tests</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>9.2.1</b> In-Sample Granger Causality</a></li>
+<li class="chapter" data-level="5.2.1" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-morgan-granger-newbold-test"><i class="fa fa-check"></i><b>5.2.1</b> The Morgan-Granger-Newbold Test</a></li>
+<li class="chapter" data-level="5.2.2" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#the-diebold-mariano-test"><i class="fa fa-check"></i><b>5.2.2</b> The Diebold-Mariano Test</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
+<li class="chapter" data-level="5.3" data-path="comparing-forecasts.html"><a href="comparing-forecasts.html#forecasting-year-on-year-monthly-inflation-12-steps-ahead"><i class="fa fa-check"></i><b>5.3</b> Forecasting Year-on-Year Monthly Inflation 12-steps-ahead</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="combining-forecasts.html"><a href="combining-forecasts.html"><i class="fa fa-check"></i><b>6</b> – Combining Forecasts</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>9.3.1</b> One-step-ahead forecasts</a></li>
-<li class="chapter" data-level="9.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>9.3.2</b> Multi-step-ahead forecasts</a></li>
-<li class="chapter" data-level="9.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>9.3.3</b> Out-of-Sample Granger Causality</a></li>
+<li class="chapter" data-level="6.1" data-path="combining-forecasts.html"><a href="combining-forecasts.html#benefits-of-forecast-combination"><i class="fa fa-check"></i><b>6.1</b> Benefits of Forecast Combination</a></li>
+<li class="chapter" data-level="6.2" data-path="combining-forecasts.html"><a href="combining-forecasts.html#optimal-weights-for-forecast-combination"><i class="fa fa-check"></i><b>6.2</b> Optimal Weights for Forecast Combination</a></li>
+<li class="chapter" data-level="6.3" data-path="combining-forecasts.html"><a href="combining-forecasts.html#forecast-encompassing"><i class="fa fa-check"></i><b>6.3</b> Forecast Encompassing</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="trends.html"><a href="trends.html"><i class="fa fa-check"></i><b>7</b> – Trends</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="trends.html"><a href="trends.html#trends-in-the-data"><i class="fa fa-check"></i><b>7.1</b> Trends in the Data</a></li>
+<li class="chapter" data-level="7.2" data-path="trends.html"><a href="trends.html#spurious-relationships"><i class="fa fa-check"></i><b>7.2</b> Spurious Relationships</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="trends.html"><a href="trends.html#deterministic-trends"><i class="fa fa-check"></i><b>7.2.1</b> Deterministic Trends</a></li>
+<li class="chapter" data-level="7.2.2" data-path="trends.html"><a href="trends.html#stochastic-trends"><i class="fa fa-check"></i><b>7.2.2</b> Stochastic Trends</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="trends.html"><a href="trends.html#modeling"><i class="fa fa-check"></i><b>7.3</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="trends.html"><a href="trends.html#trends-in-mortgage-rates"><i class="fa fa-check"></i><b>7.3.1</b> Trends in mortgage rates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="trends.html"><a href="trends.html#forecasting"><i class="fa fa-check"></i><b>7.4</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seasonality.html"><a href="seasonality.html"><i class="fa fa-check"></i><b>8</b> – Seasonality</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-fluctuations-in-the-data"><i class="fa fa-check"></i><b>8.1</b> Seasonal Fluctuations in the Data</a></li>
+<li class="chapter" data-level="8.2" data-path="seasonality.html"><a href="seasonality.html#modeling-1"><i class="fa fa-check"></i><b>8.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="seasonality.html"><a href="seasonality.html#seasonal-dummy-variables"><i class="fa fa-check"></i><b>8.2.1</b> Seasonal dummy variables</a></li>
+<li class="chapter" data-level="8.2.2" data-path="seasonality.html"><a href="seasonality.html#seasonal-harmonic-variables"><i class="fa fa-check"></i><b>8.2.2</b> Seasonal harmonic variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="seasonality.html"><a href="seasonality.html#forecasting-1"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="autoregression.html"><a href="autoregression.html"><i class="fa fa-check"></i><b>9</b> – Autoregression</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="autoregression.html"><a href="autoregression.html#stochastic-cycles"><i class="fa fa-check"></i><b>9.1</b> Stochastic Cycles</a></li>
+<li class="chapter" data-level="9.2" data-path="autoregression.html"><a href="autoregression.html#modeling-2"><i class="fa fa-check"></i><b>9.2</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="autoregression.html"><a href="autoregression.html#first-order-autoregression"><i class="fa fa-check"></i><b>9.2.1</b> First-order autoregression</a></li>
+<li class="chapter" data-level="9.2.2" data-path="autoregression.html"><a href="autoregression.html#unit-roots-and-non-stationarity"><i class="fa fa-check"></i><b>9.2.2</b> Unit Roots and Non-stationarity</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="autoregression.html"><a href="autoregression.html#forecasting-2"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="autoregression.html"><a href="autoregression.html#iterative-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>9.3.1</b> Iterative Method of Multistep Forecasting</a></li>
+<li class="chapter" data-level="9.3.2" data-path="autoregression.html"><a href="autoregression.html#direct-method-of-multistep-forecasting"><i class="fa fa-check"></i><b>9.3.2</b> Direct Method of Multistep Forecasting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>10</b> – Threshold Autoregression</a>
+<li class="chapter" data-level="10" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>10</b> – Vector Autoregression</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>10.1</b> Regime-Dependent Nonlinearity</a></li>
-<li class="chapter" data-level="10.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>10.2</b> Modeling</a></li>
-<li class="chapter" data-level="10.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>10.3</b> Forecasting</a>
+<li class="chapter" data-level="10.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#dynamic-feedbacks-among-economic-variables"><i class="fa fa-check"></i><b>10.1</b> Dynamic Feedbacks Among Economic Variables</a></li>
+<li class="chapter" data-level="10.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#modeling-3"><i class="fa fa-check"></i><b>10.2</b> Modeling</a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>10.3.1</b> Skeleton Extrapolation</a></li>
-<li class="chapter" data-level="10.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>10.3.2</b> Analytical Method</a></li>
-<li class="chapter" data-level="10.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>10.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
+<li class="chapter" data-level="10.2.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#in-sample-granger-causality"><i class="fa fa-check"></i><b>10.2.1</b> In-Sample Granger Causality</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#forecasting-3"><i class="fa fa-check"></i><b>10.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#one-step-ahead-forecasts"><i class="fa fa-check"></i><b>10.3.1</b> One-step-ahead forecasts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#multi-step-ahead-forecasts"><i class="fa fa-check"></i><b>10.3.2</b> Multi-step-ahead forecasts</a></li>
+<li class="chapter" data-level="10.3.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#out-of-sample-granger-causality"><i class="fa fa-check"></i><b>10.3.3</b> Out-of-Sample Granger Causality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html"><i class="fa fa-check"></i><b>11</b> – Threshold Autoregression</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#regime-dependent-nonlinearity"><i class="fa fa-check"></i><b>11.1</b> Regime-Dependent Nonlinearity</a></li>
+<li class="chapter" data-level="11.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#modeling-4"><i class="fa fa-check"></i><b>11.2</b> Modeling</a></li>
+<li class="chapter" data-level="11.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#forecasting-4"><i class="fa fa-check"></i><b>11.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#skeleton-extrapolation"><i class="fa fa-check"></i><b>11.3.1</b> Skeleton Extrapolation</a></li>
+<li class="chapter" data-level="11.3.2" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#analytical-method"><i class="fa fa-check"></i><b>11.3.2</b> Analytical Method</a></li>
+<li class="chapter" data-level="11.3.3" data-path="threshold-autoregression.html"><a href="threshold-autoregression.html#numerical-method-bootstrap-resampling"><i class="fa fa-check"></i><b>11.3.3</b> Numerical Method: Bootstrap Resampling</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="forecasting-using-r.html"><a href="forecasting-using-r.html"><i class="fa fa-check"></i>Forecasting Using R</a></li>
@@ -303,11 +308,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-forecasting" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Chapter 1</span> – Introduction to Forecasting<a href="introduction-to-forecasting.html#introduction-to-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-to-forecasting" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> – Introduction to Forecasting<a href="introduction-to-forecasting.html#introduction-to-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="art/astrologer.png" /></p>
-<div id="what-forecast-is-and-is-not" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> What Forecast Is and Is Not<a href="introduction-to-forecasting.html#what-forecast-is-and-is-not" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-forecast-is-and-is-not" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> What Forecast Is and Is Not<a href="introduction-to-forecasting.html#what-forecast-is-and-is-not" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>What is a forecast if not a guess? An educated guess, nonetheless. We guess because we have no precise knowledge of how things will turn up in the future—near or distant. We may guess today whether it will rain tomorrow, for example. It may or may not rain tomorrow. With each of these two outcomes having some chance of occurring—assuming that we live in a place that can get rain on any day of the year—our claim about whether it will rain is a guess.</p>
 <p>We guess events that are uncertain. These are events for which several outcomes—each with some chance of appearing—are possible. In other words, we guess random variables. Making a claim about whether it will rain tomorrow is a guess because rain is a random variable. In its simplest form, we can think of a rain as a discrete random variable—a binary random variable, to be precise—it either rains or it does not rain.
 More accurately, we can think of a rain as a continuous random variable, albeit truncated from below at zero. So, it either rains or it does not rain. But if it rains, it may rain a little, or it may rain a lot. These all are guesses. By contrast, making a claim about whether the sun will rise tomorrow is hardly a guess. We know with absolute precision when will the sun rise. There is no prophecy about predicting the sunrise.</p>
@@ -315,8 +320,8 @@ More accurately, we can think of a rain as a continuous random variable, albeit 
 <p>Otherwise, an uninformed guess is merely a gamble. Consider, for example, the so-called “card counting.” A casino is a gambling house where everyone is welcome so long as gambling is what they do. But when one attempts to “beat the house” using the knowledge accumulated by counting cards, the gamble becomes an educated guess and the gambler becomes <em>persona non grata</em>.</p>
 <p>Thus, making a guess that it will rain tomorrow may be a forecast or a gamble. It is a forecast if we make a claim it will rain tomorrow because we looked out of the window and saw clouds today. Such a guess relies on our understanding of meteorological phenomena. It would be a gamble had we made the very same claim based on a hunch, without looking out of the window.</p>
 </div>
-<div id="a-brief-history-of-the-study-of-forecasting" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> A Brief History of the Study of Forecasting<a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a-brief-history-of-the-study-of-forecasting" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> A Brief History of the Study of Forecasting<a href="introduction-to-forecasting.html#a-brief-history-of-the-study-of-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The roots of forecasting extend very much to the beginning of human history. In their desire to predict the future, people have attempted to make forecasts of their own or have used the services of others. This desire to guess what was to come, has been necessitated by the potential benefits such information could offer.</p>
 <p>For many centuries, much of forecasting revolved around weather forecasting. Primarily because weather was the single most important factor that impacted the livelihood of people, and indeed the fate of civilizations. A sequence of droughts toward the end of the ninth century, through its intrinsic links with agriculture, is believed to have led to the collapse of the Classic Mayan civilization <span class="citation">(<a href="#ref-hodell1995">Hodell, Curtis, and Brenner 1995</a>)</span>.</p>
 <p>Early attempts at weather forecasting were rather simplistic. The Babylonians based their weather forecasts on the appearance of clouds. The ancient Egyptians measured the levels of the Nile River’s waters to predict an approaching famine due to droughts or destructive floods.</p>
@@ -325,24 +330,24 @@ More accurately, we can think of a rain as a continuous random variable, albeit 
 <p>Other notorious economic forecasters of that age, albeit not as known or celebrated academics as Fisher, were Charles Bullock and Warren Persons, who ran a Harvard-affiliated quasi-academic center for business cycle research with main purpose to generate economic forecasts based on historical precedents. Unlike Fisher’s forecasts that were model-based, Bullock and Persons’ forecasts were more data-driven. These and other “America’s first economic forecasters” were primarily focused on predicting stock prices. Their initial success quickly faded with the failure to predict the Great Depression, which plummeted their reputation as forecasters and, with that, their own fortunes as well <span class="citation">(<a href="#ref-friedman2013">Friedman 2013</a>)</span>.</p>
 <p>Much of the success of the early economic forecasters came during the early years of the 20th century. The failure to predict the Great Depression adversely impacted their reputation and, indeed, fortunes. As with the telegraph back in the 19th century, the evolution of the computing power in the second half of the 20th century facilitated the resurrection of economic forecasting, which became increasingly based on the effective use of econometric methods. Toward the end of the 20th century, and particularly from the beginning of the 21st century, the evolution of the Internet and the ease and affordability of computing power allowed the storage and distribution of high-frequency granular data that has further aided the advancement of the study of forecasting.</p>
 </div>
-<div id="through-the-lens-of-causal-inference" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Through the Lens of Causal Inference<a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="through-the-lens-of-causal-inference" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Through the Lens of Causal Inference<a href="introduction-to-forecasting.html#through-the-lens-of-causal-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Forecasting relies on some understanding of cause and effect between two variables over two time periods, even if one is not intrinsically aware of such a relationship. Such an understanding was apparent in the Babylonians’ and Egyptians’ methods of weather forecasting.</p>
 <p>Birds’ behavior, historically, has been the single most reliable predictor of upcoming changes to the weather. As the adage goes, “<em>Hawks flying high means a clear sky. When they fly low, prepare for a blow.</em>” The most likely reason for birds flying low is the sudden change in atmospheric pressure leading to the storm. Birds are “nature’s barometers” of the sort.</p>
 <p>We know it now, but our predecessors did not know it back when the barometer was yet to be invented. And yet, it turns out that their basing of the weather forecast on birds’ behavior was not unfounded.</p>
 <p>Birds do not cause storms; changes to air pressure do. But both the birds’ behavior and the storm are the outcomes of the same cause—atmospheric pressure. As it happens, one outcome (birds’ behavior) precedes the other outcome (the storm). And such temporal ordering of the events—each an outcome of an exogenous shock—helps build a simple forecasting model, which is based on a mere correlation, and yet it works. Consider the following diagram.</p>
 <div class="figure"><span style="display:block;" id="fig:birds"></span>
-<img src="figures/c1/dag-birds.png" alt="Causality, Correlation, and Forecasting" width="1040" />
 <p class="caption">
-Figure 1.1: Causality, Correlation, and Forecasting
+Figure 2.1: Causality, Correlation, and Forecasting
 </p>
+<img src="figures/c1/dag-birds.png" alt="Causality, Correlation, and Forecasting"  />
 </div>
 <p>On this diagram, <strong>P</strong> denotes air pressure, <strong>B</strong> denotes birds’ behavior, and <strong>S</strong> denotes a storm. The subscripts clarify temporal ordering. The solid lines indicate a causal relationship, and the dashed line indicates a correlation without causality. The gray lines indicate an unobserved effect, and the black line indicates the observed effect. Based on this diagram, while we do not observe the true causal effect, the observed correlation and the temporal ordering of the two outcomes of the same cause helps us build a useful predictive model. Of course, had we observed the true causal effects, the relationship between air pressure and birds’ behavior would deem obsolete.</p>
 <p>This illustration alludes to a notable feature of forecasting. To make a forecast, one does not need a “clean” identification of the causal mechanism. A mere correlation might as well suffice. In some instances, this might even be a preferred setting. Correlation captures information on unobserved variables, which aids in forecasting, whereas causal inference specifically ignores this information.</p>
 <p>That’s not to say that forecasting does not rely on causal relations. It does, very much so. And everything else held constant, the causal relationship would be preferred to the correlational. In our example, once the scientifically substantiated causal linkage between changes in atmospheric pressure and the occurrence of storms was established, there was little need and hardly any value in the correlational relationship between birds’ behavior and the occurrence of storms.</p>
 </div>
-<div id="self-fulfilling-prophecy" class="section level2 hasAnchor" number="1.4">
-<h2><span class="header-section-number">1.4</span> Self Fulfilling Prophecy<a href="introduction-to-forecasting.html#self-fulfilling-prophecy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="self-fulfilling-prophecy" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Self Fulfilling Prophecy<a href="introduction-to-forecasting.html#self-fulfilling-prophecy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The foregoing illustration paints an uncharacteristically simplistic picture of forecasting. It describes a rather simplified model as it omits several factors, other than air pressure, that could influence birds’ behavior or the formation of a storm. It also illustrates a relatively straightforward forecasting exercise because it involves relations between climate and nature. Such relationship is closer to a hard science than to a soft science.</p>
 <p>Things become increasingly more complex and much less predictable when people, with their behavioral peculiarities, enter the equation. Economists, who obviously deal with systems that involve or are comprised by people, are notorious for making bad forecasts. One of the earliest economic forecasts that did not quite live up to the expectations, was that of Irving Fisher who, in early October of 1929, made the claim that “stock prices have reached what looks like a permanently high plateau.” The Wall Street Crash and Great Depression followed shortly after.</p>
 <p>Often, we fail to forecast because we cannot know what will happen in the future. But sometimes, we fail to forecast because we exactly know what is to come. The issue lies in our ability to influence the future because we could forecast it reasonably well.</p>
@@ -350,14 +355,14 @@ Figure 1.1: Causality, Correlation, and Forecasting
 <p>If we were the only people who became aware of such an opportunity, the scheme would just work. But the information is available to everyone and at once. Thus, many people will learn about this opportunity and act accordingly: They will all try to buy the shares of the company immediately to sell them for the higher price later. This will create demand, and the share prices will increase today instead of tomorrow. And the temporal arbitrage opportunity will be no more.</p>
 <p>What we just described is known as the <em>efficient market hypothesis</em>. The efficient market hypothesis suggests that markets adjust immediately and correctly to the relevant new information. As a result, traders cannot take advantage of this new information. The moment one realizes there can be an arbitrage opportunity, it is already too late. So, some things, such as stock prices, are unpredictable but not because we don’t know what will happen to them. <em>Au contraire</em>, it is because we know this all too well.</p>
 </div>
-<div id="knowing-the-unknown" class="section level2 hasAnchor" number="1.5">
-<h2><span class="header-section-number">1.5</span> Knowing the Unknown<a href="introduction-to-forecasting.html#knowing-the-unknown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="knowing-the-unknown" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Knowing the Unknown<a href="introduction-to-forecasting.html#knowing-the-unknown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Methods of forecasting may differ, but they have one thing in common: they all rely—or at least pretend to rely—upon information. We record and observe information in the form of <em>data</em>. When the data are organized and stored in a certain way—chronologically and at regular intervals—we have a <em>time series</em>. By construction, a time series is historical data. Forecasting involves examining historical data to make an informed guess about what is to come in the near or the distant future.</p>
 <div class="figure"><span style="display:block;" id="fig:time-series-c1"></span>
-<img src="figures/c1/time-series.png" alt="A time series and its density" width="1040" />
 <p class="caption">
-Figure 1.2: A time series and its density
+Figure 2.2: A time series and its density
 </p>
+<img src="figures/c1/time-series.png" alt="A time series and its density"  />
 </div>
 <p>The left-hand side of the graph features a time series of 20 observations, given by <span class="math inline">\(x_t\)</span>, where <span class="math inline">\(t=1,\ldots,20\)</span>. The observation in the first period, <span class="math inline">\(x_1\)</span>, takes the value of two; the observation in the second period, <span class="math inline">\(x_2\)</span>, takes the value of four; and so forth until the observation in the last period, <span class="math inline">\(x_{20}\)</span>, which takes the value of five.</p>
 <p>The question is, given the observed data, what would be our best guess about <span class="math inline">\(x_{21}\)</span>, that is, the value of the observation in the subsequent period? In other words, the question asks us to forecast the next observation, given that we have observed the chronological sequence of the previous 20 observations.</p>
@@ -367,16 +372,16 @@ Figure 1.2: A time series and its density
 <p>We rarely use a density to communicate our forecast, however. When commercial banks or professional forecasters make a guess about the upcoming interest rate hike by the central bank, they usually report a single value. That is a <em>point forecast</em>—the simplest and most frequently used summary of a forecast. A point forecast is one value that qualifies or quantifies our guess about the future realization of an event, for example, a guess that it will rain tomorrow or a that the central bank will increase interest rates by 0.25 percentage points. In our illustration, the guess that in period 21 we could observe <em>three</em> is a point forecast.</p>
 <p>We denote point forecast by <span class="math inline">\(\hat{y}_{t+h|t}\)</span>, where <span class="math inline">\(h\)</span> is the forecast horizon. We use “hat” to emphasize that a forecast is based on parameter estimates rather than on the true parameters of the model. In other words, <span class="math inline">\(\hat{y}_{t+h|t}\)</span> is an <span class="math inline">\(h\)</span>-step-ahead point forecast made in period <span class="math inline">\(t\)</span> based on available data, assumed model, and the estimated parameters of this model. In the foregoing example, where we were attempting to guess the realization of the variable in period <span class="math inline">\(21\)</span> based on information up to and including period <span class="math inline">\(20\)</span>, our forecast horizon was one.</p>
 </div>
-<div id="why-we-cant-get-it-right" class="section level2 hasAnchor" number="1.6">
-<h2><span class="header-section-number">1.6</span> Why We Can’t Get It Right<a href="introduction-to-forecasting.html#why-we-cant-get-it-right" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="why-we-cant-get-it-right" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Why We Can’t Get It Right<a href="introduction-to-forecasting.html#why-we-cant-get-it-right" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The difference between a point forecast and the realized future outcome of a variable is the <em>forecast error</em>. That is, <span class="math display">\[e_{t+h|t} = y_{t+h} - \hat{y}_{t+h|t}.\]</span></p>
 <p>We might commit an error in forecasting for many reasons, and we can consolidate these reasons into three categories. First, we might commit forecast error because of the very essence of the endeavor: we are trying to guess something in the future, which has not happened yet. Many factors contribute to the realization of a variable, including new factors that we do not observe or are unaware of at the time when we make a forecast. All economic forecasts pertaining to federal or state budgets of 2020 were off, by a large margin. At the time when projections were made, probably in the second half of 2019, nobody knew the once–in–a–lifetime global pandemic would derail economies around the world. These are unavoidable forecast errors that present themselves due to lack of information from the future.</p>
 <p>Second, we may commit forecast error because the model we choose to generate forecasts is, at best, a close approximation of the true model. In the earlier illustration, the model that our predecessors used to forecast storms was obviously wrong. And although we made the case that it was “sufficiently good,” the model was far from perfect and certainly not complete. Winds, for example, can direct clouds in another direction, resulting in no storm. And our model, at least the way we presented it, did not account for the wind. We commit such forecast errors because we are not aware of the true model due to our incompetence or ignorance. These are potentially avoidable forecast errors. Indeed, time series econometrics and forecasting evolve in search of true models.</p>
 <p>Third, we may commit forecast error because we rely on estimates of the model parameters, rather than on its true parameters. The estimates can be off for many different reasons. They could be off, for example, because of the measurement error in the variables that we apply or because of the sampling error. In any case, the discrepancy between estimated parameters and true parameters could lead to a forecast error.</p>
 <p>These three components of a forecast error are the known unknowns. They are pretty much unavoidable in practice. When we get a forecast exactly right, that usually is because the three errors, by fluke, have exactly offset one anther.</p>
 </div>
-<div id="minimizing-the-risk-of-getting-it-wrong" class="section level2 hasAnchor" number="1.7">
-<h2><span class="header-section-number">1.7</span> Minimizing the Risk of Getting It Wrong<a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="minimizing-the-risk-of-getting-it-wrong" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Minimizing the Risk of Getting It Wrong<a href="introduction-to-forecasting.html#minimizing-the-risk-of-getting-it-wrong" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A point forecast can be any value, any reasonable guess. The <em>optimal</em> point forecast is the best guess. That is, the optimal point forecast is a point forecast that minimizes the risk of getting it wrong.</p>
 <p>We measure risk using a <em>loss function</em>. A loss function, which we denote by <span class="math inline">\(l(e_{t+h|t})\)</span>, is a transformation of a forecast error such that the following conditions are satisfied:</p>
 <ol style="list-style-type: lower-roman">
@@ -389,10 +394,10 @@ Figure 1.2: A time series and its density
 </ol>
 <p>The quadratic loss is particularly popular, partly because it echoes the way we typically fit the model to the data—i.e., using a least squares estimator. The following figure plots a sample of forecast errors mapped onto the quadratic loss function, represented by the U-shaped curve centered on zero (flipped clockwise for illustration purposes).</p>
 <div class="figure"><span style="display:block;" id="fig:loss"></span>
-<img src="figures/c1/loss.png" alt="Forecast errors and the quadratic loss" width="1040" />
 <p class="caption">
-Figure 1.3: Forecast errors and the quadratic loss
+Figure 2.3: Forecast errors and the quadratic loss
 </p>
+<img src="figures/c1/loss.png" alt="Forecast errors and the quadratic loss"  />
 </div>
 <p>The optimal forecast minimizes the expected loss,
 <span class="math inline">\(E[l(e_{t+h|t})]\)</span>. Assuming the quadratic loss function:
@@ -402,19 +407,19 @@ Figure 1.3: Forecast errors and the quadratic loss
 <p>As it turns out, a point forecast that minimizes the expected loss function is the mean of the random variable:
 <span class="math display" id="eq:optimal">\[\begin{equation}
     \hat{y}_{t+h|t} = E\left(y_{t+h}\right).
-    \tag{1.1}
+    \tag{2.1}
 \end{equation}\]</span></p>
-<p>This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization—assuming the quadratic loss—is the weighted sum of its all possible future realizations. The equality in equation <a href="introduction-to-forecasting.html#eq:optimal">(1.1)</a> is implied in Figure <a href="introduction-to-forecasting.html#fig:loss">1.3</a>. If we were to use any value other than the mean—which would imply sliding the U-shaped curve to the left or to the right—the expected value of the loss function will only increase. The following animation presents a visualization of this thought exercise.</p>
+<p>This is to say that given what we know about the dynamic properties of a time series, out best guess about its future realization—assuming the quadratic loss—is the weighted sum of its all possible future realizations. The equality in equation <a href="introduction-to-forecasting.html#eq:optimal">(2.1)</a> is implied in Figure <a href="introduction-to-forecasting.html#fig:loss">2.3</a>. If we were to use any value other than the mean—which would imply sliding the U-shaped curve to the left or to the right—the expected value of the loss function will only increase. The following animation presents a visualization of this thought exercise.</p>
 <p><img src="gifs/quadratic-loss.gif" /></p>
-<p>In Figure <a href="introduction-to-forecasting.html#fig:time-series-c1">1.2</a> we illustrated a time series and its density over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that <em>one</em> and <em>six</em> occur with a probability of <span class="math inline">\(0.05\)</span>, <em>two</em> occurs with a probability of <span class="math inline">\(0.15\)</span>, <em>five</em> occurs with a probability of <span class="math inline">\(0.20\)</span>, <em>four</em> occurs with a probability of <span class="math inline">\(0.25\)</span>, and <em>three</em> occurs with a probability of <span class="math inline">\(0.30\)</span>. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be <span class="math inline">\({1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55\)</span>. If we know that the value must be an integer, then we round our forecast to <em>four</em>. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of <em>four</em> gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.</p>
+<p>In Figure <a href="introduction-to-forecasting.html#fig:time-series-c1">2.2</a> we illustrated a time series and its density over the periods from 1 to 20. Suppose this is all the information we have. Then, we can conclude that <em>one</em> and <em>six</em> occur with a probability of <span class="math inline">\(0.05\)</span>, <em>two</em> occurs with a probability of <span class="math inline">\(0.15\)</span>, <em>five</em> occurs with a probability of <span class="math inline">\(0.20\)</span>, <em>four</em> occurs with a probability of <span class="math inline">\(0.25\)</span>, and <em>three</em> occurs with a probability of <span class="math inline">\(0.30\)</span>. Using this information, and assuming that the realizations of the observed series are independent of one another, the optimal point forecast, under quadratic loss, will be <span class="math inline">\({1\times 0.05}+{2\times 0.15}+{3\times 0.30}+{4\times 0.25}+{5\times 0.20}+{6\times 0.05}=3.55\)</span>. If we know that the value must be an integer, then we round our forecast to <em>four</em>. The actual realization, of course, can be any value, including a value that we have not observed in the data. But our guess of <em>four</em> gives us the best chance of being as close as possible to the realized value, given the information that we have and the assumptions that we have made about the model.</p>
 </div>
-<div id="economists-do-it-with-models" class="section level2 hasAnchor" number="1.8">
-<h2><span class="header-section-number">1.8</span> Economists Do It With Models<a href="introduction-to-forecasting.html#economists-do-it-with-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="economists-do-it-with-models" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Economists Do It With Models<a href="introduction-to-forecasting.html#economists-do-it-with-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Model is our simplified vision about how things are interrelated. Whether the things are truly related is irrelevant. Because model is not the truth. Model is our understanding of the truth, which may very well be wrong.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <p>As knowledge accumulates, our understanding of the true relationship between things improves. So, we come up with better models that help us more accurately approximate the truth.</p>
 </div>
-<div id="getting-it-right-for-the-right-reasons" class="section level2 hasAnchor" number="1.9">
-<h2><span class="header-section-number">1.9</span> Getting It Right for the Right Reasons<a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="getting-it-right-for-the-right-reasons" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Getting It Right for the Right Reasons<a href="introduction-to-forecasting.html#getting-it-right-for-the-right-reasons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There may be instances—if we are fortuitous—when our forecast is spot-on. But such an instance will be just that—a fluke. Because our model is a simplified approximation of the truth, we cannot count on getting the forecast exactly right. For the most part, our forecasts will be off, and this is perfectly okay, so long as <em>on average</em> we are spot-on.</p>
 <p>In fact, we may make an impeccable guess about the future for the wrong reasons. Suppose our “model” is such that it always predicts a recession. Then, every so often, we will get it right. Because recessions happen. But we will be getting it right for the wrong reason. Because our “model” is clearly wrong. Recessions are not the only outcomes of the business cycle.</p>
 <p>The time series in the figure above were generated so that each observation was drawn from independent and identically distributed random variables. The presented density then serves as a close approximation of a forecast. Assuming quadratic loss, the optimal forecast would be, as we calculated above, <em>four</em>. Had we only observed the very last observation, which is <em>five</em>, our best guess for the next observation would have been <em>five</em>. If the next observation turned out to be five, then we would have guessed it right for the wrong reason. The right forecast would have been <em>four</em>, even if it turned out to be inaccurate.</p>

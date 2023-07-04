@@ -1,4 +1,4 @@
-# Forecasting With Time Series Models {-}
+# Forecasting With Time Series Models
 
 # &ndash; Introduction to Forecasting
 ![](art/astrologer.png)
